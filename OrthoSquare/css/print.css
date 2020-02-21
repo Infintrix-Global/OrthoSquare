@@ -1,0 +1,178 @@
+﻿
+@media print {
+@page {
+	margin: 0px;
+}
+body {
+	margin: 0px;
+	padding: 0;
+	line-height: 1.4em;
+	word-spacing: 1px;
+	letter-spacing: 0.2px;
+	font: 13px Century Gothic;
+	color: #595959;
+}
+.table-bordered {
+    border: 1px solid gray !important;
+   
+}
+.right
+{float:right!important;
+    }
+     .center
+    {text-align:center !important;
+        
+        }
+   
+     .h2{    color: red;
+    /* font-size: 25px; */
+    text-align: center;}   
+        
+        
+.invoiceheader
+{
+    color:#0e31b7 !important;
+    font-size:x-large !important;
+    
+    }
+    .head{    color: #4d79ff !important;
+    font-size: Medium !important;
+    font-weight: bold !important;}
+    
+    .head1{    color: #4d79ff !important;
+    font-size: small !important;
+    font-weight: bold !important;}
+    
+    
+.yellow{    background-color: rgba(255, 255, 153, 0.41)!important;}
+.white{    background-color: #FFF!important;}
+.height {
+	height: 100px;
+	min-height:150px;
+	
+}
+.panel-body {
+    height: 170px;
+    padding: 15px;
+}
+.img
+{width:100px;
+ height:100px;
+    }
+.fixed{    position: fixed;
+    bottom: 0;    margin-bottom: 20px;}
+.container {
+    width: 100%;
+}
+.div{    display: inline;
+         float: left;}
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.panel-group {
+  width:100%;
+        float: left;
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+     margin-bottom: 0px; 
+}
+.panel-primary {
+    border-color: #d7b66e;
+   
+       
+}.panel-primary>.panel-heading {
+    color: #fff;
+    background-color: #d7b66e;
+    border-color: #d7b66e;
+}
+
+.receipt-header-mid {
+    margin: 100px 0;
+    overflow: hidden;
+}
+.receipt-header-mid .receipt-left h2 {
+    font-weight: 400;
+    margin: 34px 0 0;
+    text-align: center;
+    text-transform: uppercase;
+    border-top: 1px solid #ccc;
+    padding-top: 3px;
+    font-size: 18px;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+/*Header*/
+h2 {
+	color: #009900;
+	font-size: 25px;
+	text-align: right;
+}
+.post .entry h2 {
+	font-size: 20px;
+}
+
+/* Links */
+a:link, a:visited {
+	background: transparent;
+	color: #333;
+	text-decoration: none;
+}
+a:link[href^="http://"]:after, a[href^="http://"]:visited:after {
+	content: " (" attr(href) ") ";
+	font-size: 11px;
+}
+a[href^="http://"] {
+	color: #000;
+}
+table {
+	/*text-align: center;*/
+}
+/*Image*/
+img, img a, .more-link a {
+	border: none;
+}
+/*Remove Element*/
+#logo, #catnavi, .topnavi, .more-link, .navigation, #sidebartop, #related, #social, #sponsors, .tabs, #allpost, .toolbar, .splitbox, #commentform, #commentabs .idTabs, .postmeta-content .comments, #respond h3, .tag, .footerlinks {
+	display: none;
+}
+/*Post*/
+.post {
+	border-bottom: 1px solid #000;
+}
+.postmeta {
+	font-size: 10pt;
+	margin-top: 10px;
+}
+.postfooter {
+	font-size: 10pt;
+	margin-bottom: 20px;
+}
+/*Comment Section*/
+.commentlist .avatar {
+	float: left;
+	margin-right: 10px;
+}
+.commentlist .children {
+	margin-top: 10px;
+}
+#comments {
+	page-break-before: always;
+}
+
+
+/*Footer*/
+#footer {
+	margin-top: 10px;
+}
+tr:nth-child(even) {
+    background-color: #ffff99;
+}
+}
