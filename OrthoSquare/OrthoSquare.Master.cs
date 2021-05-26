@@ -18,18 +18,16 @@ namespace OrthoSquare
         public string imgPath;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["User"] != null)
-            //{
-            //    if (!IsPostBack)
-            //    {
-
-            //    }
-            //    BindMenu();
-            //}
-            //else
-            //{
-            //    Response.Redirect("Login.aspx");
-            //}
+            Response.Cache.SetNoStore();
+            if (SessionUtilities.UserID != null)
+            {
+               
+            }
+            else
+            {
+                Session.RemoveAll();
+                Response.Redirect("Login.aspx");
+            }
 
           BindMenu();
           BindName();
@@ -57,7 +55,7 @@ namespace OrthoSquare
                 lblCname.Text = dt1.Rows[0]["ClinicName"].ToString();
                 lblName1.Text = dt1.Rows[0]["FirstName"].ToString();
                 //Dhaval
-                imgPath = "../Images/" + dt1.Rows[0]["ProfileImageUrl"].ToString();
+                imgPath = "../EmployeeProfile/" + dt1.Rows[0]["ProfileImageUrl"].ToString();
             }
 
 
@@ -107,8 +105,21 @@ namespace OrthoSquare
                     var literalMenu = new LiteralControl("<li class='nav-item  '><a href='" + ResolveClientUrl("~/" + row["Path"].ToString()) + "'><i class='" + row["MenuIcon"].ToString() + "'></i>" + "<span class='title'>" + row["MenuName"].ToString() + "</span>" + "</a>");
                     PlhldrMenu.Controls.Add(literalMenu);
                 }
+               
+                //if (dtSubMenu.Count() >= 2)
+              
+                //{
+                //    var literalSubMenuolds = new LiteralControl("<ul class='sub-menu sub-menu1'>");
+                //    PlhldrMenu.Controls.Add(literalSubMenuolds);
+                //}
+                //else
+                //{
+                //     var literalSubMenuolds = new LiteralControl("<ul class='sub-menu '>");
+                //     PlhldrMenu.Controls.Add(literalSubMenuolds);
 
-                var literalSubMenuolds = new LiteralControl("<ul class='sub-menu'>");
+                //}
+
+                var literalSubMenuolds = new LiteralControl("<ul class='sub-menu '>");
                 PlhldrMenu.Controls.Add(literalSubMenuolds);
                 foreach (DataRow rowSubMenu in dtSubMenu)
                 {

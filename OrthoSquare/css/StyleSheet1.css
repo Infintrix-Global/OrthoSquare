@@ -1,0 +1,49 @@
+﻿.fc-unthemed .fc-content, .fc-unthemed .fc-divider, .fc-unthemed .fc-list-heading td, .fc-unthemed .fc-list-view, .fc-unthemed .fc-popover, .fc-unthemed .fc-row, .fc-unthemed tbody, .fc-unthemed td, .fc-unthemed th, .fc-unthemed thead {
+    /*border-color: #d4d2d2 !important;*/
+    /*background: #077396 !important;*/
+    color: #fff !important;
+    border: 1px solid #d4d2d2 !important;
+}
+.fc-ltr .fc-basic-view .fc-day-top .fc-day-number {
+    float: right;
+    color: #000 !important;
+}
+thead.fc-head {
+    background-color: black !important;
+}
+
+td.fc-head-container.fc-widget-header {
+    background-color: azure;
+}
+
+
+
+.fc-row.fc-widget-header thead {
+    background: #077396;
+}
+
+.fc-content-skeleton thead {
+    background: whitesmoke;
+}
+th.fc-day-header.fc-widget-header {
+    padding: 10px;
+}
+td.fc-day-top.fc-past {
+    padding: 5px;
+}
+
+td.fc-day-top.fc-future {
+    padding: 5px;
+}
+td.fc-day-top.fc-wed.fc-today {
+    background: lightgoldenrodyellow !important;
+}
+.panel-primary>.panel-heading {
+    color: #fff;
+    background-color: #077396;
+    border-color: #077396;
+}
+.panel-primary {
+    border-color: #077396;
+}
+

@@ -48,7 +48,11 @@ namespace OrthoSquare.Doctor
 
                 lblName.Text = dt1.Rows[0]["FirstName"].ToString() + " " + dt1.Rows[0]["LastName"].ToString();
                 ImagePhoto1.ImageUrl = "~/EmployeeProfile/" + dt1.Rows[0]["ProfileImageUrl"].ToString();
-                lblbirthDate.Text = Convert.ToDateTime(dt1.Rows[0]["DOB"]).ToString("dd-MM-yyyy");
+
+                if(dt1.Rows[0]["DOB"].ToString() !="")
+                {
+                    lblbirthDate.Text = Convert.ToDateTime(dt1.Rows[0]["DOB"]).ToString("dd-MM-yyyy");
+                }
                 lblGender.Text = dt1.Rows[0]["Gender"].ToString();
                 lblAddress.Text = dt1.Rows[0]["Line1"].ToString() + ", " + dt1.Rows[0]["Line2"].ToString() + " ," + dt1.Rows[0]["AreaPin"].ToString(); ;
                 lblMobileNo.Text = dt1.Rows[0]["Mobile1"].ToString() + " ," + dt1.Rows[0]["Mobile2"].ToString();

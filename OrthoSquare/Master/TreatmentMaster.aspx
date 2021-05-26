@@ -71,7 +71,7 @@
 
                                     <div class="form-group">
                                         <label>Treatment Name<span class="required">*</span></label>
-                                        <asp:TextBox ID="txtAdd" class="form-control"
+                                        <asp:TextBox ID="txtAdd" MaxLength="100" class="form-control"
                                             runat="server"></asp:TextBox>
                                         <span class="help-block">
                                          <asp:RequiredFieldValidator ID="RequiredtxtAdd" runat="server" ControlToValidate="txtAdd"
@@ -80,13 +80,13 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Treatment Cost<span class="required">*</span></label>
-                                        <asp:TextBox ID="txtTCost" class="form-control"
+                                        <label>Treatment Cost</label>
+                                        <asp:TextBox ID="txtTCost" TextMode="Number" class="form-control"
                                             runat="server"></asp:TextBox>
 
                                         <span class="help-block">
-                                         <asp:RequiredFieldValidator ID="RequiredFieldCost" runat="server" ControlToValidate="txtTCost"
-                                                    SetFocusOnError="true" ErrorMessage="Please Enter Treatment Cost" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <%-- <asp:RequiredFieldValidator ID="RequiredFieldCost" runat="server" ControlToValidate="txtTCost"
+                                                    SetFocusOnError="true" ErrorMessage="Please Enter Treatment Cost" ForeColor="Red"></asp:RequiredFieldValidator>--%>
                                             </span>
                                     </div>
 
@@ -165,7 +165,9 @@
 
         <div class="row">
             <div class="col-md-12">
-
+                <div style="margin-bottom: 5px;">
+                    <asp:Label ID="lblMSG1" class="panel-title" runat="server" Text="" Font-Size="Medium"></asp:Label>
+                </div>
                 <div class="portlet light ">
                     <div class="portlet-title">
                         <div class="caption">

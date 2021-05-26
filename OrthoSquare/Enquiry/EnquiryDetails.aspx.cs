@@ -10,7 +10,8 @@ using OrthoSquare.Utility;
 using System.Data.OleDb;
 using System.IO;
 using PreconFinal.Utility;
-namespace OrthoSquare.Enquiry
+
+namespace OrthoSquare.Enquiry1
 {
     public partial class EnquiryDetails : System.Web.UI.Page
     {
@@ -25,8 +26,10 @@ namespace OrthoSquare.Enquiry
         {
             if (!IsPostBack)
             {
+
+               
                 EnqNo();
-                getAllEnquiry();
+               
                 Bindddlclinic();
                 BindCountry();
                 ddlCountry.SelectedValue = "1";
@@ -37,12 +40,25 @@ namespace OrthoSquare.Enquiry
                 bindddlTreatment();
                 BindEnquirySourceSearch();
                 BindEnquirySource();
-
+                BindAssignToEmp(0);
+                BindAssignToTelecaller(0);
+                if (SessionUtilities.RoleID == 1)
+                {
+                    ddlclinic.SelectedValue = SessionUtilities.Empid.ToString();
+                    BindAssignToEmp(SessionUtilities.Empid);
+                }
+                bindClinicSearch();
+                if (SessionUtilities.RoleID == 2)
+                {
+                    Cid.Visible = true;
+                }
+                getAllEnquiry();
             }
         }
 
+        
 
-        private long EnquiryID
+    private long EnquiryID
         {
             get
             {
@@ -56,6 +72,33 @@ namespace OrthoSquare.Enquiry
             {
                 ViewState["EnquiryID"] = value;
             }
+        }
+        public void bindClinicSearch()
+        {
+
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                dt = objclinic.GetAllClinicDetaisNew(SessionUtilities.Empid);
+            }
+            else
+            {
+                dt = objclinic.GetAllClinicDetais();
+
+            }
+            ddlclinicSearch.DataSource = dt;
+
+
+            ddlclinicSearch.DataValueField = "ClinicID";
+            ddlclinicSearch.DataTextField = "ClinicName";
+            ddlclinicSearch.DataBind();
+            ddlclinicSearch.Items.Insert(0, new ListItem("-- Select Clinic --", "0", true));
+
         }
 
 
@@ -71,47 +114,178 @@ namespace OrthoSquare.Enquiry
 
         public void Bindddlclinic()
         {
-            ddlclinic.DataSource = objcommon.clinicMaster();
+
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+               // dt = objclinic.GetAllClinicDetaisNew(SessionUtilities.Empid);
+                dt = objclinic.GetAllClinicDetais();
+            }
+
+            else if (SessionUtilities.RoleID == 9)
+            {
+                // dt = objclinic.GetAllClinicDetaisNew(SessionUtilities.Empid);
+                dt = objcommon.GetByTelecallerClinic(SessionUtilities.Empid,SessionUtilities.RoleID);
+            }
+            else if (SessionUtilities.RoleID == 5)
+            {
+                // dt = objclinic.GetAllClinicDetaisNew(SessionUtilities.Empid);
+                dt = objcommon.GetByTelecallerClinic(SessionUtilities.Empid,SessionUtilities.RoleID);
+            }
+            else
+            {
+                dt = objclinic.GetAllClinicDetais();
+
+            }
+            ddlclinic.DataSource = dt;
+
+           // ddlclinic.DataSource = objcommon.clinicMaster();
             ddlclinic.DataTextField = "ClinicName";
             ddlclinic.DataValueField = "ClinicID";
             ddlclinic.DataBind();
 
             ddlclinic.Items.Insert(0, new ListItem("--- Select ---", "0"));
 
+          
         }
-        public void BindAssignToEmp(long Cid)
+        public void BindAssignToEmp(int Cid)
         {
-            ddlAssign.DataSource = objclinic.GetSelectAllClinicEmployee(Cid);
+
+            if (SessionUtilities.RoleID == 1)
+            {
+
+                ddlAssign.DataSource = objcommon.DoctersMasterNew(Cid, SessionUtilities.RoleID);
+               
+
+            }
+            else if (SessionUtilities.RoleID == 3)
+            {
+
+                ddlAssign.DataSource = objcommon.DoctersMasterNewENQ11(Convert .ToInt16(ddlclinic .SelectedValue), SessionUtilities.RoleID);
+
+
+            }
+
+            else
+            {
+                // ddlAssign.DataSource = objcommon.DoctersMasterNewENQ(Cid, SessionUtilities.RoleID);
+                ddlAssign.DataSource = objcommon.DoctersMasterNew(Cid, SessionUtilities.RoleID);
+
+            }
+
             ddlAssign.DataTextField = "FirstName";
             ddlAssign.DataValueField = "DoctorID";
             ddlAssign.DataBind();
-
             ddlAssign.Items.Insert(0, new ListItem("--- Select ---", "0"));
+        }
+
+
+        public void BindAssignToTelecaller(int Cid)
+        {
+            BAL_EmployeeMaster objEMP = new BAL_EmployeeMaster();
+
+            ddlTelecaller.DataSource = objEMP.GetAllTelecaller(Cid, SessionUtilities.RoleID);
+
+            ddlTelecaller.DataTextField = "EMPName";
+            ddlTelecaller.DataValueField = "EmployeeID";
+            ddlTelecaller.DataBind();
+            ddlTelecaller.Items.Insert(0, new ListItem("--- Select ---", "0"));
         }
         public void getAllEnquiry()
         {
-            int Cid = 0;
-
-            if( SessionUtilities .RoleID ==2 )
+            string Cid = "0";
+            string CID1 = "";
+            int RoleId = 0;
+            if (ddlclinicSearch.SelectedValue == "0")
             {
+                if (SessionUtilities.RoleID == 1)
+                {
 
-                Cid = 0;
+                    Cid = SessionUtilities.Empid.ToString();
+                    RoleId = SessionUtilities.RoleID;
+                }
+                else if (SessionUtilities.RoleID == 3)
+                {
+
+                    DataTable dt1 = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        CID1 += dt1.Rows[i]["ClinicID"] + ",";
+                    }
+
+                    if (CID1 != "")
+                    {
+                        CID1 = CID1.Remove(CID1.Length - 1);
+                    }
+                    Cid = CID1;
+
+                    RoleId = SessionUtilities.RoleID;
+                }
+                else if (SessionUtilities.RoleID == 9)
+                {
+
+                    DataTable dt1 = objcommon.GetByTelecallerClinic(SessionUtilities.Empid, SessionUtilities.RoleID);
+
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        CID1 += dt1.Rows[i]["ClinicID"] + ",";
+                    }
+
+                    if (CID1 != "")
+                    {
+                        CID1 = CID1.Remove(CID1.Length - 1);
+                    }
+                    Cid = CID1;
+
+                    RoleId = SessionUtilities.RoleID;
+                }
+                else if (SessionUtilities.RoleID ==5)
+                {
+
+                    DataTable dt1 = objcommon.GetByTelecallerClinic(SessionUtilities.Empid,SessionUtilities.RoleID);
+
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        CID1 += dt1.Rows[i]["ClinicID"] + ",";
+                    }
+
+                    if (CID1 != "")
+                    {
+                        CID1 = CID1.Remove(CID1.Length - 1);
+                    }
+                    Cid = CID1;
+
+                    RoleId = SessionUtilities.RoleID;
+                }
+                else
+                {
+
+                    Cid = "0";
+                    RoleId = 0;
+                }
             }
             else
             {
-
-                Cid = SessionUtilities.Empid;
-
+                Cid = ddlclinicSearch.SelectedValue;
             }
 
 
 
-            AllData = objENQ.GetAllEnquiry(Cid);
+            AllData = objENQ.GetAllEnquirynew(Cid,txtSearch .Text .Trim (), txttxtMobailNoss.Text .Trim (), Convert .ToInt32 (ddlEnquirysourceSearch.SelectedValue ), txtFromEnquiryDate.Text, txtToEnquiryDate.Text, RoleId);
 
-
+        
             Session["EnquiryDetails"] = AllData;
             gvShow.DataSource = AllData;
             gvShow.DataBind();
+
+
+
 
         }
 
@@ -181,7 +355,7 @@ namespace OrthoSquare.Enquiry
 
             ddlEnquirySource.Items.Insert(0, new ListItem("--- Select ---", "0"));
 
-            ddlEnquirySource.Items.Insert(iCount, new ListItem("Other", "-1"));
+           // ddlEnquirySource.Items.Insert(iCount, new ListItem("Other", "-1"));
         }
 
 
@@ -234,6 +408,8 @@ namespace OrthoSquare.Enquiry
 
         protected void btAdd_Click(object sender, EventArgs e)
         {
+
+            int Isv = 0;
             try
             {
                 int _isInserted = -1;
@@ -252,9 +428,20 @@ namespace OrthoSquare.Enquiry
                     LavelCode = "hot";
                 }
 
+                string FollowupDate = "";
 
+                if(txtFollowupDate .Text !="")
+                {
+                    FollowupDate = txtFollowupDate.Text;
+                }
+                else
+                {
+                    FollowupDate = "01-01-1999";
+
+                }
                 string c = ddlCity.SelectedValue;
 
+               // string Fdate = txtFollowupDate.Text;
 
                 Enquiry_Details objEnqDetails = new Enquiry_Details()
                 {
@@ -280,11 +467,14 @@ namespace OrthoSquare.Enquiry
                     Email = txtEmail.Text,
                     Mobile = txtMobile.Text,
                     Telephone = txtTelephone.Text,
-                    ReceivedByEmpId = SessionUtilities.Empid,
+                    ReceivedByEmpId = Convert.ToInt32(ddlclinic.SelectedValue),
                     AssignToEmpId = Convert.ToInt32(ddlAssign.SelectedValue),
-                    Status = "P",
+                    RoleId = Convert.ToInt32(RadioRole.SelectedValue),
+                    TelecallerToEmpId = Convert.ToInt32(ddlTelecaller.SelectedValue),
+                    Status = Rabinfo.SelectedValue,
                     //Folllowupdate = Convert.ToDateTime(txtFollowupDate.Text),
-                    Folllowupdate = txtFollowupDate.Text,
+                    
+                    Folllowupdate = FollowupDate,
                     InterestLevel = RadInterestLavel.SelectedItem.Text,
                     InterestLevelCode = LavelCode,
                     // CreatedDate = System.DateTime.Now.ToString (),
@@ -296,47 +486,58 @@ namespace OrthoSquare.Enquiry
                     IsActive = true
                 };
 
+                if (EnquiryID > 0)
+                {
+                  
+                }
+                else
+                {
+                    Isv = objENQ.GetEnqurysIsvelid(txtMobile.Text);
 
-                int Isv = objENQ.GetEnqurysIsvelid(txtMobile.Text);
-
+                }
                  if (Isv > 0)
                  {
+                    this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Mobile number already in use')", true);
 
-                     lblMessage.Text = "Enquiry already exists";
+                    lblMessage.Text = "Mobile number already in use";
                      lblMessage.ForeColor = System.Drawing.Color.Red;
 
                  }
                  else
                  {
                      _isInserted = objENQ.Add_Enquiry(objEnqDetails);
-                 }
-                if (_isInserted == -1)
-                {
-                    lblMessage.Text = "Failed to Add Enquiry";
-                    lblMessage.ForeColor = System.Drawing.Color.Red;
-                }
-                else
-                {
-                    EnquiryID = 0;
-                    lblMessage.Text = "Enquiry Added Successfully";
-                    lblMessage.ForeColor = System.Drawing.Color.Green;
-                    //txtCompanyName.Text = "";
-                    //txtBrandName.Text = "";
-                    if (Rabinfo.SelectedValue == "Patient")
+
+                    if (_isInserted == -1)
                     {
-
-                        string Eid = objENQ.GetEnqMaxId();
-
-                        Response.Redirect("../patient/PatientMaster.aspx?Eid=" + Eid);
+                        lblMessage.Text = "Failed to Add Enquiry";
+                        lblMessage.ForeColor = System.Drawing.Color.Red;
                     }
                     else
                     {
-                        Response.Redirect("EnquiryDetails.aspx");
 
+                        lblMessage.Text = "Enquiry Added Successfully";
+                        lblMessage.ForeColor = System.Drawing.Color.Green;
+                        //txtCompanyName.Text = "";
+                        //txtBrandName.Text = "";
+                        if (Rabinfo.SelectedValue == "Patient")
+                        {
+
+                            string Eid = objENQ.GetEnqMaxId();
+
+                            Response.Redirect("../patient/PatientMaster.aspx?Eid=" + Eid);
+                        }
+                        else
+                        {
+                            getAllEnquiry();
+                          ///  Response.Redirect("EnquiryDetails.aspx");
+
+                        }
+                        EnquiryID = 0;
+                        // getAllMaterial();
+                        //btSearch_Click(sender, e);
                     }
-                    // getAllMaterial();
-                    //btSearch_Click(sender, e);
                 }
+               
             }
             catch (Exception ex)
             {
@@ -367,17 +568,42 @@ namespace OrthoSquare.Enquiry
                     DataTable dt = objENQ.GetSelectAllEnquiry(ID);
 
                     txtEnquiryNO.Text = dt.Rows[0]["Enquiryno"].ToString();
-                    txtENqDate.Text = dt.Rows[0]["EnquiryDate"].ToString();
+                    txtENqDate.Text = Convert .ToDateTime (dt.Rows[0]["EnquiryDate"]).ToString("dd-MM-yyyy");
                     txtFname.Text = dt.Rows[0]["FirstName"].ToString();
                     txtLname.Text = dt.Rows[0]["LastName"].ToString();
-                    txtBDate.Text = dt.Rows[0]["DateBirth"].ToString();
+
+                    if(dt.Rows[0]["DateBirth"].ToString() !="")
+                        {
+                        if (Convert.ToDateTime(dt.Rows[0]["DateBirth"]).ToString("dd-MM-yyyy") == "01-01-1999")
+                        {
+                            txtBDate.Text = "";
+                        }
+                        else
+                        {
+                            txtBDate.Text = Convert.ToDateTime(dt.Rows[0]["DateBirth"]).ToString("dd-MM-yyyy");
+                        }
+                    }
+                  //  txtBDate.Text = Convert.ToDateTime(dt.Rows[0]["DateBirth"]).ToString("dd-MM-yyyy");
+
                     txtAge.Text = dt.Rows[0]["Age"].ToString();
                     txtEmail.Text = dt.Rows[0]["Email"].ToString();
                     txtMobile.Text = dt.Rows[0]["Mobile"].ToString();
                     txtArea.Text = dt.Rows[0]["Area"].ToString();
                     txtTelephone.Text = dt.Rows[0]["Telephone"].ToString();
                     txtAddress.Text = dt.Rows[0]["Address"].ToString();
-                    txtFollowupDate.Text = dt.Rows[0]["Folllowupdate"].ToString();
+                    if (dt.Rows[0]["Folllowupdate"].ToString() != "")
+                    {
+                        if (Convert.ToDateTime(dt.Rows[0]["Folllowupdate"]).ToString("dd-MM-yyyy") == "01-01-1999")
+                        {
+                            txtFollowupDate.Text = "";
+                        }
+                        else
+                        {
+
+                            txtFollowupDate.Text = dt.Rows[0]["Folllowupdate"].ToString();
+                        }
+                    }
+                    
                     BindCountry();
                     if (dt.Rows[0]["CountryId"].ToString() != "")
                     {
@@ -402,11 +628,53 @@ namespace OrthoSquare.Enquiry
                     //  ddlPurpose.SelectedValue = dt.Rows[0]["PurposeId"].ToString();
                     //  ddlReceivedBy.SelectedValue = dt.Rows[0]["ReceivedByEmpId"].ToString();
                     //  ddlAssign.SelectedValue = dt.Rows[0]["AssignToEmpId"].ToString();
-                    RadGender.SelectedItem.Text = dt.Rows[0]["Gender"].ToString();
+                    if (dt.Rows[0]["Gender"].ToString() != "")
+                    {
+                       // RadGender.SelectedValue = dt.Rows[0]["Gender"].ToString();
+
+                        RadGender.Items.FindByText(dt.Rows[0]["Gender"].ToString()).Selected = true;
+                    }
+                    txtConversion.Text = dt.Rows[0]["Conversation"].ToString();
+
+                    
                     if (dt.Rows[0]["InterestLevel"].ToString() != "")
                     {
-                        RadInterestLavel.SelectedValue = dt.Rows[0]["InterestLevel"].ToString();
+                       // RadInterestLavel.SelectedValue = dt.Rows[0]["InterestLevel"].ToString();
+                        RadInterestLavel.Items.FindByText(dt.Rows[0]["InterestLevel"].ToString()).Selected = true;
+                    }
+                    Bindddlclinic();
+                    ddlclinic.SelectedValue = dt.Rows[0]["ClinicID"].ToString();
+                    BindAssignToEmp(Convert .ToInt32(dt.Rows[0]["ClinicID"]));
+                    if (dt.Rows[0]["AssignToEmpId"].ToString() != "")
+                    {
+                        ddlAssign.SelectedValue = dt.Rows[0]["AssignToEmpId"].ToString();
+                    }
+                    bindddlTreatment();
+                    if (dt.Rows[0]["TreatmentID"].ToString() != "")
+                    {
+                        ddlTreatment.SelectedValue = dt.Rows[0]["TreatmentID"].ToString();
+                    }
+                    //   Rabinfo.SelectedValue = dt.Rows[0]["Status"].ToString();
+                    if (dt.Rows[0]["Status"].ToString() != "")
+                    {
+                        Rabinfo.Items.FindByText(dt.Rows[0]["Status"].ToString()).Selected = true;
 
+                    }
+                    if (dt.Rows[0]["Status"].ToString() == "Followup")
+                    {
+                        IDF.Visible = true;
+                        if (dt.Rows[0]["Folllowupdate"].ToString() != "")
+                        {
+                            if (Convert.ToDateTime(dt.Rows[0]["Folllowupdate"]).ToString("dd-MM-yyyy") == "01-01-1999")
+                            {
+                                txtFollowupDate.Text = "";
+                            }
+                            else
+                            {
+
+                                txtFollowupDate.Text = Convert.ToDateTime(dt.Rows[0]["Folllowupdate"]).ToString("dd-MM-yyyy");
+                            }
+                        }
                     }
                     //  ddlUOM.SelectedValue = dt.Rows[0]["UOMId"].ToString();
                 }
@@ -462,42 +730,10 @@ namespace OrthoSquare.Enquiry
         {
             try
             {
-                string search = "";
-                //if (txtSearch.Text != "")
-                //{
-                if (txtSearch.Text != "")
-                {
-                    search += "FirstName like '%" + txtSearch.Text + "%'";
-                }
-
-                if (Convert .ToInt32 (ddlEnquirysourceSearch.SelectedValue)  > 0)
-                {
-                    search += "Sourceid = " + Convert.ToInt32(ddlEnquirysourceSearch.SelectedValue) + "";
-                }
-
-
                 
 
+                getAllEnquiry();
 
-                DataRow[] dtSearch1 = AllData.Select(search);
-                if (dtSearch1.Count() > 0)
-                {
-                    DataTable dtSearch = dtSearch1.CopyToDataTable();
-                    gvShow.DataSource = dtSearch;
-                    gvShow.DataBind();
-                }
-                else
-                {
-                    DataTable dt = new DataTable();
-                    gvShow.DataSource = dt;
-                    gvShow.DataBind();
-                }
-                //}
-                //else
-                //{
-                //    gvShow.DataSource = AllData;
-                //    gvShow.DataBind();
-                //}
             }
             catch (Exception ex)
             {
@@ -506,79 +742,7 @@ namespace OrthoSquare.Enquiry
 
         protected void btUpdate_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    int _isInserted = -1;
-
-
-            //    string LavelCode = "";
-            //    if (RadInterestLavel.SelectedItem.Text == "1")
-            //    {
-            //        LavelCode = "Cold";
-            //    }
-            //    else if (RadInterestLavel.SelectedItem.Text == "2" || RadInterestLavel.SelectedItem.Text == "3")
-            //    {
-            //        LavelCode = "Warm";
-            //    }
-            //    else
-            //    {
-            //        LavelCode = "hot";
-            //    }
-
-
-            //    Enquiry_Details objEnqDetails = new Enquiry_Details()
-            //    {
-            //        EnquiryID = EnquiryID,
-            //        //CatId = Convert.ToInt32(ddlInterested.SelectedValue),
-            //        Sourceid = Convert.ToInt32(ddlEnquirySource.SelectedValue),
-            //       // PurposeId = Convert.ToInt32(ddlPurpose.SelectedValue),
-            //        Enquiryno = txtEnquiryNO.Text,
-            //        //  EnquiryDate = Convert.ToDateTime(txtENqDate.Text),
-            //        FirstName = txtFname.Text,
-            //        LastName = txtLname.Text,
-            //        // DateBirth = Convert.ToDateTime(txtBDate.Text),
-            //        Age = txtAge.Text,
-            //        Gender = RadGender.SelectedItem.Text,
-            //        Address = txtAddress.Text,
-            //        stateid = Convert.ToInt32(ddlState.SelectedValue),
-            //        Cityid = Convert.ToInt32(ddlCity.SelectedValue),
-            //        Area = txtArea.Text,
-            //        Email = txtEmail.Text,
-            //        Mobile = txtMobile.Text,
-            //        Telephone = txtTelephone.Text,
-            //       // ReceivedByEmpId = Convert.ToInt32(ddlReceivedBy.SelectedValue),
-            //       // AssignToEmpId = Convert.ToInt32(ddlAssign.SelectedValue),
-            //        Status = "P",
-            //        //Folllowupdate = Convert.ToDateTime(txtFollowupDate.Text),
-            //        InterestLevel = RadInterestLavel.SelectedItem.Text,
-            //        InterestLevelCode = LavelCode,
-            //        ModifiedBy = 1,
-            //        IsActive = true
-            //        //ModifiedDate =""
-            //    };
-
-            //    _isInserted = objENQ.Update_Enquiry(objEnqDetails);
-
-            //    if (_isInserted == -1)
-            //    {
-            //        lblMessage.Text = "Failed to Update Enquiry";
-            //        lblMessage.ForeColor = System.Drawing.Color.Red;
-            //    }
-            //    else
-            //    {
-            //        EnquiryID = 0;
-            //        lblMessage.Text = "Material Update Enquiry";
-            //        lblMessage.ForeColor = System.Drawing.Color.Green;
-            //        //txtCompanyName.Text = "";
-            //        //txtBrandName.Text = "";
-            //        Response.Redirect("EnquiryDetails.aspx");
-            //        getAllEnquiry();
-            //        //btSearch_Click(sender, e);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //}
+          
         }
 
         protected void Button2_Click(object sender, EventArgs e)
@@ -611,10 +775,68 @@ namespace OrthoSquare.Enquiry
 
         protected void btBack_Click(object sender, EventArgs e)
         {
-
+            Clear();
+            getAllEnquiry();
             Edit.Visible = true;
             Add.Visible = false;
             Div2.Visible = false;
+        }
+
+        public void Clear()
+        {
+            CleartextBoxes(this);
+            // BindCountry();
+            EnqNo();
+
+            Bindddlclinic();
+            BindCountry();
+            ddlCountry.SelectedValue = "1";
+            BindState();
+            ddlState.SelectedValue = "2";
+            BindCity();
+            ddlCity.SelectedValue = "34";
+            bindddlTreatment();
+            BindEnquirySourceSearch();
+            BindEnquirySource();
+
+            if (SessionUtilities.RoleID == 1)
+            {
+                ddlclinic.SelectedValue = SessionUtilities.Empid.ToString();
+                BindAssignToEmp(SessionUtilities.Empid);
+            }
+            bindClinicSearch();
+            if (SessionUtilities.RoleID == 2)
+            {
+                Cid.Visible = true;
+            }
+
+        }
+
+        public void CleartextBoxes(Control parent)
+        {
+
+            foreach (Control c in parent.Controls)
+            {
+
+                if ((c.GetType() == typeof(TextBox)))
+                {
+
+
+
+                    ((TextBox)(c)).Text = "";
+
+                }
+
+
+                if (c.HasControls())
+                {
+
+                    CleartextBoxes(c);
+
+                }
+
+            }
+
         }
 
 
@@ -634,7 +856,23 @@ namespace OrthoSquare.Enquiry
 
         protected void ddlclinic_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BindAssignToEmp(Convert.ToInt32(ddlclinic.SelectedValue));
+
+            if (RadioRole.SelectedValue == "3")
+            {
+                BindAssignToEmp(Convert.ToInt32(ddlclinic.SelectedValue));
+            }
+            else if(RadioRole.SelectedValue == "9")
+            {
+                BindAssignToTelecaller(Convert.ToInt32(ddlclinic.SelectedValue));
+            }
+            else if (RadioRole.SelectedValue == "5")
+            {
+                BindAssignToTelecaller(Convert.ToInt32(ddlclinic.SelectedValue));
+            }
+            else
+            {
+
+            }
         }
 
         protected void Rabinfo_SelectedIndexChanged(object sender, EventArgs e)
@@ -653,15 +891,15 @@ namespace OrthoSquare.Enquiry
 
         protected void ddlEnquirySource_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ddlEnquirySource.SelectedItem.Text == "Other")
-            {
-                LinkButton1.Visible = true;
-            }
-            else
-            {
+            //if (ddlEnquirySource.SelectedItem.Text == "Other")
+            //{
+            //    LinkButton1.Visible = true;
+            //}
+            //else
+            //{
 
-                LinkButton1.Visible = false;
-            }
+            //    LinkButton1.Visible = false;
+            //}
         }
 
         public override void VerifyRenderingInServerForm(Control control)
@@ -690,11 +928,11 @@ namespace OrthoSquare.Enquiry
             {
                 List<ExcelRows> objExcelRows = new List<ExcelRows>();
                 ExcelRows obj = new ExcelRows();
-                obj.ColumnHeaderName = "Primary Education Details Report";
+                obj.ColumnHeaderName = "Enquiry Report";
                 obj.ColumnValue = null;
                 objExcelRows.Add(obj);
 
-                GridViewExportUtil.ExportToExcelManual("PrimaryEducation", objExcelRows, dtDataExcel, null);
+                GridViewExportUtil.ExportToExcelManual("EnquiryReport", objExcelRows, dtDataExcel, null);
                 lblMessage.Text = "";
             }
             else
@@ -711,8 +949,8 @@ namespace OrthoSquare.Enquiry
         {
 
          //   DisableMessage();
-          bool  Result = false;
-          string ResultMsg = "";
+            bool  Result = false;   
+            string ResultMsg = "";
             // Previousdisabled();
            // maxquestion();
 
@@ -849,26 +1087,17 @@ namespace OrthoSquare.Enquiry
                     if ( !string.IsNullOrEmpty(Common.CheckNullandEmpty(item["FirstName"]))
                         )
                     {
-                        //Get Faculty ID based on Faculty Name
-                        //string strSource = item["Source"].ToString().Trim().Replace("  ", " ");
-                        //SourceID = objENQ.GetEnquirySourceID(strSource);
+                       
+                        //string strTreatment = item["Treatment"].ToString().Trim().Replace("  ", " ");
+                        //TreatmentID = objENQ.GetEnquiryTreatmentID(strTreatment);
 
-                        //Get Course ID based on FacultyID and CourseName
-                        string strTreatment = item["Treatment"].ToString().Trim().Replace("  ", " ");
-                        TreatmentID = objENQ.GetEnquiryTreatmentID(strTreatment);
-
-                        //Get Subject ID based on  CourseID and SubjectName
-                        string ClinicName = item["Clinic"].ToString().Trim().Replace("  ", " ");
-                        ClinicID = objENQ.GetEnquiryClinicID(ClinicName);
+                       
+                        //string ClinicName = item["Clinic"].ToString().Trim().Replace("  ", " ");
+                        //ClinicID = objENQ.GetEnquiryClinicID(ClinicName);
 
 
 
-                        //string AssignTo = item["AssignTo"].ToString().Trim().Replace("  ", " ");
-                        //DoctorID = objENQ.GetEnquiryDoctorID(AssignTo);
-
-                      
-
-                        //  txtENqDate.Text = System.DateTime.Now.ToString("dd MMM yyyy");
+                     
 
                           int Eno = objcommon.GetEnquiryNo();
                           string EnquiryNO = "E" + Eno.ToString();
@@ -884,7 +1113,9 @@ namespace OrthoSquare.Enquiry
                           {
 
 
-                              objENQ.SaveExcelUploadedEnquiry(TreatmentID, ClinicID, EnquiryNO, item["FirstName"].ToString().Trim(), item["LastName"].ToString().Trim(), item["Email"].ToString().Trim(), item["Mobile"].ToString().Trim(), item["Conversation"].ToString().Trim());
+                              objENQ.SaveExcelUploadedEnquiry(Convert .ToInt32 (item["Treatment"]), Convert .ToInt32  (item["Clinic"]), EnquiryNO, item["FirstName"].ToString().Trim(), item["LastName"].ToString().Trim(), item["Email"].ToString().Trim(), item["Mobile"].ToString().Trim(), item["Conversation"].ToString().Trim());
+                         
+                          
                           }
                         reccount++;
                     }
@@ -924,5 +1155,23 @@ namespace OrthoSquare.Enquiry
             }
         }
         #endregion
+
+        protected void RadioRole_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(RadioRole.SelectedValue=="3")
+            {
+                PanelDoctor.Visible = true;
+                PanelTelecaller.Visible = false;
+                BindAssignToEmp(Convert.ToInt32(ddlclinic.SelectedValue));
+            }
+            else
+            {
+                PanelDoctor.Visible = false;
+                PanelTelecaller.Visible = true;
+                BindAssignToTelecaller(Convert.ToInt32(ddlclinic.SelectedValue));
+            }
+
+          
+        }
     }
 }

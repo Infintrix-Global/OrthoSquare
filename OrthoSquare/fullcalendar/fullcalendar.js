@@ -414,9 +414,10 @@ function intersectRects(rect1, rect2) {
         left: Math.max(rect1.left, rect2.left),
         right: Math.min(rect1.right, rect2.right),
         top: Math.max(rect1.top, rect2.top),
-        bottom: Math.min(rect1.bottom, rect2.bottom)
+     //   bottom: Math.min(rect1.bottom, rect2.bottom)
     };
-    if (res.left < res.right && res.top < res.bottom) {
+	 if (res.left < res.right) {
+    //if (res.left < res.right && res.top < res.bottom) {
         return res;
     }
     return false;
@@ -12021,7 +12022,7 @@ var TimeGrid = /** @class */ (function (_super) {
     TimeGrid.prototype.generateSegVerticalCss = function (seg) {
         return {
             top: seg.top,
-            bottom: -seg.bottom // flipped because needs to be space beyond bottom edge of event container
+         //   bottom: -seg.bottom // flipped because needs to be space beyond bottom edge of event container
         };
     };
     /* Hit System

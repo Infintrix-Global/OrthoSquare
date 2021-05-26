@@ -16,10 +16,11 @@ namespace OrthoSquare
         BasePage objBasePage = new BasePage();
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+
+
         }
 
-       
+
 
         protected void btnlogin_Click1(object sender, EventArgs e)
         {
@@ -30,24 +31,34 @@ namespace OrthoSquare
             BAL_Login _ballogin = new BAL_Login();
             DataTable _dtLogin = _ballogin.getLoginDetails(_LoginEntity);
 
+            // DataTable SEM = _ballogin.CheckSoftwareExpiredMaster();
 
+            DateTime dateTime = DateTime.UtcNow.Date;
+            string Todate = dateTime.ToString("yyyyMMdd");
 
-            SessionUtilities.UserID = int.Parse(_dtLogin.Rows[0]["UserID"].ToString());
-            SessionUtilities.Empid = int.Parse(_dtLogin.Rows[0]["ClinicID"].ToString());
-            SessionUtilities.RoleID = int.Parse(_dtLogin.Rows[0]["RoleID"].ToString());
+            // string ExpDate = Convert.ToDateTime(SEM.Rows[0]["ExpiredDate"]).ToString("yyyyMMdd");
 
+            //if (Convert.ToInt32(Todate) > Convert.ToInt32(ExpDate))
+            //{
+            //    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Login", "alert('Your software has been expired')", true);
 
-
-
+            //}
+            //else
+            //{
             if (Convert.ToInt32(_dtLogin.Rows[0][0].ToString()) == -1)
             {
-                //   lblMessage.Visible = true;
-                // lblMessage.ForeColor = System.Drawing.Color.Red;
-                //  lblMessage.Text = "Enter Correct User Name or Password";
-                //Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Login", "alert('Enter Correct User Name or Password')", true);
+
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Login", "alert('Enter Correct User Name or Password')", true);
             }
             else
             {
+
+
+                SessionUtilities.UserID = int.Parse(_dtLogin.Rows[0]["UserID"].ToString());
+                SessionUtilities.Empid = int.Parse(_dtLogin.Rows[0]["ClinicID"].ToString());
+                SessionUtilities.RoleID = int.Parse(_dtLogin.Rows[0]["RoleID"].ToString());
+
+
                 Session["User"] = _dtLogin;
 
                 if (SessionUtilities.RoleID == 1)
@@ -59,12 +70,37 @@ namespace OrthoSquare
 
                     Response.Redirect("Dashboard/SuperAdminDashboard.aspx");
                 }
-                else
+                else if (SessionUtilities.RoleID == 3)
                 {
 
                     Response.Redirect("Dashboard/DocterDashboard.aspx");
 
                 }
+                else if (SessionUtilities.RoleID == 4)
+                {
+
+                    Response.Redirect("Dashboard/AccountDashoard.aspx");
+
+                }
+                else if (SessionUtilities.RoleID == 9)
+                {
+
+                    Response.Redirect("Dashboard/TelecallerDashoard.aspx");
+
+                }
+                else if (SessionUtilities.RoleID == 5)
+                {
+
+                    Response.Redirect("Dashboard/TelecallerDashoard.aspx");
+
+                }
+                else
+                {
+
+                }
+
+
+                // }
             }
         }
     }

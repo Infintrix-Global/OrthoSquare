@@ -8,7 +8,7 @@ using OrthoSquare.BAL_Classes;
 using System.Data;
 using OrthoSquare.Utility;
 
-namespace OrthoSquare.Enquiry
+namespace OrthoSquare.Enquiry1
 {
     public partial class FollowupDetails : System.Web.UI.Page
     {
@@ -18,16 +18,31 @@ namespace OrthoSquare.Enquiry
         BAL_Enquirystatus objStatus = new BAL_Enquirystatus();
         clsCommonMasters objcommon = new clsCommonMasters();
         BAL_EnquirySource objES = new BAL_EnquirySource();
+        BAL_Clinic objclinic = new BAL_Clinic();
+
+        string lID = "";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+
+
+
                 EnqNo();
-                getAllEnquiry();
+
                 BindEnquiryStatus();
                 BindFollowupmode();
                 BindEnquirySource();
                 BindReceivedByEmp();
+                getAllEnquiry();
+
+                if (Request.QueryString["Eid"] != null)
+                {
+                    Followupse(Convert.ToInt32(Request.QueryString["Eid"]));
+
+                }
+
             }
         }
 
@@ -79,27 +94,57 @@ namespace OrthoSquare.Enquiry
             if (SessionUtilities.RoleID == 3)
             {
 
-                AllData = objENQ.GetAllEnquiryFollowpDetails(Convert .ToInt32 (SessionUtilities.Empid));
+                //AllData = objENQ.GetAllEnquiryFollowpDetails(Convert .ToInt32 (SessionUtilities.Empid),0);
+
+                AllData = objFMode.FolloupSearchList(txtName.Text, txtMobile.Text, Convert.ToInt32(ddlSource.SelectedValue), Convert.ToInt32(ddlRecievedby.SelectedValue), txtFromEnquiryDate.Text, txtToEnquiryDate.Text, txtSFromFollowDate.Text, txtSToFollowDate.Text, Convert.ToInt32(SessionUtilities.Empid), Convert.ToInt32(SessionUtilities.RoleID));
+
 
             }
+
+            else if (SessionUtilities.RoleID == 1)
+            {
+
+                // AllData = objENQ.GetAllEnquiryFollowpDetails(0,Convert .ToInt32 (SessionUtilities.Empid));
+                AllData = objFMode.FolloupSearchList(txtName.Text, txtMobile.Text, Convert.ToInt32(ddlSource.SelectedValue), Convert.ToInt32(ddlRecievedby.SelectedValue), txtFromEnquiryDate.Text, txtToEnquiryDate.Text, txtSFromFollowDate.Text, txtSToFollowDate.Text, Convert.ToInt32(SessionUtilities.Empid), Convert.ToInt32(SessionUtilities.RoleID));
+            }
+            else if (SessionUtilities.RoleID == 9)
+            {
+
+                // AllData = objENQ.GetAllEnquiryFollowpDetails(0,Convert .ToInt32 (SessionUtilities.Empid));
+                AllData = objFMode.FolloupSearchTellecallList(txtName.Text, txtMobile.Text, Convert.ToInt32(ddlSource.SelectedValue), Convert.ToInt32(ddlRecievedby.SelectedValue), txtFromEnquiryDate.Text, txtToEnquiryDate.Text, txtSFromFollowDate.Text, txtSToFollowDate.Text, Convert.ToInt32(SessionUtilities.Empid), Convert.ToInt32(SessionUtilities.RoleID));
+            }
+
+            else if (SessionUtilities.RoleID == 5)
+            {
+
+                // AllData = objENQ.GetAllEnquiryFollowpDetails(0,Convert .ToInt32 (SessionUtilities.Empid));
+                AllData = objFMode.FolloupSearchTellecallList(txtName.Text, txtMobile.Text, Convert.ToInt32(ddlSource.SelectedValue), Convert.ToInt32(ddlRecievedby.SelectedValue), txtFromEnquiryDate.Text, txtToEnquiryDate.Text, txtSFromFollowDate.Text, txtSToFollowDate.Text, Convert.ToInt32(SessionUtilities.Empid), Convert.ToInt32(SessionUtilities.RoleID));
+            }
+
             else
             {
 
-                AllData = objENQ.GetAllEnquiryFollowup();
+                AllData = objFMode.FolloupSearchList(txtName.Text, txtMobile.Text, Convert.ToInt32(ddlSource.SelectedValue), Convert.ToInt32(ddlRecievedby.SelectedValue), txtFromEnquiryDate.Text, txtToEnquiryDate.Text, txtSFromFollowDate.Text, txtSToFollowDate.Text, Convert.ToInt32(SessionUtilities.Empid), Convert.ToInt32(SessionUtilities.RoleID));
+
+                //   AllData = objENQ.GetAllEnquiryFollowup();
             }
             //Dhaval
-            for (int i = 0; i < AllData.Rows.Count; i++)
-            {
-                if (AllData.Rows[i]["Pstatus"].ToString() == "1")
-                { AllData.Rows[i]["Pstatus"] = "Less Co-operative"; }
-                else if(AllData.Rows[i]["Pstatus"].ToString() == "2")
-                { AllData.Rows[i]["Pstatus"] = "Co-operative"; }
-                else if (AllData.Rows[i]["Pstatus"].ToString() == "3")
-                { AllData.Rows[i]["Pstatus"] = "Very Co-operative"; }
-            }
-            gvShow.DataSource = AllData;
-            gvShow.DataBind();
 
+            if (AllData != null && AllData.Rows.Count > 0)
+            {
+                for (int i = 0; i < AllData.Rows.Count; i++)
+                {
+                    if (AllData.Rows[i]["Pstatus"].ToString() == "1")
+                    { AllData.Rows[i]["Pstatus"] = "Less Co-operative"; }
+                    else if (AllData.Rows[i]["Pstatus"].ToString() == "2")
+                    { AllData.Rows[i]["Pstatus"] = "Co-operative"; }
+                    else if (AllData.Rows[i]["Pstatus"].ToString() == "3")
+                    { AllData.Rows[i]["Pstatus"] = "Very Co-operative"; }
+                }
+                Session["EnquiryDetails"] = AllData;
+                gvShow.DataSource = AllData;
+                gvShow.DataBind();
+            }
         }
 
         public void BindEnquirySource()
@@ -109,7 +154,7 @@ namespace OrthoSquare.Enquiry
             ddlSource.DataValueField = "Sourceid";
             ddlSource.DataBind();
 
-            ddlSource.Items.Insert(0, new ListItem("--- Select ---", "0"));
+            ddlSource.Items.Insert(0, new ListItem("--- Select Source ---", "0"));
         }
 
         public void BindFollowupmode()
@@ -130,26 +175,43 @@ namespace OrthoSquare.Enquiry
             ddlStatus.DataTextField = "statusName";
             ddlStatus.DataValueField = "StatusId";
             ddlStatus.DataBind();
-           // ddlStatus.Items.Insert(0, "---Select---");
+            // ddlStatus.Items.Insert(0, "---Select---");
             ddlStatus.Items.Insert(0, new ListItem("--- Select ---", "0"));
         }
         public void BindReceivedByEmp()
         {
-           
 
-            ddlRecievedby.DataSource = objcommon.clinicMaster();
+
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                dt = objclinic.GetAllClinicDetaisNew(SessionUtilities.Empid);
+            }
+            else
+            {
+                dt = objclinic.GetAllClinicDetais();
+
+            }
+            ddlRecievedby.DataSource = dt;
+
+            // ddlRecievedby.DataSource = objcommon.clinicMaster();
             ddlRecievedby.DataTextField = "ClinicName";
             ddlRecievedby.DataValueField = "ClinicID";
             ddlRecievedby.DataBind();
 
-            ddlRecievedby.Items.Insert(0, new ListItem("--- Select ---", "0"));
+            ddlRecievedby.Items.Insert(0, new ListItem("--- Select Recieved by---", "0"));
         }
 
 
         protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvShow.PageIndex = e.NewPageIndex;
-
+            getAllEnquiry();
         }
 
 
@@ -160,7 +222,7 @@ namespace OrthoSquare.Enquiry
             if (e.CommandName == "AddCustomer")
             {
                 string Eid = e.CommandArgument.ToString();
-                EnquiryID = Convert .ToInt32 (Eid);
+                EnquiryID = Convert.ToInt32(Eid);
                 Response.Redirect("../patient/PatientMaster.aspx?Eid=" + Eid);
             }
 
@@ -186,7 +248,15 @@ namespace OrthoSquare.Enquiry
                     lblMobileNo.Text = dt.Rows[0]["Mobile"].ToString() + ", " + dt.Rows[0]["Telephone"].ToString();
                     lblSourse.Text = dt.Rows[0]["Sourcename"].ToString();
                     lblEmail.Text = dt.Rows[0]["Email"].ToString();
-                    txtTodayFollowupdate.Text = Convert.ToDateTime(dt.Rows[0]["Folllowupdate"]).ToString("dd-MM-yyyy");
+                    if (dt.Rows[0]["Folllowupdate"].ToString() != "")
+                    {
+                        txtTodayFollowupdate.Text = Convert.ToDateTime(dt.Rows[0]["Folllowupdate"]).ToString("dd-MM-yyyy");
+                    }
+                    else
+                    {
+                        txtTodayFollowupdate.Text = Convert.ToDateTime(System.DateTime.Now).ToString("dd-MM-yyyy");
+
+                    }
                     txtEmployee.Text = dt.Rows[0]["FirstName"].ToString() + " " + dt.Rows[0]["LastName"].ToString();
                     lblEqNo.Text = dt.Rows[0]["Enquiryno"].ToString();
                     lblEmpNo.Text = dt.Rows[0]["AssignToEmpId"].ToString();
@@ -203,17 +273,40 @@ namespace OrthoSquare.Enquiry
                     throw ex;
                 }
             }
+            if (e.CommandName == "viewFollowup")
+            {
+                Panel2.Visible = true;
+                Panel1.Visible = false;
+                Edit.Visible = false;
+                int ID = Convert.ToInt32(e.CommandArgument);
+
+                EnquiryID = ID;
+                BindFolloupview(ID);
+            }
+
         }
 
         public void BindFolloup(int Eid)
         {
 
-            GridViewFolloup.DataSource = objENQ.GetAllEnquiryFollowup1(Convert .ToInt32 (Eid));
+            GridViewFolloup.DataSource = objENQ.GetAllEnquiryFollowup1(Convert.ToInt32(Eid));
             GridViewFolloup.DataBind();
 
-          
+
+
+
         }
 
+        public void BindFolloupview(int Eid)
+        {
+
+            GridViewFolloupDetils1.DataSource = objENQ.GetAllEnquiryFollowup1(Convert.ToInt32(Eid));
+            GridViewFolloupDetils1.DataBind();
+
+
+
+
+        }
 
 
         protected void btAdd_Click(object sender, EventArgs e)
@@ -222,13 +315,30 @@ namespace OrthoSquare.Enquiry
             {
                 int _isInserted = -1;
 
+                string Followupmode = "";
+
+                for (int i = 0; i < ddlFollowupmode.Items.Count; i++)
+                {
+                    if (ddlFollowupmode.Items[i].Selected)
+                    {
+                        Followupmode += ddlFollowupmode.Items[i].Text + ",";
+
+                    }
+                }
+
+                if (lID != "")
+                {
+                    Followupmode = Followupmode.Remove(Followupmode.Length - 1);
+
+                }
+
                 Followup_Details objFollowupDetails = new Followup_Details()
                 {
 
                     Followupid = Followupid,
                     FollowupCode = "F001",
                     EnquiryID = Convert.ToInt32(lblEnqID.Text),
-                    ClinicID =SessionUtilities .Empid ,
+                    ClinicID = SessionUtilities.Empid,
                     employeeid = Convert.ToInt32(lblEmpNo.Text),
                     enquiryno = lblEqNo.Text,
                     Followupdate = txtTodayFollowupdate.Text,
@@ -238,6 +348,7 @@ namespace OrthoSquare.Enquiry
                     InterestLevel = RadInterestLavel.SelectedItem.Text,
                     Statusid = Convert.ToInt32(ddlStatus.SelectedValue),
                     Remak = txtRemark.Text,
+                    FollowupmodeNew = Followupmode,
                     CreatedBy = 1
 
                 };
@@ -251,7 +362,7 @@ namespace OrthoSquare.Enquiry
                 }
                 else
                 {
-                  //  EnquiryID = 0;
+                    //  EnquiryID = 0;
                     lblMessage.Text = "Followup Added Successfully";
                     lblMessage.ForeColor = System.Drawing.Color.Green;
 
@@ -280,6 +391,7 @@ namespace OrthoSquare.Enquiry
         protected void btnCancel1_Click(object sender, EventArgs e)
         {
             Edit.Visible = true;
+
             AddPane.Visible = false;
         }
 
@@ -307,7 +419,7 @@ namespace OrthoSquare.Enquiry
 
                 if (lblTotalfollowUp.Text != "0")
                 {
-                  
+
 
                 }
 
@@ -344,17 +456,17 @@ namespace OrthoSquare.Enquiry
                     lblFollowupsStatus.Text = dt.Rows[0]["statusName"].ToString();
 
 
-                    if (lblFollowupsStatus.Text == "Closed " || lblTotalfollowUp.Text =="5")
+                    if (lblFollowupsStatus.Text == "Closed " || lblTotalfollowUp.Text == "5")
                     {
                         btnFollowup.Enabled = false;
-                        ImageButton1.Enabled = false;
+                        ImageButton1.Enabled = true;
 
                         lblFollowupsStatus.Text = "Closed";
                     }
 
 
-                       lblInterestLevel.Text = objENQ.GetFollowulaveDetilas(Convert.ToInt32(lblEQid.Text));           
-                    
+                    lblInterestLevel.Text = objENQ.GetFollowulaveDetilas(Convert.ToInt32(lblEQid.Text));
+
                     if (lblInterestLevel.Text == "1")
                     {
 
@@ -386,14 +498,29 @@ namespace OrthoSquare.Enquiry
 
             }
         }
+        protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string name = "";
 
+            for (int i = 0; i < ddlFollowupmode.Items.Count; i++)
+            {
+                if (ddlFollowupmode.Items[i].Selected)
+                {
+                    name += ddlFollowupmode.Items[i].Text + ",";
+                    lID += ddlFollowupmode.Items[i].Value + ",";
+                }
+            }
+            TextBox1.Text = name;
+
+        }
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             try
             {
 
-                DataTable dt = objFMode.FolloupSearchList(txtName.Text, txtMobile.Text, Convert.ToInt32(ddlSource.SelectedValue), Convert.ToInt32(ddlRecievedby.SelectedValue), txtFromEnquiryDate.Text, txtToEnquiryDate.Text, txtSFromFollowDate.Text, txtSToFollowDate.Text);
+                DataTable dt = objFMode.FolloupSearchList(txtName.Text, txtMobile.Text, Convert.ToInt32(ddlSource.SelectedValue), Convert.ToInt32(ddlRecievedby.SelectedValue), txtFromEnquiryDate.Text, txtToEnquiryDate.Text, txtSFromFollowDate.Text, txtSToFollowDate.Text, Convert.ToInt32(SessionUtilities.Empid), Convert.ToInt32(SessionUtilities.RoleID));
 
+                Session["EnquiryDetails"] = dt;
                 gvShow.DataSource = dt;
                 gvShow.DataBind();
 
@@ -435,6 +562,107 @@ namespace OrthoSquare.Enquiry
             }
             catch (Exception ex)
             {
+            }
+        }
+        public override void VerifyRenderingInServerForm(Control control)
+        {
+
+        }
+
+        protected void btnExcel1_Click1(object sender, EventArgs e)
+        {
+            //  DataTable dtDataExcel = objFMode.FolloupSearchList(txtName.Text, txtMobile.Text, Convert.ToInt32(ddlSource.SelectedValue), Convert.ToInt32(ddlRecievedby.SelectedValue), txtFromEnquiryDate.Text, txtToEnquiryDate.Text, txtSFromFollowDate.Text, txtSToFollowDate.Text, Convert.ToInt32(SessionUtilities.Empid), Convert.ToInt32(SessionUtilities.RoleID));
+
+
+            DataTable dtDataExcel = (DataTable)Session["EnquiryDetails"];
+
+            if (dtDataExcel != null && dtDataExcel.Rows.Count > 0)
+            {
+                List<ExcelRows> objExcelRows = new List<ExcelRows>();
+                ExcelRows obj = new ExcelRows();
+                obj.ColumnHeaderName = "Followup Report";
+                obj.ColumnValue = null;
+                objExcelRows.Add(obj);
+
+                GridViewExportUtil.ExportToExcelManual("FollowupReport", objExcelRows, dtDataExcel, null);
+                lblMessage.Text = "";
+            }
+            else
+            {
+                lblMessage.Visible = true;
+                lblMessage.Text = "No Record exists for Excel Download.";
+                return;
+            }
+        }
+
+
+
+        protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (RadioButtonList1.SelectedValue == "0")
+            {
+                txtFromEnquiryDate.Visible = true;
+                txtSFromFollowDate.Visible = false;
+                txtToEnquiryDate.Visible = true;
+                txtSToFollowDate.Visible = false;
+            }
+            else
+            {
+
+
+                txtFromEnquiryDate.Visible = false;
+                txtSFromFollowDate.Visible = true;
+                txtToEnquiryDate.Visible = false;
+                txtSToFollowDate.Visible = true;
+            }
+        }
+
+
+
+        public void Followupse(int ID)
+        {
+            AddPane.Visible = true;
+
+
+            Edit.Visible = false;
+
+
+            EnquiryID = ID;
+
+            try
+            {
+
+                DataTable dt = objENQ.GetSelectAllEnquiry(ID);
+
+                lblName.Text = dt.Rows[0]["FirstName"].ToString() + " " + dt.Rows[0]["LastName"].ToString();
+                lblEnqDate.Text = Convert.ToDateTime(dt.Rows[0]["EnquiryDate"]).ToString("dd-MM-yyyy");
+                lblAddress.Text = dt.Rows[0]["Address"].ToString();
+                lblMobileNo.Text = dt.Rows[0]["Mobile"].ToString() + ", " + dt.Rows[0]["Telephone"].ToString();
+                lblSourse.Text = dt.Rows[0]["Sourcename"].ToString();
+                lblEmail.Text = dt.Rows[0]["Email"].ToString();
+                if (dt.Rows[0]["Folllowupdate"].ToString() != "")
+                {
+                    txtTodayFollowupdate.Text = Convert.ToDateTime(dt.Rows[0]["Folllowupdate"]).ToString("dd-MM-yyyy");
+                }
+                else
+                {
+                    txtTodayFollowupdate.Text = Convert.ToDateTime(System.DateTime.Now).ToString("dd-MM-yyyy");
+
+                }
+                txtEmployee.Text = dt.Rows[0]["FirstName"].ToString() + " " + dt.Rows[0]["LastName"].ToString();
+                lblEqNo.Text = dt.Rows[0]["Enquiryno"].ToString();
+                lblEmpNo.Text = dt.Rows[0]["AssignToEmpId"].ToString();
+                lblEnqID.Text = dt.Rows[0]["EnquiryID"].ToString();
+                //  ddlUOM.SelectedValue = dt.Rows[0]["UOMId"].ToString();
+
+                BindFolloup(ID);
+
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

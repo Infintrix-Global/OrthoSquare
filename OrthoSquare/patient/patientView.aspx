@@ -14,7 +14,7 @@
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <span>Doctor</span>
+                    <span>Patient</span>
                 </li>
             </ul>
 
@@ -28,7 +28,7 @@
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="icon-settings font-red"></i>
-                            <span class="caption-subject font-red sbold uppercase">Doctor</span>
+                            <span class="caption-subject font-red sbold uppercase">Patient</span>
                         </div>
 
                     </div>
@@ -92,6 +92,14 @@
                         <br />
                          <br />
                            <hr style="border-color:#4d79ff; border-width: 1px" />
+                          <div class="row">
+                                    <div class="col-md-6 ">
+                                         <div class="form-group">
+                                                    <label><b>Medical History</b></label>
+                                             </div>
+                                        </div>
+                              </div>
+
                             <div class="row">
                                     <div class="col-md-6 ">
 
@@ -100,7 +108,7 @@
                                             <div class="form-body">
 
                                                 <div class="form-group">
-                                                    <label>Family Doctor's Name</label>
+                                                    <label><b>Family Doctor's Name   : </b></label>
                                                   
                                                     <asp:Label ID="txtFDoctorName" runat="server" Text="Label"></asp:Label>
                                                 </div>
@@ -122,7 +130,7 @@
                                                 <div class="form-body">
 
                                                     <div class="form-group">
-                                                        <label>Address & Telephone no.</label>
+                                                        <label><b>Address & Telephone no.   : </b>   </label>
                                                        
 
                                                         <asp:Label ID="txtDoctorAddres" runat="server" Text="Label"></asp:Label>
@@ -198,7 +206,7 @@
                                                 <div class="form-body">
 
                                                     <div class="form-group">
-                                                       
+                                                        <asp:TextBox ID="txtPreganetDueDate" Visible="false" class="form-control" placeholder="Enter Due Date." runat="server"></asp:TextBox>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -344,7 +352,8 @@
                                                 <div class="form-body">
 
                                                     <div class="form-group">
-                                                     
+                                                       <asp:TextBox ID="txtNofoCigrattes" Visible="false" class="form-control" placeholder="How many cigrattes in day." runat="server"></asp:TextBox>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -379,7 +388,7 @@
                                                 <div class="form-body">
 
                                                     <div class="form-group">
-                                                        <label>List of Medicine you are taking currently, if any   </label>
+                                                        <label><b>List of Medicine you are taking currently, if any : </b>  </label>
                                                         
 
                                                          <asp:Label ID="txtListMedicine" runat="server" Text="Label"></asp:Label>
@@ -415,7 +424,7 @@
                                                 <div class="form-body">
 
                                                     <div class="form-group">
-                                                        <label>Are you allergic to any of the following</label>
+                                                        <label><b>Are you allergic to any of the following</b></label>
                                                         
                                                          
                                                     </div>
@@ -448,10 +457,23 @@
                                                 <div class="form-body">
 
                                                     <div class="form-group">
-                                                        <asp:CheckBoxList ID="checkallergic"  Width ="600px" RepeatDirection="Horizontal" RepeatColumns="6" runat="server">
-                                                           
-                                                            
-                                                        </asp:CheckBoxList>
+                                                       <asp:GridView ID="Gridallergic"  runat="server" AutoGenerateColumns="False">
+
+
+                                             <Columns>
+                                    <asp:TemplateField HeaderText="Sr. No." >
+                                        <ItemTemplate>
+                                            <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
+                                           
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Name" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="SpecialitallergicName" runat="server" Text='<%# Eval("allergicName") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                                </Columns>
+                                            </asp:GridView>
                                                     </div>
                                                 </div>
 
@@ -486,5 +508,5 @@
 
         </div>
 
-    </div>
+
 </asp:Content>

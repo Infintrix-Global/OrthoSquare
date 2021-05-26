@@ -37,7 +37,7 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@GrandTotal", GrandTotal);
 
                 objGeneral.AddParameterWithValueToSQLCommand("@PaidAmount", PaidAmount);
-                objGeneral.AddParameterWithValueToSQLCommand("@PendingAmount", PendingAmount);
+                objGeneral.AddParameterWithValueToSQLCommand("@PendingAmount", Convert .ToDecimal (PendingAmount));
                 objGeneral.AddParameterWithValueToSQLCommand("@CreateID", CreateID);
 
 
@@ -55,14 +55,54 @@ namespace OrthoSquare.BAL_Classes
 
                 isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_AddInvoiceDetails");
 
-
-
             }
             catch (Exception ex)
             {
             }
             return isInserted;
         }
+
+
+        public int InvoiceDetailsTritment(int Tid,int Pid,int Did,int TreatmentID, string Unit, string Cost, string Discount, string Tax,string ISInvoice)
+        {
+            int isInserted = -1;
+            try
+            {
+                General objGeneral = new General();
+
+                if (ISInvoice == "1" || ISInvoice == "2")
+                {
+                    strQuery = " update TreatmentbyPatient set Unit = @Unit, TreatmentsCost = @Cost, Discount = @Discount, Tex = @Tax, ISInvoice = 1 where ID = @Tid ";
+                }
+                else
+                {
+                    strQuery = "insert into  TreatmentbyPatient(patientid,DoctorID,TreatmentID,StartedTreatments,TreatmentsCost,IsActive,Unit,Discount,Tex,ISInvoice)";
+                    strQuery += "  Values (@Pid,@Did,@TreatmentID,'Yes',@Cost,1,@Unit,@Discount,@Tax,1)";
+               
+                }
+
+                objGeneral.AddParameterWithValueToSQLCommand("@Pid", Pid);
+                objGeneral.AddParameterWithValueToSQLCommand("@Did", Did);
+                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentID", TreatmentID);
+                objGeneral.AddParameterWithValueToSQLCommand("@Tid", Tid);
+                objGeneral.AddParameterWithValueToSQLCommand("@Unit", Unit);
+                objGeneral.AddParameterWithValueToSQLCommand("@Cost", Cost);
+                objGeneral.AddParameterWithValueToSQLCommand("@Discount", Discount);
+                objGeneral.AddParameterWithValueToSQLCommand("@Tax", Tax);
+                objGeneral.GetExecuteNonQueryByCommand(strQuery);
+                isInserted = 1;
+            }
+            catch (Exception ex)
+            {
+            }
+            return isInserted;
+        }
+
+
+
+
+
+
 
         public int InvoicePendingFUpdate(int patientid)
         {
@@ -83,34 +123,82 @@ namespace OrthoSquare.BAL_Classes
             return isInserted;
         }
 
-
-
-        public int Add_InvoicePaymentDetails(int InvoiceNo, string PaymentMode, string BankName, string BranchName, string CheckNo, string CheckDate, string CardNo, string BajajFinanceDoc, string IRFCcode, string PaidAmount, string PendingAmount, int CreateID)
+        public int InvoiceDetilsDelete(int patientid)
         {
             int isInserted = -1;
             try
             {
 
                 General objGeneral = new General();
-               
+
+                strQuery = "Delete from  InvoiceDetails  where patientid = '" + patientid + "'";
+                objGeneral.GetExecuteNonQueryByCommand(strQuery);
+                isInserted = 1;
+            }
+
+            catch (Exception ex)
+            {
+            }
+            return isInserted;
+        }
+
+
+        public int Add_InvoicePaymentDetails(int InvoiceNo, string PaymentMode, string BankName, string BranchName, string CheckNo, string CheckDate, string CardNo, string BajajFinanceDoc, string ApprovalAmount, string Interest1, string TotalAMount, string ApprovalDate, string IRFCcode, string PaidAmount, string PendingAmount, int CreateID,string Finance)
+        {
+            int isInserted = -1;
+            try
+            {
+
+                General objGeneral = new General();
+
+                if (PaymentMode == "Finance")
+                {
+
+                    objGeneral.AddParameterWithValueToSQLCommand("@PaymentMode", Finance);
+                }
+                else
+                {
+                    objGeneral.AddParameterWithValueToSQLCommand("@PaymentMode", PaymentMode);
+
+                }
+
                 objGeneral.AddParameterWithValueToSQLCommand("@InvoiceNo", InvoiceNo);
-
-
-
-                objGeneral.AddParameterWithValueToSQLCommand("@PaymentMode", PaymentMode);
+                
                 objGeneral.AddParameterWithValueToSQLCommand("@BankName", BankName);
                 objGeneral.AddParameterWithValueToSQLCommand("@BranchName", BranchName);
                 objGeneral.AddParameterWithValueToSQLCommand("@CheckNo", CheckNo);
-            
-                objGeneral.AddParameterWithValueToSQLCommand("@CheckDate", CheckDate);
+
+                if (Convert.ToString(CheckDate) == "")
+                {
+                    objGeneral.AddParameterWithValueToSQLCommand("@CheckDate", DBNull.Value);
+                }
+                else
+                {
+                    objGeneral.AddParameterWithValueToSQLCommand("@CheckDate", objGeneral.getDatetime(CheckDate));
+                }
+
+              
+
                 objGeneral.AddParameterWithValueToSQLCommand("@CardNo", CardNo);
                 objGeneral.AddParameterWithValueToSQLCommand("@BajajFinanceDoc", BajajFinanceDoc);
                 objGeneral.AddParameterWithValueToSQLCommand("@IRFCcode", IRFCcode);
-              
-
                 objGeneral.AddParameterWithValueToSQLCommand("@PaidAmount", PaidAmount);
                 objGeneral.AddParameterWithValueToSQLCommand("@PendingAmount", PendingAmount);
                 objGeneral.AddParameterWithValueToSQLCommand("@CreateID", CreateID);
+                objGeneral.AddParameterWithValueToSQLCommand("@ApprovalAmount", Convert .ToDecimal(ApprovalAmount));
+                objGeneral.AddParameterWithValueToSQLCommand("@TotalAMount", Convert .ToDecimal(TotalAMount));
+                objGeneral.AddParameterWithValueToSQLCommand("@InterestinAmount", Convert .ToDecimal(Interest1));
+
+
+                if (Convert.ToString(ApprovalDate) == "")
+                {
+
+                    objGeneral.AddParameterWithValueToSQLCommand("@ApprovalDate", DBNull.Value);
+                }
+                else
+                {
+                    objGeneral.AddParameterWithValueToSQLCommand("@ApprovalDate", objGeneral.getDatetime(ApprovalDate));
+                }
 
 
 
@@ -171,24 +259,37 @@ namespace OrthoSquare.BAL_Classes
         {
             //strQuery = "  Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,DD.LastName as DLastName from InvoiceMaster IM join PatientMaster PM on PM.patientid= IM.patientid ";
             strQuery += " Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,DD.LastName as DLastName from InvoiceMaster IM join PatientMaster PM on PM.patientid= IM.patientid ";
-            strQuery += " Join tbl_DoctorDetails DD on DD.DoctorID = IM.DoctorID Join tbl_ClinicDetails CD on CD.ClinicID =IM.CreateID    where IM.InvoiceNo ='" + InvCode + "' and IM.InvoiceCode='" + InvoiceCode + "'";
+            strQuery += " Join tbl_DoctorDetails DD on DD.DoctorID = IM.DoctorID Join tbl_ClinicDetails CD on CD.ClinicID =IM.ClinicID    where IM.InvoiceNo ='" + InvCode + "' and IM.InvoiceCode='" + InvoiceCode + "'";
             return objGeneral.GetDatasetByCommand(strQuery);
 
         }
 
 
-
-
-        public DataTable GetAllInvoicDispaly()
+        public DataTable GetAllInvoicDispaly(int ClinicID, int DoctorID, string Name,string Mno)
         {
             try
             {
 
-                objGeneral.AddParameterWithValueToSQLCommand("@InvCode ", 0);
-                objGeneral.AddParameterWithValueToSQLCommand("@patientid ", 0);
-                objGeneral.AddParameterWithValueToSQLCommand("@InvNo ", 0);
-                objGeneral.AddParameterWithValueToSQLCommand("@mode", 3);
-                ds = objGeneral.GetDatasetByCommand_SP("GET_InvoiceDetails");
+
+                strQuery = "Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,PM.Mobile,DD.LastName as DLastName from InvoiceMaster IM join PatientMaster PM on PM.patientid = IM.patientid ";
+                strQuery += " JOin tbl_DoctorDetails DD on DD.DoctorID = IM.DoctorID where  PM.IsActive =1";
+                if (ClinicID > 0)
+                    strQuery += " and IM.ClinicID=" + ClinicID + "";
+                if(DoctorID > 0)
+                     strQuery += " and IM.DoctorID ="+DoctorID+""; 
+                if(Name != "")
+                    strQuery += " and PM.FristName like '%" + Name + "%'";
+                if (Mno != "")
+                    strQuery += " and PM.Mobile='" + Mno + "'";
+                
+                strQuery +=" Order by IM.InvoiceTid DESC";
+
+                return objGeneral.GetDatasetByCommand(strQuery);
+                //objGeneral.AddParameterWithValueToSQLCommand("@InvCode ", 0);
+                //objGeneral.AddParameterWithValueToSQLCommand("@patientid ", 0);
+                //objGeneral.AddParameterWithValueToSQLCommand("@InvNo ", 0);
+                //objGeneral.AddParameterWithValueToSQLCommand("@mode", 3);
+                //ds = objGeneral.GetDatasetByCommand_SP("GET_InvoiceDetails");
             }
             catch (Exception ex)
             {
@@ -239,5 +340,160 @@ namespace OrthoSquare.BAL_Classes
             return objGeneral.GetDatasetByCommand(strQuery);
 
         }
+
+        public decimal GetPaidInvoicMaster(int Pid)
+        {
+            strQuery = "Select  IsNull(Sum(PaidAmount),0)  from InvoiceMaster where  patientid=" + Pid + "";
+            return Convert .ToDecimal  (objGeneral.GetExecuteScalarByCommand(strQuery));
+
+        }
+
+
+
+
+
+        public int SaveBajaEMI(int InvoiceNo, int Patientid, string EMIsAmount, string DateofEMI)
+        {
+
+            int NewID = 0;
+            try
+            {
+                General objGeneral = new General();
+
+                int Pid = GetPaymentDetilasMax_no();
+
+
+                string strQuery = "INSERT INTO EMIBajajFinance (PaymentID,InvoiceNo,Patientid,EMIsAmount,DateofEMI)";
+                strQuery += "VALUES (@PaymentID,@InvoiceNo,@Patientid,@EMIsAmount,@DateofEMI) ; Select @@IDENTITY ";
+
+
+                objGeneral.AddParameterWithValueToSQLCommand("@PaymentID", Pid);
+                objGeneral.AddParameterWithValueToSQLCommand("@InvoiceNo", InvoiceNo);
+                objGeneral.AddParameterWithValueToSQLCommand("@Patientid", Patientid);
+                objGeneral.AddParameterWithValueToSQLCommand("@DateofEMI", Convert.ToDateTime(DateofEMI));
+                objGeneral.AddParameterWithValueToSQLCommand("@EMIsAmount", Convert .ToDecimal (EMIsAmount));
+               
+                NewID = int.Parse(objGeneral.GetExecuteScalarByCommand(strQuery));
+
+              
+            }
+            catch (Exception ex)
+            {
+                // return false;
+            }
+
+            return NewID;
+        }
+
+
+        public int GetPaymentDetilasMax_no()
+        {
+            General objGeneral = new General();
+
+            strQuery = "select MAX(PaymentID) from PaymentDetilas ";
+
+            return Convert.ToInt32(objGeneral.GetExecuteScalarByCommand(strQuery));
+
+
+        }
+
+
+
+        public int SaveFeedBack(int patientid, string FeedbackType, string FeedbackDetails, string FeedbackDate)
+        {
+
+            int NewID = 0;
+            try
+            {
+                General objGeneral = new General();
+
+                int Pid = GetPaymentDetilasMax_no();
+
+
+                string strQuery = "INSERT INTO FeedbackMaster (patientid,FeedbackType,FeedbackDetails,FeedbackDate,IsActive)";
+                strQuery += "VALUES (@patientid,@FeedbackType,@FeedbackDetails,@FeedbackDate,1) ; Select @@IDENTITY ";
+
+
+                objGeneral.AddParameterWithValueToSQLCommand("@patientid", patientid);
+                objGeneral.AddParameterWithValueToSQLCommand("@FeedbackType", FeedbackType);
+                objGeneral.AddParameterWithValueToSQLCommand("@FeedbackDetails", FeedbackDetails);
+
+                objGeneral.AddParameterWithValueToSQLCommand("@FeedbackDate", objGeneral .getDatetime (FeedbackDate));
+
+                NewID = int.Parse(objGeneral.GetExecuteScalarByCommand(strQuery));
+
+
+            }
+            catch (Exception ex)
+            {
+                // return false;
+            }
+
+            return NewID;
+        }
+
+
+        public int Deleteinvoice(int InvoiceNo)
+        {
+
+            int NewID = 0;
+            try
+            {
+                strQuery = "Delete From InvoiceMaster where InvoiceTid ='" + InvoiceNo + "'";
+                NewID = int.Parse(objGeneral.GetExecuteScalarByCommand(strQuery));
+
+
+            }
+            catch (Exception ex)
+            {
+                // return false;
+            }
+
+            return NewID;
+        }
+
+
+        public DataTable GetAllPayMentDetails(int Cid,int Did,string FormDate,string Todate,string PaymentMode)
+        {
+            try
+            {
+
+                objGeneral.AddParameterWithValueToSQLCommand("@Id", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@FromdPayDate ", FormDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@ToPayDate", Todate);
+                objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", Did);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", Cid);
+                objGeneral.AddParameterWithValueToSQLCommand("@PaymentMode", PaymentMode);
+               
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
+                ds = objGeneral.GetDatasetByCommand_SP("GET_InvoiceReport");
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+        }
+
+        public DataTable GetAllPayMentModeDetails(int Cid, int Did, string FormDate, string Todate, string PaymentMode)
+        {
+            try
+            {
+
+                objGeneral.AddParameterWithValueToSQLCommand("@Id", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@FromdPayDate ", FormDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@ToPayDate", Todate);
+                objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", Did);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", Cid);
+                objGeneral.AddParameterWithValueToSQLCommand("@PaymentMode", PaymentMode);
+
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 2);
+                ds = objGeneral.GetDatasetByCommand_SP("GET_InvoiceReport");
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+        }
+
     }
 }

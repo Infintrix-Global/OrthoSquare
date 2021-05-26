@@ -63,6 +63,25 @@ namespace OrthoSquare.patient
                     RadPanMasala.SelectedValue = dt11.Rows[0]["PanMasalaChewing"].ToString();
                     RadTobacco.SelectedValue = dt11.Rows[0]["Tobacco"].ToString();
                     RadSomking.SelectedValue = dt11.Rows[0]["Somking"].ToString();
+
+
+                    if (Convert.ToDateTime(dt11.Rows[0]["DueDate"]).ToString("dd-MM-yyyy") == "01-01-1990")
+                    {
+                        txtPreganetDueDate.Visible = false;
+                        
+                    }
+                    else
+                    {
+                        txtPreganetDueDate.Visible = true;
+                        txtPreganetDueDate.Text = Convert.ToDateTime(dt11.Rows[0]["DueDate"]).ToString("dd-MM-yyyy");
+                    }
+
+                    if (dt11.Rows[0]["Somking"].ToString() == "Yes")
+                    {
+                        txtNofoCigrattes.Visible = true;
+                        txtNofoCigrattes.Text = dt11.Rows[0]["cigrattesInDay"].ToString();
+                    }
+                   
                 }
                 DataTable dt111 = objP.GetPatientMedicalProblem(pid);
                 if (dt111 != null && dt111.Rows.Count > 0)
@@ -70,7 +89,12 @@ namespace OrthoSquare.patient
                     GridMproblem.DataSource = dt111;
                     GridMproblem.DataBind();
                 }
-
+                DataTable dtalg = objP.GetPatientbyAllergic(pid);
+                if (dtalg != null && dtalg.Rows.Count > 0)
+                {
+                    Gridallergic.DataSource = dtalg;
+                    Gridallergic.DataBind();
+                }
             }
         }
     }

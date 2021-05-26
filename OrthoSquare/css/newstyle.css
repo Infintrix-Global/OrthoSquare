@@ -1,0 +1,27 @@
+﻿.mt-checkbox.mt-checkbox-outline:hover>input:not([disabled]):checked~span, .mt-checkbox.mt-checkbox-outline:hover>input:not([disabled])~span, .mt-checkbox.mt-checkbox-outline>input:checked~span, .mt-checkbox.mt-checkbox-outline>input:focus~span, .mt-checkbox.mt-checkbox-outline>span, .mt-checkbox.mt-radio-outline:hover>input:not([disabled]):checked~span, .mt-checkbox.mt-radio-outline:hover>input:not([disabled])~span, .mt-checkbox.mt-radio-outline>input:checked~span, .mt-checkbox.mt-radio-outline>input:focus~span, .mt-checkbox.mt-radio-outline>span, .mt-radio.mt-checkbox-outline:hover>input:not([disabled]):checked~span, .mt-radio.mt-checkbox-outline:hover>input:not([disabled])~span, .mt-radio.mt-checkbox-outline>input:checked~span, .mt-radio.mt-checkbox-outline>input:focus~span, .mt-radio.mt-checkbox-outline>span, .mt-radio.mt-radio-outline:hover>input:not([disabled]):checked~span, .mt-radio.mt-radio-outline:hover>input:not([disabled])~span, .mt-radio.mt-radio-outline>input:checked~span, .mt-radio.mt-radio-outline>input:focus~span, .mt-radio.mt-radio-outline>span {
+    border: 1px solid #8e8b8b !important;
+    background: 0 0;
+}
+@media (max-width:768px) {
+    .login .content .rememberme {
+        margin-left: 8px;
+        font-size: 13px;
+    }
+
+    .form-group {
+        margin-bottom: 0;
+    }
+    .login .content .form-actions .btn {
+    margin-top: 1px;
+    font-weight: 600;
+    padding: 7px 15px!important;
+}
+    .login .content .form-actions {
+    clear: both;
+    border: 0;
+    border-bottom: 0px solid #eee;
+    padding: 0px 30px;
+    margin-left: -30px;
+    margin-right: -30px;
+}
+}

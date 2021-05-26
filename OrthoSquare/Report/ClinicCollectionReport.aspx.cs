@@ -14,6 +14,7 @@ namespace OrthoSquare.Report
     public partial class ClinicCollectionReport : System.Web.UI.Page
     {
         BAL_Clinic objc = new BAL_Clinic();
+        clsCommonMasters objcommon = new clsCommonMasters();
         public static DataTable AllData = new DataTable();
         BAL_Expense objExp = new BAL_Expense();
         decimal sumFooterValue = 0;
@@ -23,6 +24,10 @@ namespace OrthoSquare.Report
             if (!IsPostBack)
             {
                 bindClinic();
+                if (SessionUtilities.RoleID == 1)
+                {
+                    ddlClinic . SelectedValue = SessionUtilities.Empid.ToString ();
+                }
                 getAllCollection();
             }
 
@@ -31,17 +36,29 @@ namespace OrthoSquare.Report
 
         public void bindClinic()
         {
-            ddlClinic.DataSource = objc.GetAllClinicDetais();
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                dt = objc.GetAllClinicDetaisNew(SessionUtilities.Empid);
+            }
+            else
+            {
+                dt = objc.GetAllClinicDetais();
+
+            }
+            ddlClinic.DataSource = dt;
+
             ddlClinic.DataValueField = "ClinicID";
             ddlClinic.DataTextField = "ClinicName";
             ddlClinic.DataBind();
             ddlClinic.Items.Insert(0, new ListItem("-- Select Clinic --", "0", true));
 
         }
-
-
-
-
 
         public void getAllCollection()
         {
@@ -81,7 +98,7 @@ namespace OrthoSquare.Report
                 Label lblClinicID = (Label)e.Row.FindControl("lblClinicID");
 
 
-                lblPendingAmount.Text = objExp.GetPendingAmount(Convert.ToInt32  (lblClinicID.Text),0,0).ToString();
+              // lblPendingAmount.Text = objExp.GetPendingAmount(Convert.ToInt32  (lblClinicID.Text),0,0).ToString();
 
 
                 sumFooterValue += Convert.ToDecimal(lblPaidAmount.Text);

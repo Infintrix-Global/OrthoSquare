@@ -140,10 +140,48 @@
                                 <table style="width: 100%;">
                                     <tr>
                                         <td>Degree :
-                                            <asp:Label ID="lblDegree" runat="server" Text="Label"></asp:Label></td>
+                                            </td>
                                         <td>
-                                            <asp:Image ID="ImageDegree" runat="server" Height="80px" Width="80px" GenerateEmptyAlternateText="True"
-                                                ImageUrl="~/Images/no-photo.jpg" />
+                                           
+                                            
+                                         <asp:GridView ID="GridQualification" runat="server" class="table table-striped table-bordered table-hover" AutoGenerateColumns="False" ShowFooter="true"  >
+                                                                            <Columns>
+                                                                                <asp:TemplateField HeaderText="Sr.no" ItemStyle-Width="50px">
+                                                                                    <ItemTemplate>
+                                                                                        <asp:Label ID="lblSrno1" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label>
+                                                                                    </ItemTemplate>
+                                                                                </asp:TemplateField>
+                                                                                <asp:TemplateField HeaderText="Degree" ItemStyle-Width="120px">
+                                                                                    <ItemTemplate>
+
+                                                                                        <asp:TextBox ID="txt_CertificationName" ReadOnly="true" runat="server" CssClass="form-control" placeholder="Certification Name" Text='<%#Eval("DegreeName") %>'></asp:TextBox>
+                                                                                     
+                                                                                        
+                                                                                                                            </div>
+                                                                                    </ItemTemplate>
+                                                                                </asp:TemplateField>
+                                                                                <asp:TemplateField HeaderText="Board Name" ItemStyle-Width="120px">
+                                                                                    <ItemTemplate>
+                                                                                        <asp:TextBox ID="txt_boardname" ReadOnly="true"  runat="server" CssClass="form-control" Text='<%#Eval("Boardname") %>'></asp:TextBox>
+                                                                                    </ItemTemplate>
+                                                                                </asp:TemplateField>
+                                                                                
+
+                                                                              
+                                                                                 <asp:TemplateField HeaderText="File" ItemStyle-Width="50px">
+                                                                                    <ItemTemplate>
+                                                                                        <asp:TextBox ID="txtFileName" Visible="false" ReadOnly="true" Text='<%#Eval("CertificationImage") %>' CssClass="form-control" runat="server"></asp:TextBox>
+                                                                                           <asp:Image ID="ImageFileName"  Width="100px" Height="100px" ImageUrl='<%# "../QualificationDoc/"+ Eval("CertificationImage") %>' runat="server" />
+
+                                                                                    </ItemTemplate>
+                                                                                </asp:TemplateField>
+                                                                                
+                                                                               
+                                                                            </Columns>
+                                                                        </asp:GridView>
+                                            
+                                            
+                                            
                                         </td>
                                     </tr>
                                     <tr>
@@ -208,7 +246,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Identity Policy No :
+                                        <td>Indemnity Policy No :
                                             <asp:Label ID="lblIdentityPolicyNo" runat="server" Text="Label"></asp:Label></td>
                                         <td>
                                             <asp:Image ID="ImageIdentityPolicyNo" runat="server" Height="80px" Width="80px" GenerateEmptyAlternateText="True"

@@ -58,6 +58,15 @@ namespace OrthoSquare.Master {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidatorMobile;
         
         /// <summary>
+        /// ddlClinic control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlClinic;
+        
+        /// <summary>
         /// ddlDocter control.
         /// </summary>
         /// <remarks>
@@ -74,6 +83,42 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList RadlistAp;
+        
+        /// <summary>
+        /// txtSFromFollowDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSFromFollowDate;
+        
+        /// <summary>
+        /// txtSFromFollowDate_CalendarExtender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.CalendarExtender txtSFromFollowDate_CalendarExtender;
+        
+        /// <summary>
+        /// txtSToFollowDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSToFollowDate;
+        
+        /// <summary>
+        /// txtSToFollowDate_CalendarExtender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.CalendarExtender txtSToFollowDate_CalendarExtender;
         
         /// <summary>
         /// btSearch control.

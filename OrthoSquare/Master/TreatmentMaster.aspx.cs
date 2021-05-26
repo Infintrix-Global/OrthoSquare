@@ -40,23 +40,34 @@ namespace OrthoSquare.Master
             {
                 int _isInserted = -1;
 
+                 int i = 0;
 
-                _isInserted = objES.AddTreatment(txtAdd.Text,txtTCost .Text );
+                 i = objES.CountTritment(txtAdd.Text.Trim());
 
-                if (_isInserted == -1)
+                if (i > 0)
                 {
-                    lblMessage.Text = "Failed to Add Treatment";
+                    lblMessage.Text = "Treatment Name already exists";
                     lblMessage.ForeColor = System.Drawing.Color.Red;
                 }
                 else
                 {
+                    _isInserted = objES.AddTreatment(txtAdd.Text, txtTCost.Text);
 
-                    lblMessage.Text = "Treatment Added Successfully";
-                    lblMessage.ForeColor = System.Drawing.Color.Green;
-                    txtAdd.Text = "";
-                    getAllTreatment();
-                    Response.Redirect("TreatmentMaster.aspx");
-                    btSearch_Click(sender, e);
+                    if (_isInserted == -1)
+                    {
+                        lblMessage.Text = "Failed to Add Treatment";
+                        lblMessage.ForeColor = System.Drawing.Color.Red;
+                    }
+                    else
+                    {
+
+                        lblMessage.Text = "Treatment Added Successfully";
+                        lblMessage.ForeColor = System.Drawing.Color.Green;
+                        txtAdd.Text = "";
+                      //  getAllTreatment();
+                       // Response.Redirect("TreatmentMaster.aspx");
+                        btSearch_Click(sender, e);
+                    }
                 }
             }
             catch (Exception ex)
@@ -107,6 +118,8 @@ namespace OrthoSquare.Master
         {
             gvShow.EditIndex = -1;
             btSearch_Click(sender, e);
+            lblMessage.Text = "";
+            lblMSG1.Text = "";
         }
 
         protected void gvShow_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -154,37 +167,52 @@ namespace OrthoSquare.Master
             TextBox txtName = (TextBox)row.FindControl("txtName");
             TextBox txtCost = (TextBox)row.FindControl("txtTCost");
 
+               int i = 0;
 
-            isUpdated = objES.UpdateTreatment(txtName.Text, txtCost.Text , Convert.ToInt32(lblID.Text));
-            if (isUpdated == 1)
-            {
-                // DataTable UserLog = (DataTable)Session["User"];
+               i = objES.CountTritment(txtName.Text.Trim());
 
-                lblMessage.Text = "Treatment Updated Successfully";
-                lblMessage.ForeColor = System.Drawing.Color.Green;
-                //gvShow.EditIndex = -1;
-                //  getAllCategoryGrid();
-                Response.Redirect("TreatmentMaster.aspx");
+                 if (i > 0)
+                 {
+                     lblMSG1.Text = "Treatment Name already exists";
+                     lblMSG1.ForeColor = System.Drawing.Color.Red;
+                 }
+                 else
+                 {
+                     isUpdated = objES.UpdateTreatment(txtName.Text, txtCost.Text, Convert.ToInt32(lblID.Text));
+                     if (isUpdated == 1)
+                     {
+                         // DataTable UserLog = (DataTable)Session["User"];
 
-                btSearch_Click(sender, e);
-            }
-            else
-            {
-                lblMessage.Text = "Failed to Update Treatment";
-                lblMessage.ForeColor = System.Drawing.Color.Red;
-            }
+                         lblMessage.Text = "Treatment Updated Successfully";
+                         lblMessage.ForeColor = System.Drawing.Color.Green;
+                         //gvShow.EditIndex = -1;
+                         //  getAllCategoryGrid();
+                         Response.Redirect("TreatmentMaster.aspx");
+
+                         btSearch_Click(sender, e);
+                     }
+                     else
+                     {
+                         lblMessage.Text = "Failed to Update Treatment";
+                         lblMessage.ForeColor = System.Drawing.Color.Red;
+                     }
+                 }
         }
 
         protected void btnclear_Click(object sender, EventArgs e)
         {
             Edit.Visible = true;
             Add.Visible = false;
+            lblMSG1.Text = "";
+            lblMessage.Text = "";
         }
 
         protected void btnAddNew_Click(object sender, EventArgs e)
         {
             Edit.Visible = false;
             Add.Visible = true;
+            lblMSG1.Text = "";
+            lblMessage.Text = "";
         }
       
     }

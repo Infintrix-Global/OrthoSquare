@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="AllAppointmentList.aspx.cs" Inherits="OrthoSquare.Master.AllAppointmentList" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -43,11 +44,9 @@
 					<div class="portlet-body">
 						
                          <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                         <label for="form_control_1">
-                                            Visitor Name <span class="required"></span>
-                                        </label>
+                                         
                                         <asp:TextBox ID="txtName" runat="server" class="form-control" placeholder="Visitor Name"
                                             ClientIDMode="Static" MaxLength="80"></asp:TextBox>
                                         <span class="help-block">
@@ -59,11 +58,9 @@
                                        
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                         <label for="form_control_1">
-                                            Mobile No. <span class="required"></span>
-                                        </label>
+                                        
                                         <asp:TextBox ID="txtMobile" runat="server" class="form-control" placeholder="Mobile No."
                                             ClientIDMode="Static" MaxLength="15"></asp:TextBox>
                                         <span class="help-block">
@@ -74,14 +71,19 @@
                                        
                                     </div>
                                 </div>
-                              
-                            </div>.
-                            <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-sm-3">
+
+                                  
+                                    <asp:DropDownList ID="ddlClinic" class="form-control"  AutoPostBack="true"  runat="server" OnSelectedIndexChanged="ddlClinic_SelectedIndexChanged1"></asp:DropDownList>
+
+<%--                                       <span class="help-block">
+                                      <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="ddlClinic" InitialValue="0"
+                                                            SetFocusOnError="true" ErrorMessage="Please Enter Clinic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                           </span>--%>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                         <label for="form_control_1">
-                                           Docter <span class="required"></span>
-                                        </label>
+                                        
                                         
                                          <asp:DropDownList ID="ddlDocter" class="form-control" runat="server"></asp:DropDownList>
                                         <span class="help-block">
@@ -90,11 +92,12 @@
                                        
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                            </div>.
+                            <div class="row">
+                                
+                                <div class="col-md-3">
                                     <div class="form-group form-md-line-input">
-                                                <label for="form_control_1">
-                                                    Status
-                                                </label>
+                                                
                                                 <asp:RadioButtonList ID="RadlistAp" runat="server" RepeatDirection="Horizontal"
                                                     Width="300px">
                                                     <asp:ListItem Value="1">Approve</asp:ListItem>
@@ -104,17 +107,43 @@
                                                
                                             </div>
                                 </div>
-                              
-                            </div>
-                            <div class="row">
-                            <div class="col-md-4">
+                               <div class="col-md-3">
+                                    <div class="form-group">
+                                          
+                                      <asp:TextBox ID="txtSFromFollowDate" runat="server" class="form-control" placeholder="From Date "
+                                            ClientIDMode="Static"></asp:TextBox>
+                                      
+                                        <asp:CalendarExtender ID="txtSFromFollowDate_CalendarExtender" runat="server" Format="dd-MM-yyyy"
+                                            Enabled="True" TargetControlID="txtSFromFollowDate">
+                                        </asp:CalendarExtender>
+                                      
+                                        <span class="help-block">
+                                        
+                                        </span>
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                             
+                                        <asp:TextBox ID="txtSToFollowDate" runat="server" class="form-control" placeholder="To Date"
+                                            ClientIDMode="Static"></asp:TextBox>
+                                      
+                                        <asp:CalendarExtender ID="txtSToFollowDate_CalendarExtender" runat="server"  Format="dd-MM-yyyy"
+                                            Enabled="True" TargetControlID="txtSToFollowDate">
+                                        </asp:CalendarExtender>
+                                               
+                                            </div>
+                                </div>
+
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
 											OnClick="btSearch_Click" />
                                     </div>
                                 </div>
                             </div>
-                        
+                      
                         
                         
 							<!-- Usage as a class -->
@@ -171,8 +200,8 @@
                                         <ItemTemplate>
                                             <div class="grey">
                                                 <asp:Label ID="lblstatus" Visible="false" runat="server" Text='<%# Eval("Status") %>'></asp:Label>
-                                                <asp:LinkButton ID="linkApporuval" CommandArgument='<%# Eval("Appointmentid") %>' CommandName="Approve" runat="server"><i class="fa fa-check"></i></asp:LinkButton>
-                                                <asp:LinkButton ID="LinkRegect" CommandArgument='<%# Eval("Appointmentid") %>' CommandName="Reject" runat="server"> <i class="fa fa-times-circle"></i></asp:LinkButton>
+                                                <asp:LinkButton ID="linkApporuval" CommandArgument='<%# Eval("Appointmentid") %>'  ToolTip="Approve" CommandName="Approve" runat="server"><i class="fa fa-check"></i></asp:LinkButton>
+                                                <asp:LinkButton ID="LinkRegect" CommandArgument='<%# Eval("Appointmentid") %>' ToolTip="Reject" CommandName="Reject" runat="server"> <i class="fa fa-times-circle"></i></asp:LinkButton>
 
 
                                             </div>

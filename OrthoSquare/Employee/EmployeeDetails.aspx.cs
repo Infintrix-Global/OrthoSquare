@@ -26,8 +26,19 @@ namespace OrthoSquare.Employee
                 BindRole();
                 EmployeeCode();
                 BindCountry();
+                ddlCountry1.SelectedValue = "1";
+                State();
+                ddlState.SelectedValue = "2";
+                City();
+                ddlCity.SelectedValue = "34";
                 Bindddlclinic();
+
                 BindPermanentCountry();
+                ddlPCountry.SelectedValue = "1";
+                PermanentState();
+                ddlPState.SelectedValue = "2";
+                PermanentCity();
+                ddlPCity.SelectedValue = "34";
 
                 TabContactPerson1.Tabs[0].Enabled = true;
 
@@ -46,12 +57,13 @@ namespace OrthoSquare.Employee
         }
 
 
-
+        
         public void EmployeeCode()
         {
             txtRegDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
 
             int Eno = objcommon.GetEmployeeCODE();
+
             txtEmpCode.Text = "EMP" + Eno.ToString();
         }
 
@@ -352,6 +364,24 @@ namespace OrthoSquare.Employee
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+            string PermanentCountry1 = "", PermanentState1 = "", PermanentCity1="";
+
+            if (CheCopy.Checked == true)
+            {
+                PermanentCountry1 = ddlCountry1.SelectedValue;
+                PermanentState1=ddlState.SelectedValue;
+                PermanentCity1 = ddlCity.SelectedValue;
+
+            }
+            else
+            {
+
+                PermanentCountry1 = ddlPCountry.SelectedValue;
+                PermanentState1 = ddlPState.SelectedValue;
+                PermanentCity1 = ddlPCity.SelectedValue;
+            }
+
+
 
             try
             {
@@ -382,9 +412,11 @@ namespace OrthoSquare.Employee
                     CurrentPinCode = txtperPincode.Text,
                     PermanentAddress = txtperAddress.Text,
                     PermanentLandmark = txtperArea.Text,
-                    PermanentCountry = Convert.ToInt32(ddlPCountry.SelectedValue),
-                    PermanentState = Convert.ToInt32(ddlPState.SelectedValue),
-                    PermanentCity = Convert.ToInt32(ddlPCity.SelectedValue),
+
+
+                    PermanentCountry = Convert.ToInt32(PermanentCountry1),
+                    PermanentState = Convert.ToInt32(PermanentState1),
+                    PermanentCity = Convert.ToInt32(PermanentCity1),
                     PermanentPinCode = txtperPincode.Text,
                     ResidentPhone = txtPerTelephoneNO.Text,
                     Mobile = txtMobile.Text,
@@ -477,7 +509,15 @@ namespace OrthoSquare.Employee
                     RadGender.SelectedItem.Text = dt.Rows[0]["Gender"].ToString();
                  
                     txtBloodGroup.Text = dt.Rows[0]["BloodGroup"].ToString();
+
+                    if (Convert.ToDateTime(dt.Rows[0]["BirthDate"]).ToString("dd-MM-yyyy") == "01-01-1990")
+                    {
+                        txtBirthDate.Text="";
+                    }
+                    else
+                    {
                     txtBirthDate.Text = Convert.ToDateTime(dt.Rows[0]["BirthDate"]).ToString("dd-MM-yyyy");
+                    }
                     lbl_filepath1.Text = dt.Rows[0]["EmployeePhoto"].ToString();
                     dllNationality.Text = dt.Rows[0]["Nationality"].ToString();
                     ImagePhoto1.ImageUrl = "~/Material/EmployeeProfile/" + dt.Rows[0]["EmployeePhoto"].ToString();
@@ -485,19 +525,38 @@ namespace OrthoSquare.Employee
                     txtAddress.Text = dt.Rows[0]["CurrentAddress"].ToString();
                     txtArea.Text = dt.Rows[0]["CurrentLandmark"].ToString();
                     txtPincode.Text = dt.Rows[0]["CurrentPinCode"].ToString();
-                    ddlCountry1.SelectedValue = dt.Rows[0]["CurrentCountry"].ToString();
-                    State();
-                    ddlState.SelectedValue = dt.Rows[0]["CurrentState"].ToString();
-                    City();
-                    ddlCity.SelectedValue = dt.Rows[0]["CurrentCity"].ToString();
+                    if (dt.Rows[0]["CurrentCountry"].ToString() != "0")
+                    {
+                        ddlCountry1.SelectedValue = dt.Rows[0]["CurrentCountry"].ToString();
+                    }
+                    if (dt.Rows[0]["CurrentState"].ToString() != "0")
+                    {
+                        State();
+                        ddlState.SelectedValue = dt.Rows[0]["CurrentState"].ToString();
+                    }
+                    if (dt.Rows[0]["CurrentCity"].ToString() != "0")
+                    {
+                        City();
+                        ddlCity.SelectedValue = dt.Rows[0]["CurrentCity"].ToString();
+                    }
                     txtperAddress.Text = dt.Rows[0]["PermanentAddress"].ToString();
                     txtperArea.Text = dt.Rows[0]["PermanentLandmark"].ToString();
                     txtperPincode.Text = dt.Rows[0]["CurrentPinCode"].ToString();
-                    ddlPCountry.SelectedValue = dt.Rows[0]["PermanentCountry"].ToString();
-                    PermanentState();
-                    ddlPState.SelectedValue = dt.Rows[0]["PermanentState"].ToString();
-                    PermanentCity();
-                    ddlPCity.SelectedValue = dt.Rows[0]["PermanentCity"].ToString();
+
+                    if (dt.Rows[0]["PermanentCountry"].ToString() != "0")
+                    {
+                        ddlPCountry.SelectedValue = dt.Rows[0]["PermanentCountry"].ToString();
+                    }
+                    if (dt.Rows[0]["PermanentState"].ToString() != "0")
+                    {
+                        PermanentState();
+                        ddlPState.SelectedValue = dt.Rows[0]["PermanentState"].ToString();
+                    }
+                    if (dt.Rows[0]["PermanentCity"].ToString() != "0")
+                    {
+                        PermanentCity();
+                        ddlPCity.SelectedValue = dt.Rows[0]["PermanentCity"].ToString();
+                    }
                     txtMobile.Text = dt.Rows[0]["Mobile"].ToString();
                     txtEmail.Text = dt.Rows[0]["Email"].ToString();
                     txtPerTelephoneNO.Text = dt.Rows[0]["ResidentPhone"].ToString();
@@ -512,9 +571,23 @@ namespace OrthoSquare.Employee
                     txtPassportNo.Text = dt.Rows[0]["PassportNo"].ToString();
                     txtPassword.Text = dt.Rows[0]["UserName"].ToString();
                     txtUsername.Text = dt.Rows[0]["Password"].ToString();
-
-                    ddlDesignation.SelectedValue = dt.Rows[0]["RoleID"].ToString();
-                }
+                    if (dt.Rows[0]["RoleID"].ToString() != "0")
+                    {
+                        ddlDesignation.SelectedValue = dt.Rows[0]["RoleID"].ToString();
+                    }
+                    txtUsername.Text = dt.Rows[0]["UserName1"].ToString();
+                    txtPassword.Text = dt.Rows[0]["Password1"].ToString();
+                    Bindddlclinic();
+                    ddlclinic.SelectedValue = dt.Rows[0]["ClinicID"].ToString();
+                    if(dt.Rows[0]["EmployeePhoto"].ToString() !="")
+                    {
+                        ImagePhoto1.ImageUrl = "~/EmployeeProfile/" + dt.Rows[0]["EmployeePhoto"].ToString();
+                    }
+                    else
+                    {
+                         ImagePhoto1.ImageUrl = " ~/Images/no-photo.jpg";
+                   
+                }   }
                 catch (Exception ex)
                 {
                     throw ex;

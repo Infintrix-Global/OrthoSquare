@@ -15,10 +15,10 @@ namespace OrthoSquare.BAL_Classes
 
         public DataTable GetConsultationAddTreatment(long patientid)
         {
-           
+
             try
             {
-               
+
 
                 objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", 0);
                 objGeneral.AddParameterWithValueToSQLCommand("@patientid", patientid);
@@ -46,8 +46,8 @@ namespace OrthoSquare.BAL_Classes
                 //    " WHERE  WE.WorkOrderID ='" + WorkOrderID + "' and WE.IsActive='1'";
 
 
-                strQuery = "Select * from TreatmentbyPatient where IsActive =1 and patientid='" + PID + "'";
-                
+                strQuery = "Select * from TreatmentbyPatient where IsActive =1 and patientid='" + PID + "' and StartedTreatments ='Yes'";
+
                 DataTable dtExpInfo = objGeneral.GetDatasetByCommand(strQuery);
                 if (dtExpInfo != null && dtExpInfo.Rows.Count > 0)
                 {
@@ -58,9 +58,13 @@ namespace OrthoSquare.BAL_Classes
                         objNewRow.ID = Convert.ToInt32(item["ID"]);
                         objNewRow.TreatmentID = Convert.ToInt32(item["TreatmentID"]);
                         objNewRow.Cost = item["TreatmentsCost"].ToString();
+                        objNewRow.Unit = item["Unit"].ToString();
+                        objNewRow.Discount = item["Discount"].ToString();
+                        objNewRow.Tex = "0";
+                        objNewRow.ISInvoice = Convert.ToInt32(item["ISInvoice"]);
                         objNewRow.RowNumber = RowCNT;
 
-                      
+
                         objtWorkorderEmployeesInfo.Add(objNewRow);
                         RowCNT++;
                     }
@@ -95,7 +99,7 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", Did);
                 objGeneral.AddParameterWithValueToSQLCommand("@patientid", pid);
                 objGeneral.AddParameterWithValueToSQLCommand("@TreatmentID", Tid);
-               
+
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 2);
 
 
@@ -116,9 +120,9 @@ namespace OrthoSquare.BAL_Classes
             try
             {
 
-                objGeneral.AddParameterWithValueToSQLCommand("@DoctorID",0);
-                objGeneral.AddParameterWithValueToSQLCommand("@patientid",patientid1);
-                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentID","");
+                objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@patientid", patientid1);
+                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentID", "");
 
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 3);
                 ds = objGeneral.GetDatasetByCommand_SP("Get_ConsultationAddTreatment");
@@ -140,19 +144,19 @@ namespace OrthoSquare.BAL_Classes
 
 
                 objGeneral.AddParameterWithValueToSQLCommand("@PTID", PTID);
-                objGeneral.AddParameterWithValueToSQLCommand("@patientid",patientid);
+                objGeneral.AddParameterWithValueToSQLCommand("@patientid", patientid);
                 objGeneral.AddParameterWithValueToSQLCommand("@TreatmentID", TreatmentID);
                 objGeneral.AddParameterWithValueToSQLCommand("@Remoarks", Remoarks);
                 objGeneral.AddParameterWithValueToSQLCommand("@TreatmentImage", TreatmentImage);
-               
-
-
-               
-                    objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
 
 
 
-                    isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_AddPatientTreatmentImage");
+
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
+
+
+
+                isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_AddPatientTreatmentImage");
 
 
 
@@ -175,7 +179,7 @@ namespace OrthoSquare.BAL_Classes
                 General objGeneral = new General();
 
                 strQuery = "insert into PatientbyDentalinfo (patientid,Complaint,DentalTreatment,ToothNo) values(@patientid,@Complaint,@DentalTreatment,@ToothNo) ";
-	  
+
 
                 objGeneral.AddParameterWithValueToSQLCommand("@patientid", patientid);
                 objGeneral.AddParameterWithValueToSQLCommand("@Complaint", Complaint);
@@ -197,9 +201,9 @@ namespace OrthoSquare.BAL_Classes
 
 
 
-    
 
-        public int Add_Medicines(long patientid, string MedicinesName,string txtMtype, string TotalMedicines, string DayMedicines,string MorningMedicines,string AfternoonMedicines,string EveningMedicines,string Remarks)
+
+        public int Add_Medicines(long patientid, string MedicinesName, string txtMtype, string TotalMedicines, string DayMedicines, string MorningMedicines, string AfternoonMedicines, string EveningMedicines, string Remarks)
         {
             int isInserted = -1;
             try
@@ -207,9 +211,9 @@ namespace OrthoSquare.BAL_Classes
 
                 General objGeneral = new General();
 
-                strQuery = "insert into PatientMedicines (patientid,MedicinesName,txtMtype,TotalMedicines,DayMedicines,MorningMedicines,AfternoonMedicines,EveningMedicines,Remarks) ";
-                strQuery += " values(@patientid,@MedicinesName,@txtMtype,@TotalMedicines,@DayMedicines,@MorningMedicines,@AfternoonMedicines,@EveningMedicines,@Remarks) ";
-               
+                strQuery = "insert into PatientMedicines (patientid,MedicinesName,txtMtype,TotalMedicines,DayMedicines,MorningMedicines,AfternoonMedicines,EveningMedicines,Remarks,IsActive) ";
+                strQuery += " values(@patientid,@MedicinesName,@txtMtype,@TotalMedicines,@DayMedicines,@MorningMedicines,@AfternoonMedicines,@EveningMedicines,@Remarks,1) ";
+
 
                 objGeneral.AddParameterWithValueToSQLCommand("@patientid", patientid);
                 objGeneral.AddParameterWithValueToSQLCommand("@MedicinesName", MedicinesName);
@@ -218,8 +222,8 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@MorningMedicines", MorningMedicines);
                 objGeneral.AddParameterWithValueToSQLCommand("@AfternoonMedicines", AfternoonMedicines);
                 objGeneral.AddParameterWithValueToSQLCommand("@EveningMedicines", EveningMedicines);
-                 objGeneral.AddParameterWithValueToSQLCommand("@Remarks", Remarks);
-                 objGeneral.AddParameterWithValueToSQLCommand("@txtMtype", txtMtype);
+                objGeneral.AddParameterWithValueToSQLCommand("@Remarks", Remarks);
+                objGeneral.AddParameterWithValueToSQLCommand("@txtMtype", txtMtype);
 
                 objGeneral.GetExecuteNonQueryByCommand(strQuery);
                 isInserted = 1;
@@ -232,23 +236,14 @@ namespace OrthoSquare.BAL_Classes
             return isInserted;
         }
 
-
-
-
-        public DataTable GetPTGallery(long Pid)
+        public DataTable GetAdd_Medicines(long Pid)
         {
             try
             {
 
-                //objGeneral.AddParameterWithValueToSQLCommand("@PTID", 0);
-                //objGeneral.AddParameterWithValueToSQLCommand("@patientid", 0);
-                //objGeneral.AddParameterWithValueToSQLCommand("@TreatmentID", 0);
-                //objGeneral.AddParameterWithValueToSQLCommand("@Remoarks", "");
-                //objGeneral.AddParameterWithValueToSQLCommand("@TreatmentImage", "");
-                //objGeneral.AddParameterWithValueToSQLCommand("@mode", 2);
-                //ds = objGeneral.GetDatasetByCommand_SP("SP_AddPatientTreatmentImage");
 
-                strQuery = "Select * from PatientTreatmentImage where IsActive=1";
+
+                strQuery = "Select * from PatientMedicines where IsActive=1";
 
                 if (Pid > 0)
                     strQuery += " and patientid ='" + Pid + "'";
@@ -268,16 +263,50 @@ namespace OrthoSquare.BAL_Classes
 
 
 
+        public DataTable GetPTGallery(long Pid)
+        {
+            try
+            {
 
-        public int Update_TreatmentbyPatient(long TPID, string Cost, string Tooth, string StartedTreatments)
+                //objGeneral.AddParameterWithValueToSQLCommand("@PTID", 0);
+                //objGeneral.AddParameterWithValueToSQLCommand("@patientid", 0);
+                //objGeneral.AddParameterWithValueToSQLCommand("@TreatmentID", 0);
+                //objGeneral.AddParameterWithValueToSQLCommand("@Remoarks", "");
+                //objGeneral.AddParameterWithValueToSQLCommand("@TreatmentImage", "");
+                //objGeneral.AddParameterWithValueToSQLCommand("@mode", 2);
+                //ds = objGeneral.GetDatasetByCommand_SP("SP_AddPatientTreatmentImage");
+
+                strQuery = "Select Top 8 * from PatientTreatmentImage where IsActive=1";
+
+                if (Pid > 0)
+                    strQuery += " and patientid ='" + Pid + "'";
+                strQuery += " ORDER BY PTID DESC";
+
+                return objGeneral.GetDatasetByCommand(strQuery);
+
+
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+
+        }
+
+
+
+
+        public int Update_TreatmentbyPatient(long TPID, string Cost, string Tooth, string StartedTreatments, string Notes,string sdate)
         {
             int isInserted = -1;
             try
             {
 
                 General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@Sdate", objGeneral.getDatetime(sdate));
 
-                strQuery = "update  TreatmentbyPatient set toothNo='" + Tooth + "',TreatmentsCost='" + Cost + "',StartedTreatments ='" + StartedTreatments + "' where ID='" + TPID + "' ";
+                strQuery = "update  TreatmentbyPatient set toothNo='" + Tooth + "',TreatmentsCost='" + Cost + "',StartedTreatments ='" + StartedTreatments + "',TNotes ='" + Notes + "',ISInvoice='2' ,CtrateDate=@Sdate where ID='" + TPID + "' ";
 
 
                 objGeneral.GetExecuteNonQueryByCommand(strQuery);
@@ -291,6 +320,53 @@ namespace OrthoSquare.BAL_Classes
             return isInserted;
         }
 
+
+        public int Update_TreatmentbyPatientYES(long TPID, string Cost, string Tooth, string StartedTreatments, string Notes,string sDate)
+        {
+            int isInserted = -1;
+            try
+            {
+
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@Sdate", objGeneral.getDatetime(sDate));
+
+                strQuery = "update  TreatmentbyPatient set toothNo='" + Tooth + "',TreatmentsCost='" + Cost + "',StartedTreatments ='" + StartedTreatments + "',TNotes ='" + Notes + "',ISInvoice='2',CtrateDate=@Sdate where ID='" + TPID + "' ";
+
+
+                objGeneral.GetExecuteNonQueryByCommand(strQuery);
+
+                isInserted = 1;
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return isInserted;
+        }
+
+        public int Update_TreatmentbyPatientWorkDone(int Pid, int TreatmentbyPatientID, string TootNo, string Notes)
+        {
+            int isInserted = -1;
+            try
+            {
+
+                General objGeneral = new General();
+
+                //   strQuery = "update  TreatmentbyPatient set toothNo='" + Tooth + "',TreatmentsCost='" + Cost + "',StartedTreatments ='" + StartedTreatments + "',TNotes ='" + Notes + "',ISInvoice='2',CtrateDate=GETDATE() where ID='" + TPID + "' ";
+
+                strQuery = "insert into TreatmentStartedNotes (TreatmentbyPatientID,patientid,TootNo,Notes,CreateDate) values('" + TreatmentbyPatientID + "','" + Pid + "','" + TootNo + "','" + Notes + "',GETDATE())";
+
+
+                objGeneral.GetExecuteNonQueryByCommand(strQuery);
+
+                isInserted = 1;
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return isInserted;
+        }
 
 
 
@@ -340,7 +416,91 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
+        public DataTable GetPTTreatmentPlan(long Pid)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                strQuery = "Select *,D.FirstName +' '+ D.LastName as DName from TreatmentPlan TP join tbl_DoctorDetails D on D.DoctorID =TP.DoctorID where TP.IsActive =1";
 
+                if (Pid > 0)
+                    strQuery += " and TP.patientid ='" + Pid + "'";
+
+
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return dt;
+        }
+
+
+        public DataTable GetMedicinesName(long Pid)
+        {
+
+            DataTable dt = new DataTable();
+            try
+            {
+                strQuery = "Select * from PatientMedicines  where patientid ='" + Pid + "'";
+
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return dt;
+
+        }
+
+        public DataTable GetTreatmentStartedNotesWorkDone(int Pid)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+
+                strQuery = "Select T.TreatmentName,TP.TootNo,TP.Notes,TP.CreateDate from TreatmentStartedNotes  TP left join  TreatmentbyPatient TSN  on  TSN.ID = TP. TreatmentbyPatientID ";
+                strQuery += " left join  TreatmentMASTER T  on  T.TreatmentID = TSN. TreatmentID  where TSN.IsActive =1 ";
+                strQuery += " and TP.patientid= '" + Pid + "'";
+
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return dt;
+        }
+
+
+
+
+        public int Update_PCstatus(long Pid, string PCstatus)
+        {
+            int isInserted = -1;
+            try
+            {
+
+                General objGeneral = new General();
+
+                strQuery = "update  PatientMaster set PCstatus='" + PCstatus + "' where patientid='" + Pid + "' ";
+
+
+                objGeneral.GetExecuteNonQueryByCommand(strQuery);
+
+                isInserted = 1;
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return isInserted;
+        }
 
     }
 }

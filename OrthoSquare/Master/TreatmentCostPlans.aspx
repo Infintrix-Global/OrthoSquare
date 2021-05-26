@@ -109,7 +109,7 @@
                             <asp:GridView ID="gvShow" runat="server" class="table table-bordered table-hover"
                                     GridLines="None" DataKeyNames="TreatmentID" AutoGenerateColumns="false" 
                                     ShowHeaderWhenEmpty="true" AllowPaging="true"
-                                    OnPageIndexChanging="gvShow_PageIndexChanging">
+                                    OnPageIndexChanging="gvShow_PageIndexChanging123">
                                   <Columns >
                                         <asp:TemplateField  >
                                             <HeaderTemplate>
@@ -275,7 +275,7 @@
                             <asp:GridView ID="GridTreatmentCostPlans" runat="server" class="table table-bordered table-hover"
                                     GridLines="None" DataKeyNames="TreatmentCostPlansid" AutoGenerateColumns="false" 
                                     OnRowDeleting="GridTreatmentCostPlans_RowDeleting" 
-                                     ShowHeaderWhenEmpty="true" AllowPaging="true"
+                                      AllowPaging="true"
                                     OnPageIndexChanging="GridTreatmentCostPlans_PageIndexChanging">
                                     <Columns>
                                         <asp:TemplateField  HeaderText="Sr. No.">

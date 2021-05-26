@@ -50,8 +50,16 @@ namespace OrthoSquare.Doctor
                     ImagePhoto11.ImageUrl = "~/Images/no-photo.jpg";
 
                 }
+                if (dt1.Rows[0]["DOB"].ToString() != "")
+                {
+                    lblbirthDate.Text = Convert.ToDateTime(dt1.Rows[0]["DOB"]).ToString("dd-MM-yyyy");
+                }
+                else
+                {
+                    lblbirthDate.Text = "";
 
-                lblbirthDate.Text = Convert.ToDateTime(dt1.Rows[0]["DOB"]).ToString("dd-MM-yyyy");
+                }
+               
                 lblGender.Text = dt1.Rows[0]["Gender"].ToString();
                 lblAddress.Text = dt1.Rows[0]["Line1"].ToString() + ", " + dt1.Rows[0]["Line2"].ToString() + " ," + dt1.Rows[0]["AreaPin"].ToString() ;
                 lblMobileNo.Text = dt1.Rows[0]["Mobile1"].ToString() + " ," + dt1.Rows[0]["Mobile2"].ToString();
@@ -112,8 +120,10 @@ namespace OrthoSquare.Doctor
                 if (dt11 != null && dt11.Rows.Count > 0)
                 {
 
-                    lblDegree.Text = dt11.Rows[0]["Name"].ToString();
-                    ImageDegree.ImageUrl = "~/Documents/" + dt11.Rows[0]["DegreeUpload1"].ToString();
+                  
+                    GridQualification.DataSource = dt11;
+                    GridQualification.DataBind();
+                
                 }
                 DataTable dt111 = objDoc.GetDocterstbl_DrSpeciality(Did);
 

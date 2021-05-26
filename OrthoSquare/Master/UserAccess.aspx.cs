@@ -48,8 +48,6 @@ namespace OrthoSquare.Master
 
         }
 
-
-
         public void MenuDetials(string menuNamme)
         {
             DataTable dt = objUser.RetriveMenus(menuNamme);
@@ -67,10 +65,6 @@ namespace OrthoSquare.Master
             this.BindmenuList(ddlParent);
 
         }
-
-
-
-
 
         private void BindmenuList(DropDownList ddlParent)
         {
@@ -104,7 +98,6 @@ namespace OrthoSquare.Master
 
         }
 
-
         protected void MenuChanged(object sender, EventArgs e)
         {
             DropDownList ddlParent = (DropDownList)sender;
@@ -133,43 +126,21 @@ namespace OrthoSquare.Master
                 int i = GrdMenu.Rows.Count;
                 GridViewRow myRow = e.Row;
 
-                //foreach (GridViewRow a in GrdMenu.Rows )
-                //{
-                // int i = a.RowIndex;
+               
                 if (e.Row.RowType == DataControlRowType.DataRow)
                 {
                     Label Menuid = (myRow.Cells[0].FindControl("LabelParentMenuID") as Label);
-                    //Label Menuid = (a.Cells[0].FindControl("LabelParentMenuID") as Label);
+                   
                     int MenuID = Convert.ToInt32(Menuid.Text);
                     CheckBox chkSelect = (CheckBox)e.Row.FindControl("chkSelectMenuId");
                     if (chkSelect != null)
                         chkSelect.Checked = IsMenuSelected(MenuID);
-                    //else
-                    //    chkSelect.Checked = false;
+                   
 
                 }
 
 
-                // }
-
-                //int RowCount = 0;
-                //for (RowCount = 0; RowCount < GrdMenu.Rows.Count; RowCount++)
-                //{
-                //    if (e.Row.RowType == DataControlRowType.DataRow)
-                //    {
-                //        Label Menuid = (item.Cells[0].FindControl("LabelParentMenuID") as Label);
-
-
-                //        int MenuID = Convert.ToInt32(Menuid.Text);
-                //        CheckBox chkSelect = (CheckBox)e.Row.FindControl("chkSelectMenuId");
-                //        if (chkSelect != null)
-                //            chkSelect.Checked = IsMenuSelected(MenuID);
-                //        //else
-                //        //    chkSelect.Checked = false;
-                //    }
-
-
-                //}
+                
 
             }
             catch (Exception ex)

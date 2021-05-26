@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="EnquirySourceMaster.aspx.cs" Inherits="OrthoSquare.Enquiry.EnquirySourceMaster" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="EnquirySourceMaster.aspx.cs" Inherits="OrthoSquare.Enquiry1.EnquirySourceMaster" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -71,8 +71,8 @@
                                 <div class="form-body">
 
                                     <div class="form-group">
-                                        <label>Treatment Name<span class="required">*</span></label>
-                                        <label>Enquiry Source Name </label>
+                                        <label>Enquiry Source Name<span class="required">*</span></label>
+                                     
                                         <asp:TextBox ID="txtAdd" class="form-control"
                                             runat="server"></asp:TextBox>
 
@@ -159,7 +159,9 @@
 
         <div class="row">
             <div class="col-md-12">
-
+                 <div style="margin-bottom: 5px;">
+                    <asp:Label ID="lblMSG1" class="panel-title" runat="server" Text="" Font-Size="Medium"></asp:Label>
+                </div>
                 <div class="portlet light ">
                     <div class="portlet-title">
                         <div class="caption">
@@ -208,7 +210,7 @@
                                                 <asp:Label ID="lblID" runat="server" Text='<%# Eval("Sourceid") %>' Visible="false"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField ItemStyle-Width="60%" HeaderText="Source Name">
+                                        <asp:TemplateField ItemStyle-Width="60%" HeaderText="Enquiry Source Name">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblName" runat="server" Text='<%# Eval("Sourcename") %>'></asp:Label>
                                             </ItemTemplate>

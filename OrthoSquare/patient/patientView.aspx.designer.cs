@@ -121,6 +121,15 @@ namespace OrthoSquare.patient {
         protected global::System.Web.UI.WebControls.RadioButtonList RadPregnant1;
         
         /// <summary>
+        /// txtPreganetDueDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPreganetDueDate;
+        
+        /// <summary>
         /// RadPanMasala control.
         /// </summary>
         /// <remarks>
@@ -148,6 +157,15 @@ namespace OrthoSquare.patient {
         protected global::System.Web.UI.WebControls.RadioButtonList RadSomking;
         
         /// <summary>
+        /// txtNofoCigrattes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNofoCigrattes;
+        
+        /// <summary>
         /// txtListMedicine control.
         /// </summary>
         /// <remarks>
@@ -157,12 +175,12 @@ namespace OrthoSquare.patient {
         protected global::System.Web.UI.WebControls.Label txtListMedicine;
         
         /// <summary>
-        /// checkallergic control.
+        /// Gridallergic control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList checkallergic;
+        protected global::System.Web.UI.WebControls.GridView Gridallergic;
     }
 }

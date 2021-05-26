@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EnquirySource.aspx.cs" Inherits="OrthoSquare.Enquiry.EnquirySource" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EnquirySource.aspx.cs" Inherits="OrthoSquare.Enquiry1.EnquirySource" %>
 
 <!DOCTYPE html>
 

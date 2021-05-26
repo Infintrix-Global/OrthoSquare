@@ -8,7 +8,7 @@ using OrthoSquare.BAL_Classes;
 using System.Data;
 using OrthoSquare.Utility;
 
-namespace OrthoSquare.Enquiry
+namespace OrthoSquare.Enquiry1
 {
     public partial class EnquirySourceMaster : System.Web.UI.Page
     {
@@ -39,24 +39,34 @@ namespace OrthoSquare.Enquiry
             try
             {
                 int _isInserted = -1;
+                int i = 0;
 
+                i = objES.CountEnqirySource(txtAdd.Text.Trim());
 
-                _isInserted = objES.AddEnqirySource(txtAdd.Text);
-
-                if (_isInserted == -1)
+                if (i > 0)
                 {
-                    lblMessage.Text = "Failed to Add Enqiry Source";
+                    lblMessage.Text = "Enquiry Source already exists";
                     lblMessage.ForeColor = System.Drawing.Color.Red;
                 }
                 else
                 {
+                    _isInserted = objES.AddEnqirySource(txtAdd.Text.Trim());
 
-                    lblMessage.Text = "Enqiry Source Added Successfully";
-                    lblMessage.ForeColor = System.Drawing.Color.Green;
-                    txtAdd.Text = "";
-                    getAllEnquirySource();
-                    Response.Redirect("EnquirySourceMaster.aspx");
-                    btSearch_Click(sender, e);
+                    if (_isInserted == -1)
+                    {
+                        lblMessage.Text = "Failed to Add Enqiry Source";
+                        lblMessage.ForeColor = System.Drawing.Color.Red;
+                    }
+                    else
+                    {
+
+                        lblMessage.Text = "Enqiry Source Added Successfully";
+                        lblMessage.ForeColor = System.Drawing.Color.Green;
+                        txtAdd.Text = "";
+                       // getAllEnquirySource();
+                       // Response.Redirect("EnquirySourceMaster.aspx");
+                        btSearch_Click(sender, e);
+                    }
                 }
             }
             catch (Exception ex)
@@ -107,6 +117,8 @@ namespace OrthoSquare.Enquiry
         {
             gvShow.EditIndex = -1;
             btSearch_Click(sender, e);
+            lblMessage.Text = "";
+            lblMSG1.Text = "";
         }
 
         protected void gvShow_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -151,37 +163,52 @@ namespace OrthoSquare.Enquiry
             Label lblID = (Label)row.FindControl("lblID");
             TextBox txtName = (TextBox)row.FindControl("txtName");
 
+             int i = 0;
 
-            isUpdated = objES.UpdateEnqirySource(txtName.Text, Convert.ToInt32(lblID.Text));
-            if (isUpdated == 1)
-            {
-                // DataTable UserLog = (DataTable)Session["User"];
+             i = objES.CountEnqirySource(txtName.Text.Trim());
 
-                lblMessage.Text = "Enqiry Source Updated Successfully";
-                lblMessage.ForeColor = System.Drawing.Color.Green;
-                //gvShow.EditIndex = -1;
-                //  getAllCategoryGrid();
-                Response.Redirect("EnquirySourceMaster.aspx");
+                if (i > 0)
+                {
+                    lblMSG1.Text = "Enquiry Source already exists";
+                    lblMSG1.ForeColor = System.Drawing.Color.Red;
+                }
+                else
+                {
+                    isUpdated = objES.UpdateEnqirySource(txtName.Text, Convert.ToInt32(lblID.Text));
+                    if (isUpdated == 1)
+                    {
+                        // DataTable UserLog = (DataTable)Session["User"];
 
-                btSearch_Click(sender, e);
-            }
-            else
-            {
-                lblMessage.Text = "Failed to Update Enqiry Source";
-                lblMessage.ForeColor = System.Drawing.Color.Red;
-            }
+                        lblMessage.Text = "Enqiry Source Updated Successfully";
+                        lblMessage.ForeColor = System.Drawing.Color.Green;
+                        //gvShow.EditIndex = -1;
+                        //  getAllCategoryGrid();
+                        Response.Redirect("EnquirySourceMaster.aspx");
+
+                        btSearch_Click(sender, e);
+                    }
+                    else
+                    {
+                        lblMessage.Text = "Failed to Update Enqiry Source";
+                        lblMessage.ForeColor = System.Drawing.Color.Red;
+                    }
+                }
         }
 
         protected void btnclear_Click(object sender, EventArgs e)
         {
             Edit.Visible = true;
             Add.Visible = false;
+            lblMessage.Text = "";
+            lblMSG1.Text = "";
         }
 
         protected void btnAddNew_Click(object sender, EventArgs e)
         {
             Edit.Visible = false;
             Add.Visible = true;
+            lblMessage.Text = "";
+            lblMSG1.Text = "";
         }
       
     }

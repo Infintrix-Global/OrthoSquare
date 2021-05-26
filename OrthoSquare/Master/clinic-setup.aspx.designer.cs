@@ -13,15 +13,6 @@ namespace OrthoSquare.Branch {
     public partial class clinic_setup {
         
         /// <summary>
-        /// UpdatePanel1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
-        /// <summary>
         /// Add control.
         /// </summary>
         /// <remarks>
@@ -38,6 +29,15 @@ namespace OrthoSquare.Branch {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMessage;
+        
+        /// <summary>
+        /// UpdatePanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
         /// ddlTitla control.
@@ -301,15 +301,6 @@ namespace OrthoSquare.Branch {
         protected global::System.Web.UI.WebControls.DropDownList ddl_DayOfWeek;
         
         /// <summary>
-        /// RequiredFieldValidatorddl_DayOfWeek control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorddl_DayOfWeek;
-        
-        /// <summary>
         /// txtCloseTime control.
         /// </summary>
         /// <remarks>
@@ -409,6 +400,15 @@ namespace OrthoSquare.Branch {
         protected global::System.Web.UI.WebControls.Button btnAddNew;
         
         /// <summary>
+        /// Buttonapprove control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Buttonapprove;
+        
+        /// <summary>
         /// gvShow control.
         /// </summary>
         /// <remarks>
@@ -416,5 +416,23 @@ namespace OrthoSquare.Branch {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvShow;
+        
+        /// <summary>
+        /// Div1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
+        
+        /// <summary>
+        /// Gridapprove control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView Gridapprove;
     }
 }

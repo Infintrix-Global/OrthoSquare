@@ -112,22 +112,13 @@ namespace OrthoSquare.Doctor {
         protected global::System.Web.UI.WebControls.GridView GridDoctorbyClinic;
         
         /// <summary>
-        /// lblDegree control.
+        /// GridQualification control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDegree;
-        
-        /// <summary>
-        /// ImageDegree control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image ImageDegree;
+        protected global::System.Web.UI.WebControls.GridView GridQualification;
         
         /// <summary>
         /// GridSpeciality control.

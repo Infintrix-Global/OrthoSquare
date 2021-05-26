@@ -23,23 +23,28 @@ namespace OrthoSquare.Report
         decimal sumFooterPendingValue = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (SessionUtilities.RoleID == 2)
+            if (!IsPostBack)
             {
-                bindClinic();
-                getAllCollection();
+                if (SessionUtilities.RoleID == 1)
+                {
+                    bindClinic();
+                    ddlClinic.SelectedValue = SessionUtilities.Empid.ToString();
+                    bindDoctorMaster(SessionUtilities.Empid);
+                   // ddlDocter.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
+                    getAllCollection();
 
 
-            }
-            else
-            {
-                bindClinic();
+                }
+                else
+                {
+                    bindClinic();
+                    ddlDocter.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
 
-                ddlClinic.SelectedValue = SessionUtilities.Empid.ToString();
-                //  ddlClinic.Enabled = false;
-                bindDoctorMaster(SessionUtilities.Empid);
-                getAllCollection();
+                    //  ddlClinic.Enabled = false;
+                    // bindDoctorMaster(SessionUtilities.Empid);
+                    getAllCollection();
 
+                }
             }
         }
 
@@ -47,7 +52,25 @@ namespace OrthoSquare.Report
 
         public void bindClinic()
         {
-            ddlClinic.DataSource = objc.GetAllClinicDetais();
+
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                dt = objc.GetAllClinicDetaisNew(SessionUtilities.Empid);
+            }
+            else
+            {
+                dt = objc.GetAllClinicDetais();
+
+            }
+            ddlClinic.DataSource = dt;
+
+
             ddlClinic.DataValueField = "ClinicID";
             ddlClinic.DataTextField = "ClinicName";
             ddlClinic.DataBind();
@@ -57,9 +80,26 @@ namespace OrthoSquare.Report
 
         public void bindDoctorMaster(int Cid)
         {
-            ddlDocter.DataSource = objcommon.DoctersMaster(Cid);
+
+            if (SessionUtilities.RoleID == 3 || SessionUtilities.RoleID == 1)
+            {
+
+                ddlDocter.DataSource = objcommon.DoctersMaster(Cid,SessionUtilities.RoleID);
+               
+
+            }
+            else
+            {
+                ddlDocter.DataSource = objcommon.DoctersMaster(Cid, SessionUtilities.RoleID);
+               
+            }
+
+
+
+
+            
             ddlDocter.DataValueField = "DoctorID";
-            ddlDocter.DataTextField = "FirstName";
+            ddlDocter.DataTextField = "DoctorName";
             ddlDocter.DataBind();
             ddlDocter.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
 
@@ -75,7 +115,7 @@ namespace OrthoSquare.Report
         public void getAllCollection()
         {
 
-            AllData = objExp.GetAllPatientCollectionReport(Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlDocter.SelectedValue));
+            AllData = objExp.GetAllPatientCollectionReport(Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlDocter.SelectedValue),txtToDate .Text .Trim (),txtFromDate .Text .Trim (), txtPatientName.Text.Trim());
             gvShow.DataSource = AllData;
             gvShow.DataBind();
 
@@ -100,8 +140,6 @@ namespace OrthoSquare.Report
         protected void gvShow_RowDataBound(object sender, GridViewRowEventArgs e)
         {
 
-
-
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
 
@@ -110,11 +148,7 @@ namespace OrthoSquare.Report
 
                 Label lblpatientid = (Label)e.Row.FindControl("lblpatientid");
 
-                lblPendingAmount.Text = objExp.GetPendingAmount(0, 0, Convert.ToInt32(lblpatientid.Text)).ToString();
-
-
-
-
+           
 
                 sumFooterValue += Convert.ToDecimal(lblPaidAmount.Text);
                 sumFooterPendingValue += Convert.ToDecimal(lblPendingAmount.Text);

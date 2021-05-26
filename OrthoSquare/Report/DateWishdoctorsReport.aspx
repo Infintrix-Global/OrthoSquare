@@ -13,7 +13,7 @@
 			<ul class="page-breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index-2.html">Home</a>
+					<a href="#">Home</a>
 					<i class="fa fa-angle-right"></i>
 				</li>
 				<li>
@@ -137,7 +137,7 @@
 												<asp:Label ID="lblVisitorName" runat="server" Text='<%# Eval("PFristName") +"  "+ Eval("PLastName") %>'></asp:Label>
 											</ItemTemplate>
 										</asp:TemplateField>
-										<asp:TemplateField HeaderText="Docter Name" ItemStyle-Width="10%">
+										<asp:TemplateField HeaderText="Doctor Name" ItemStyle-Width="10%">
 											<ItemTemplate>
 												<asp:Label ID="lblVisitorName1" runat="server" Text='<%# Eval("FirstName") +"  "+ Eval("LastName") %>'></asp:Label>
 											</ItemTemplate>
@@ -159,7 +159,7 @@
 
                                            
 
-                                             <asp:TemplateField HeaderText="Date" ItemStyle-Width="18%">
+                                             <asp:TemplateField HeaderText="Payment Date" ItemStyle-Width="18%">
 											<ItemTemplate>
 											<asp:Label ID="lblEnqDate" runat="server" Text='<%# Eval("PayDate","{0:dd/MM/yyyy}") %>'></asp:Label>
 											</ItemTemplate>

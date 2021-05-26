@@ -13,7 +13,9 @@ namespace OrthoSquare.Report
     public partial class AllDoctorWiserevenuereport : System.Web.UI.Page
     {
         BAL_DoctorsDetails objdoc = new BAL_DoctorsDetails();
+        clsCommonMasters objcommon = new clsCommonMasters();
         decimal sumFooterValue = 0;
+        int cid = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -28,7 +30,23 @@ namespace OrthoSquare.Report
 
         public void BindDocter()
         {
-            ddlDoctor.DataSource = objdoc.GetAllDocters(SessionUtilities .Empid );
+            //ddlDoctor.DataSource = objdoc.GetAllDocters(SessionUtilities .Empid );
+
+            if (SessionUtilities.RoleID == 3 || SessionUtilities.RoleID == 1)
+            {
+
+                ddlDoctor.DataSource = objcommon.DoctersMaster(SessionUtilities.Empid, SessionUtilities.RoleID);
+
+
+
+            }
+            else
+            {
+                ddlDoctor.DataSource = objcommon.DoctersMaster(0, SessionUtilities.RoleID);
+
+
+            }
+            
             ddlDoctor.DataTextField = "FirstName";
             ddlDoctor.DataValueField = "DoctorID";
             ddlDoctor.DataBind();
@@ -38,13 +56,18 @@ namespace OrthoSquare.Report
 
         protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+
+
             GridDocterCollection.PageIndex = e.NewPageIndex;
             BindDocterCollection();
         }
         public void BindDocterCollection()
         {
-
-            DataTable dt = objdoc.GetAllDoctersRevenue(Convert.ToInt32(ddlDoctor.SelectedValue));
+            if (SessionUtilities.RoleID == 1)
+            {
+                cid = SessionUtilities.Empid;
+            }
+            DataTable dt = objdoc.GetAllDoctersRevenue(Convert.ToInt32(ddlDoctor.SelectedValue),cid);
             GridDocterCollection.DataSource = dt;
 
             GridDocterCollection.DataBind();

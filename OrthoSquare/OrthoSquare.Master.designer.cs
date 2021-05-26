@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OrthoSquare {
-    
-    
-    public partial class OrthoSquare1 {
-        
+namespace OrthoSquare
+{
+
+
+    public partial class OrthoSquare1
+    {
+
         /// <summary>
         /// style_components control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace OrthoSquare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlLink style_components;
-        
+
         /// <summary>
         /// style_color control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace OrthoSquare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlLink style_color;
-        
+
         /// <summary>
         /// head control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace OrthoSquare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
-        
+
         /// <summary>
         /// submit_form control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace OrthoSquare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm submit_form;
-        
+
         /// <summary>
         /// lblCname control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace OrthoSquare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblCname;
-        
+
         /// <summary>
         /// lblName1 control.
         /// </summary>
@@ -65,7 +67,25 @@ namespace OrthoSquare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblName1;
-        
+
+        /// <summary>
+        /// LinkButton3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton3;
+
+        /// <summary>
+        /// LinkButton2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
+
         /// <summary>
         /// LinkButton1 control.
         /// </summary>
@@ -74,7 +94,7 @@ namespace OrthoSquare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
-        
+
         /// <summary>
         /// PlhldrMenu control.
         /// </summary>
@@ -83,7 +103,7 @@ namespace OrthoSquare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder PlhldrMenu;
-        
+
         /// <summary>
         /// ScriptManager1 control.
         /// </summary>
@@ -92,7 +112,7 @@ namespace OrthoSquare {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager ScriptManager1;
-        
+
         /// <summary>
         /// ContentPlaceHolder1 control.
         /// </summary>

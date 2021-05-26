@@ -5,11 +5,14 @@ using System.Web;
 
 using System.Configuration;
 using System.Text;
-
+using OrthoSquare.BAL_Classes;
+using System.Net;
 namespace OrthoSquare.Utility
 {
     public class BasePage
     {
+        General objGeneral = new General();
+
         //public string DateFormat
         //{
         //    get { return SessionUtilities.DateFormatted; }
@@ -38,6 +41,46 @@ namespace OrthoSquare.Utility
         }
 
 
+        public int SendMail(string Email, string Username, string Password)
+        {
+            int IsReturn = 0;
+            try
+            {
+                var fromAddress = "infintrix.vadodara@gmail.com";
+
+                var toAddress = Email;
+
+                const string fromPassword = "Igvadodara@123";
+                // Passing the values and make a email formate to display
+                string subject = "Your UserName and Password For ";
+                string body = "Dear ," + "\n";
+                body += "Your UserName and Password For OrthoSquare :" + "\n";
+                body += "UserName : " + Username + " " + "\n\n";
+                body += "Password : " + Password + " " + "\n\n";
+                body += "Thank you!" + "\n";
+                body += "Warm Regards," + "\n";
+
+                // smtp settings
+                var smtp = new System.Net.Mail.SmtpClient();
+                {
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                    smtp.Credentials = new NetworkCredential(fromAddress, fromPassword);
+                    smtp.Timeout = 50000;
+                }
+                // Passing values to smtp object
+                smtp.Send(fromAddress, toAddress, subject, body);
+                IsReturn = 1;
+            }
+            catch (Exception ex)
+            {
+                //objGeneral.ErrorMessage("Error is=" + Convert.ToString(ex.Message));
+                throw ex;
+            }
+            return IsReturn;
+        }
 
 
 

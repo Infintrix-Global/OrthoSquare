@@ -53,8 +53,8 @@ namespace OrthoSquare.Master
                     lblMessage.Text = "Dental Category Added Successfully";
                     lblMessage.ForeColor = System.Drawing.Color.Green;
                     txtAdd.Text = "";
-                    getAllDentalCategory();
-                    Response.Redirect("DentalCategory.aspx");
+                  //  getAllDentalCategory();
+                  //  Response.Redirect("DentalCategory.aspx");
                     btSearch_Click(sender, e);
                 }
             }
@@ -175,6 +175,8 @@ namespace OrthoSquare.Master
         {
             Edit.Visible = true;
             Add.Visible = false;
+            getAllDentalCategory();
+
         }
 
         protected void btnAddNew_Click(object sender, EventArgs e)

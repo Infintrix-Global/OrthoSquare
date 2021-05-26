@@ -1,4 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="DocterCollectionReport.aspx.cs" Inherits="OrthoSquare.Report.DocterCollectionReport" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -15,7 +17,7 @@
 					<i class="fa fa-angle-right"></i>
 				</li>
 				<li>
-					<span>Doctor Collection Report</span>
+					<span>Doctor Report</span>
 				</li>
 			</ul>
 
@@ -26,16 +28,9 @@
                     <div class="portlet-title">
 						<div class="caption">
 							<i class="icon-settings font-red"></i>
-							<span class="caption-subject font-red sbold uppercase">Doctor Collection Report</span>
+							<span class="caption-subject font-red sbold uppercase">Doctor Report</span>
 						</div>
-						<%--<div class="actions">
-							<div class="btn-group btn-group-devided" data-toggle="buttons">
-								<label class="btn grey-salsa btn-sm active">
-									<input type="radio" name="options" class="toggle" id="option1">Actions</label>
-								<label class="btn grey-salsa btn-sm">
-									<input type="radio" name="options" class="toggle" id="option2">Settings</label>
-							</div>
-						</div>--%>
+						
 					</div>
                     <div class="portlet-body">
                         <!-- BEGIN FORM-->
@@ -54,7 +49,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="form_control_1">
-                                            Docter Name
+                                            Doctor Name
                                         </label>
                                        <asp:DropDownList ID="ddlDocter" class="form-control"  AutoPostBack="true" runat="server"></asp:DropDownList>
 
@@ -64,7 +59,48 @@
                                 </div>
                                
                             </div>
-                            
+                             <div class="row">
+                                     <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="form_control_1">
+                                            From Date 
+                                        </label>
+                                      <asp:TextBox ID="txtSFromFollowDate" runat="server" class="form-control" placeholder="From Date "
+                                            ClientIDMode="Static"></asp:TextBox>
+                                      
+                                        <asp:CalendarExtender ID="txtSFromFollowDate_CalendarExtender" runat="server" Format="dd-MM-yyyy"
+                                            Enabled="True" TargetControlID="txtSFromFollowDate">
+                                        </asp:CalendarExtender>
+                                      
+                                        <span class="help-block">
+                                           
+                                        </span>
+                                       
+                                    </div>
+                                </div>
+                                 
+                                <!-- Usage as a class -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="form_control_1">
+                                            To Date 
+                                        </label>
+                                        <asp:TextBox ID="txtSToFollowDate" runat="server" class="form-control" placeholder="To Date"
+                                            ClientIDMode="Static"></asp:TextBox>
+                                      
+                                        <asp:CalendarExtender ID="txtSToFollowDate_CalendarExtender" runat="server"  Format="dd-MM-yyyy"
+                                            Enabled="True" TargetControlID="txtSToFollowDate">
+                                        </asp:CalendarExtender>
+                                      
+                                        <span class="help-block">
+                                           
+                                        </span>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+
+                             <div class="row">
                             <div class="row">
                             <div class="col-md-4">
                                     <div class="form-group">
@@ -86,8 +122,10 @@
                                     <asp:TemplateField HeaderText="Sr No." >
                                         <ItemTemplate>
                                             <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
-                                            <asp:Label ID="lblClinicID" Visible="false" runat="server" Text='<%# Eval("ClinicID")%>'></asp:Label>
-                                            <asp:Label ID="lblDoctor" Visible="false" runat="server" Text='<%# Eval("DoctorID")%>'></asp:Label>
+                                          
+                                            <asp:Label ID="lblDoctor" Visible="false" runat="server" Text='<%# Eval("DoctorId")%>'></asp:Label>
+                                            <asp:Label ID="lblClinicID" Visible="false" runat="server" Text='<%# Eval("ClinicId")%>'></asp:Label>
+                                            <asp:Label ID="lblIsDelete" Visible="false" runat="server" Text='<%# Eval("isDeleted")%>'></asp:Label>
                                            
                                         </ItemTemplate>
                                     </asp:TemplateField>
@@ -96,7 +134,7 @@
                                     
                                      <asp:TemplateField HeaderText="Clinic Name" >
                                         <ItemTemplate>
-                                            <asp:Label ID="lblVendorName" runat="server" Text='<%# Eval("ClinicName")%>'></asp:Label>
+                                            <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("ClinicName") %>'></asp:Label>
                                         </ItemTemplate>
                                          
                                     </asp:TemplateField>
@@ -104,21 +142,37 @@
 
                                      <asp:TemplateField HeaderText="Doctor Name" >
                                         <ItemTemplate>
-                                           <asp:Label ID="lblVisitorName1" runat="server" Text='<%# Eval("FirstName") +"  "+ Eval("LastName") %>'></asp:Label>
+                                           <asp:Label ID="lblVisitorName1" runat="server" Text='<%# Eval("DoctorName") %>'></asp:Label>
                                         </ItemTemplate>
-                                          <FooterStyle HorizontalAlign="Right" />
+                                          <%--<FooterStyle HorizontalAlign="Right" />
 												<FooterTemplate>
                                                     <asp:Label ID="lblTotal1" runat="server" Text="Total"></asp:Label>
+												</FooterTemplate>--%>
+                                    </asp:TemplateField>
+
+                                      <asp:TemplateField HeaderText="Mobile No" >
+                                        <ItemTemplate>
+                                           <asp:Label ID="lblMobile1" runat="server" Text='<%# Eval("Mobile1") %>'></asp:Label>
+                                        </ItemTemplate>
+                                          <%--<FooterStyle HorizontalAlign="Right" />
+												<FooterTemplate>
+                                                    <asp:Label ID="lblTotal1" runat="server" Text="Total"></asp:Label>
+												</FooterTemplate>--%>
+                                    </asp:TemplateField>
+
+                                     <asp:TemplateField HeaderText="Total Amount" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblTotal" runat="server"   Text=""></asp:Label>
+                                        </ItemTemplate>
+                                          <FooterStyle HorizontalAlign="Left" />
+												<FooterTemplate>
+                                                    <asp:Label ID="lblGTotla" runat="server" Text=""></asp:Label>
 												</FooterTemplate>
                                     </asp:TemplateField>
 
-
-
-
-
                                      <asp:TemplateField HeaderText="Paid Amount" >
                                         <ItemTemplate>
-                                            <asp:Label ID="lblPaidAmount" runat="server" Text='<%# Eval("PaidAmount")%>'></asp:Label>
+                                            <asp:Label ID="lblPaidAmount" runat="server" Text=""></asp:Label>
                                         </ItemTemplate>
 
                                           <FooterStyle HorizontalAlign="Left" />
@@ -130,7 +184,7 @@
 
                                     <asp:TemplateField HeaderText="Pending Amount" >
                                         <ItemTemplate>
-                                            <asp:Label ID="lblPendingAmount" runat="server" Text=""></asp:Label>
+                                            <asp:Label ID="lblPendingAmount" runat="server"   Text=""></asp:Label>
                                         </ItemTemplate>
                                           <FooterStyle HorizontalAlign="Left" />
 												<FooterTemplate>
@@ -138,7 +192,7 @@
 												</FooterTemplate>
                                     </asp:TemplateField>
                                     
-                                    
+                                   
 
                                     
                                 </Columns>
@@ -156,6 +210,7 @@
             </div>
         </div>
          </div>
+             </div>
     </asp:Panel>
             </ContentTemplate>
     </asp:UpdatePanel>

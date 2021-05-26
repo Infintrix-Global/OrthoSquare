@@ -94,6 +94,15 @@ namespace OrthoSquare.Dashboard {
         protected global::System.Web.UI.WebControls.Label lblPatient;
         
         /// <summary>
+        /// LinkButtonINV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButtonINV;
+        
+        /// <summary>
         /// totalinvoice control.
         /// </summary>
         /// <remarks>
@@ -101,6 +110,15 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label totalinvoice;
+        
+        /// <summary>
+        /// LinkButtonEXP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButtonEXP;
         
         /// <summary>
         /// lblExp control.
@@ -148,13 +166,13 @@ namespace OrthoSquare.Dashboard {
         protected global::System.Web.UI.WebControls.Button Button2;
         
         /// <summary>
-        /// ddlpatient control.
+        /// ddlpatient1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlpatient;
+        protected global::System.Web.UI.WebControls.DropDownList ddlpatient1;
         
         /// <summary>
         /// grdProducts control.
@@ -166,12 +184,66 @@ namespace OrthoSquare.Dashboard {
         protected global::System.Web.UI.WebControls.DataList grdProducts;
         
         /// <summary>
-        /// gvShow control.
+        /// ddlYEARENQ control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvShow;
+        protected global::System.Web.UI.WebControls.DropDownList ddlYEARENQ;
+        
+        /// <summary>
+        /// GridViewFolloupDetils1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewFolloupDetils1;
+        
+        /// <summary>
+        /// ddlyear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlyear;
+        
+        /// <summary>
+        /// ddlMonth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlMonth;
+        
+        /// <summary>
+        /// GridTREATMENTWISEPATIENT control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridTREATMENTWISEPATIENT;
+        
+        /// <summary>
+        /// ddlyesrEXP1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlyesrEXP1;
+        
+        /// <summary>
+        /// lt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal lt;
     }
 }

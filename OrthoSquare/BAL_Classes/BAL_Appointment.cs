@@ -20,7 +20,17 @@ namespace OrthoSquare.BAL_Classes
             {
                 General objGeneral = new General();
 
+                DateTime DateBirth1;
+                if (bojApp.DateBirth == "")
+                {
+                    DateBirth1 = objGeneral.getDatetime("01-01-1999");
 
+                }
+                else
+                {
+                    DateBirth1 = objGeneral.getDatetime(bojApp.DateBirth);
+
+                }
 
 
                 objGeneral.AddParameterWithValueToSQLCommand("@Appointmentid", bojApp.Appointmentid);
@@ -29,7 +39,10 @@ namespace OrthoSquare.BAL_Classes
 
                 objGeneral.AddParameterWithValueToSQLCommand("@FirstName", bojApp.FirstName);
                 objGeneral.AddParameterWithValueToSQLCommand("@LastName", bojApp.LastName);
-                objGeneral.AddParameterWithValueToSQLCommand("@DateBirth", objGeneral.getDatetime(bojApp.DateBirth));
+
+                objGeneral.AddParameterWithValueToSQLCommand("@DateBirth", DateBirth1);
+
+                // objGeneral.AddParameterWithValueToSQLCommand("@DateBirth", objGeneral.getDatetime(bojApp.DateBirth));
                 objGeneral.AddParameterWithValueToSQLCommand("@Age", bojApp.Age);
 
                 objGeneral.AddParameterWithValueToSQLCommand("@Gender", bojApp.Gender);
@@ -40,15 +53,15 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@ModifiedBy", bojApp.ModifiedBy);
                 objGeneral.AddParameterWithValueToSQLCommand("@IsActive", 1);
                 objGeneral.AddParameterWithValueToSQLCommand("@OffLineData", 1);
-                objGeneral.AddParameterWithValueToSQLCommand("@start_date", objGeneral .getDatetime11(bojApp.start_date));
+                objGeneral.AddParameterWithValueToSQLCommand("@start_date", objGeneral.getDatetime11(bojApp.start_date));
                 objGeneral.AddParameterWithValueToSQLCommand("@end_date", objGeneral.getDatetime11(bojApp.end_date));
                 objGeneral.AddParameterWithValueToSQLCommand("@start_time", bojApp.start_time);
                 objGeneral.AddParameterWithValueToSQLCommand("@end_time", bojApp.end_time);
                 objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", bojApp.DoctorID);
                 objGeneral.AddParameterWithValueToSQLCommand("@patientid", bojApp.patientid);
                 objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", bojApp.ClinicID);
-
-                if (bojApp.patientid > 0)
+                objGeneral.AddParameterWithValueToSQLCommand("@EnquiryID", bojApp.EnquiryID);
+                if (bojApp.patientid > 0 || bojApp.EnquiryID > 0)
                 {
                     objGeneral.AddParameterWithValueToSQLCommand("@mode", 2);
                 }
@@ -66,7 +79,7 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
-         public int Add_AppointmentDetails(int Did)
+        public int Add_AppointmentDetails(int Did)
         {
             int isInserted = -1;
             try
@@ -102,19 +115,59 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
-        public DataTable GetAlltodayAppoinmentNew(int Cid)
+        public DataTable GetAlltodayAppoinmentNew1(int Cid)
         {
+            DataTable dt = new DataTable();
+            try
+            {
+                strQuery = " Select * from AppointmentMaster AM join  tbl_DoctorDetails D on D.DoctorID = AM.DoctorID where convert(date,AM.start_date,101)  =CONVERT(date,GETDATE(),101) AND Status IN  (0,1)";
 
-            strQuery = " Select TOP 10 *,D.FirstName as DFirstName,D.LastName As DLastName from AppointmentMaster AM join  tbl_DoctorDetails D on D.DoctorID = AM.DoctorID where convert(date,AM.start_date,101)  =CONVERT(date,GETDATE(),101) AND Status IN  (0,1)";
+                if (Cid > 0)
+                    strQuery += " and AM.ClinicID='" + Cid + "'";
 
-            if (Cid > 0)
-                strQuery += " and AM.ClinicID='" + Cid + "'";
-
-            return objGeneral.GetDatasetByCommand(strQuery);
-        
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+            }
+            return dt;
         }
 
+        public DataTable GetAlltodayAppoinmentNew(int Cid)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                strQuery = " Select TOP 10 *,D.FirstName as DFirstName,D.LastName As DLastName from AppointmentMaster AM join  tbl_DoctorDetails D on D.DoctorID = AM.DoctorID where convert(date,AM.start_date,101)  =CONVERT(date,GETDATE(),101) AND Status IN  (0,1)";
 
+                if (Cid > 0)
+                    strQuery += " and AM.ClinicID='" + Cid + "'";
+
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+            }
+            return dt;
+        }
+
+        public DataTable GetAlltodayAppoinmentNewDocter(int Did)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                strQuery = " Select TOP 10 *,D.FirstName as DFirstName,D.LastName As DLastName from AppointmentMaster AM join  tbl_DoctorDetails D on D.DoctorID = AM.DoctorID where convert(date,AM.start_date,101)  =CONVERT(date,GETDATE(),101) AND Status IN  (0,1)";
+
+                if (Did > 0)
+                    strQuery += " and AM.DoctorID='" + Did + "'";
+
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+            }
+            return dt;
+        }
 
 
 
@@ -122,12 +175,6 @@ namespace OrthoSquare.BAL_Classes
         {
             try
             {
-
-
-
-
-
-
                 //objGeneral.AddParameterWithValueToSQLCommand("@IsActive", true);
                 objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", 0);
                 objGeneral.AddParameterWithValueToSQLCommand("@Appointmentid ", 0);
@@ -143,77 +190,93 @@ namespace OrthoSquare.BAL_Classes
 
         public DataTable GetAllListtodayAppoinmentNew(string Name, string MobileNo, int DoctorID, int Status)
         {
-
-            strQuery = "Select *,D.FirstName as DFirstName,D.LastName As DLastName from AppointmentMaster AM join  tbl_DoctorDetails D on D.DoctorID = AM.DoctorID where convert(date,AM.start_date,101)  =CONVERT(date,GETDATE(),101)  ";
-           
-        
-            General objGeneral = new General();
-            if (Name != "")
-                strQuery += " and  AM.FirstName like '%" + Name + "%'";
-            if (MobileNo != "")
-                strQuery += " and AM.MobileNo1=@MobileNo ";
-
-            if (DoctorID > 0)
-                strQuery += " and AM.DoctorID=@DoctorID ";
-
-            if (Status > 0)
+            DataTable dt = new DataTable();
+            try
             {
-                strQuery += " and AM.Status=@Status ";
+                strQuery = "Select *,D.FirstName as DFirstName,D.LastName As DLastName from AppointmentMaster AM join  tbl_DoctorDetails D on D.DoctorID = AM.DoctorID where convert(date,AM.start_date,101)  =CONVERT(date,GETDATE(),101)  ";
+
+
+                General objGeneral = new General();
+                if (Name != "")
+                    strQuery += " and  AM.FirstName like '%" + Name + "%'";
+                if (MobileNo != "")
+                    strQuery += " and AM.MobileNo1=@MobileNo ";
+
+                if (DoctorID > 0)
+                    strQuery += " and AM.DoctorID=@DoctorID ";
+
+                if (Status > 0)
+                {
+                    strQuery += " and AM.Status=@Status ";
+                }
+                else
+                {
+
+                    strQuery += " AND Status IN  (0,1)";
+                }
+
+                objGeneral.AddParameterWithValueToSQLCommand("@Name", Name);
+                objGeneral.AddParameterWithValueToSQLCommand("@MobileNo", MobileNo);
+                objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", DoctorID);
+                objGeneral.AddParameterWithValueToSQLCommand("@Status", Status);
+
+                dt = objGeneral.GetDatasetByCommand(strQuery);
             }
-            else
+            catch (Exception ex)
             {
-
-                strQuery += "AND Status IN  (0,1)";
             }
-          
-           
-
-            objGeneral.AddParameterWithValueToSQLCommand("@Name", Name);
-            objGeneral.AddParameterWithValueToSQLCommand("@MobileNo", MobileNo);
-            objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", DoctorID);
-            objGeneral.AddParameterWithValueToSQLCommand("@Status", Status);
-           
-            return objGeneral.GetDatasetByCommand(strQuery);
-
+            return dt;
         }
 
 
 
 
-        public DataTable GetAllListtodayAppoinmentDetails(string Name, string MobileNo, int DoctorID, int Status)
+        public DataTable GetAllListtodayAppoinmentDetails(string Name, string MobileNo, int DoctorID, int Cid, int Status, string FromDate, string ToDate, string TodayDate)
         {
-
-            strQuery = "Select *,D.FirstName as DFirstName,D.LastName As DLastName from AppointmentMaster AM join  tbl_DoctorDetails D on D.DoctorID = AM.DoctorID where convert(date,AM.start_date,101)  >= CONVERT(date,GETDATE(),101)  ";
-
-
-            General objGeneral = new General();
-            if (Name != "")
-                strQuery += " and  AM.FirstName like '%"+Name+"%'";
-            if (MobileNo != "")
-                strQuery += " and AM.MobileNo1=@MobileNo ";
-
-            if (DoctorID > 0)
-                strQuery += " and AM.DoctorID=@DoctorID ";
-
-            if (Status > 0)
+            DataTable dt = new DataTable();
+            try
             {
-                strQuery += " and AM.Status=@Status ";
+                General objGeneral = new General();
+                strQuery = "Select *,D.FirstName as DFirstName,D.LastName As DLastName from AppointmentMaster AM join  tbl_DoctorDetails D on D.DoctorID = AM.DoctorID where AM.IsActive =1   ";
+
+                if (TodayDate == "1")
+                    strQuery += " and  convert(date,AM.start_date,101)  >= CONVERT(date,GETDATE(),101)";
+
+                if (Name != "")
+                    strQuery += " and  AM.FirstName like '%" + Name + "%'";
+                if (MobileNo != "")
+                    strQuery += " and AM.MobileNo1=@MobileNo ";
+
+                if (DoctorID > 0)
+                    strQuery += " and AM.DoctorID=@DoctorID ";
+                if (Cid > 0)
+                    strQuery += " and AM.ClinicId=@Cid";
+                if (FromDate != "" && ToDate != "")
+                    strQuery += " and convert(date,AM.start_date,105) between convert(date,@FromDate,105) and convert(date,@ToDate,105)";
+
+                if (Status > 0)
+                {
+                    strQuery += " and AM.Status=@Status ";
+                }
+                else
+                {
+
+                    strQuery += " AND Status IN  (0,1)";
+                }
+
+                objGeneral.AddParameterWithValueToSQLCommand("@Name", Name);
+                objGeneral.AddParameterWithValueToSQLCommand("@MobileNo", MobileNo);
+                objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", DoctorID);
+                objGeneral.AddParameterWithValueToSQLCommand("@Cid", Cid);
+                objGeneral.AddParameterWithValueToSQLCommand("@Status", Status);
+                objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@ToDate", ToDate);
+                dt = objGeneral.GetDatasetByCommand(strQuery);
             }
-            else
+            catch (Exception ex)
             {
-
-                strQuery += "AND Status IN  (0,1)";
             }
-
-
-
-            objGeneral.AddParameterWithValueToSQLCommand("@Name", Name);
-            objGeneral.AddParameterWithValueToSQLCommand("@MobileNo", MobileNo);
-            objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", DoctorID);
-            objGeneral.AddParameterWithValueToSQLCommand("@Status", Status);
-
-            return objGeneral.GetDatasetByCommand(strQuery);
-
+            return dt;
         }
 
         public int GetReject(int Aid)
@@ -259,7 +322,7 @@ namespace OrthoSquare.BAL_Classes
                 //objGeneral.AddParameterWithValueToSQLCommand("@IsActive", true);
                 objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", 0);
                 objGeneral.AddParameterWithValueToSQLCommand("@Appointmentid ", 0);
-                objGeneral.AddParameterWithValueToSQLCommand("@mode",6);
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 6);
                 ds = objGeneral.GetDatasetByCommand_SP("GET_Appointment");
             }
             catch (Exception ex)
@@ -268,6 +331,85 @@ namespace OrthoSquare.BAL_Classes
             return ds.Tables[0];
         }
 
+
+
+
+        public DataTable GetAlltodayConsultationViewCon(int Did, int Cid, string pname, string pcode)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                strQuery = " Select *,PM.FristName as PFristName,PM.LastName as PLastName,PM.Mobile as PMobile,DM.FirstName as DFirstName,DM.LastName as DLastName from AppointmentMaster AM  ";
+                strQuery += " Join PatientMaster PM on PM.patientid = AM.patientid ";
+                strQuery += " Join tbl_DoctorDetails DM on DM.DoctorID = AM.DoctorID ";
+                strQuery += " where AM.Status =1 ";
+
+                if (Did > 0)
+                    strQuery += " and AM.DoctorID ='" + Did + "'";
+
+                if (Cid > 0)
+                    strQuery += " and AM.ClinicID ='" + Cid + "'";
+                if (pname != "")
+                    strQuery += " and PM.FristName like '" + pname + "%'";
+                if (pcode != "")
+                    strQuery += " and PM.PatientCode ='" + pcode + "'";
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+            }
+            return dt;
+        }
+
+
+
+
+        public DataTable GetAlltodayConsultationViewConnew(int Did, int Cid, string pname, string pcode)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                strQuery = " Select PM.patientid,PM.PatientCode,PM.FristName as PFristName,PM.LastName as PLastName,PM.Mobile as PMobile,DM.FirstName as DFirstName,DM.LastName as DLastName from TreatmentbyPatient AM  ";
+                strQuery += " Join PatientMaster PM on PM.patientid = AM.patientid ";
+                strQuery += " Join tbl_DoctorDetails DM on DM.DoctorID = AM.DoctorID ";
+                strQuery += " where PM.IsActive =1 ";
+
+                if (Did > 0)
+                    strQuery += " and AM.DoctorID ='" + Did + "'";
+
+                if (Cid > 0)
+                    strQuery += " and PM.ClinicID ='" + Cid + "'";
+                if (pname != "")
+                    strQuery += " and PM.FristName like '" + pname + "%'";
+                if (pcode != "")
+                    strQuery += " and PM.PatientCode ='" + pcode + "'";
+                strQuery += " Group by PM.patientid,PM.FristName,PM.LastName,PM.PatientCode ,PM.Mobile,DM.FirstName,DM.LastName";
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+            }
+            return dt;
+        }
+
+
+
+        public DataTable GetAllviewConsultation()
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+
+                strQuery = "Select *,PM.FristName as PFristName,PM.LastName as PLastName,PM.Mobile as PMobile from PatientMaster PM where PM.IsActive=1";
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return dt;
+
+        }
 
         public DataTable GetAllAppoimentDetails(int Aid)
         {
@@ -285,15 +427,37 @@ namespace OrthoSquare.BAL_Classes
             return ds.Tables[0];
         }
 
-        public DataTable GetPreviousConsultationDetila(long patientid11,long Did)
+        public DataTable GetPreviousConsultationDetila(long patientid11, long Did)
         {
+            DataTable dt = new DataTable();
+            try
+            {
+                strQuery = " Select *  from TreatmentbyPatient TP join  TreatmentMASTER TM on Tm.TreatmentID =TP.TreatmentID join  tbl_DoctorDetails D on D.DoctorID =TP.DoctorID where TP.patientid ='" + patientid11 + "' and TP.IsActive =1 and StartedTreatments='Yes'";
 
-            strQuery = " Select *  from TreatmentbyPatient TP join  TreatmentMASTER TM on Tm.TreatmentID =TP.TreatmentID join  tbl_DoctorDetails D on D.DoctorID =TP.DoctorID where TP.patientid ='"+patientid11+"' and TP.IsActive =1";
-
-            return objGeneral.GetDatasetByCommand(strQuery);
-          
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+            }
+            return dt;
         }
 
-     
+
+        public DataTable GetTreatmentPlanConsultationDetila(long patientid11, long Did)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                strQuery = " Select *  from TreatmentPlan TP join  tbl_DoctorDetails D on D.DoctorID =TP.DoctorID where TP.patientid ='" + patientid11 + "' and TP.IsActive =1";
+
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return dt;
+        }
+
     }
 }

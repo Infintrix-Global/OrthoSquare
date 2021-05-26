@@ -150,7 +150,7 @@ namespace OrthoSquare.Master
                     lblMessage.Text = "Treatment Cost Plans Deleted.";
                     lblMessage.ForeColor = System.Drawing.Color.Red;
                     Response.Redirect("TreatmentCostPlans.aspx");
-                    //btSearch_Click(sender, e);
+                    btSearch_Click(sender, e);
                 }
             }
             catch (Exception ex)
@@ -160,7 +160,7 @@ namespace OrthoSquare.Master
         }
 
 
-        protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        protected void gvShow_PageIndexChanging123(object sender, GridViewPageEventArgs e)
         {
 
             gvShow.PageIndex = e.NewPageIndex;
@@ -171,7 +171,7 @@ namespace OrthoSquare.Master
         {
 
             GridTreatmentCostPlans.PageIndex = e.NewPageIndex;
-           // btSearch_Click(sender, e);
+            getAllTreatmentCostPaln();
         }
 
         protected void btSearch_Click(object sender, EventArgs e)

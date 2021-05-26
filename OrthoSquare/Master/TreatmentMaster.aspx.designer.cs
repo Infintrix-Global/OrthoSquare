@@ -67,15 +67,6 @@ namespace OrthoSquare.Master {
         protected global::System.Web.UI.WebControls.TextBox txtTCost;
         
         /// <summary>
-        /// RequiredFieldCost control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldCost;
-        
-        /// <summary>
         /// btAdd control.
         /// </summary>
         /// <remarks>
@@ -101,6 +92,15 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Edit;
+        
+        /// <summary>
+        /// lblMSG1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMSG1;
         
         /// <summary>
         /// txtSearch control.

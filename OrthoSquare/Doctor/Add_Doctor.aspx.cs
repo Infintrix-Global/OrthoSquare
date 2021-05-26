@@ -21,6 +21,7 @@ namespace OrthoSquare.Doctor
         BasePage objBasePage = new BasePage();
         BAL_DoctorsDetails objDoc = new BAL_DoctorsDetails();
         BAL_Appointment objApp = new BAL_Appointment();
+        BAL_Clinic objclinic = new BAL_Clinic();
         string AdharCarImageUrl = string.Empty;
         string CertificateImageUrl = string.Empty;
         string PanCardImageUrl = string.Empty;
@@ -34,9 +35,19 @@ namespace OrthoSquare.Doctor
         public static DataTable AllData = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.Form.Attributes.Add("enctype", "multipart/form-data");
+            //Page.Form.Attributes.Add("enctype", "multipart/form-data");
+            FileUpload1.Attributes["onchange"] = "UploadFile(this)";
+
             if (!IsPostBack)
             {
+                bindClinicSearch();
+
+                if (SessionUtilities.RoleID == 1)
+                {
+                    ddlClinicSearch.SelectedValue = SessionUtilities.Empid.ToString();
+                    // BindDocter(Convert.ToInt32(SessionUtilities.Empid));
+                    // BindPatient();
+                }
                 BindCountry();
                 ddlCountry.SelectedValue = "1";
                 BindState();
@@ -48,7 +59,8 @@ namespace OrthoSquare.Doctor
                 DoctorTypeNew();
                 getAllDoctor();
                 Bindddlclinic();
-                BindddlclinicAS();
+                BindddlclinicUplodExl();
+              
                 txtDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
                 ddlState.Items.Insert(0, new ListItem("--- Select ---", "0"));
                 ddlCity.Items.Insert(0, new ListItem("--- Select ---", "0"));
@@ -58,28 +70,64 @@ namespace OrthoSquare.Doctor
                 TabContactPerson1.Tabs[2].Enabled = false;
             }
         }
+
+        public void bindClinicSearch()
+        {
+
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                dt = objclinic.GetAllClinicDetaisNew(SessionUtilities.Empid);
+            }
+            else
+            {
+                dt = objclinic.GetAllClinicDetais();
+
+            }
+            ddlClinicSearch.DataSource = dt;
+
+            ddlClinicSearch.DataValueField = "ClinicID";
+            ddlClinicSearch.DataTextField = "ClinicName";
+            ddlClinicSearch.DataBind();
+            ddlClinicSearch.Items.Insert(0, new ListItem("-- Select Clinic --", "0", true));
+
+        }
+
         public void getAllDoctor()
         {
 
             int Cid1 = 0;
+            int Did1 = 0;
 
-
-            if(SessionUtilities .RoleID == 2)
+            if (SessionUtilities.RoleID == 3)
             {
+                Did1 = SessionUtilities.Empid;
+                AllData = objDoc.GetAllDoctersNew2(Cid1, Did1, txtNAme.Text.Trim(), txtMobiles.Text.Trim());
 
-                Cid1 = 0;
+
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                Cid1 = Convert.ToInt32(ddlClinicSearch.SelectedValue);
+                AllData = objDoc.GetAllDoctersNew(Cid1, Did1, txtNAme.Text.Trim(), txtMobiles.Text.Trim());
+
             }
             else
             {
-                Cid1 = SessionUtilities.Empid;
+                Cid1 = Convert.ToInt32(ddlClinicSearch.SelectedValue);
+                Did1 = 0;
+                AllData = objDoc.GetAllDoctersNew2(Cid1, Did1, txtNAme.Text.Trim(), txtMobiles.Text.Trim());
+
 
             }
 
 
 
-
-
-            AllData = objDoc.GetAllDocters(Cid1);
             gvShow.DataSource = AllData;
             gvShow.DataBind();
 
@@ -87,39 +135,90 @@ namespace OrthoSquare.Doctor
 
         public void Bindddlclinic()
         {
-            ddlclinic.DataSource = objcommon.clinicMaster();
+
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                dt = objclinic.GetAllClinicDetaisNew(SessionUtilities.Empid);
+            }
+            else
+            {
+                dt = objclinic.GetAllClinicDetais();
+
+            }
+            ddlclinic.DataSource = dt;
+
+            // ddlclinic.DataSource = objcommon.clinicMaster();
             ddlclinic.DataTextField = "ClinicName";
             ddlclinic.DataValueField = "ClinicID";
             ddlclinic.DataBind();
 
-         //   ddlclinic.Items.Insert(0, new ListItem("--- Select ---", "0"));
 
-
-         //   lst.Items.Clear();
-         //   lst.Items.Add(new ListItem("-- Select --", "-1"));
-
-         //   lst.SelectedIndex = 0;
-
-         //  // DataSet ds = new DataSet();
-         ////  ds.Tables.Add(objcommon.clinicMaster()); // Get Your Detail Here from Database 
-
-         //   lst.DataSource = objcommon.clinicMaster();
-         //   lst.DataBind();
 
         }
 
 
-
-
-
-        public void BindddlclinicAS()
+        public void BindddlclinicUplodExl()
         {
+
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                dt = objclinic.GetAllClinicDetaisNew(SessionUtilities.Empid);
+            }
+            else
+            {
+                dt = objclinic.GetAllClinicDetais();
+
+            }
+            ddlUploadClinic.DataSource = dt;
+
+            // ddlclinic.DataSource = objcommon.clinicMaster();
+            ddlUploadClinic.DataTextField = "ClinicName";
+            ddlUploadClinic.DataValueField = "ClinicID";
+            ddlUploadClinic.DataBind();
+            ddlUploadClinic.Items.Insert(0, new ListItem("--- Select ---", "0"));
+
+
+        }
+
+        public void BindddlclinicAS(int DoctorID)
+        {
+
+
+
             CheckBoxList1.DataSource = objcommon.clinicMaster();
             CheckBoxList1.DataTextField = "ClinicName";
             CheckBoxList1.DataValueField = "ClinicID";
             CheckBoxList1.DataBind();
 
-          
+
+            DataTable dt111SP = objDoc.GetDoctersByClinicSelect(DoctorID);
+
+
+            if (dt111SP != null && dt111SP.Rows.Count > 0)
+            {
+                for (int j = 0; j < dt111SP.Rows.Count; j++)
+                {
+                    for (int i = 0; i < CheckBoxList1.Items.Count; i++)
+                    {
+                        if (CheckBoxList1.Items[i].Value == dt111SP.Rows[j]["ClinicID"].ToString())
+                        {
+                            CheckBoxList1.Items[i].Selected = true;
+                        }
+                    }
+                }
+            }
 
         }
         private long DoctorID
@@ -168,7 +267,7 @@ namespace OrthoSquare.Doctor
             ddlState.DataValueField = "StateID";
             ddlState.DataBind();
             ddlState.Items.Insert(0, new ListItem("--- Select ---", "0"));
-         
+
         }
 
         public void BindCity()
@@ -194,7 +293,7 @@ namespace OrthoSquare.Doctor
             ddlCity.DataValueField = "CityID";
             ddlCity.DataBind();
             ddlCity.Items.Insert(0, new ListItem("--- Select ---", "0"));
-           
+
         }
 
         public void DoctorSpeciality()
@@ -207,23 +306,29 @@ namespace OrthoSquare.Doctor
 
         public void DoctorDegree()
         {
-            ddl_Degree1.DataSource = objcommon.DoctorDegree();
-            ddl_Degree1.DataValueField = "DegreeID";
-            ddl_Degree1.DataTextField = "Name";
-            ddl_Degree1.DataBind();
+
+
+
+            ddlDegreeQ.DataSource = objcommon.DoctorDegree();
+            ddlDegreeQ.DataValueField = "DegreeID";
+            ddlDegreeQ.DataTextField = "Name";
+            ddlDegreeQ.DataBind();
+            ddlDegreeQ.Items.Insert(ddlDegreeQ.Items.Count, new ListItem("Other", "Other"));
+            ddlDegreeQ.Items.Insert(0, new ListItem("--- Select ---", "0"));
         }
         private void DoctorTypeNew()
         {
-           
-                    ddlDoctorTypeNew.DataSource = objcommon.AllDoctorType();;
-                    ddlDoctorTypeNew.DataValueField = "DocTypeID";
-                    ddlDoctorTypeNew.DataTextField = "DoctorType";
-                    ddlDoctorTypeNew.DataBind();
-                    ddlDoctorTypeNew.Items.Insert(0, new ListItem("-- Select Doctor Type --", "0", true));
 
-                
-            }
-        
+            ddlDoctorTypeNew.DataSource = objcommon.AllDoctorType(); ;
+            ddlDoctorTypeNew.DataValueField = "DocTypeID";
+            ddlDoctorTypeNew.DataTextField = "DoctorType";
+            ddlDoctorTypeNew.DataBind();
+            ddlDoctorTypeNew.Items.Insert(0, new ListItem("-- Select Doctor Type --", "0", true));
+
+
+            ddlDoctorTypeNew.SelectedItem.Text = "Full-Time Consultant";
+        }
+
         protected void ddlCountry_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindState();
@@ -251,184 +356,32 @@ namespace OrthoSquare.Doctor
             TextBox1.Text = name;
 
         }
-     
+
+
+        protected void cbAll_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string name = "";
+
+            for (int i = 0; i < CheckBoxList1.Items.Count; i++)
+            {
+                if (CheckBoxList1.Items[i].Selected)
+                {
+                    name += CheckBoxList1.Items[i].Text + ",";
+                    lID += CheckBoxList1.Items[i].Value + ",";
+                }
+            }
+            TextBox1.Text = name;
+
+        }
+
         protected void btAdd_Click(object sender, EventArgs e)
         {
             try
             {
                 int _isInserted = -1;
 
-               
-                string specialities = "";
-                foreach (ListItem item in ddl_SelectSpeciality1.Items)
-                {
-                    if (item.Selected)
-                    {
-                        specialities += item.Value + ",";
-                    }
-
-                }
-                
-
-
-
-                for (int i = 0; i < ddl_SelectSpeciality1.Items.Count; i++)
-                {
-
-                    if (ddl_SelectSpeciality1.Items[i].Selected)
-                    {
-                        specialities += ddl_SelectSpeciality1.Items[i].Value + ",";
-                    }
-
-                }
-                if (specialities != "")
-                {
-                    specialities = specialities.Remove(specialities.Length - 1);
-                }
-
-               
-                string degrees = "";
-               
-
-                for (int i = 0; i < ddl_Degree1.Items.Count; i++)
-                {
-
-                    if (ddl_Degree1.Items[i].Selected)
-                    {
-                        degrees += ddl_Degree1.Items[i].Value + ",";
-                    }
-
-                    
-                }
-
-
-                if (degrees != "")
-                {
-                    degrees = degrees.Remove(degrees.Length - 1);
-                }
-
-              
-              //  string Password = objBasePage.Encryptdata(txtPassword.Text.Trim());
-
-                string checkpwd = objBasePage.Decryptdata("cGtjNjE1Mg==");
-
-                int DIDS =   objDoc.GetDoctorsID() + 1 ;
-                string Password1 = txtFristName.Text +"@" + DIDS;
-                DoctorDetails objClinicDetails = new DoctorDetails()
-                {
-                    DoctorID = DoctorID,
-                    DoctorTypeID =Convert.ToInt32(ddlDoctorTypeNew .SelectedValue) ,
-                    RegDate =txtDate .Text ,
-                    FirstName  = ddlTitla.SelectedValue + txtFristName.Text,
-                    LastName = txtLastName.Text,
-                    BirthDate  =txtBirthDate.Text,
-                    Gender =RADGender .SelectedItem.Text ,
-                    AddressLine1 =txtAddress1 .Text ,
-                    AddressLine2=txtAddress2.Text ,
-                    CountryID = Convert.ToInt32(ddlCountry.SelectedValue),
-                    StateID = Convert.ToInt32(ddlState.SelectedValue),
-                    CityID = Convert.ToInt32(ddlCity.SelectedValue),
-                    AreaPin =txtPinCode .Text ,
-                    PhoneNo1 =txtMobileNo1 .Text ,
-                    PhoneNo2 = txtMobileNo2 .Text ,
-                    Email = txtEmail.Text,
-                    BloodGroup =txtBloodGroup.Text ,
-                    PanCardNo =txtPanCard.Text ,
-                    PanCardImageUrl = lblpancard.Text ,
-                    AdharCardNo =txtAdharNo .Text ,
-                    AdharCardImageUrl =lblAdharcard .Text  ,
-                    ProfileImageUrl = lbl_filepath1.Text , 
-                    RegistrationNo = txtRegNo.Text ,
-                    RegistrationImageUrl=lblCrtificat.Text ,
-                    IdentityPolicyNo=txtIdentity .Text ,
-                    IdentityPolicyImageUrl=lblPolicy.Text,
-                    DegreeUpload1=lblDegree1 .Text ,
-                    DegreeUpload2 =lblDegree2 .Text ,
-                    UserName = txtMobileNo1.Text,
-                    UserPassword = Password1,
-                    specialities=specialities,
-                    ClinicID=Convert .ToInt32 (ddlclinic .SelectedValue ),
-                    Intime =txtInTime .Text ,
-                    Outtime =txtOutTime .Text ,
-                    degrees =degrees ,
-                    IsActive = true
-                };
-
-
-                int Isv = objDoc.GetDoctorsIsvelid(txtMobileNo1.Text);
-
-                if (Isv > 0)
-                {
-
-                    lblMessage.Text = "Doctor already exists";
-                    lblMessage.ForeColor = System.Drawing.Color.Red;
-                }
-                else
-                {
-
-                    //for (int i = 0; i < ddlclinic.Items.Count; i++)
-                    //{
-                    //    if (ddlclinic.Items[i].Selected)
-                    //    {
-                    //        lID = ddlclinic.Items[i].Value;
-
-
-                          
-                    //    }
-                    //}
-
-
-
-
-
-                    _isInserted = objDoc.Add_Doctors(objClinicDetails);
-
-                    if (_isInserted == -1)
-                    {
-                        lblMessage.Text = "Failed to Add Doctor";
-                        lblMessage.ForeColor = System.Drawing.Color.Red;
-                    }
-                    else
-                    {
-                        // clinicID = 0;
-
-
-                        int Did = objDoc.GetDoctorsID();
-
-                        int IDq = objApp.Add_AppointmentDetails(Did);
-
-                        lblMessage.Text = "Doctor Added Successfully";
-                        lblMessage.ForeColor = System.Drawing.Color.Green;
-                        SendMail(txtEmail.Text, txtMobileNo1.Text, Password1);
-
-                        Clear();
-                        txtDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
-
-        protected void btUpdate_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int _isInserted = -1;
-
 
                 string specialities = "";
-                foreach (ListItem item in ddl_SelectSpeciality1.Items)
-                {
-                    if (item.Selected)
-                    {
-                        specialities += item.Value + ",";
-                    }
-
-                }
 
 
 
@@ -451,35 +404,17 @@ namespace OrthoSquare.Doctor
                 string degrees = "";
 
 
-                for (int i = 0; i < ddl_Degree1.Items.Count; i++)
-                {
-
-                    if (ddl_Degree1.Items[i].Selected)
-                    {
-                        degrees += ddl_Degree1.Items[i].Value + ",";
-                    }
-
-
-                }
-
-
-                if (degrees != "")
-                {
-                    degrees = degrees.Remove(degrees.Length - 1);
-                }
-
-
-                //  string Password = objBasePage.Encryptdata(txtPassword.Text.Trim());
 
                 string checkpwd = objBasePage.Decryptdata("cGtjNjE1Mg==");
 
                 int DIDS = objDoc.GetDoctorsID() + 1;
-                string Password1 = txtFristName.Text + "@" + DIDS;
+                string str = txtFristName.Text.Trim().Replace(" ", "");
+                string Password1 = str + "@" + DIDS;
                 DoctorDetails objClinicDetails = new DoctorDetails()
                 {
                     DoctorID = DoctorID,
                     DoctorTypeID = Convert.ToInt32(ddlDoctorTypeNew.SelectedValue),
-                    RegDate =txtDate.Text,
+                    RegDate = txtDate.Text,
                     FirstName = ddlTitla.SelectedValue + txtFristName.Text,
                     LastName = txtLastName.Text,
                     BirthDate = txtBirthDate.Text,
@@ -503,8 +438,160 @@ namespace OrthoSquare.Doctor
                     RegistrationImageUrl = lblCrtificat.Text,
                     IdentityPolicyNo = txtIdentity.Text,
                     IdentityPolicyImageUrl = lblPolicy.Text,
-                    DegreeUpload1 = lblDegree1.Text,
-                    DegreeUpload2 = lblDegree2.Text,
+                    DegreeUpload1 = "",
+                    DegreeUpload2 = "",
+                    UserName = txtMobileNo1.Text,
+                    UserPassword = Password1,
+                    specialities = specialities,
+                    ClinicID = Convert.ToInt32(ddlclinic.SelectedValue),
+                    Intime = txtInTime.Text,
+                    Outtime = txtOutTime.Text,
+                    degrees = degrees,
+
+                    IsActive = true
+                };
+
+
+
+
+
+
+                _isInserted = objDoc.Add_Doctors(objClinicDetails);
+                int Did = objDoc.GetDoctorsID();
+
+
+                DataTable dt = new DataTable();
+                dt.Columns.Add(new DataColumn("DoctorID", typeof(int)));
+                dt.Columns.Add(new DataColumn("DegreeName", typeof(string)));
+                dt.Columns.Add(new DataColumn("Boardname", typeof(string)));
+                dt.Columns.Add(new DataColumn("CertificationImage", typeof(string)));
+
+
+                for (int i = 0; i <= GridQualification.Rows.Count - 1; i++)
+                {
+                    GridViewRow gRow = GridQualification.Rows[i];
+                    string txt_CertificationName = ((TextBox)gRow.FindControl("txt_CertificationName")).Text;
+                    string txt_boardname = ((TextBox)gRow.FindControl("txt_boardname")).Text;
+
+                    string txtFileName = ((TextBox)gRow.FindControl("txtFileName")).Text;
+
+                    if (txt_CertificationName != "" && txt_boardname != "")
+                    {
+                        dt.Rows.Add(Did, txt_CertificationName, txt_boardname, txtFileName);
+                    }
+                }
+
+
+
+                bool Result1 = objDoc.InsertUpdateAddDoctor_Degree(dt);
+
+                if (_isInserted == -1)
+                {
+                    lblMessage.Text = "Failed to Add Doctor";
+                    lblMessage.ForeColor = System.Drawing.Color.Red;
+                }
+                else
+                {
+                    // clinicID = 0;
+
+
+                    int Did1 = objDoc.GetDoctorsID();
+
+                    int IDq = objApp.Add_AppointmentDetails(Did1);
+
+                    lblMessage.Text = "Doctor Added Successfully";
+                    lblMessage.ForeColor = System.Drawing.Color.Green;
+                    SendMail(txtEmail.Text, txtMobileNo1.Text, Password1);
+
+                    Clear();
+                    txtDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+
+        protected void btUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int _isInserted = -1;
+
+
+                string specialities = "";
+                //foreach (ListItem item in ddl_SelectSpeciality1.Items)
+                //{
+                //    if (item.Selected)
+                //    {
+                //        specialities += item.Value + ",";
+                //    }
+
+                //}
+
+
+
+
+                for (int i = 0; i < ddl_SelectSpeciality1.Items.Count; i++)
+                {
+
+                    if (ddl_SelectSpeciality1.Items[i].Selected)
+                    {
+                        specialities += ddl_SelectSpeciality1.Items[i].Value + ",";
+                    }
+
+                }
+                if (specialities != "")
+                {
+                    specialities = specialities.Remove(specialities.Length - 1);
+                }
+
+
+                string degrees = "";
+
+
+
+
+
+                //  string Password = objBasePage.Encryptdata(txtPassword.Text.Trim());
+
+                string checkpwd = objBasePage.Decryptdata("cGtjNjE1Mg==");
+
+                int DIDS = objDoc.GetDoctorsID() + 1;
+                string Password1 = txtFristName.Text + "@" + DIDS;
+                DoctorDetails objClinicDetails = new DoctorDetails()
+                {
+                    DoctorID = DoctorID,
+                    DoctorTypeID = Convert.ToInt32(ddlDoctorTypeNew.SelectedValue),
+                    RegDate = txtDate.Text,
+                    FirstName = ddlTitla.SelectedValue + txtFristName.Text,
+                    LastName = txtLastName.Text,
+                    BirthDate = txtBirthDate.Text,
+                    Gender = RADGender.SelectedItem.Text,
+                    AddressLine1 = txtAddress1.Text,
+                    AddressLine2 = txtAddress2.Text,
+                    CountryID = Convert.ToInt32(ddlCountry.SelectedValue),
+                    StateID = Convert.ToInt32(ddlState.SelectedValue),
+                    CityID = Convert.ToInt32(ddlCity.SelectedValue),
+                    AreaPin = txtPinCode.Text,
+                    PhoneNo1 = txtMobileNo1.Text,
+                    PhoneNo2 = txtMobileNo2.Text,
+                    Email = txtEmail.Text,
+                    BloodGroup = txtBloodGroup.Text,
+                    PanCardNo = txtPanCard.Text,
+                    PanCardImageUrl = lblpancard.Text,
+                    AdharCardNo = txtAdharNo.Text,
+                    AdharCardImageUrl = lblAdharcard.Text,
+                    ProfileImageUrl = lbl_filepath1.Text,
+                    RegistrationNo = txtRegNo.Text,
+                    RegistrationImageUrl = lblCrtificat.Text,
+                    IdentityPolicyNo = txtIdentity.Text,
+                    IdentityPolicyImageUrl = lblPolicy.Text,
+                    DegreeUpload1 = "",
+                    DegreeUpload2 = "",
                     UserName = txtMobileNo1.Text,
                     UserPassword = Password1,
                     specialities = specialities,
@@ -516,31 +603,59 @@ namespace OrthoSquare.Doctor
                 };
 
 
-               
-                    _isInserted = objDoc.Add_Doctors(objClinicDetails);
 
-                    if (_isInserted == -1)
+                _isInserted = objDoc.Add_Doctors(objClinicDetails);
+
+
+                DataTable dt = new DataTable();
+                dt.Columns.Add(new DataColumn("DoctorID", typeof(int)));
+                dt.Columns.Add(new DataColumn("DegreeName", typeof(string)));
+                dt.Columns.Add(new DataColumn("Boardname", typeof(string)));
+                dt.Columns.Add(new DataColumn("CertificationImage", typeof(string)));
+
+
+                for (int i = 0; i <= GridQualification.Rows.Count - 1; i++)
+                {
+                    GridViewRow gRow = GridQualification.Rows[i];
+                    string txt_CertificationName = ((TextBox)gRow.FindControl("txt_CertificationName")).Text;
+                    string txt_boardname = ((TextBox)gRow.FindControl("txt_boardname")).Text;
+
+                    string txtFileName = ((TextBox)gRow.FindControl("txtFileName")).Text;
+
+                    if (txt_CertificationName != "" && txt_boardname != "")
                     {
-                        lblMessage.Text = "Failed to Update Doctor";
-                        lblMessage.ForeColor = System.Drawing.Color.Red;
+                        dt.Rows.Add(DoctorID, txt_CertificationName, txt_boardname, txtFileName);
                     }
-                    else
-                    {
-                        // clinicID = 0;
+                }
 
 
-                        int Did = objDoc.GetDoctorsID();
+                bool Result = objDoc.DeleteDoctorByDegree(Convert.ToInt32(DoctorID));
 
-                        int IDq = objApp.Add_AppointmentDetails(Did);
+                bool Result1 = objDoc.InsertUpdateAddDoctor_Degree(dt);
 
-                        lblMessage.Text = "Doctor Update Successfully";
-                        lblMessage.ForeColor = System.Drawing.Color.Green;
-                       // SendMail(txtEmail.Text, txtMobileNo1.Text, Password1);
+                if (_isInserted == -1)
+                {
+                    lblMessage.Text = "Failed to Update Doctor";
+                    lblMessage.ForeColor = System.Drawing.Color.Red;
+                }
+                else
+                {
+                    // clinicID = 0;
 
-                        Clear();
-                        txtDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
-                    }
-                
+
+                    //  int Did = objDoc.GetDoctorsID();
+                    // int DCid = objDoc.Add_DoctorsDoctorebyClinic(Convert.ToInt32(ddlclinic.SelectedItem), Convert.ToInt32(Did));
+                    // int IDq = objApp.Add_AppointmentDetails(Did);
+
+
+                    // SendMail(txtEmail.Text, txtMobileNo1.Text, Password1);
+
+                    Clear();
+                    lblMessage.Text = "Doctor Update Successfully";
+                    lblMessage.ForeColor = System.Drawing.Color.Green;
+                    txtDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
+                }
+
             }
             catch (Exception ex)
             {
@@ -548,8 +663,6 @@ namespace OrthoSquare.Doctor
 
 
         }
-
-
 
         public void Clear()
         {
@@ -567,8 +680,7 @@ namespace OrthoSquare.Doctor
             ImageAdharcard.ImageUrl = "~/Images/no-photo.jpg";
             Imagepancard.ImageUrl = "~/Images/no-photo.jpg";
             ImageCrtificat.ImageUrl = "~/Images/no-photo.jpg";
-            Image_Degree1 .ImageUrl = "~/Images/no-photo.jpg";
-            ImageDegree2.ImageUrl = "~/Images/no-photo.jpg";
+
             ImagePolicy.ImageUrl = "~/Images/no-photo.jpg";
             // ddlState.Items.Insert(0, new ListItem("--- Select ---", "0"));
             //ddlCity.Items.Insert(0, new ListItem("--- Select ---", "0"));
@@ -601,7 +713,7 @@ namespace OrthoSquare.Doctor
 
         }
 
-       
+
         protected void btnUploadimage_Click(object sender, EventArgs e)
         {
             UploadImage();
@@ -669,7 +781,7 @@ namespace OrthoSquare.Doctor
                             string Imgname = "Profilepic" + Dno + txtFristName.Text;
 
 
-                           // string Imgname = txtFristName.Text;
+                            // string Imgname = txtFristName.Text;
 
                             string path = Server.MapPath(@"~\EmployeeProfile\");
                             System.IO.Directory.CreateDirectory(path);
@@ -679,7 +791,7 @@ namespace OrthoSquare.Doctor
                             ImagePhoto1.Visible = true;
 
                             lbl_filepath1.Text = Imgname + ext;
-                            
+
                             profileImageUrl = Imgname + ext;
 
                         }
@@ -929,111 +1041,183 @@ namespace OrthoSquare.Doctor
         protected void gvShow_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
-            int id = Convert.ToInt32(e.CommandArgument);
 
-            DoctorID = id;
 
-            if(e.CommandName =="EditDocterDetails")
+            if (e.CommandName == "EditDocterDetails")
             {
+                int id = Convert.ToInt32(e.CommandArgument);
+
+                DoctorID = id;
+                string beforeFounder = "";
                 DataTable dt1 = objDoc.GetDoctersInouttime(DoctorID);
 
 
 
-                      DoctorID = DoctorID;
-                      DoctorTypeNew();
 
-                      if (dt1.Rows[0]["DoctorTypeID"].ToString() != "")
-                      {
-                          ddlDoctorTypeNew.SelectedValue = dt1.Rows[0]["DoctorTypeID"].ToString();
-                      }
-                     txtFristName.Text=dt1.Rows[0]["FirstName"].ToString() ;
-                     txtLastName.Text=dt1.Rows[0]["LastName"].ToString() ;
-                    txtBirthDate.Text=dt1.Rows[0]["DOB"].ToString() ; 
-                 //   RADGender .SelectedItem.Text=dt1.Rows[0]["Gender"].ToString() ; 
-                    txtAddress1 .Text=dt1.Rows[0]["Line1"].ToString() ; 
-                    txtAddress2.Text=dt1.Rows[0]["Line2"].ToString() ;
-                    BindCountry();
-                    if (dt1.Rows[0]["CountryID"].ToString() != "")
+                DoctorTypeNew();
+
+                if (dt1.Rows[0]["DoctorTypeID"].ToString() != "")
+                {
+                    ddlDoctorTypeNew.SelectedValue = dt1.Rows[0]["DoctorTypeID"].ToString();
+                }
+                // txtFristName.Text = dt1.Rows[0]["FirstName"].ToString().Replace(".", " ");
+                txtFristName.Text = dt1.Rows[0]["FirstName"].ToString();
+
+                int pos = txtFristName.Text.IndexOf(".") + 1;
+                if (pos >= 0)
+                {
+                    // String after founder  
+                    string afterFounder = txtFristName.Text.Remove(pos);
+                    Console.WriteLine(afterFounder);
+                    // Remove everything before founder but include founder  
+                    beforeFounder = txtFristName.Text.Remove(0, pos);
+                    Console.Write(beforeFounder);
+                }
+
+                txtFristName.Text = beforeFounder;
+                txtLastName.Text = dt1.Rows[0]["LastName"].ToString();
+                if (dt1.Rows[0]["DOB"].ToString() != "")
+                {
+                    txtBirthDate.Text = Convert.ToDateTime(dt1.Rows[0]["DOB"]).ToString("dd-MM-yyyy");
+                }
+                //   RADGender .SelectedItem.Text=dt1.Rows[0]["Gender"].ToString() ; 
+                txtAddress1.Text = dt1.Rows[0]["Line1"].ToString();
+                txtAddress2.Text = dt1.Rows[0]["Line2"].ToString();
+                BindCountry();
+                if (dt1.Rows[0]["CountryID"].ToString() != "")
+                {
+                    ddlCountry.SelectedValue = dt1.Rows[0]["CountryID"].ToString();
+                }
+                BindState();
+
+                if (dt1.Rows[0]["StateID"].ToString() != "")
+                {
+                    ddlState.SelectedValue = dt1.Rows[0]["StateID"].ToString();
+                }
+
+
+                BindCity();
+                if (dt1.Rows[0]["CityID"].ToString() != "")
+                {
+                    ddlCity.SelectedValue = dt1.Rows[0]["CityID"].ToString();
+                }
+
+                if (dt1.Rows[0]["Gender"].ToString() != "")
+                {
+                    RADGender.Items.FindByText(dt1.Rows[0]["Gender"].ToString()).Selected = true;
+                }
+                txtPinCode.Text = dt1.Rows[0]["AreaPin"].ToString();
+                txtMobileNo1.Text = dt1.Rows[0]["Mobile1"].ToString();
+                txtMobileNo2.Text = dt1.Rows[0]["Mobile2"].ToString();
+                txtEmail.Text = dt1.Rows[0]["Email"].ToString();
+                txtBloodGroup.Text = dt1.Rows[0]["BloodGroup"].ToString();
+                //txtPanCard.Text ,
+                //PanCardImageUrl=PanCardImageUrl,
+                //AdharCardNo =txtAdharNo .Text ,
+                //AdharCardImageUrl =AdharCarImageUrl ,
+                //ProfileImageUrl =profileImageUrl, 
+                // txtUserName.Text=dt1.Rows[0]["UserName1"].ToString();
+                // txtPassword .Text=dt1.Rows[0]["Password1"].ToString() ;
+                txtInTime.Text = dt1.Rows[0]["InTime"].ToString();
+                txtOutTime.Text = dt1.Rows[0]["OutTime"].ToString();
+                Bindddlclinic();
+
+                if (dt1.Rows[0]["ClinicID"].ToString() != "")
+                {
+                    ddlclinic.SelectedValue = dt1.Rows[0]["ClinicID"].ToString();
+
+                }
+                ImagePhoto1.ImageUrl = "~/EmployeeProfile/" + dt1.Rows[0]["ProfileImageUrl"].ToString();
+                ImageAdharcard.ImageUrl = "~/Documents/" + dt1.Rows[0]["AdharCardImageUrl"].ToString();
+                Imagepancard.ImageUrl = "~/Documents/" + dt1.Rows[0]["PanCardImageUrl"].ToString();
+                ImageCrtificat.ImageUrl = "~/Documents/" + dt1.Rows[0]["RegistrationImageUrl"].ToString();
+
+                ImagePolicy.ImageUrl = "~/Documents/" + dt1.Rows[0]["IdentityPolicyImageUrl"].ToString();
+
+                txtAdharNo.Text = dt1.Rows[0]["AdharCardNo"].ToString();
+                txtPanCard.Text = dt1.Rows[0]["PanCardNo"].ToString();
+                txtRegNo.Text = dt1.Rows[0]["RegistrationNo"].ToString();
+                txtIdentity.Text = dt1.Rows[0]["IdentityPolicyNo"].ToString();
+
+
+                DataTable dt111 = objDoc.GetDocterstbl_Doctor_Degree(DoctorID);
+
+
+                if (dt111 != null && dt111.Rows.Count > 0)
+                {
+
+                    ViewState["QualificationCurrentTable"] = dt111;
+                    AddQualification();
+                    GridQualification.DataSource = dt111;
+                    GridQualification.DataBind();
+
+                    AddQualification();
+
+                }
+
+
+
+
+                DataTable dt111SP = objDoc.GetDocterstbl_DrSpeciality(DoctorID);
+
+
+                if (dt111SP != null && dt111SP.Rows.Count > 0)
+                {
+                    for (int j = 0; j < dt111SP.Rows.Count; j++)
                     {
-                        ddlCountry.SelectedValue = dt1.Rows[0]["CountryID"].ToString();
+                        for (int i = 0; i < ddl_SelectSpeciality1.Items.Count; i++)
+                        {
+                            if (ddl_SelectSpeciality1.Items[i].Text == dt111SP.Rows[j]["SpecialityName"].ToString())
+                            {
+                                ddl_SelectSpeciality1.Items[i].Selected = true;
+                            }
+                        }
                     }
-                    BindState();
+                }
 
-                    if (dt1.Rows[0]["StateID"].ToString() != "")
-                    {
-                        ddlState.SelectedValue = dt1.Rows[0]["StateID"].ToString();
-                    }
-
-                   
-                    BindCity();
-                    if (dt1.Rows[0]["CityID"].ToString() != "")
-                    {
-                        ddlCity.SelectedValue = dt1.Rows[0]["CityID"].ToString(); 
-                    }
-                  
-                   
-                    txtPinCode .Text=dt1.Rows[0]["AreaPin"].ToString() ; 
-                    txtMobileNo1 .Text=dt1.Rows[0]["Mobile1"].ToString() ; 
-                    txtMobileNo2 .Text=dt1.Rows[0]["Mobile2"].ToString() ; 
-                    txtEmail.Text=dt1.Rows[0]["Email"].ToString() ; 
-                    txtBloodGroup.Text=dt1.Rows[0]["BloodGroup"].ToString() ; 
-                    //txtPanCard.Text ,
-                    //PanCardImageUrl=PanCardImageUrl,
-                    //AdharCardNo =txtAdharNo .Text ,
-                    //AdharCardImageUrl =AdharCarImageUrl ,
-                    //ProfileImageUrl =profileImageUrl, 
-                   // txtUserName.Text=dt1.Rows[0]["UserName1"].ToString();
-                   // txtPassword .Text=dt1.Rows[0]["Password1"].ToString() ;
-                    txtInTime.Text = dt1.Rows[0]["InTime"].ToString();
-                    txtOutTime.Text = dt1.Rows[0]["OutTime"].ToString();
-                    Bindddlclinic();
-
-                    if (dt1.Rows[0]["ClinicID"].ToString() != "")
-                    {
-                        ddlclinic.SelectedValue = dt1.Rows[0]["ClinicID"].ToString();
-
-                    }
-                    ImagePhoto1.ImageUrl = "~/EmployeeProfile/" + dt1.Rows[0]["ProfileImageUrl"].ToString();
-                    ImageAdharcard.ImageUrl = "~/Documents/" + dt1.Rows[0]["AdharCardImageUrl"].ToString();
-                    Imagepancard.ImageUrl = "~/Documents/" + dt1.Rows[0]["PanCardImageUrl"].ToString();
-                    ImageCrtificat.ImageUrl = "~/Documents/" + dt1.Rows[0]["RegistrationImageUrl"].ToString();
-
-                    ImagePolicy.ImageUrl = "~/Documents/" + dt1.Rows[0]["IdentityPolicyImageUrl"].ToString();
-
-                    txtAdharNo.Text = dt1.Rows[0]["AdharCardNo"].ToString();
-                    txtPanCard.Text = dt1.Rows[0]["PanCardNo"].ToString();
-                    txtRegNo.Text = dt1.Rows[0]["RegistrationNo"].ToString();
-                    txtIdentity.Text = dt1.Rows[0]["IdentityPolicyNo"].ToString();
-
-                    Div2.Visible = false;
-                    Add.Visible = true;
-                    Edit.Visible = false;
-                    btUpdate.Visible = true;
+                Div2.Visible = false;
+                Add.Visible = true;
+                btAdd.Visible = false;
+                Edit.Visible = false;
+                btUpdate.Visible = true;
             }
             if (e.CommandName == "EditInouttime")
             {
-               DataTable dt = objDoc.GetDoctersInouttime(DoctorID);
-               txtIntimeUpdate.Text = dt.Rows[0]["InTime"].ToString();
-               txtouttimeUpdate.Text = dt.Rows[0]["OutTime"].ToString();
-               Div2.Visible = true;
-               Add.Visible = false;
-               Edit.Visible = false;
-               btUpdate.Visible = false;
+                int id = Convert.ToInt32(e.CommandArgument);
+
+                DoctorID = id;
+
+                DataTable dt = objDoc.GetDoctersInouttime(DoctorID);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    txtIntimeUpdate.Text = dt.Rows[0]["InTime"].ToString();
+                    txtouttimeUpdate.Text = dt.Rows[0]["OutTime"].ToString();
+                    Div2.Visible = true;
+                    Add.Visible = false;
+                    Edit.Visible = false;
+                }
+                // btUpdate.Visible = false;
             }
 
             if (e.CommandName == "viewDocterDetails")
             {
+                int id = Convert.ToInt32(e.CommandArgument);
 
+                DoctorID = id;
 
                 Response.Redirect("ViewDoctor.aspx?DoctorID=" + DoctorID);
             }
             if (e.CommandName == "DoctorsbyClinic")
             {
+                int id = Convert.ToInt32(e.CommandArgument);
 
+                DoctorID = id;
+                BindddlclinicAS(Convert.ToInt32(DoctorID));
                 Div2.Visible = false;
                 Add.Visible = false;
                 Edit.Visible = false;
-                btUpdate.Visible = false;
+                //  btUpdate.Visible = false;
                 Div11.Visible = false;
                 Div111.Visible = true;
             }
@@ -1077,31 +1261,33 @@ namespace OrthoSquare.Doctor
         {
             try
             {
-                string search = "";
-                //if (txtSearch.Text != "")
-                //{
-                if (txtNAme.Text != "")
-                {
-                    search += "FirstName like '%" + txtNAme.Text + "%'";
-                }
-                else
-                {
-                    search += "Mobile1 = " + txtMobiles.Text + "";
-                }
 
-                DataRow[] dtSearch1 = AllData.Select(search);
-                if (dtSearch1.Count() > 0)
-                {
-                    DataTable dtSearch = dtSearch1.CopyToDataTable();
-                    gvShow.DataSource = dtSearch;
-                    gvShow.DataBind();
-                }
-                else
-                {
-                    DataTable dt = new DataTable();
-                    gvShow.DataSource = dt;
-                    gvShow.DataBind();
-                }
+                getAllDoctor();
+                //string search = "";
+                ////if (txtSearch.Text != "")
+                ////{
+                //if (txtNAme.Text != "")
+                //{
+                //    search += "FirstName like '%" + txtNAme.Text + "%'";
+                //}
+                //else
+                //{
+                //    search += "Mobile1 = " + txtMobiles.Text + "";
+                //}
+
+                //DataRow[] dtSearch1 = AllData.Select(search);
+                //if (dtSearch1.Count() > 0)
+                //{
+                //    DataTable dtSearch = dtSearch1.CopyToDataTable();
+                //    gvShow.DataSource = dtSearch;
+                //    gvShow.DataBind();
+                //}
+                //else
+                //{
+                //    DataTable dt = new DataTable();
+                //    gvShow.DataSource = dt;
+                //    gvShow.DataBind();
+                //}
                 //}
                 //else
                 //{
@@ -1119,7 +1305,7 @@ namespace OrthoSquare.Doctor
             Add.Visible = false;
             Div2.Visible = false;
             Div11.Visible = false;
-            btUpdate.Visible = false;
+            // btUpdate.Visible = false;
             getAllDoctor();
         }
         protected void btnAddNew_Click(object sender, EventArgs e)
@@ -1128,15 +1314,38 @@ namespace OrthoSquare.Doctor
             Add.Visible = true;
             Div2.Visible = false;
             Div11.Visible = false;
-            btUpdate.Visible = false;
+            // btUpdate.Visible = false;
         }
 
 
 
         protected void BtnNextContact_Click(object sender, EventArgs e)
         {
-            TabContactPerson1.Tabs[1].Enabled = true;
-            TabContactPerson1.ActiveTabIndex = 1;
+
+            if (DoctorID == 0)
+            {
+                int Isv = objDoc.GetDoctorsIsvelid(txtMobileNo1.Text);
+
+                if (Isv > 0)
+                {
+
+                    lblMessage.Text = "Doctor already exists";
+                    lblMessage.ForeColor = System.Drawing.Color.Red;
+                }
+                else
+                {
+
+
+                    TabContactPerson1.Tabs[1].Enabled = true;
+                    TabContactPerson1.ActiveTabIndex = 1;
+                }
+            }
+            else
+            {
+                TabContactPerson1.Tabs[1].Enabled = true;
+                TabContactPerson1.ActiveTabIndex = 1;
+
+            }
         }
         protected void BtnNextMedical_Click(object sender, EventArgs e)
         {
@@ -1146,11 +1355,11 @@ namespace OrthoSquare.Doctor
 
         protected void btnUpdateIOtime_Click(object sender, EventArgs e)
         {
-              try
-              {
+            try
+            {
                 int _isInserted = -1;
 
-              _isInserted = objDoc.Add_DoctorsUpdate(DoctorID ,txtIntimeUpdate .Text ,txtouttimeUpdate .Text );
+                _isInserted = objDoc.Add_DoctorsUpdate(DoctorID, txtIntimeUpdate.Text, txtouttimeUpdate.Text);
 
                 if (_isInserted == -1)
                 {
@@ -1159,10 +1368,10 @@ namespace OrthoSquare.Doctor
                 }
                 else
                 {
-                   // clinicID = 0;
+                    // clinicID = 0;
                     lblmsg1.Text = "Doctor Added Successfully";
                     lblmsg1.ForeColor = System.Drawing.Color.Green;
-                   // Clear();
+                    // Clear();
 
 
                 }
@@ -1171,7 +1380,7 @@ namespace OrthoSquare.Doctor
             {
             }
 
-          
+
 
         }
 
@@ -1179,170 +1388,10 @@ namespace OrthoSquare.Doctor
         {
             Div2.Visible = false;
             Add.Visible = false;
-            Edit.Visible = true ;
+            Edit.Visible = true;
             btUpdate.Visible = false;
         }
 
-
-        public void UploadImageDegree1()
-        {
-
-            string filename = "", newfile = "";
-            string[] validFileTypes = { "jpeg", "png", "jpg", "bmp", "gif" };
-
-            if (!FileUpDegree1.HasFile)
-            {
-                this.Page.ClientScript.RegisterStartupScript(GetType(), "ShowAlert", "alert('Please select a file.');", true);
-                FileUpDegree1.Focus();
-            }
-            string DD = txtFristName.Text;
-            string aa = FileUpDegree1.FileName;
-            string ext = System.IO.Path.GetExtension(FileUpDegree1.PostedFile.FileName).ToLower();
-            bool isValidFile = false;
-            for (int i = 0; i < validFileTypes.Length; i++)
-            {
-                if (ext == "." + validFileTypes[i])
-                {
-                    isValidFile = true;
-                    break;
-                }
-            }
-            if (isValidFile == true)
-            {
-
-                if (FileUpDegree1.HasFile)
-                {
-
-                    filename = Server.MapPath(FileUpDegree1.FileName);
-                    newfile = FileUpDegree1.PostedFile.FileName;
-                    //                filecontent = System.IO.File.ReadAllText(filename);
-                    FileInfo fi = new FileInfo(newfile);
-
-                    // check folder exist or not
-                    if (!System.IO.Directory.Exists(@"~\Documents"))
-                    {
-                        try
-                        {
-
-                            int Dno1 = objcommon.GetDoctorMax_No();
-
-                            string Imgname = "Degree1" + Dno1 + ddl_Degree1.SelectedItem.Text;
-
-                            string path = Server.MapPath(@"~\Documents\");
-                            System.IO.Directory.CreateDirectory(path);
-                            FileUpDegree1.SaveAs(path + @"\" + "Degree1" + Dno1 + ddl_Degree1.SelectedItem.Text + ext);
-
-                            Image_Degree1.ImageUrl = @"~\Documents\" + "Degree1" + Dno1 + ddl_Degree1.SelectedItem.Text + ext;
-                            Image_Degree1.Visible = true;
-
-
-                           
-
-                            lblDegree1.Text = Imgname + ext;
-
-                            DegreeImageUrl1 = Imgname + ext;
-
-                        }
-                        catch (Exception ex)
-                        {
-                            lblDegree1.Text = "Not able to create new directory";
-                        }
-
-                    }
-                }
-            }
-            else
-            {
-                this.Page.ClientScript.RegisterStartupScript(GetType(), "ShowAlert", "alert('Please select valid file.');", true);
-            }
-
-
-        }
-
-
-
-        public void UploadImageDegree2()
-        {
-
-            string filename = "", newfile = "";
-            string[] validFileTypes = { "jpeg", "png", "jpg", "bmp", "gif" };
-
-            if (!FileUpDegree2.HasFile)
-            {
-                this.Page.ClientScript.RegisterStartupScript(GetType(), "ShowAlert", "alert('Please select a file.');", true);
-                FileUpDegree2.Focus();
-            }
-            string DD = txtFristName.Text;
-            string aa = FileUpDegree2.FileName;
-            string ext = System.IO.Path.GetExtension(FileUpDegree2.PostedFile.FileName).ToLower();
-            bool isValidFile = false;
-            for (int i = 0; i < validFileTypes.Length; i++)
-            {
-                if (ext == "." + validFileTypes[i])
-                {
-                    isValidFile = true;
-                    break;
-                }
-            }
-            if (isValidFile == true)
-            {
-
-                if (FileUpDegree2.HasFile)
-                {
-
-                    filename = Server.MapPath(FileUpDegree2.FileName);
-                    newfile = FileUpDegree2.PostedFile.FileName;
-                    //                filecontent = System.IO.File.ReadAllText(filename);
-                    FileInfo fi = new FileInfo(newfile);
-
-                    // check folder exist or not
-                    if (!System.IO.Directory.Exists(@"~\Documents"))
-                    {
-                        try
-                        {
-
-                            int Dno1 = objcommon.GetDoctorMax_No();
-
-                            string Imgname = "Degree2" + Dno1 + ddl_Degree1.SelectedItem.Text;
-
-                            string path = Server.MapPath(@"~\Documents\");
-                            System.IO.Directory.CreateDirectory(path);
-                            FileUpDegree2.SaveAs(path + @"\" + "Degree2" + Dno1 + ddl_Degree1.SelectedItem.Text + ext);
-
-                            ImageDegree2.ImageUrl = @"~\Documents\" + "Degree2" + Dno1 + ddl_Degree1.SelectedItem.Text + ext;
-                            ImageDegree2.Visible = true;
-
-                            lblDegree2.Text = Imgname + ext;
-
-                            DegreeImageUrl2 = Imgname + ext;
-
-                        }
-                        catch (Exception ex)
-                        {
-                            lblDegree1.Text = "Not able to create new directory";
-                        }
-
-                    }
-                }
-            }
-            else
-            {
-                this.Page.ClientScript.RegisterStartupScript(GetType(), "ShowAlert", "alert('Please select valid file.');", true);
-            }
-
-
-        }
-
-        protected void btnImageDegree1_Click(object sender, EventArgs e)
-        {
-            UploadImageDegree1();
-
-        }
-
-        protected void btnImageDegree2_Click(object sender, EventArgs e)
-        {
-            UploadImageDegree2();
-        }
 
 
         protected void btnUplPolicy_Click(object sender, EventArgs e)
@@ -1424,60 +1473,19 @@ namespace OrthoSquare.Doctor
         }
 
 
-    
-
-
-        protected void btnDegreeDelect(object sender, EventArgs e)
-        {
-
-            foreach (ListItem li in ddl_Degree1.Items)
-            {
-                string chkboxlistValue = "";
-                if (li.Selected)
-                {
-                    chkboxlistValue += li.Value;
-                }
-               
-                
-                if (chkboxlistValue == "1")
-                {
-                    Degree1.Visible = true;
-
-                }
-
-                if (chkboxlistValue == "2")
-                {
-                    Degree2.Visible = true;
-
-                }
-            }
-
-
-
-           
-
-            //if (ddl_Degree1.SelectedValue == "2")
-            //{
-            //    Degree2.Visible = true;
-
-            //}
-           
-        }
-
 
         #region " ***** Questions ***** "
         protected void btnOptionalUpload_Click(object sender, EventArgs e)
         {
 
-            //   DisableMessage();
+
             bool Result = false;
             string ResultMsg = "";
-            // Previousdisabled();
-            // maxquestion();
+
 
             UploadAllQuestions(flOptional, ref Result, ref ResultMsg);
 
-            // EnableorDisableQuestion();
+
 
         }
 
@@ -1488,14 +1496,14 @@ namespace OrthoSquare.Doctor
             Add.Visible = false;
             Div2.Visible = false;
             Div11.Visible = false;
-            btUpdate.Visible = false;
+            // btUpdate.Visible = false;
         }
         protected void btnAddexcelupload_Click(object sender, EventArgs e)
         {
             Edit.Visible = false;
             Add.Visible = false;
             Div2.Visible = false;
-            btUpdate.Visible = false;
+            // btUpdate.Visible = false;
             Div11.Visible = true;
         }
 
@@ -1542,9 +1550,9 @@ namespace OrthoSquare.Doctor
 
 
                     lblMSG11.Text = "Doctor Information have been uploaded sucessfully.";
-                      //  lblMSG1.Text = strresult;
-                        //Result = false;
-                   
+                    //  lblMSG1.Text = strresult;
+                    //Result = false;
+
                 }
                 catch (Exception ex)
                 {
@@ -1583,32 +1591,32 @@ namespace OrthoSquare.Doctor
 
                     string UserName = "", Password = "";
 
-                    if (!string.IsNullOrEmpty(Common.CheckNullandEmpty(item["RegDate"])) && !string.IsNullOrEmpty(Common.CheckNullandEmpty(item["FirstName"]))
+                    if (!string.IsNullOrEmpty(Common.CheckNullandEmpty(item["FirstName"]))
                         && !string.IsNullOrEmpty(Common.CheckNullandEmpty(item["LastName"])) && !string.IsNullOrEmpty(Common.CheckNullandEmpty(item["Email"]))
                         )
                     {
 
                         int Isv = objDoc.GetDoctorsIsvelid(item["Mobile"].ToString().Trim());
 
-                         if (Isv > 0)
-                         {
+                        if (Isv > 0)
+                        {
 
-                         }
-                         else
-                         {
+                        }
+                        else
+                        {
 
-                             int Did = objDoc.SaveExcelUploadedDotor(item["RegDate"].ToString().Trim(), item["FirstName"].ToString().Trim(), item["LastName"].ToString().Trim(), item["Email"].ToString().Trim(), item["Mobile"].ToString().Trim(), item["InTime"].ToString().Trim(), item["OutTime"].ToString().Trim());
+                            int Did = objDoc.SaveExcelUploadedDotor(Convert.ToInt32(ddlUploadClinic.SelectedValue), Convert.ToDateTime(System.DateTime.Now).ToString("dd-MM-yyyy"), item["FirstName"].ToString().Trim(), item["LastName"].ToString().Trim(), item["Email"].ToString().Trim(), item["Mobile"].ToString().Trim(), item["InTime"].ToString().Trim(), item["OutTime"].ToString().Trim());
 
-                             //int Did = objDoc.GetDoctorsID();
+                            //int Did = objDoc.GetDoctorsID();
 
-                             int IDq = objApp.Add_AppointmentDetails(Did);
+                            int IDq = objApp.Add_AppointmentDetails(Did);
 
-                             UserName = item["Mobile"].ToString().Trim();
-                             Password = item["FirstName"].ToString().Trim() + "@" + Did;
-                             int DidL = objDoc.SaveExcelUploadedLoginDotor(UserName, Password, Did);
+                            UserName = item["Mobile"].ToString().Trim();
+                            Password = item["FirstName"].ToString().Trim() + "@" + Did;
+                            int DidL = objDoc.SaveExcelUploadedLoginDotor(UserName, Password, Did);
 
-                             SendMail(item["Email"].ToString().Trim(), UserName, Password);
-                         }
+                            SendMail(item["Email"].ToString().Trim(), UserName, Password);
+                        }
                         reccount++;
                     }
                 }
@@ -1648,23 +1656,23 @@ namespace OrthoSquare.Doctor
         }
 
 
-        protected void SendMail(string Email,string Username,string Password)
+        protected void SendMail(string Email, string Username, string Password)
         {
             // Gmail Address from where you send the mail
-            var fromAddress = "infintrix.world@gmail.com";
+            var fromAddress = "orthomail885@gmail.com";
             // any address where the email will be sending
-            //var toAddress = "mehulrana1901@gmail.com,urvi.gandhi@infintrixglobal.com,nidhi.mehta@infintrixglobal.com,bhavin.gandhi@infintrixglobal.com,mehul.rana@infintrixglobal.com,naimisha.rohit@infintrixglobal.com";
+            // var toAddress = "mehulrana1901@gmail.com,urvi.gandhi@infintrixglobal.com,nidhi.mehta@infintrixglobal.com,bhavin.gandhi@infintrixglobal.com,mehul.rana@infintrixglobal.com,naimisha.rohit@infintrixglobal.com";
 
-            var toAddress = Email;
+            var toAddress = Email + ",drshraddhakambale@gmail.com";
 
             //Password of your gmail address
-            const string fromPassword = "Infintrixworld@123";
+            const string fromPassword = "Ortho@1234";
             // Passing the values and make a email formate to display
             string subject = "Your UserName and Password For Ortho Square";
             string body = "Dear ," + "\n";
-            body += "Your UserName and passward For OrthoSquare :" + "\n";
+            body += "Your UserName and Password For OrthoSquare :" + "\n";
             body += "UserName : " + Username + " " + "\n\n";
-            body += "Passward : " + Password + " " + "\n\n";
+            body += "Password : " + Password + " " + "\n\n";
             body += "Thank you!" + "\n";
             body += "Warm Regards," + "\n";
 
@@ -1673,7 +1681,9 @@ namespace OrthoSquare.Doctor
             {
                 smtp.Host = "smtp.gmail.com";
                 smtp.Port = 587;
+                //smtp.Port = 465;
                 smtp.EnableSsl = true;
+
                 smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
                 smtp.Credentials = new NetworkCredential(fromAddress, fromPassword);
                 smtp.Timeout = 50000;
@@ -1694,11 +1704,9 @@ namespace OrthoSquare.Doctor
             Add.Visible = false;
             Div2.Visible = false;
             Div11.Visible = false;
-            btUpdate.Visible = false;
+            //  btUpdate.Visible = false;
             Div111.Visible = false;
         }
-
-
 
         protected void btnDbyCSubmit_Click(object sender, EventArgs e)
         {
@@ -1706,9 +1714,10 @@ namespace OrthoSquare.Doctor
 
             try
             {
+             
+                int  D_id=  objDoc.Add_DoctorsDoctorebyClinicDelete(Convert.ToInt32(DoctorID));
+
                 int _isInserted = -1;
-
-
 
                 for (int i = 0; i < CheckBoxList1.Items.Count; i++)
                 {
@@ -1716,7 +1725,7 @@ namespace OrthoSquare.Doctor
                     {
                         lID = CheckBoxList1.Items[i].Value;
 
-                        _isInserted = objDoc.Add_DoctorsDoctorebyClinic(Convert .ToInt32 (lID),Convert .ToInt32 (DoctorID));
+                        _isInserted = objDoc.Add_DoctorsDoctorebyClinic(Convert.ToInt32(lID), Convert.ToInt32(DoctorID));
 
                     }
                 }
@@ -1729,12 +1738,12 @@ namespace OrthoSquare.Doctor
                 }
                 else
                 {
-          
+
                     lblmsg1223.Text = "Doctor Added Successfully";
                     lblmsg1223.ForeColor = System.Drawing.Color.Green;
-                   
+
                     TextBox1.Text = "";
-                    BindddlclinicAS();
+                    BindddlclinicAS(Convert.ToInt32(DoctorID));
                 }
             }
             catch (Exception ex)
@@ -1742,27 +1751,431 @@ namespace OrthoSquare.Doctor
             }
         }
 
-
-
         protected void btnAddDegree_Click(object sender, EventArgs e)
         {
             int _isInserted = -1;
-            
+
             _isInserted = objDoc.Add_DoctorDegree(txtAddDegree.Text);
-            
+
             DoctorDegree();
             txtAddDegree.Text = "";
         }
 
-        protected void btnAddDegree11_Click(object sender, EventArgs e)
-        {
-            AddDegree.Visible = true;
-        }
+
         protected void btnDegreeCancel_Click(object sender, EventArgs e)
         {
             AddDegree.Visible = false;
             DoctorDegree();
             txtAddDegree.Text = "";
+        }
+
+        protected void gvShow_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+
+                ImageButton lbtDelete = (ImageButton)e.Row.FindControl("lbtDelete");
+                ImageButton btnUpdate1 = (ImageButton)e.Row.FindControl("btnUpdate1");
+                ImageButton ImageButton1 = (ImageButton)e.Row.FindControl("ImageButton1");
+                ImageButton btnUpdate = (ImageButton)e.Row.FindControl("btnUpdate");
+
+
+
+                if (SessionUtilities.RoleID == 3)
+                {
+                    lbtDelete.Visible = false;
+                    btnUpdate1.Visible = false;
+                    ImageButton1.Visible = true;
+
+                    btnAddNew.Visible = false;
+                    Button11.Visible = false;
+                }
+                else if (SessionUtilities.RoleID == 1)
+                {
+                    lbtDelete.Visible = false;
+                    btnUpdate1.Visible = false;
+                    ImageButton1.Visible = true;
+                    btnUpdate.Visible = true;
+
+                }
+            }
+
+
+
+        }
+        //Qualification
+        protected void GridQualification_DataBound1(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+
+                TextBox txt_CertificationName = (TextBox)e.Row.FindControl("txt_CertificationName");
+                TextBox txt_boardname = (TextBox)e.Row.FindControl("txt_boardname");
+
+                if (txt_CertificationName.Text == "" && txt_boardname.Text == "")
+                {
+                    //  e.Row.Visible = false;
+                    e.Row.Attributes["style"] = "display:none";
+                }
+
+
+            }
+        }
+
+        protected void GridQualification_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            try
+            {
+                if (e.CommandName == "GrdCQDelete")
+                {
+                    DataTable dt = (DataTable)ViewState["QualificationCurrentTable"];
+                    string index = e.CommandArgument.ToString();
+
+                    for (int i = 0; i <= dt.Rows.Count - 1; i++)
+                    {
+                        if (dt.Rows[i]["DegreeName"].ToString() == index)
+                        {
+                            dt.Rows.Remove(dt.Rows[i]);
+                        }
+                    }
+                    ViewState["QualificationCurrentTable"] = dt;
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        GridQualification.DataSource = dt;
+                        GridQualification.DataBind();
+
+                        SetQualificationData();
+                    }
+                    else
+                    {
+                        // InstallmentTable();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        protected void Upload12111(object sender, EventArgs e)
+        {
+            string filename = "", newfile = "";
+            string[] validFileTypes = { "jpeg", "png", "jpg", "bmp", "gif", "pdf" };
+
+            if (!FileUpload1.HasFile)
+            {
+                this.Page.ClientScript.RegisterStartupScript(GetType(), "ShowAlert", "alert('Please select a file.');", true);
+                FileUpload1.Focus();
+            }
+            //string DD = txtFristName.Text;
+            string aa = FileUpload1.FileName;
+            string ext = System.IO.Path.GetExtension(FileUpload1.PostedFile.FileName).ToLower();
+            bool isValidFile = false;
+            for (int i = 0; i < validFileTypes.Length; i++)
+            {
+                if (ext == "." + validFileTypes[i])
+                {
+                    isValidFile = true;
+                    break;
+                }
+            }
+            if (isValidFile == true)
+            {
+
+                if (FileUpload1.HasFile)
+                {
+
+                    filename = Server.MapPath(FileUpload1.FileName);
+                    newfile = FileUpload1.PostedFile.FileName;
+                    //                filecontent = System.IO.File.ReadAllText(filename);
+                    FileInfo fi = new FileInfo(newfile);
+
+                    // check folder exist or not
+                    if (!System.IO.Directory.Exists(@"~\QualificationDoc"))
+                    {
+                        try
+                        {
+
+
+                            string Imgname = txtFristName.Text.Trim() + "_" + ddlDegreeQ.SelectedItem.Text;
+
+                            string path = Server.MapPath(@"~\QualificationDoc\");
+                            System.IO.Directory.CreateDirectory(path);
+                            FileUpload1.SaveAs(path + @"\" + txtFristName.Text.Trim() + "_" + ddlDegreeQ.SelectedItem.Text + ext);
+
+                            CertificationImage.ImageUrl = @"~\QualificationDoc\" + txtFristName.Text.Trim() + "_" + ddlDegreeQ.SelectedItem.Text + ext;
+                            CertificationImage.Visible = true;
+
+                            lblImageName.Text = Imgname + ext;
+
+                            //  IdentityPolicyImageUrl = Imgname + ext;
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            lblImageName.Text = "Not able to create new directory";
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+                this.Page.ClientScript.RegisterStartupScript(GetType(), "ShowAlert", "alert('Please select valid file.');", true);
+            }
+
+            //=========
+
+
+        }
+
+
+        public void AddQualification()
+        {
+            try
+            {
+                int index = 0;
+                if (ViewState["QualificationCurrentTable"] != null)
+                {
+                    DataTable dtCurrentTable = (DataTable)ViewState["QualificationCurrentTable"];
+                    DataRow drCurrentRow = null;
+                    decimal Installment_AMT = 0;
+                    if (dtCurrentTable.Rows.Count > 0)
+                    {
+                        for (int i = 1; i <= dtCurrentTable.Rows.Count; i++)
+                        {
+                            GridViewRow gRow = GridQualification.Rows[index];
+                            string Certification_Name = ((TextBox)GridQualification.Rows[index].Cells[1].FindControl("txt_CertificationName")).Text;
+                            string boardname1 = ((TextBox)GridQualification.Rows[index].Cells[2].FindControl("txt_boardname")).Text;
+
+                            TextBox box3 = (TextBox)GridQualification.Rows[index].Cells[3].FindControl("txtFileName");
+
+
+                            drCurrentRow = dtCurrentTable.NewRow();
+                            dtCurrentTable.Rows[i - 1]["DegreeName"] = "";
+                            if (!string.IsNullOrEmpty(Certification_Name))
+                            {
+
+                                dtCurrentTable.Rows[i - 1]["DegreeName"] = Certification_Name;
+
+                            }
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(ddlDegreeQ.SelectedItem.Text))
+                                {
+                                    dtCurrentTable.Rows[i - 1]["DegreeName"] = ddlDegreeQ.SelectedItem.Text;
+                                }
+                                else
+                                {
+                                    if (ddlDegreeQ.SelectedItem.Text == "--- Select ---")
+                                    {
+                                        dtCurrentTable.Rows[i - 1]["DegreeName"] = "Na";
+                                    }
+
+                                }
+                            }
+
+                            dtCurrentTable.Rows[i - 1]["Boardname"] = "";
+                            if (!string.IsNullOrEmpty(boardname1))
+                            {
+                                dtCurrentTable.Rows[i - 1]["Boardname"] = boardname1;
+                            }
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(txtBoardName.Text))
+                                {
+                                    dtCurrentTable.Rows[i - 1]["Boardname"] = txtBoardName.Text;
+                                }
+                                else
+                                {
+
+                                    dtCurrentTable.Rows[i - 1]["Boardname"] = "Na";
+                                }
+                            }
+
+
+
+                            dtCurrentTable.Rows[i - 1]["CertificationImage"] = "";
+                            if (!string.IsNullOrEmpty(box3.Text))
+                            {
+                                dtCurrentTable.Rows[i - 1]["CertificationImage"] = box3.Text;
+                            }
+
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(lblImageName.Text))
+                                {
+                                    dtCurrentTable.Rows[i - 1]["CertificationImage"] = lblImageName.Text;
+                                }
+                                else
+                                {
+                                    dtCurrentTable.Rows[i - 1]["CertificationImage"] = "no-photo.jpg";
+
+                                }
+                            }
+                            index++;
+                        }
+                        dtCurrentTable.Rows.Add(drCurrentRow);
+
+                        ViewState["QualificationCurrentTable"] = dtCurrentTable;
+                        GridQualification.DataSource = dtCurrentTable;
+                        GridQualification.DataBind();
+                        DoctorDegree();
+                        txtBoardName.Text = "";
+                        lblImageName.Text = "";
+                        CertificationImage.ImageUrl = "~/img/no-photo.jpg";
+
+                    }
+                    else
+                    {
+                        QualificationTable();
+                    }
+                }
+                SetQualificationData();
+            }
+            catch (Exception e)
+            {
+            }
+        }
+
+        protected void QualificationTable()
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                DataRow dr;
+                dt.Columns.AddRange(new DataColumn[3] {
+                new DataColumn("DegreeName",typeof(string)),
+                new DataColumn("Boardname",typeof(string)),
+
+                new DataColumn("CertificationImage",typeof(string)),
+
+
+                });
+
+                dr = dt.NewRow();
+
+
+                dr["DegreeName"] = ddlDegreeQ.SelectedItem.Text;
+                dr["Boardname"] = txtBoardName.Text;
+                dr["CertificationImage"] = lblImageName.Text;
+
+
+                //dr["Status"] = "false";
+                dt.Rows.Add(dr);
+
+                ViewState["QualificationCurrentTable"] = dt;
+                GridQualification.DataSource = dt;
+                GridQualification.DataBind();
+
+                DoctorDegree();
+                txtBoardName.Text = "";
+                lblImageName.Text = "";
+                CertificationImage.ImageUrl = "~/img/no-photo.jpg";
+
+            }
+            catch (Exception e)
+            {
+            }
+        }
+
+        public void SetQualificationData()
+        {
+            try
+            {
+                int Index = 0;
+
+                if (ViewState["QualificationCurrentTable"] != null)
+                {
+                    DataTable dt = (DataTable)ViewState["QualificationCurrentTable"];
+                    if (dt.Rows.Count > 0)
+                    {
+                        for (int i = 0; i <= dt.Rows.Count - 1; i++)
+                        {
+                            TextBox txt_CertificationName = (TextBox)GridQualification.Rows[Index].Cells[1].FindControl("txt_CertificationName");
+                            TextBox txt_boardname = (TextBox)GridQualification.Rows[Index].Cells[2].FindControl("txt_boardname");
+
+                            TextBox box3 = (TextBox)GridQualification.Rows[Index].Cells[3].FindControl("txtFileName");
+
+                            Image ImageFileName = (Image)GridQualification.Rows[Index].Cells[3].FindControl("ImageFileName");
+
+
+
+
+                            if (dt.Rows[i]["DegreeName"].ToString() != "")
+                            {
+                                txt_CertificationName.Text = dt.Rows[i]["DegreeName"].ToString();
+                            }
+                            else
+                            {
+                                txt_CertificationName.Text = "";
+                            }
+                            if (dt.Rows[i]["Boardname"].ToString() != "")
+                            {
+                                txt_boardname.Text = dt.Rows[i]["Boardname"].ToString();
+                            }
+                            else
+                            {
+                                txt_boardname.Text = "";
+
+                            }
+                            box3.Text = dt.Rows[i]["CertificationImage"].ToString();
+
+                            if (dt.Rows[i]["CertificationImage"].ToString() != "")
+                            {
+                                ImageFileName.ImageUrl = "../QualificationDoc/" + dt.Rows[i]["CertificationImage"].ToString();
+                            }
+                            else
+                            {
+
+                                CertificationImage.ImageUrl = "~/img/no-photo.jpg";
+                            }
+                            Index++;
+                        }
+
+                    }
+                    else
+                    {
+                        QualificationTable();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+            }
+        }
+
+        protected void btnAddDetails_Click(object sender, EventArgs e)
+        {
+            if (GridQualification.Rows.Count == 0)
+            {
+                QualificationTable();
+
+                AddQualification();
+            }
+            else
+            {
+
+                AddQualification();
+            }
+        }
+
+        protected void ddlDegreeQ_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlDegreeQ.SelectedItem.Text == "Other")
+            {
+
+                AddDegree.Visible = true;
+
+            }
+            else
+            {
+
+                AddDegree.Visible = false;
+
+            }
         }
     }
 }

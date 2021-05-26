@@ -15,19 +15,33 @@ namespace OrthoSquare.Master
 
         clsCommonMasters objcommon = new clsCommonMasters();
         BAL_Appointment objApp = new BAL_Appointment();
+        BAL_Clinic objc = new BAL_Clinic();
         public static DataTable AllData = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                bindDoctorMaster();
-                GridTodayAppoinmentget();
+                bindClinic();
+                //bindDoctorMaster();
+                if (SessionUtilities.RoleID == 1)
+                {
+                    ddlClinic.SelectedValue = SessionUtilities.Empid.ToString();
+                    BindDocter(Convert.ToInt32(SessionUtilities.Empid));
+                    // BindPatient();
+                }
+
+                string DateToday = "1";
+                GridTodayAppoinmentget(DateToday);
             }
         }
 
-        public void GridTodayAppoinmentget()
+
+
+        public void GridTodayAppoinmentget(string DateToday)
         {
             int App = 0;
+            int Cid = 0;
+            int Did = 0;
             if (RadlistAp.SelectedValue == "")
             {
 
@@ -39,26 +53,80 @@ namespace OrthoSquare.Master
 
             }
 
+            if(SessionUtilities .RoleID ==1)
+            {
 
+                Cid = Convert .ToInt32 (ddlClinic.SelectedValue );
 
-            AllData = objApp.GetAllListtodayAppoinmentDetails(txtName.Text, txtMobile.Text, Convert.ToInt32(ddlDocter.SelectedValue), App);
+            }
+            if (SessionUtilities.RoleID == 3)
+            {
+                Did = Convert.ToInt32(ddlDocter.SelectedValue);
+               // ddlDocter.SelectedValue =SessionUtilities.Empid.ToString ();
+
+            }
+
+            AllData = objApp.GetAllListtodayAppoinmentDetails(txtName.Text, txtMobile.Text, Did, Cid, App, txtSFromFollowDate.Text, txtSToFollowDate.Text, DateToday);
 
             GridAppoinment.DataSource = AllData;
             GridAppoinment.DataBind();
 
         }
 
-        public void bindDoctorMaster()
+        public void bindClinic()
         {
-            ddlDocter.DataSource = objcommon.DoctersMaster(SessionUtilities.Empid);
-            ddlDocter.DataValueField = "DoctorID";
-            ddlDocter.DataTextField = "FirstName";
-            ddlDocter.DataBind();
-            ddlDocter.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
+
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                dt = objc.GetAllClinicDetaisNew(SessionUtilities.Empid);
+            }
+            else
+            {
+                dt = objc.GetAllClinicDetais();
+
+            }
+            ddlClinic.DataSource = dt;
+
+            ddlClinic.DataValueField = "ClinicID";
+            ddlClinic.DataTextField = "ClinicName";
+            ddlClinic.DataBind();
+            ddlClinic.Items.Insert(0, new ListItem("-- Select Clinic --", "0", true));
 
         }
 
 
+        public void BindDocter(int Cid)
+        {
+            if (SessionUtilities.RoleID == 3 || SessionUtilities.RoleID == 1)
+            {
+
+                ddlDocter.DataSource = objcommon.DoctersMaster(Cid, SessionUtilities.RoleID);
+
+            }
+            else
+            {
+                ddlDocter.DataSource = objcommon.DoctersMasterNewENQ11(Cid, SessionUtilities.RoleID);
+
+            }
+
+            ddlDocter.DataTextField = "FirstName";
+            ddlDocter.DataValueField = "DoctorID";
+            ddlDocter.DataBind();
+            ddlDocter.Items.Insert(0, new ListItem("--- Select ---", "0"));
+        }
+
+
+        protected void ddlClinic_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            BindDocter(Convert.ToInt32(ddlClinic.SelectedValue));
+
+        }
 
 
 
@@ -70,8 +138,9 @@ namespace OrthoSquare.Master
             {
 
                 int _isDeleted = objApp.GetApprove(Aid);
-                GridTodayAppoinmentget();
-                Response.Redirect("BranchDashboard.aspx");
+                string DateToday = "";
+                GridTodayAppoinmentget(DateToday);
+                Response.Redirect("AllAppointmentList.aspx");
 
             }
             if (e.CommandName == "Reject")
@@ -79,7 +148,7 @@ namespace OrthoSquare.Master
 
 
                 int _isDeleted = objApp.GetReject(Aid);
-                Response.Redirect("BranchDashboard.aspx");
+                Response.Redirect("AllAppointmentList.aspx");
             }
         }
 
@@ -101,7 +170,8 @@ namespace OrthoSquare.Master
 
         protected void btSearch_Click(object sender, EventArgs e)
         {
-            GridTodayAppoinmentget();
+            string DateToday = "";
+            GridTodayAppoinmentget(DateToday);
         }
 
 

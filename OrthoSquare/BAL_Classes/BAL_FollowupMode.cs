@@ -85,14 +85,147 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
-        public DataTable FolloupSearchList(string Name, string MobileNo, int SourceType, int ReceivedByEmpId, string ToEnquiryDate, string FromEnquiryDate, string ToFollowDate, string FromFollowDate)
+        public DataTable FolloupSearchList(string Name, string MobileNo, int SourceType, int ReceivedByEmpId, string FromEnquiryDate , string ToEnquiryDate, string FromFollowDate, string  ToFollowDate, int UserID,int Rolid)
         {
 
-            strQuery = "Select * from Enquiry E join EnquirySourceMaster ES on ES.Sourceid =E.Sourceid  ";
-            strQuery += " join State S on S.StateID =E.stateid Join City C on C.CityID =E.Cityid ";
-            strQuery += " Join tbl_ClinicDetails CD on CD .ClinicID =E.ReceivedByEmpId  Join tblEmployeePersonal Emp1 on Emp1 .EmployeeID =E.AssignToEmpId  where E.IsActive =1  ";
+            General objGeneral = new General();
+          
+            strQuery = " Select * ,E.FirstName +' '+E.LastName as Ename,Emp.FirstName+' '+Emp.LastName as Dname,TM.TreatmentName from Enquiry E  Join  EnquirySourceMaster ES on ES.Sourceid =E.Sourceid ";
+            strQuery += " join Country Cou on E.CountryId =Cou.CountryID     join State S on S.StateID =E.stateid Join City C on C.CityID =E.Cityid ";
+            strQuery += " Join tbl_DoctorDetails Emp on Emp .DoctorID =E.AssignToEmpId ";
+            strQuery += " Join tbl_ClinicDetails CD on CD .ClinicID =E.ClinicID ";
+            strQuery += "  Join TreatmentMASTER TM on TM.TreatmentID=E.TreatmentID where E.IsActive =1 and E.IsPatient=0";
+            
+            if (UserID > 1)
+                if (Rolid == 1)
+                {
+                    strQuery += " and E.ClinicID  ="+UserID+"";
+                }
+                else
+                {
+                    strQuery += " and  E.AssignToEmpId =" + UserID + "";
+                }
+            if (Name != "")
+                strQuery += " and E.FirstName like '%" + Name + "%'";
+            if (MobileNo != "")
+                strQuery += " and E.Mobile=@MobileNo";
+
+            if (SourceType > 0)
+                strQuery += " and E.Sourceid=@SourceType";
+
+            if (ReceivedByEmpId > 0)
+                strQuery += " and E.ClinicID=@ReceivedByEmpId";
+
+            if (FromEnquiryDate != "" && ToEnquiryDate != "")
+                strQuery += " and convert(date,E.EnquiryDate,105) between convert(date,@FromEnquiryDate,105) and convert(date,@ToEnquiryDate,105)";
+
+            if (FromFollowDate != "" && ToFollowDate != "")
+                strQuery += " and convert(date,E.Folllowupdate,105) between convert(date,@FromFollowDate,105) and convert(date,@ToFollowDate,105)";
+
+            strQuery += " order by convert(date,E.Folllowupdate,105) DESC";
+
+            objGeneral.AddParameterWithValueToSQLCommand("@Name", Name);
+            objGeneral.AddParameterWithValueToSQLCommand("@MobileNo", MobileNo);
+            objGeneral.AddParameterWithValueToSQLCommand("@SourceType", SourceType);
+            objGeneral.AddParameterWithValueToSQLCommand("@FromEnquiryDate", FromEnquiryDate);
+            objGeneral.AddParameterWithValueToSQLCommand("@ToEnquiryDate", ToEnquiryDate);
+            objGeneral.AddParameterWithValueToSQLCommand("@FromFollowDate", FromFollowDate);
+            objGeneral.AddParameterWithValueToSQLCommand("@ToFollowDate", ToFollowDate);
+            objGeneral.AddParameterWithValueToSQLCommand("@ReceivedByEmpId", ReceivedByEmpId);
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+        }
+
+        public DataTable FolloupSearchTellecallList(string Name, string MobileNo, int SourceType, int ReceivedByEmpId, string FromEnquiryDate, string ToEnquiryDate, string FromFollowDate, string ToFollowDate, int UserID, int Rolid)
+        {
 
             General objGeneral = new General();
+
+            strQuery = " Select * ,E.FirstName +' '+E.LastName as Ename,Emp.FirstName+' '+Emp.Surname as Dname,TM.TreatmentName from Enquiry E  Join  EnquirySourceMaster ES on ES.Sourceid =E.Sourceid ";
+            strQuery += " join Country Cou on E.CountryId =Cou.CountryID     join State S on S.StateID =E.stateid Join City C on C.CityID =E.Cityid ";
+            strQuery += " Join tblEmployeePersonal Emp on Emp .EmployeeID =E.TelecallerToEmpId ";
+            strQuery += " Join tbl_ClinicDetails CD on CD .ClinicID =E.ClinicID ";
+            strQuery += "  Join TreatmentMASTER TM on TM.TreatmentID=E.TreatmentID where E.IsActive =1 and E.IsPatient=0 ";
+
+            if (UserID > 1)
+               
+                 strQuery += " and  E.TelecallerToEmpId =" + UserID + "";
+               
+            if (Name != "")
+                strQuery += " and E.FirstName like '%" + Name + "%'";
+            if (MobileNo != "")
+                strQuery += " and E.Mobile=@MobileNo";
+
+            if (SourceType > 0)
+                strQuery += " and E.Sourceid=@SourceType";
+
+            if (ReceivedByEmpId > 0)
+                strQuery += " and E.ClinicID=@ReceivedByEmpId";
+
+            if (FromEnquiryDate != "" && ToEnquiryDate != "")
+                strQuery += " and convert(date,E.EnquiryDate,105) between convert(date,@FromEnquiryDate,105) and convert(date,@ToEnquiryDate,105)";
+
+            if (FromFollowDate != "" && ToFollowDate != "")
+                strQuery += " and convert(date,E.Folllowupdate,105) between convert(date,@FromFollowDate,105) and convert(date,@ToFollowDate,105)";
+
+            strQuery += " order by convert(date,E.Folllowupdate,105) DESC";
+
+            objGeneral.AddParameterWithValueToSQLCommand("@Name", Name);
+            objGeneral.AddParameterWithValueToSQLCommand("@MobileNo", MobileNo);
+            objGeneral.AddParameterWithValueToSQLCommand("@SourceType", SourceType);
+            objGeneral.AddParameterWithValueToSQLCommand("@FromEnquiryDate", FromEnquiryDate);
+            objGeneral.AddParameterWithValueToSQLCommand("@ToEnquiryDate", ToEnquiryDate);
+            objGeneral.AddParameterWithValueToSQLCommand("@FromFollowDate", FromFollowDate);
+            objGeneral.AddParameterWithValueToSQLCommand("@ToFollowDate", ToFollowDate);
+            objGeneral.AddParameterWithValueToSQLCommand("@ReceivedByEmpId", ReceivedByEmpId);
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+        }
+
+
+        public DataTable FolloupSearchTellecallList1(int UserID, int Rolid)
+        {
+
+            General objGeneral = new General();
+
+            strQuery = " Select * ,E.FirstName +' '+E.LastName as Ename,Emp.FirstName+' '+Emp.Surname as Dname,TM.TreatmentName from Enquiry E  Join  EnquirySourceMaster ES on ES.Sourceid =E.Sourceid ";
+            strQuery += " join Country Cou on E.CountryId =Cou.CountryID     join State S on S.StateID =E.stateid Join City C on C.CityID =E.Cityid ";
+            strQuery += " Join tblEmployeePersonal Emp on Emp .EmployeeID =E.TelecallerToEmpId ";
+            strQuery += " Join tbl_ClinicDetails CD on CD .ClinicID =E.ClinicID ";
+            strQuery += "  Join TreatmentMASTER TM on TM.TreatmentID=E.TreatmentID where E.IsActive =1 and E.IsPatient=0 ";
+
+            if (UserID > 1)
+
+             strQuery += " and  E.TelecallerToEmpId =" + UserID + "";
+            strQuery += " order by convert(date,E.Folllowupdate,105) DESC";
+
+            
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+        }
+
+
+
+        public DataTable PendingFolloupSearchList(string Name, string MobileNo, int SourceType, int ReceivedByEmpId, string ToEnquiryDate, string FromEnquiryDate, string ToFollowDate, string FromFollowDate, int UserID, int Rolid)
+        {
+
+            General objGeneral = new General();
+
+            strQuery = " Select * ,E.FirstName +' '+E.LastName as Ename,Emp.FirstName+' '+Emp.LastName as Dname,TM.TreatmentName from Enquiry E  Join  EnquirySourceMaster ES on ES.Sourceid =E.Sourceid ";
+            strQuery += " join Country Cou on E.CountryId =Cou.CountryID     join State S on S.StateID =E.stateid Join City C on C.CityID =E.Cityid ";
+            strQuery += " Join tbl_DoctorDetails Emp on Emp .DoctorID =E.AssignToEmpId ";
+            strQuery += " Join tbl_ClinicDetails CD on CD .ClinicID =E.ClinicID ";
+            strQuery += "  Join TreatmentMASTER TM on TM.TreatmentID=E.TreatmentID where NOT EXISTS  (SELECT * FROM Followup F  WHERE F.EnquiryID = E.EnquiryID) and E.IsActive =1 and E.IsPatient=0";
+
+            if (UserID > 1)
+                if (Rolid == 1)
+                {
+                    strQuery += " and E.ClinicID  =" + UserID + "";
+                }
+                else
+                {
+                    strQuery += " and  E.AssignToEmpId =" + UserID + "";
+                }
             if (Name != "")
                 strQuery += " and E.FirstName like '%" + Name + "%'";
             if (MobileNo != "")
@@ -105,10 +238,10 @@ namespace OrthoSquare.BAL_Classes
                 strQuery += " and E.ReceivedByEmpId=@ReceivedByEmpId";
 
             if (FromEnquiryDate != "" && ToEnquiryDate != "")
-                strQuery += " and convert(date,E.EnquiryDate,101) between convert(date,@FromEnquiryDate,101) and convert(date,@ToEnquiryDate,101)";
+                strQuery += " and convert(date,E.EnquiryDate,105) between convert(date,@FromEnquiryDate,105) and convert(date,@ToEnquiryDate,105)";
 
             if (FromFollowDate != "" && ToFollowDate != "")
-                strQuery += " and convert(date,E.Folllowupdate,101) between convert(date,@FromFollowDate,101) and convert(date,@ToFollowDate,101)";
+                strQuery += " and convert(date,E.Folllowupdate,105) between convert(date,@FromFollowDate,105) and convert(date,@ToFollowDate,105)";
 
             strQuery += " order by E.InterestLevel DESC";
 

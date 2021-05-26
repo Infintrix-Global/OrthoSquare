@@ -208,7 +208,7 @@
                                                 <asp:Label ID="lblID" runat="server" Text='<%# Eval("MedicalProid") %>' Visible="false"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField ItemStyle-Width="60%" HeaderText="Source Name">
+                                        <asp:TemplateField ItemStyle-Width="60%" HeaderText="Medical Problem">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
                                             </ItemTemplate>

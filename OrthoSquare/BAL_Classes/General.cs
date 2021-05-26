@@ -6,6 +6,8 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
+using System.Web.Hosting;
 
 namespace OrthoSquare.BAL_Classes
 {
@@ -45,6 +47,7 @@ namespace OrthoSquare.BAL_Classes
         }
 
         public void Dispose()
+        
         {
             try
             {
@@ -177,6 +180,7 @@ namespace OrthoSquare.BAL_Classes
             object identity = 0;
             try
             {
+
                 mobj_SqlCommand.CommandText = Command;
                 mobj_SqlCommand.CommandTimeout = mint_CommandTimeout;
                 mobj_SqlCommand.CommandType = CommandType.Text;
@@ -242,6 +246,7 @@ namespace OrthoSquare.BAL_Classes
             {
                 CloseConnection();
             }
+        
         }
 
         public DataTable GetDatasetByCommand_Paging(string Command, int StartIndex, int PageSize)
@@ -391,6 +396,18 @@ namespace OrthoSquare.BAL_Classes
         public DateTime getDatetime11(string dt)
         {
             return DateTime.ParseExact(dt, "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+        }
+
+
+        public static void ErrorMessage(string msg)
+        {
+
+            string ACPPath = HostingEnvironment.MapPath("~/log.txt"); //System.Configuration.ConfigurationManager.AppSettings["Log"];
+            StreamWriter swExtLogFile = new StreamWriter(ACPPath, true);
+            swExtLogFile.Write(Environment.NewLine);
+            swExtLogFile.Write("*****Error message=****" + msg + " at " + DateTime.Now.ToString());
+            swExtLogFile.Flush();
+            swExtLogFile.Close();
         }
     }
 

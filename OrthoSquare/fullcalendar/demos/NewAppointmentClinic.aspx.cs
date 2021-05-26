@@ -36,7 +36,11 @@ namespace OrthoSquare.Master
                // bindDoctorMaster();
                 bindClinic();
 
-                ddlClinic.SelectedValue = SessionUtilities.Empid.ToString ();
+                if (SessionUtilities.RoleID == 1)
+                {
+                    ddlClinic.SelectedValue = SessionUtilities.Empid.ToString();
+                    bindDoctorMaster(SessionUtilities.Empid);
+                }
             }
 
            
@@ -48,7 +52,20 @@ namespace OrthoSquare.Master
 
         public void bindDoctorMaster(int Cid)
         {
-            ddlDocter.DataSource = objcommon.DoctersMaster(Cid);
+
+            if (SessionUtilities.RoleID == 3 || SessionUtilities.RoleID == 1)
+            {
+                ddlDocter.DataSource = objcommon.DoctersMaster(Cid, SessionUtilities.RoleID);
+
+               // bindDoctorMaster(SessionUtilities.UserID, SessionUtilities.RoleID);
+
+            }
+            else
+            {
+                ddlDocter.DataSource = objcommon.DoctersMasterNewENQ11(Cid, SessionUtilities.RoleID);
+              //  bindDoctorMaster(0, SessionUtilities.RoleID);
+            }
+
             ddlDocter.DataValueField = "DoctorID";
             ddlDocter.DataTextField = "FirstName";
             ddlDocter.DataBind();
@@ -59,7 +76,26 @@ namespace OrthoSquare.Master
 
         public void bindClinic()
         {
-            ddlClinic.DataSource = objc.GetAllClinicDetais();
+
+
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                dt = objc.GetAllClinicDetaisNew(SessionUtilities.Empid);
+            }
+            else
+            {
+                dt = objc.GetAllClinicDetais();
+
+            }
+            ddlClinic.DataSource = dt;
+
+           // ddlClinic.DataSource = objc.GetAllClinicDetais();
             ddlClinic.DataValueField = "ClinicID";
             ddlClinic.DataTextField = "ClinicName";
             ddlClinic.DataBind();
@@ -81,17 +117,17 @@ namespace OrthoSquare.Master
             {
                 if (SessionUtilities.RoleID == 2)
                 {
-                    query = "SELECT * FROM AppointmentMaster";
+                    query = "SELECT * FROM AppointmentMaster A  Join tbl_ClinicDetails C on C.ClinicID =A.ClinicID where  Year (CreatedDate) =Year(GETDATE())";
                 }
-               else if (SessionUtilities.RoleID == 2)
+               else if (SessionUtilities.RoleID == 1)
                 {
-                    query = "SELECT * FROM AppointmentMaster where ClinicID="+SessionUtilities .Empid +"";
+                    query = "SELECT * FROM AppointmentMaster A left Join tbl_ClinicDetails C on C.ClinicID =A.ClinicID where A.ClinicID=" + SessionUtilities .Empid + " and Year (CreatedDate) =Year(GETDATE()) Or A.IsActive =0";
 
                 }
                 else
                {
 
-                   query = "SELECT * FROM AppointmentMaster where DoctorID=" + SessionUtilities.Empid + "";
+                   query = "SELECT * FROM AppointmentMaster A left Join tbl_ClinicDetails C on C.ClinicID =A.ClinicID where A.DoctorID=" + SessionUtilities.Empid + " and Year (CreatedDate) =Year(GETDATE()) Or A.IsActive =0";
 
                }
             }
@@ -104,7 +140,7 @@ namespace OrthoSquare.Master
                 // if(dt != null && dt.Rows.Count )
 
 
-                query = "SELECT * FROM AppointmentMaster where DoctorID='" + Docterid + "'";
+                query = "SELECT * FROM AppointmentMaster A left Join tbl_ClinicDetails C on C.ClinicID =A.ClinicID where A.DoctorID='" + Docterid + "' and Year (CreatedDate) =Year(GETDATE()) Or A.IsActive =0";
             }
             SqlCommand cmd = new SqlCommand(query, myConnection);
 
@@ -119,18 +155,22 @@ namespace OrthoSquare.Master
             if (reader.HasRows)
             {
                 var indexOfId = reader.GetOrdinal("Appointmentid");
+                // var indexOfLecture = reader.GetOrdinal("FirstName") +'('+ reader.GetOrdinal("ClinicName") +')';
                 var indexOfLecture = reader.GetOrdinal("FirstName");
                 var indexOfStartDate = reader.GetOrdinal("start_date");
                 var indexOfEndDate = reader.GetOrdinal("end_date");
                 var indexOfTimeStart = reader.GetOrdinal("start_time");
                 var indexOfTimeEnd = reader.GetOrdinal("end_time");
-
+                var ClinicID = reader.GetOrdinal("ClinicID");
 
                 while (reader.Read())
                 {
 
+
+
+
                     var Id = reader.GetValue(indexOfId).ToString();
-                    var Lecture = reader.GetValue(indexOfLecture).ToString();
+                    var Lecture = reader.GetValue(indexOfLecture).ToString() + " ("+ reader.GetValue(ClinicID).ToString() + ")";
                     var DateStart = reader.GetValue(indexOfStartDate).ToString();
                     var DateEnd = reader.GetValue(indexOfEndDate).ToString();
                     var StartTime = reader.GetValue(indexOfTimeStart);

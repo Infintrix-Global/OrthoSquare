@@ -22,7 +22,7 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@EmployeeID", bojEmpDetails.EmployeeID);
                 objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", bojEmpDetails.ClinicID);
                 objGeneral.AddParameterWithValueToSQLCommand("@EmployeeCode", bojEmpDetails.EmployeeCode);
-                objGeneral.AddParameterWithValueToSQLCommand("@RegistrationDate",objGeneral .getDatetime (bojEmpDetails.RegistrationDate));
+                objGeneral.AddParameterWithValueToSQLCommand("@RegistrationDate", objGeneral.getDatetime(bojEmpDetails.RegistrationDate));
                 objGeneral.AddParameterWithValueToSQLCommand("@FirstName", bojEmpDetails.FirstName);
                 objGeneral.AddParameterWithValueToSQLCommand("@MiddleName", bojEmpDetails.MiddleName);
                 objGeneral.AddParameterWithValueToSQLCommand("@Surname", bojEmpDetails.Surname);
@@ -31,7 +31,17 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@Religion", bojEmpDetails.Religion);
                 objGeneral.AddParameterWithValueToSQLCommand("@Emp_Cast", bojEmpDetails.Emp_Cast);
                 objGeneral.AddParameterWithValueToSQLCommand("@BloodGroup", bojEmpDetails.BloodGroup);
-                objGeneral.AddParameterWithValueToSQLCommand("@BirthDate", objGeneral.getDatetime(bojEmpDetails.BirthDate));
+
+                if (bojEmpDetails.BirthDate != "")
+                {
+                    objGeneral.AddParameterWithValueToSQLCommand("@BirthDate", objGeneral.getDatetime(bojEmpDetails.BirthDate));
+                }
+                else
+                {
+                    objGeneral.AddParameterWithValueToSQLCommand("@BirthDate", objGeneral.getDatetime("01-01-1990"));
+                }
+
+
                 objGeneral.AddParameterWithValueToSQLCommand("@EmployeePhoto ", bojEmpDetails.EmployeePhoto);
                 objGeneral.AddParameterWithValueToSQLCommand("@CreatedBy", bojEmpDetails.CreatedBy);
                 objGeneral.AddParameterWithValueToSQLCommand("@ModifiedBy", bojEmpDetails.ModifiedBy);
@@ -83,25 +93,65 @@ namespace OrthoSquare.BAL_Classes
             return isInserted;
         }
 
-        public DataTable GetAllEmployee(string strname,string Mno,string Eno)
+        public DataTable GetAllEmployee(string strname, string Mno, string Eno)
         {
-               
+            DataTable dt = new DataTable();
+            try
+            {
 
-              string strQ=" Select * from tblEmployeePersonal EP join tblEmployeeContactDetails EC on EC.EmployeeID =EP.EmployeeID ";
-              strQ += " Join Login L on EP.EmployeeID = L.ClinicID   where L.RoleID Not In (1,2,3) and  EP.IsActive=1";
+                string strQ = " Select * from tblEmployeePersonal EP join tblEmployeeContactDetails EC on EC.EmployeeID =EP.EmployeeID ";
+                strQ += " Join Login L on EP.EmployeeID = L.ClinicID   where L.RoleID Not In (1,2,3,8) and  EP.IsActive=1";
 
-              if (strname != "")
-                  strQ += "and  FirstName like '%" + strname + "%'";
-              if(Mno != "")
+                if (strname != "")
+                    strQ += "and  FirstName like '%" + strname + "%'";
+                if (Mno != "")
                     strQ += "and  Mobile = '" + Mno + "'";
-              if (Eno != "")
-                  strQ += "and EmployeeCode = '" + Eno + "'";
-             
+                if (Eno != "")
+                    strQ += "and EmployeeCode = '" + Eno + "'";
 
-              return objGeneral.GetDatasetByCommand(strQ);
-           
-        
+
+                dt = objGeneral.GetDatasetByCommand(strQ);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return dt;
+
         }
+
+
+        public DataTable GetAllTelecaller(int ClinicID,int RoleId)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string strQ = "";
+                if (RoleId == 9)
+                {
+                     strQ = " Select *,EP.FirstName+' '+EP.Surname as EMPName from tblEmployeePersonal EP join tblEmployeeContactDetails EC on EC.EmployeeID =EP.EmployeeID ";
+                    strQ += " Join Login L on EP.EmployeeID = L.ClinicID   where L.RoleID In (9) and  EP.IsActive=1";
+                }
+                else
+                {
+                    strQ = " Select *,EP.FirstName+' '+EP.Surname as EMPName from tblEmployeePersonal EP join tblEmployeeContactDetails EC on EC.EmployeeID =EP.EmployeeID ";
+                    strQ += " Join Login L on EP.EmployeeID = L.ClinicID   where L.RoleID In (5) and  EP.IsActive=1";
+                }
+                if (ClinicID >0)
+                    strQ += "and EP.ClinicId= '"+ ClinicID + "' ";
+               
+                dt = objGeneral.GetDatasetByCommand(strQ);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return dt;
+
+        }
+
+
+
 
         public int DeleteEmployee(int EID)
         {

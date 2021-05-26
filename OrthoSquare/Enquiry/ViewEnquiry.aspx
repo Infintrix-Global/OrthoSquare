@@ -1,5 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="ViewEnquiry.aspx.cs" Inherits="OrthoSquare.Enquiry.ViewEnquiry" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="ViewEnquiry.aspx.cs" Inherits="OrthoSquare.Enquiry1.ViewEnquiry" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style type="text/css">
+        .auto-style1 {
+            height: 19px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -34,54 +39,193 @@
 
                     </div>
                     <div class="portlet-body">
-                      
-                        
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table style="width: 100%;">
-                                      <tr>
-                                        <td>Source : <asp:Label ID="lblSource" runat="server" Text=""></asp:Label></td>
-                                        
-                                    </tr>
-                                      <tr>
-                                        <td>Treatment : <asp:Label ID="lblTreatment" runat="server" Text=""></asp:Label></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>Name : <asp:Label ID="lblName" runat="server" Text=""></asp:Label></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>BirthDate : <asp:Label ID="lblbirthDate" runat="server" Text=""></asp:Label></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>Gender : <asp:Label ID="lblGender" runat="server" Text=""></asp:Label></td>
-                                       
-                                    </tr>
-                                     <tr>
-                                        <td>Blood Group : <asp:Label ID="lblBloodGroup" runat="server" Text=""></asp:Label></td>
-                                        
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td>Address: <asp:Label ID="lblAddress" runat="server" Text=""></asp:Label></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>Mobile No : <asp:Label ID="lblMobileNo" runat="server" Text=""></asp:Label></td>
-                                        
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td>Email ID : <asp:Label ID="lblEmail" runat="server" Text="Label"></asp:Label></td>
-                                        
-                                       
-                                    </tr>
-                                   
-                                </table>
+                        <div class="row"> 
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                         <b>Source : </b>
+                                    </div>
                                 </div>
-                            </div>
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                         <asp:Label ID="lblSource" runat="server" Text=""></asp:Label>
+                                       
+                                    </div>
+                                </div>
+                        <div class="col-md-3">
+                                    <div class="form-group">
+                                         
+                                       <b>Treatment :</b>
+                                    </div>
+                                </div>
+                        <div class="col-md-3">
+                                    <div class="form-group">
+                                         
+                                       <asp:Label ID="lblTreatment" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                    </div>
+                         <div class="row"> 
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                         <b>Name: </b>
+                                    </div>
+                                </div>
+                             <div class="col-md-9">
+                                    <div class="form-group">
+                                        <asp:Label ID="lblName" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                             </div>
+                        <div class="row"> 
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                         <b>BirthDate :</b>
+                                    </div>
+                                </div>
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                         <asp:Label ID="lblbirthDate" runat="server" Text=""></asp:Label>
+                                       
+                                    </div>
+                                </div>
+                        <div class="col-md-3">
+                                    <div class="form-group">
+                                         
+                                       <b>Age :</b>
+                                    </div>
+                                </div>
+                        <div class="col-md-3">
+                                    <div class="form-group">
+                                         
+                                       <asp:Label ID="lblAge" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                    </div>
+
+                        <div class="row"> 
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                         <b>Gender :</b>
+                                    </div>
+                                </div>
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                       <asp:Label ID="lblGender" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                        <div class="col-md-3">
+                                    <div class="form-group">
+                                         
+                                       <b>Blood Group :</b>
+                                    </div>
+                                </div>
+                        <div class="col-md-3">
+                                    <div class="form-group">
+                                     <asp:Label ID="lblBloodGroup" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                    </div>
+                        <div class="row"> 
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                         <b>Address: </b>
+                                    </div>
+                                </div>
+                             <div class="col-md-9">
+                                    <div class="form-group">
+                                        <asp:Label ID="lblAddress" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                             </div>
+
+
+                        <div class="row"> 
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                         <b>Mobile No : </b>
+                                    </div>
+                                </div>
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                     <asp:Label ID="lblMobileNo" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                        <div class="col-md-3">
+                                    <div class="form-group">
+                                         
+                                       <b>Email ID :  </b>
+                                    </div>
+                                </div>
+                        <div class="col-md-3">
+                                    <div class="form-group">
+                                     <asp:Label ID="lblEmail" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                    </div>
+
+
+                        <div class="row"> 
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                         <b>Clinic Name : </b>
+                                    </div>
+                                </div>
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                  <asp:Label ID="lblClinicName" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                        <div class="col-md-3">
+                                    <div class="form-group">
+                                         
+                                       <b>Assign To : </b>
+                                    </div>
+                                </div>
+                        <div class="col-md-3">
+                                    <div class="form-group">
+                                    <asp:Label ID="lblAssignToEmpId" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                    </div>
+
+
+                        <div class="row"> 
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                         <b>Status : </b>
+                                    </div>
+                                </div>
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                               <asp:Label ID="lblStatus" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                        <div class="col-md-3">
+                                    <div class="form-group">
+                                         
+                                       <b>Folllowup date : </b>
+                                    </div>
+                                </div>
+                        <div class="col-md-3">
+                                    <div class="form-group">
+                                   <asp:Label ID="lblFolllowupdate" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                    </div>
+
+                        <div class="row"> 
+                          <div class="col-md-3">
+                                    <div class="form-group">
+                                         <b>Conversation : </b>
+                                    </div>
+                                </div>
+                             <div class="col-md-9">
+                                    <div class="form-group">
+                                       <asp:Label ID="lblConversation" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                             </div>
+                        
                       
                           
                                

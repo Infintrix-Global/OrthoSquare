@@ -15,20 +15,101 @@ namespace OrthoSquare.Invoice
 
         BAL_InvoiceDetails objinv = new BAL_InvoiceDetails();
         public static DataTable AllData = new DataTable();
-
+        clsCommonMasters objcomm = new clsCommonMasters();
+        BAL_Clinic objc = new BAL_Clinic();
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
             {
-                getAllInvoice();
+                bindClinic();
+                if(SessionUtilities .RoleID ==1)
+                {
+
+                    ddlClinic.SelectedValue = SessionUtilities.Empid.ToString();
+                    BindDocter(SessionUtilities.Empid);
+                    getAllInvoice(Convert .ToInt32 (SessionUtilities.Empid), 0, "","");
+                }
+                else if (SessionUtilities .RoleID ==3)
+                {
+                    ddlDoctor.Items.Insert(0, new ListItem("--- Select ---", "0"));
+                    getAllInvoice(0, Convert.ToInt32(SessionUtilities.Empid), "", "");
+                }
+                else
+                {
+                    ddlDoctor.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
+
+                    getAllInvoice(0, 0, "", "");
+                }
+               // ddlDoctor.Items.Insert(0, new ListItem("--- Select ---", "0"));
+                
 
             }
         }
-
-        public void getAllInvoice()
+        public void bindClinic()
         {
 
-            AllData = objinv.GetAllInvoicDispaly();
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcomm.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                dt = objc.GetAllClinicDetaisNew(SessionUtilities.Empid);
+            }
+            else
+            {
+                dt = objc.GetAllClinicDetaisNew(0);
+
+            }
+            ddlClinic.DataSource = dt;
+
+            ddlClinic.DataValueField = "ClinicID";
+            ddlClinic.DataTextField = "ClinicName";
+            ddlClinic.DataBind();
+            ddlClinic.Items.Insert(0, new ListItem("-- Select Clinic --", "0", true));
+
+        }
+
+        protected void ddlClinic_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            BindDocter(Convert.ToInt32(ddlClinic.SelectedValue));
+        }
+        public void BindDocter(int Cid)
+        {
+            DataTable dt=null ;
+            ddlDoctor.DataSource = null;
+            ddlDoctor.DataBind();
+            //ddlDoctor.Items.Remove("--- Select ---");
+            if (SessionUtilities.RoleID == 3 || SessionUtilities.RoleID == 1)
+            {
+                dt= objcomm.DoctersMaster(Cid, SessionUtilities.RoleID);
+                ddlDoctor.DataSource = dt;
+
+            }
+            else
+            {
+                dt=objcomm.DoctersMaster(Cid, SessionUtilities.RoleID);
+                ddlDoctor.DataSource = dt;
+
+            }
+
+            ddlDoctor.DataTextField = "FirstName";
+            ddlDoctor.DataValueField = "DoctorID";
+            ddlDoctor.Items.Remove(ddlDoctor.Items.FindByValue("0"));
+            ddlDoctor.DataBind();
+            ddlDoctor.Items.Insert(0, new ListItem("--- Select ---", "0"));
+
+            
+
+           
+        }
+
+        public void getAllInvoice(int Cid,int Did,string Search,string MNo)
+        {
+
+            AllData = objinv.GetAllInvoicDispaly(Cid, Did, Search, MNo);
             gvShow.DataSource = AllData;
             gvShow.DataBind();
 
@@ -37,7 +118,7 @@ namespace OrthoSquare.Invoice
         protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvShow.PageIndex = e.NewPageIndex;
-            getAllInvoice();
+            getAllInvoice(Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), txtSearch.Text,txtMobileNo .Text );
             btSearch_Click(sender, e);
         }
 
@@ -46,54 +127,30 @@ namespace OrthoSquare.Invoice
             int invCode = Convert.ToInt32(e.CommandArgument);
             if (e.CommandName == "Viewinv")
             {
-                //Response.Redirect("InvoicePrint.aspx?InvoiceCode=" + invCode);
-
                 GridViewRow gvRow = (GridViewRow)((Control)e.CommandSource).NamingContainer;
                 Int32 rowind = gvRow.RowIndex;
                 Label lblInvoiceCode = (Label)gvRow.FindControl("lblInvoiceCode");
 
-                Response.Redirect("InvoicePrint.aspx?InvoiceCode=" + invCode + "&Fid=" + lblInvoiceCode.Text);
+                Response.Redirect("InvoicePrint.aspx?InvoiceCode=" + invCode + "&Fid=" + lblInvoiceCode.Text + "&Back=" + 1);
+
             }
+
+            if (e.CommandName == "delete1")
+            {
+                int invCode1 = Convert.ToInt32(e.CommandArgument);
+                
+                int I = objinv.Deleteinvoice(invCode1);
+                getAllInvoice(Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), txtSearch.Text, txtMobileNo.Text);
+
+
+            }
+
+
         }
         protected void btSearch_Click(object sender, EventArgs e)
         {
-            try
-            {
-                string search = "";
-                //if (txtSearch.Text != "")
-                //{
-                if (txtSearch.Text != "")
-                {
-                    search += "PFristName like '%" + txtSearch.Text + "%'";
-                }
-                else
-                {
-                    // search += "Mobile = " + txtm.Text + "";
-                }
-
-                DataRow[] dtSearch1 = AllData.Select(search);
-                if (dtSearch1.Count() > 0)
-                {
-                    DataTable dtSearch = dtSearch1.CopyToDataTable();
-                    gvShow.DataSource = dtSearch;
-                    gvShow.DataBind();
-                }
-                else
-                {
-                    DataTable dt = new DataTable();
-                    gvShow.DataSource = dt;
-                    gvShow.DataBind();
-                }
-                //}
-                //else
-                //{
-                //    gvShow.DataSource = AllData;
-                //    gvShow.DataBind();
-                //}
-            }
-            catch (Exception ex)
-            {
-            }
+           getAllInvoice(Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), txtSearch.Text, txtMobileNo.Text);
+           
         }
 
         protected void btnAddNew_Click(object sender, EventArgs e)

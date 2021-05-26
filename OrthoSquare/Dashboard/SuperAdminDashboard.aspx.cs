@@ -24,16 +24,29 @@ namespace OrthoSquare.Dashboard
         BAL_EnquiryDetails objENQ = new BAL_EnquiryDetails();
         BAL_Appointment objApp = new BAL_Appointment();
         BAL_ConsultationAddTreatment objCT = new BAL_ConsultationAddTreatment();
-
+        BAL_Clinic objc = new BAL_Clinic();
         BAL_Patient objp = new BAL_Patient();
+        Notificationnew objN = new Notificationnew();
+        BAL_Treatment objT = new BAL_Treatment();
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
+
             if (!IsPostBack)
             {
+               
+              //  ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMsg", "alert('Your software will be expired on 20-06-2019')", true);
+
+                objcommon.UserLoginhistory(SessionUtilities.Empid, SessionUtilities.RoleID);
+
+                bindYear();
+                bindClinic();
                 BindChart();
                 GridTodayAppoinmentget();
                 EmployeeCount();
                 TreatmentMASTERCount();
+               
                // getAllEnquiry();
                 DocterNo();
                 FollowupNo();
@@ -45,6 +58,8 @@ namespace OrthoSquare.Dashboard
                 CLINICSTotal();
                 DAILYAPPONTMENTSTOTAL();
                 CLINICSTotal();
+                bindState();
+                biendClinicData();
             }
         }
 
@@ -52,7 +67,9 @@ namespace OrthoSquare.Dashboard
         public void DocterNo()
         {
 
-            int Eno = objcommon.GetDoctorMax_No();
+            //int Eno = objcommon.GetDoctorMax_No();
+            int Eno = objcommon.GetDoctorCountMASTER();
+           
             lblDoctors.Text = Eno.ToString();
         }
 
@@ -67,7 +84,9 @@ namespace OrthoSquare.Dashboard
         {
 
             int Eno = objcommon.GetTreatmentMASTER();
-            lblTreatmentTotal.Text = Eno.ToString();
+
+         
+            lblTreatmentTotal.Text = Eno.ToString ();
         }
 
 
@@ -76,7 +95,7 @@ namespace OrthoSquare.Dashboard
         public void FollowupNo()
         {
 
-            int Eno = objcommon.GetFollowupCountNo();
+            int Eno = objcommon.GetFollowupCountNoNew(Convert.ToInt32(SessionUtilities.Empid), Convert.ToInt32(SessionUtilities.RoleID));
             lblFollwupCOunt.Text = Eno.ToString();
         }
 
@@ -123,7 +142,7 @@ namespace OrthoSquare.Dashboard
         public void TotalInvoice()
         {
 
-            decimal Totalinv = objcommon.GetTotalPaidAmount(SessionUtilities.Empid);
+            decimal Totalinv = objcommon.GetTotalPaidAmount(0);
 
             if (Totalinv != 0)
             {
@@ -137,11 +156,121 @@ namespace OrthoSquare.Dashboard
         }
 
 
-
-        public void TotalExpense()
+       public void biendClinicData()
         {
 
-            decimal TotalExp = objcommon.GetTotalExpense(SessionUtilities.Empid);
+            DataTable dt = objcommon.GetAllClinicDetaisNew1(Convert .ToInt32 (ddlstate .SelectedValue ));
+            gvShow.DataSource = dt;
+            gvShow.DataBind();
+
+
+        }
+
+        protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvShow.PageIndex = e.NewPageIndex;
+
+            biendClinicData();
+        }
+
+        public void bindClinic()
+        {
+            ddlClinic.DataSource = objc.GetAllClinicDetais();
+            ddlClinic.DataValueField = "ClinicID";
+            ddlClinic.DataTextField = "ClinicName";
+            ddlClinic.DataBind();
+            ddlClinic.Items.Insert(0, new ListItem("-- Select Clinic --", "0", true));
+
+
+
+            ddlClinicCollection.DataSource = objc.GetAllClinicDetais();
+            ddlClinicCollection.DataValueField = "ClinicID";
+            ddlClinicCollection.DataTextField = "ClinicName";
+            ddlClinicCollection.DataBind();
+            ddlClinicCollection.Items.Insert(0, new ListItem("-- Select Clinic --", "0", true));
+
+
+        }
+        protected void ddlClinic_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ddlClinicCollection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindChart();
+        }
+
+        public void bindState()
+        {
+            DataTable dt = objcommon.GetState();
+            ddlstate.DataSource = dt;
+            ddlstate.DataTextField = "StateName";
+            ddlstate.DataValueField = "StateID";
+            ddlstate.DataBind();
+            ddlstate.Items.Insert(0, new ListItem("--- Select ---", "0"));
+
+        }
+        protected void State_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            biendClinicData();
+
+        }
+
+
+        public void bindYear()
+        {
+            string Year = System.DateTime.Now.Year.ToString();
+
+            DataTable dt = objcommon.GetYear();
+
+
+
+            ddlyear1.DataSource = dt;
+            ddlyear1.DataTextField = "YearName";
+            ddlyear1.DataValueField = "YearName";
+            ddlyear1.DataBind();
+            ddlyear1.Items.Insert(0, new ListItem("--- Select ---", "0"));
+
+
+            ddlYearSOE.DataSource = dt;
+            ddlYearSOE.DataTextField = "YearName";
+            ddlYearSOE.DataValueField = "YearName";
+            ddlYearSOE.DataBind();
+            ddlYearSOE.Items.Insert(0, new ListItem("--- Select ---", "0"));
+
+
+            ddlYearCollection.DataSource = dt;
+            ddlYearCollection.DataTextField = "YearName";
+            ddlYearCollection.DataValueField = "YearName";
+            ddlYearCollection.DataBind();
+            ddlYearCollection.Items.Insert(0, new ListItem("--- Select ---", "0"));
+
+            ddlyear1.SelectedValue = Year;
+            ddlYearSOE.SelectedValue = Year;
+            ddlYearCollection.SelectedValue = Year;
+        }
+
+        protected void ddlYear_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+        protected void ddlYearSOE_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ddlYearCollection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        public void TotalExpense()
+        {
+           
+
+            decimal TotalExp = objcommon.GetTotalExpense(0);
 
             if (TotalExp != 0)
             {
@@ -153,7 +282,6 @@ namespace OrthoSquare.Dashboard
                 lblExp.Text = "0.00";
             }
         }
-
 
 
         public void GridTodayAppoinmentget()
@@ -180,7 +308,13 @@ namespace OrthoSquare.Dashboard
 
                 GridAppoinment.DataSource = AllData;
                 GridAppoinment.DataBind();
+
+             DataTable dt56= objApp.GetAlltodayAppoinmentNew1(Cid);
+
+                lblTodayAppoinment.Text = dt56.Rows.Count.ToString();
             }
+
+
         }
 
         //public void getAllEnquiry()
@@ -216,11 +350,33 @@ namespace OrthoSquare.Dashboard
         protected void GridAppoinment_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int Aid = Convert.ToInt32(e.CommandArgument);
+            string msg;
             if (e.CommandName == "Approve")
             {
 
                 int _isDeleted = objApp.GetApprove(Aid);
                 // GridTodayAppoinmentget();
+
+
+
+                GridViewRow gvRow = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                Label lblpatientid = (Label)gvRow.FindControl("lblpatientid");
+                Label lblstart_date = (Label)gvRow.FindControl("lblstart_date");
+                Label lblstart_Time = (Label)gvRow.FindControl("lblstart_Time");
+             
+
+                DataTable DTP = objp.GetPatient(Convert.ToInt32(lblpatientid.Text));
+
+                msg = "Your Appoinment Date :" + lblstart_date.Text + " " + "Time : " + lblstart_Time.Text + " has been Approved";
+
+
+                // PushNotification(Convert.ToInt32(lblpatientid.Text), "Approved Appoinment", msg);
+                objN.SendMessage(lblpatientid.Text, DTP.Rows[0]["registrationToken"].ToString(), msg, " Approved Appoinment","1");
+
+
+
+
+
                 Response.Redirect("BranchDashboard.aspx");
 
             }
@@ -229,6 +385,20 @@ namespace OrthoSquare.Dashboard
 
 
                 int _isDeleted = objApp.GetReject(Aid);
+
+
+                GridViewRow gvRow = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                Label lblpatientid = (Label)gvRow.FindControl("lblpatientid");
+                Label lblstart_date = (Label)gvRow.FindControl("lblstart_date");
+                Label lblstart_Time = (Label)gvRow.FindControl("lblstart_Time");
+
+               
+                DataTable DTP = objp.GetPatient(Convert.ToInt32(lblpatientid.Text));
+
+                msg = "Your Appoinment Date :" + lblstart_date.Text + " " + "Time : " + lblstart_Time.Text + " has been Reject";
+
+                objN.SendMessage(lblpatientid.Text, DTP.Rows[0]["registrationToken"].ToString(), msg, " Reject Appoinment","2");
+                
                 Response.Redirect("BranchDashboard.aspx");
             }
         }
@@ -298,9 +468,6 @@ namespace OrthoSquare.Dashboard
         }
 
 
-
-
-
         [WebMethod]
         public static List<object> GetChartDataline(string monthsid)
         {
@@ -336,25 +503,27 @@ namespace OrthoSquare.Dashboard
                 }
             }
         }
-
-
-
-
+        
         //--------------------------------------------------------- Bar Chart----------
 
      private DataTable GetData()
 
     {
-        string conn = ConfigurationManager.ConnectionStrings["OrthoSquareDBConnectionString"].ConnectionString;
-        DataTable dt = new DataTable();
+      //  string conn = ConfigurationManager.ConnectionStrings["OrthoSquareDBConnectionString"].ConnectionString;
 
-        string cmd = "Select * from ( Select  M.MonthsName, Sum(IM.PaidAmount) COLLECTION  from  MonthsMaster M Left  join InvoiceMaster IM on M.MonthsName = MONTH(IM.PayDate) "
-	+ " Group by MonthsName ) T1 "
-    + " Join (Select  M.MonthsName, Sum(IM.Amount) EXPENSES from  MonthsMaster M "
-    +  "  Left  join ExpenseMaster IM on M.MonthsName = MONTH(IM.ExpDate) "
-	+  " Group by MonthsName )T2 "
-	+ " ON T1.MonthsName = T2 .MonthsName ";
+            SqlConnection conn = new SqlConnection(@"Data Source=92.204.4.195; Initial Catalog=Orthosquare; User ID=ortho_admin;Password=admin@@123");
 
+            DataTable dt = new DataTable();
+
+            //       string cmd = "Select * from ( Select  M.MonthsName, Sum(IM.PaidAmount) COLLECTION  from  MonthsMaster M Left  join InvoiceMaster IM on M.MonthsName = MONTH(IM.PayDate) "
+            //+ " Group by MonthsName ) T1 "
+            //   + " Join (Select  M.MonthsName, Sum(IM.Amount) EXPENSES from  MonthsMaster M "
+            //   +  "  Left  join ExpenseMaster IM on M.MonthsName = MONTH(IM.ExpDate) "
+            //+  " Group by MonthsName )T2 "
+            //+ " ON T1.MonthsName = T2 .MonthsName ";
+
+            string cmd = " Select isnull(Sum(IM.PaidAmount),0)  COLLECTION,isnull(Sum(E.Amount) ,0) EXPENSES,MONTH(IM.PayDate) MonthsName from InvoiceMaster IM "
+            + "  Left  join ExpenseMaster E on MONTH(IM.PayDate) = MONTH(E.ExpDate) where Year(IM.PayDate)  ="+ddlYearCollection .SelectedValue+"  Group by MONTH(IM.PayDate)";
         SqlDataAdapter adp = new SqlDataAdapter(cmd, conn);
 
         adp.Fill(dt);
@@ -383,7 +552,7 @@ namespace OrthoSquare.Dashboard
 
         var data = new google.visualization.DataTable();
 
-        data.addColumn('string', 'MonthsName');
+        data.addColumn('string', 'Months');
 
         data.addColumn('number', 'COLLECTION');
 
@@ -431,31 +600,32 @@ namespace OrthoSquare.Dashboard
 
         //---------------------------------------------------Pai Chart -------------------------
 
-         [WebMethod]
-    public static List<Data> GetDatapai()
-    {
-        SqlConnection conn = new SqlConnection(@"Data Source=MAC\SQLEXPRESS;Initial Catalog=NewOrthoSquare3009;Integrated Security=True");
-        DataSet ds = new DataSet();
-        DataTable dt = new DataTable();
-        conn.Open();
-        string cmdstr = "Select ESM.Sourcename,count(E.Sourceid) as Source1 from Enquiry E join EnquirySourceMaster ESM on  ESM.Sourceid=E.Sourceid where ESM.Sourceid in (10,17,21,18,12) group by ESM.Sourcename ";
-        SqlCommand cmd = new SqlCommand(cmdstr, conn);
-        SqlDataAdapter adp = new SqlDataAdapter(cmd);
-        adp.Fill(ds);
-        dt = ds.Tables[0];
-        List<Data> dataList = new List<Data>();
-        string cat="";
-        int val=0;
-        foreach (DataRow dr in dt.Rows)
-        {
-            cat=dr[0].ToString();
-            val=Convert.ToInt32( dr[1]);
-            dataList.Add(new Data(cat, val));
-        }
-        return dataList;
-    }
+    //     [WebMethod]
+    //public static List<Data> GetDatapai(string monthsid)
+    //{
+    //    SqlConnection conn = new SqlConnection(@"Data Source=92.204.4.195; Initial Catalog=Orthosquare; User ID=ortho_admin;Password=admin@@123");
+     
+    //         DataSet ds = new DataSet();
+    //    DataTable dt = new DataTable();
+    //    conn.Open();
+    //    string cmdstr = "Select ESM.Sourcename,count(E.Sourceid) as Source1 from Enquiry E join EnquirySourceMaster ESM on  ESM.Sourceid=E.Sourceid where ESM.Sourceid in (10,17,21,18,12) and Year(EnquiryDate)="+ monthsid + " group by ESM.Sourcename ";
+    //    SqlCommand cmd = new SqlCommand(cmdstr, conn);
+    //    SqlDataAdapter adp = new SqlDataAdapter(cmd);
+    //    adp.Fill(ds);
+    //    dt = ds.Tables[0];
+    //    List<Data> dataList = new List<Data>();
+    //    string cat="";
+    //    int val=0;
+    //    foreach (DataRow dr in dt.Rows)
+    //    {
+    //        cat=dr[0].ToString();
+    //        val=Convert.ToInt32( dr[1]);
+    //        dataList.Add(new Data(cat, val));
+    //    }
+    //    return dataList;
+    //}
 
-public class Data
+    public class Data
 {
     public string ColumnName = "";
     public int Value = 0;

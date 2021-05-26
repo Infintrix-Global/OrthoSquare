@@ -14,6 +14,7 @@ namespace OrthoSquare.Report
     public partial class ClinicwishExpenseReport : System.Web.UI.Page
     {
         BAL_Clinic objc = new BAL_Clinic();
+        clsCommonMasters objcommon = new clsCommonMasters();
         public static DataTable AllData = new DataTable();
         BAL_Expense objExp = new BAL_Expense();
         decimal sumFooterValue = 0;
@@ -23,6 +24,11 @@ namespace OrthoSquare.Report
             if (!IsPostBack)
             {
                 bindClinic();
+                if(SessionUtilities .RoleID ==1)
+                {
+
+                    ddlClinic.SelectedValue = SessionUtilities.Empid.ToString();
+                }
                 getAllExpense();
             }
         }
@@ -30,17 +36,29 @@ namespace OrthoSquare.Report
 
         public void bindClinic()
         {
-            ddlClinic.DataSource = objc.GetAllClinicDetais();
+
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                dt = objc.GetAllClinicDetaisNew(SessionUtilities.Empid);
+            }
+            else
+            {
+                dt = objc.GetAllClinicDetais();
+
+            }
+            ddlClinic.DataSource = dt;
             ddlClinic.DataValueField = "ClinicID";
             ddlClinic.DataTextField = "ClinicName";
             ddlClinic.DataBind();
             ddlClinic.Items.Insert(0, new ListItem("-- Select Clinic --", "0", true));
 
         }
-
-       
-
-
 
         public void getAllExpense()
         {
@@ -49,16 +67,14 @@ namespace OrthoSquare.Report
             gvShow.DataSource = AllData;
             gvShow.DataBind();
 
-        }
 
+        }
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             getAllExpense();
 
         }
-
-
 
         protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -69,8 +85,6 @@ namespace OrthoSquare.Report
 
         protected void gvShow_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-
-
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {

@@ -109,14 +109,14 @@
 
                                           <FooterStyle HorizontalAlign="Left" />
 												<FooterTemplate>
-                                                    <asp:Label ID="lblPaidAmountTotal" runat="server" Text=""></asp:Label>
+                                                    <asp:Label ID="lblPaidAmountTotal" runat="server"  Text="" ></asp:Label>
 												</FooterTemplate>
                                          </asp:TemplateField>
 
 
                                     <asp:TemplateField HeaderText="Pending Amount" >
                                         <ItemTemplate>
-                                            <asp:Label ID="lblPendingAmount" runat="server" Text=""></asp:Label>
+                                            <asp:Label ID="lblPendingAmount" runat="server" Text='<%# Eval("PendingAmount")%>'></asp:Label>
                                         </ItemTemplate>
                                           <FooterStyle HorizontalAlign="Left" />
 												<FooterTemplate>

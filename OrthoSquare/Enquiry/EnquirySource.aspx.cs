@@ -8,7 +8,7 @@ using OrthoSquare.BAL_Classes;
 using System.Data;
 using OrthoSquare.Utility;
 
-namespace OrthoSquare.Enquiry
+namespace OrthoSquare.Enquiry1
 {
     public partial class EnquirySource : System.Web.UI.Page
     {

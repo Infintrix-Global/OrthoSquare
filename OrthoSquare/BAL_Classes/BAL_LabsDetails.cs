@@ -59,7 +59,7 @@ namespace OrthoSquare.BAL_Classes
 
 
 
-        public DataTable GetLabsInoutReport(long Pid)
+        public DataTable GetLabsInoutReport(long Pid,int cid)
         {
 
             //objGeneral.AddParameterWithValueToSQLCommand("@mode", 4);
@@ -70,23 +70,28 @@ namespace OrthoSquare.BAL_Classes
 
             if (Pid > 0)
                 strQuery += "  and LD.patientid='" + Pid + "'";
+            if (cid > 0)
+                strQuery += "  and PM.ClinicID='" + cid + "'";
 
             return objGeneral.GetDatasetByCommand(strQuery);
-
-
-
 
         }
 
 
-        public DataTable GetLabs()
+        public DataTable GetLabs(int Cid)
         {
             try
             {
 
-                objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
-                objGeneral.AddParameterWithValueToSQLCommand("@Labid",0);
-                ds = objGeneral.GetDatasetByCommand_SP("GET_Labs");
+                strQuery = "Select * from LabMaster LM Join PatientMaster PM on PM.patientid=LM.patientid Join TypeofWorkLab TL on TL.TypeOfworkId = LM.TypeOfworkId Join tbl_ClinicDetails CD on CD.ClinicId = PM.ClinicId Where LM.IsActive =1 and PM.IsActive =1 ";
+              
+                if (Cid > 0)
+                    strQuery += " and PM.ClinicID=" + Cid + " ";
+                strQuery += " order by Labid DESC";
+                // objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
+                // objGeneral.AddParameterWithValueToSQLCommand("@Labid",0);
+                return objGeneral.GetDatasetByCommand(strQuery);
+
 
 
             }
@@ -96,6 +101,56 @@ namespace OrthoSquare.BAL_Classes
             return ds.Tables[0];
 
         }
+
+          public DataTable GetLabsViewDetsils(int Pid)
+        {
+           
+
+               strQuery ="Select * from LabMaster LM Join PatientMaster PM on PM.patientid=LM.patientid Join TypeofWorkLab TL on TL.TypeOfworkId = LM.TypeOfworkId";
+               strQuery += " Where LM.IsActive =1 and PM.IsActive =1 and LM.patientid='" + Pid + "'";
+
+               return objGeneral.GetDatasetByCommand(strQuery);
+
+
+                //objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
+                //objGeneral.AddParameterWithValueToSQLCommand("@Labid",0);
+                //ds = objGeneral.GetDatasetByCommand_SP("GET_Labs");
+
+
+
+        }
+
+
+
+
+
+        public DataTable GetLabsViewDetsilsNEW(long Pid)
+        {
+
+
+            strQuery = "Select * from LabMaster LM  Join TypeofWorkLab TL on TL.TypeOfworkId = LM.TypeOfworkId";
+            strQuery += " Where LM.IsActive =1 and LM.patientid='" + Pid + "'";
+
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+
+            //objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
+            //objGeneral.AddParameterWithValueToSQLCommand("@Labid",0);
+            //ds = objGeneral.GetDatasetByCommand_SP("GET_Labs");
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
 
 
         public DataTable GetLabsDetails(long Lid)

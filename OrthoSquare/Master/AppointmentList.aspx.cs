@@ -49,18 +49,32 @@ namespace OrthoSquare.Master
 
         public void bindDoctorMaster()
         {
-            ddlDocter.DataSource = objcommon.DoctersMaster(SessionUtilities.Empid);
+
+
+            if (SessionUtilities.RoleID == 3 || SessionUtilities.RoleID == 1)
+            {
+                ddlDocter.DataSource = objcommon.DoctersMaster(SessionUtilities.Empid, SessionUtilities.RoleID);
+
+              
+
+            }
+            else
+            {
+                ddlDocter.DataSource = objcommon.DoctersMaster(0, SessionUtilities.RoleID);
+
+               
+            }
+
+
+
+
+           
             ddlDocter.DataValueField = "DoctorID";
             ddlDocter.DataTextField = "FirstName";
             ddlDocter.DataBind();
             ddlDocter.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
 
         }
-
-
-     
-
-
 
         protected void GridAppoinment_RowCommand(object sender, GridViewCommandEventArgs e)
         {

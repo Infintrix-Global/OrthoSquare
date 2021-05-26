@@ -7,7 +7,7 @@
     <link href='../fullcalendar.print.min.css' rel='stylesheet' media='print' />
     <script src='../lib/moment.min.js'></script>
     <script src='../lib/jquery.min.js'></script>
-    <script src='../fullcalendar.min.js'></script>
+    <script src='../fullcalendar.js'></script>
 
     <script>
 
@@ -18,10 +18,6 @@
                 url: "NewAppointmentClinic.aspx/TestOnWebService",
                 data: "{Docterid: '" + $("[id*=ddlDocter]").val() + "',Docterid1: '" + $("[id*=TextBox1]").val() + "'}",
 
-
-                //data: "{Docterid: '" + $("[id*=ddlDocter]").val() + "',Docterid1: '" + $(s1).val() + "'}",
-
-              //  data: '{Docterid: "' + s1 + '",Docterid1: "' + s1 + '"}',
 
               
                 contentType: "application/json; charset=utf-8",
@@ -46,28 +42,15 @@
                         selectable: true,
                         selectHelper: true,
                        
-                       
                         select: function (start, end) {
-                            // var title = prompt('Even t Title:');
-
+                            
                             url: "default.html";
                             var s1 = start;
-                            
-
-
-                         <%--   $('#<%=TextBox1.ClientID%>').text(s1);--%>
-
-                          <%--  $('#<%=TextBox1.ClientID %>').text(s1);--%>
+                          
 
                             $('#<%= TextBox1.ClientID %>').val(s1);
 
-<%--                            $('#<%= Edit.ClientID %>').hide();--%>
-                           
-
-                            //$("#Edit").hide();
-                            //url: "~/Master/BookAppointment.aspx?DateTime='" + $("[id*=TextBox1]").val() + "'";
-
-                            window.location = "BookAppointment.aspx?DateTime='" + $("[id*=TextBox1]").val() + "'&ddlDocter='" + $("[id*=ddlDocter]").val() + "'";
+                            window.location = "BookAppointment.aspx?DateTime='" + $("[id*=TextBox1]").val() + "'&ddlDocter=" + $("[id*=ddlDocter]").val() + "";
                             var eventData;
 
                             if (title) {
@@ -76,13 +59,10 @@
                                     title: title,
                                     start: start,
                                     end: end
-
                                 };
                                 $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
                                 $('#DivID').fullCalendar('renderEvent', eventData, true); // stick? = true
 
-                               
-                                
                             }
                             $('#calendar').fullCalendar('unselect');
                         },
@@ -133,7 +113,7 @@
             <ul class="page-breadcrumb">
                 <li>
                     <i class="icon-home"></i>
-                    <a href="index-2.html">Home</a>
+                    <a href="#">Home</a>
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
@@ -160,26 +140,30 @@
                     </div>
 
                     <div class="row ">
-                        <div class="col-xs-12">
+                        <div class="col-md-6 col-xs-12">
                             <div class="form-group">
-                                <div class="col-sm-3">
+                               <%-- <div class="col-sm-3">--%>
                                     <asp:DropDownList ID="ddlClinic" class="form-control"  AutoPostBack="true" OnSelectedIndexChanged="ddlClinic_SelectedIndexChanged" runat="server"></asp:DropDownList>
 
                                     
                                     
+                                <%--</div>--%>
                                 </div>
-                                <div class="col-sm-3">
+                            </div>
+                             <div class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                               <%-- <div class="col-sm-3">--%>
                                       <asp:DropDownList ID="ddlDocter" class="form-control"  AutoPostBack="true" OnSelectedIndexChanged="ddlDocter_SelectedIndexChanged" runat="server"></asp:DropDownList>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidatorPinCode" runat="server" ControlToValidate="ddlDocter" InitialValue ="0"
                                                     SetFocusOnError="true" ErrorMessage="Please Enter Docter" ForeColor="Red"></asp:RequiredFieldValidator>
-                                </div>
-                                <div class="col-sm-1">
+                              <%--  </div>
+                                <div class="col-sm-1">--%>
                                     <label>
                                     </label>
-                                </div>
-                                <div class="col-sm-3">
+                             <%--   </div>
+                                <div class="col-sm-3">--%>
                                     <asp:TextBox ID="TextBox1" class="form-control" style="display:none"  runat="server"></asp:TextBox>
-                                </div>
+                               <%-- </div>--%>
                             </div>
                         </div>
                     </div>
@@ -191,14 +175,14 @@
                    
                      <div id="DivID" ></div>
                     <div class="row ">
-                        <div class="col-xs-12">
+                        <div class="col-xs-12 col-md-12">
                            <div class="form-group">
-                                <div class="col-sm-8">
+                                <div class="col-sm-12">
                                     <div id='calendar'>
 
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-4 hidden-lg hidden-md hidden-sm hidden-xs">
                                       
                                     <div class="row">
                         

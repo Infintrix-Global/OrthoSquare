@@ -55,7 +55,7 @@
                 display: none;
             }
 
-            #Button1 {
+            #btnBack {
                 display: none;
             }
 
@@ -86,9 +86,9 @@
         <table style="width: 100%;">
             <tr>
                 <td>
-                   <asp:ImageButton ID="ImageButton1" ImageUrl="~/Images/printdetail.jpg" OnClientClick="javascript:PrintPage();"
+                   <asp:ImageButton ID="ImageButton1" Visible="false" ImageUrl="~/Images/printdetail.jpg" OnClientClick="javascript:PrintPage();"
             runat="server" Width="50px" Height ="50px" />
-        <asp:Button ID="Button1" runat="server" Text="Back" OnClick="Button1_Click" CssClass="btn btn-warning" />
+        <asp:Button ID="btnBack" runat="server" Text="Back" Visible="false" OnClick="Button1_Click" CssClass="btn btn-warning" />
                 </td>
                 <td>
                   
@@ -196,11 +196,11 @@
 
                                 <asp:Label ID="lblpatientIDH" runat="server" Text="Patient ID:" Font-Size="Small"></asp:Label>
 
-                                <asp:Label ID="patientID" runat="server" Text="P01"></asp:Label>
+                                <asp:Label ID="patientID" runat="server" Text=""></asp:Label>
                                 <br />
-                                <asp:Label ID="lblMNo" runat="server" Text="9016995488"></asp:Label>
+                                <asp:Label ID="lblMNo" runat="server" Text=""></asp:Label>
                                 <br />
-                                <asp:Label ID="lblEmail" runat="server" Text="aa@gmail.com"></asp:Label>
+                                <asp:Label ID="lblEmail" runat="server" Text=""></asp:Label>
                                 <br />
                                 <br />
                                 <asp:Label ID="Label1By" Font-Bold="True" runat="server" Text="By"></asp:Label>
@@ -217,9 +217,9 @@
                                 Years
                             <br />
                                 <asp:Label ID="lblBlood" runat="server" Font-Bold="False" Text="Blood Group:" Font-Size="Small"></asp:Label>
-                                <asp:Label ID="lblBloodGroup" runat="server" Font-Bold="False" Font-Size="Small" Text="B+"></asp:Label>
+                                <asp:Label ID="lblBloodGroup" runat="server" Font-Bold="False" Font-Size="Small" Text=""></asp:Label>
                                 <br />
-                                <asp:Label ID="lblAddress" runat="server" Font-Bold="False" Font-Size="Small" Text="abc test, mumbai -400012"></asp:Label>
+                                <asp:Label ID="lblAddress" runat="server" Font-Bold="False" Font-Size="Small" Text=""></asp:Label>
                                 <%--</div>--%>
                             </td>
 
@@ -255,17 +255,18 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText=" Cost (INR)" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="lblQty" runat="server" Text='<%# Convert.ToDecimal(Eval("Cost")).ToString("#,##0.00") %>'></asp:Label>
+                                                <asp:Label ID="lblQty" runat="server" Text='<%# Convert.ToDecimal(Eval("Cost")).ToString("N", System.Globalization.CultureInfo.GetCultureInfo("en-IN")) %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Discount" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="lblUnit" runat="server" Text='<%# Convert.ToDecimal(Eval("Discount")).ToString("#,##0.00") %>'></asp:Label>
+                                                <asp:Label ID="lblUnit" runat="server" Text='<%# Convert.ToDecimal(Eval("Discount")).ToString("N", System.Globalization.CultureInfo.GetCultureInfo("en-IN")) %>'></asp:Label>
+                                            
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Tax INR (12 %)" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="Tax (INR)" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="lblTax" runat="server" Text='<%#  Convert.ToDecimal(Eval("TotalTax")).ToString("#,##0.00")  %>'></asp:Label>
+                                                <asp:Label ID="lblTax" runat="server" Text='<%#  Convert.ToDecimal(Eval("TotalTax")).ToString("N", System.Globalization.CultureInfo.GetCultureInfo("en-IN"))  %>'></asp:Label>
                                                 <br />
                                                 <asp:Label ID="Label1" runat="server" Visible="false" Text='<%#  Eval("Tax") %>'></asp:Label>
                                             </ItemTemplate>
@@ -303,7 +304,7 @@
                                 <br />
 
 
-                                <asp:Label ID="lblTax" runat="server" Text="Total Tax (12 %)" Font-Bold="True"></asp:Label>
+                                <asp:Label ID="lblTax" runat="server" Text="Total Tax (0 %)" Font-Bold="True"></asp:Label>
                                 <br />
                                 <asp:Label ID="lblNet" runat="server" Text="Total Amount" Font-Bold="True"></asp:Label>
                                 <br />
@@ -405,12 +406,13 @@
             <div class="footer">
                 <table width="100%">
                     <tr>
-                        <td width="60%"></td>
-                        <td width="40%">
+                        <td width="70%"></td>
+                        <td width="30%">
+                            <asp:Label ID="lblDoctorSig" runat="server" Text=""></asp:Label>
                             <hr style="border-color: #4d79ff; border-width: 1px;" />
-                            <asp:Label ID="lblComapnySig" runat="server" Text=""></asp:Label>
+                            
                             <br />
-                            <span class="center" style="-webkit-print-color-adjust: exact;">SIGNATURE</span>
+                           <%-- <span class="center" style="-webkit-print-color-adjust: exact;">SIGNATURE</span>--%>
                         </td>
                     </tr>
                     <%--   <tr style="height:50px"></tr>--%>
@@ -422,8 +424,8 @@
                     <tr>
                         <td colspan="2">
                             <hr style="border-color: #4d79ff; border-width: 1px; width: 111%;" />
-                            <asp:Label ID="lblfooterCompany" runat="server" Text="Demo business" Font-Bold="True"
-                                Visible="false" Font-Size="Medium" ForeColor="#4d79ff"></asp:Label>
+                            <asp:Label ID="lblfooterCompany" runat="server" Text="This is computer generated invoice and hence no signature required" Font-Bold="True"
+                                 Font-Size="Medium" ForeColor="#4d79ff"></asp:Label>
                         </td>
                     </tr>
                    <%-- <tr>

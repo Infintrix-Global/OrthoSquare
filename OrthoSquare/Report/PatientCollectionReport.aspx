@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="PatientCollectionReport.aspx.cs" Inherits="OrthoSquare.Report.PatientCollectionReport" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -15,7 +16,7 @@
 					<i class="fa fa-angle-right"></i>
 				</li>
 				<li>
-					<span>Doctor Collection Report</span>
+					<span>Patient Collection Report</span>
 				</li>
 			</ul>
 
@@ -26,7 +27,7 @@
                     <div class="portlet-title">
 						<div class="caption">
 							<i class="icon-settings font-red"></i>
-							<span class="caption-subject font-red sbold uppercase">Doctor Collection Report</span>
+							<span class="caption-subject font-red sbold uppercase">Patient Collection Report</span>
 						</div>
 						<%--<div class="actions">
 							<div class="btn-group btn-group-devided" data-toggle="buttons">
@@ -41,21 +42,17 @@
                         <!-- BEGIN FORM-->
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                         <label for="form_control_1">
-                                            Clinic Name 
-                                        </label>
+                                         
                                            <asp:DropDownList ID="ddlClinic" class="form-control"   AutoPostBack="true" OnSelectedIndexChanged="ddlClinic_SelectedIndexChanged"  runat="server"></asp:DropDownList>
 
                                        
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="form_control_1">
-                                            Docter Name
-                                        </label>
+                                       
                                        <asp:DropDownList ID="ddlDocter" class="form-control"  AutoPostBack="true" runat="server"></asp:DropDownList>
 
                                        
@@ -63,16 +60,50 @@
                                     </div>
                                 </div>
                                
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                       
+                                       <asp:TextBox ID="txtPatientName" runat="server" class="form-control" placeholder="Patient Name"
+                                            ClientIDMode="Static"></asp:TextBox>
+                                       
+                                       
+                                       
+                                    </div>
+                                </div>
                             </div>
-                            
-                            <div class="row">
-                            <div class="col-md-4">
+                             <div class="row">
+                                  <div class="col-md-3">
+                                    <div class="form-group">
+                                        
+                                        <asp:TextBox ID="txtFromDate" runat="server" class="form-control" placeholder="From Date"
+                                            ClientIDMode="Static"></asp:TextBox>
+                                        <asp:CalendarExtender ID="txtFromEnquiryDate_CalendarExtender" runat="server" 
+                                            Enabled="True" Format="dd-MM-yyyy" TargetControlID="txtFromDate">
+                                        </asp:CalendarExtender>
+                                       
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                      
+                                        <asp:TextBox ID="txtToDate" runat="server" class="form-control" placeholder="To Date"
+                                            ClientIDMode="Static"></asp:TextBox>
+                                        <asp:CalendarExtender ID="txtToEnquiryDate_CalendarExtender" runat="server" Format="dd-MM-yyyy"
+                                            Enabled="True" TargetControlID="txtToDate">
+                                        </asp:CalendarExtender>
+                                      
+                                        
+                                    </div>
+                                </div>
+                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <asp:Button ID="btnSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
                                             CausesValidation="False" OnClick="btnSearch_Click" />
                                     </div>
                                 </div>
-                            </div>
+                                 </div>
+                            
 
                             
                             <div class="table-scrollable">
@@ -86,7 +117,7 @@
                                     <asp:TemplateField HeaderText="Sr No." >
                                         <ItemTemplate>
                                             <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
-                                              <asp:Label ID="lblpatientid" runat="server" Text='<%# Eval("patientid")%>'></asp:Label>
+                                              <asp:Label ID="lblpatientid" Visible="false" runat="server" Text='<%# Eval("patientid")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                   
@@ -133,7 +164,7 @@
 
                                     <asp:TemplateField HeaderText="Pending Amount" >
                                         <ItemTemplate>
-                                            <asp:Label ID="lblPendingAmount" runat="server" Text=""></asp:Label>
+                                            <asp:Label ID="lblPendingAmount" runat="server"  Text='<%# Eval("PendingAmount")%>'></asp:Label>
                                         </ItemTemplate>
                                           <FooterStyle HorizontalAlign="Left" />
 												<FooterTemplate>

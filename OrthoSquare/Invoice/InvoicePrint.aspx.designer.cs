@@ -31,13 +31,13 @@ namespace OrthoSquare.Invoice {
         protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
         
         /// <summary>
-        /// Button1 control.
+        /// btnBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnBack;
         
         /// <summary>
         /// Panel1 control.
@@ -409,13 +409,13 @@ namespace OrthoSquare.Invoice {
         protected global::System.Web.UI.WebControls.GridView GridpayDetails;
         
         /// <summary>
-        /// lblComapnySig control.
+        /// lblDoctorSig control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblComapnySig;
+        protected global::System.Web.UI.WebControls.Label lblDoctorSig;
         
         /// <summary>
         /// lblThankyou control.

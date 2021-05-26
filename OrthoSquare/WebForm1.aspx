@@ -11,7 +11,7 @@
     <div>
         <asp:CheckBoxList ID="CheckBoxList1" runat="server" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged"></asp:CheckBoxList>
  
-        <asp:CheckBox ID="CheckBox1" runat="server" />
+        <asp:CheckBox ID="CheckBox1" runat="server" OnCheckedChanged="CheckBox1_CheckedChanged" />
         
            </div>
     </form>

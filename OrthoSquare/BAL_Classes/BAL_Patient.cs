@@ -13,7 +13,7 @@ namespace OrthoSquare.BAL_Classes
         General objGeneral = new General();
         DataSet ds = new DataSet();
 
-
+        private string strQuery = string.Empty;
         public int Add_PatientMH(Patient_Details bojpatient)
         {
             int isInserted = -1;
@@ -36,6 +36,7 @@ namespace OrthoSquare.BAL_Classes
 
                 objGeneral.AddParameterWithValueToSQLCommand("@patientid", bojpatient.patientid);
                 objGeneral.AddParameterWithValueToSQLCommand("@EnquiryId", bojpatient.EnquiryId);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", bojpatient.ClinicID);
                 objGeneral.AddParameterWithValueToSQLCommand("@PatientCode", bojpatient.PatientCode);
                 objGeneral.AddParameterWithValueToSQLCommand("@RegistrationDate", Convert.ToDateTime(bojpatient.RegistrationDate));
                 objGeneral.AddParameterWithValueToSQLCommand("@FirstName", bojpatient.FirstName);
@@ -87,6 +88,11 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@ConsentStatement", bojpatient.ConsentStatement);
 
 
+                objGeneral.AddParameterWithValueToSQLCommand("@UserName", bojpatient.UserName);
+
+                objGeneral.AddParameterWithValueToSQLCommand("@Password", bojpatient.Password);
+
+
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 3);
 
                 isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_ADDPatient");
@@ -118,6 +124,7 @@ namespace OrthoSquare.BAL_Classes
 
                     Duedate = objGeneral.getDatetime(bojpatient.DueDate);
                 }
+
 
 
                 objGeneral.AddParameterWithValueToSQLCommand("@patientid", bojpatient.patientid);
@@ -184,8 +191,10 @@ namespace OrthoSquare.BAL_Classes
 
                 objGeneral.AddParameterWithValueToSQLCommand("@ConsentStatement", bojpatient.ConsentStatement);
 
+                objGeneral.AddParameterWithValueToSQLCommand("@UserName", bojpatient.UserName);
 
-
+                objGeneral.AddParameterWithValueToSQLCommand("@Password", bojpatient.Password);
+                objGeneral.AddParameterWithValueToSQLCommand("@ConsentParth", bojpatient.ConsentParth);
 
                 if (bojpatient.patientid > 0)
                 {
@@ -196,6 +205,9 @@ namespace OrthoSquare.BAL_Classes
                     objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
                 }
                 isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_ADDPatient");
+
+
+
             }
             catch (Exception ex)
             {
@@ -203,6 +215,21 @@ namespace OrthoSquare.BAL_Classes
             return isInserted;
         }
 
+
+        public int GetPaisantID()
+        {
+
+            try
+            {
+                string strQuery = "Select isNull(MAX(patientid)+1,1) from  PatientMaster where IsActive =1";
+                return Convert.ToInt32(objGeneral.GetExecuteScalarByCommand(strQuery));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
 
         public DataTable GetPatient(int patientid)
         {
@@ -226,20 +253,80 @@ namespace OrthoSquare.BAL_Classes
         {
             try
             {
-
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 4);
                 objGeneral.AddParameterWithValueToSQLCommand("@patientid", 0);
                 ds = objGeneral.GetDatasetByCommand_SP("GET_PatientDetails");
-
-
             }
             catch (Exception ex)
             {
             }
             return ds.Tables[0];
+        }
+
+
+        public DataTable NewGetPatientlist(int Cid)
+        {
+
+             strQuery = " Select *,P.FristName +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1";
+
+            if (Cid > 0)
+                strQuery += " and P.ClinicID ='" + Cid + "'";
+            strQuery += "order by patientid DESC ";
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+          
 
         }
 
+        public DataTable NewGetPatientlist1(string  Cid)
+        {
+
+            strQuery = " Select *,P.FristName +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId ";
+            strQuery += "  left join tbl_ClinicDetails CD on CD.ClinicId = P.ClinicId  where P.IsActive =1";
+
+            if (Cid != "")
+            {
+                string ASD = "(" + Cid + ")";
+                strQuery += " and P.ClinicID in " + ASD + "";
+            }
+            strQuery += "order by patientid DESC ";
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+
+
+        }
+
+
+        public DataTable DoctorByClinicLIST(int Did)
+        {
+
+            strQuery = " Select *  from DoctorByClinic where DoctorID='"+ Did + "'";
+
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+
+
+        }
+
+
+
+
+
+
+
+        public DataTable NewGetPatientlist11(int Cid)
+        {
+
+            strQuery = " Select PatientCode,RegistrationDate,FristName +' '+LastName as Name ,Gender,BOD,BloodGroup,Age,Address+' '+Area as Address,Email,Mobile,Telephone  from PatientMaster  where  IsActive =1";
+
+            if (Cid > 0)
+                strQuery += " and ClinicID ='" + Cid + "'";
+            strQuery += "order by patientid DESC ";
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+
+
+        }
 
         public int DeletePatient(int PID)
         {
@@ -248,6 +335,24 @@ namespace OrthoSquare.BAL_Classes
             {
 
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 2);
+                objGeneral.AddParameterWithValueToSQLCommand("@patientid", PID);
+
+                _isDeleted = objGeneral.GetExecuteNonQueryByCommand_SP("GET_PatientDetails");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return _isDeleted;
+        }
+
+        public int EnquiryToPatient(int PID)
+        {
+            int _isDeleted = -1;
+            try
+            {
+
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 6);
                 objGeneral.AddParameterWithValueToSQLCommand("@patientid", PID);
 
                 _isDeleted = objGeneral.GetExecuteNonQueryByCommand_SP("GET_PatientDetails");
@@ -279,12 +384,12 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
-        public int GetPatientssIsvelid(string Mno)
+        public int GetPatientssIsvelid(string Mno,string Fname)
         {
 
             try
             {
-                string strQuery = "Select Count(*) from PatientMaster  where Mobile ='" + Mno + "'";
+                string strQuery = "Select Count(*) from PatientMaster  where Mobile ='" + Mno + "' and FristName='"+Fname+"'";
                 return Convert.ToInt32(objGeneral.GetExecuteScalarByCommand(strQuery));
             }
             catch (Exception ex)
@@ -295,7 +400,7 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
-        public int SaveExcelUploadedPatient(string Pcode, string FirstName, string LastName, string Email, string Mobile, string BirthDate)
+        public int SaveExcelUploadedPatient(string Pcode, string FirstName, string LastName, string Email, string Mobile, string BirthDate,int ClinicID)
         {
 
             int NewID = 0;
@@ -306,17 +411,22 @@ namespace OrthoSquare.BAL_Classes
 
 
 
-                string strQuery = "INSERT INTO PatientMaster (PatientCode,FristName,LastName,Email,Mobile,BOD,IsActive)";
-                strQuery += "VALUES (@PatientCode,@FirstName,@LastName,@Email,@Mobile,@BirthDate,1) ; Select @@IDENTITY ";
+                string strQuery = "INSERT INTO PatientMaster (PatientCode,ClinicID,FristName,LastName,Email,Mobile,CountryId,Cityid,stateid,IsActive)";
+                strQuery += "VALUES (@PatientCode,@ClinicID,@FirstName,@LastName,@Email,@Mobile,@CountryId,@Cityid,@stateid,1) ; Select @@IDENTITY ";
 
 
                 objGeneral.AddParameterWithValueToSQLCommand("@FirstName", FirstName);
                 objGeneral.AddParameterWithValueToSQLCommand("@LastName", LastName);
                 objGeneral.AddParameterWithValueToSQLCommand("@Email", Email);
-                objGeneral.AddParameterWithValueToSQLCommand("@BirthDate", Convert.ToDateTime(BirthDate));
+               // objGeneral.AddParameterWithValueToSQLCommand("@BirthDate", Convert.ToDateTime(BirthDate));
 
                 objGeneral.AddParameterWithValueToSQLCommand("@Mobile", Mobile);
                 objGeneral.AddParameterWithValueToSQLCommand("@PatientCode", Pcode);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+
+                objGeneral.AddParameterWithValueToSQLCommand("@CountryId", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@Cityid", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@stateid", 0);
 
 
                 NewID = int.Parse(objGeneral.GetExecuteScalarByCommand(strQuery));
@@ -363,6 +473,30 @@ namespace OrthoSquare.BAL_Classes
 
 
             string strQuery = " Select * from MedicalProblem mp join PatientbyMedicalProblem pbm on pbm.MedicalProid=mp.MedicalProid  where pbm.patientid  ='" + PID + "'";
+
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+
+        }
+
+        public DataTable GetPatientbyAllergic(long PID)
+        {
+
+
+
+            string strQuery = " Select * from AllergicMaster mp join PatientbyAllergic pbm on pbm.allergicId=mp.allergicId  where pbm.patientid  ='" + PID + "'";
+
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+
+        }
+
+        public DataTable GetPatientbyDentalinfo(long PID)
+        {
+
+
+
+            string strQuery = " Select * from PatientbyDentalinfo where  patientid  ='" + PID + "'";
 
             return objGeneral.GetDatasetByCommand(strQuery);
 

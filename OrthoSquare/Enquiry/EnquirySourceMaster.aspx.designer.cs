@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OrthoSquare.Enquiry {
+namespace OrthoSquare.Enquiry1 {
     
     
     public partial class EnquirySourceMaster {
@@ -83,6 +83,15 @@ namespace OrthoSquare.Enquiry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Edit;
+        
+        /// <summary>
+        /// lblMSG1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMSG1;
         
         /// <summary>
         /// txtSearch control.

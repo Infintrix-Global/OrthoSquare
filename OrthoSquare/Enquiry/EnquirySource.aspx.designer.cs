@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OrthoSquare.Enquiry {
+namespace OrthoSquare.Enquiry1 {
     
     
     public partial class EnquirySource {

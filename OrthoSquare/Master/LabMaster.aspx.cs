@@ -17,27 +17,49 @@ namespace OrthoSquare.Master
         clsCommonMasters objcomm = new clsCommonMasters();
         BAL_Patient objp = new BAL_Patient();
         public static DataTable AllData = new DataTable();
+
+        string lID = "";
+        int Cid = 0; 
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
             {
+                
+                if(SessionUtilities .RoleID ==1)
+                {
+                    Cid = SessionUtilities.Empid;
 
-                getAllLabs();
+                }
+
+                getAllLabs(Cid);
                 BindPatient();
+                BindGettooth();
                 BindTypeOfwork();
             }
 
         }
 
-        public void getAllLabs()
+        public void getAllLabs(int Cid)
         {
 
-            AllData = objL.GetLabs();
+            AllData = objL.GetLabs(Cid);
             gvShow.DataSource = AllData;
             gvShow.DataBind();
 
         }
 
+        public void BindGettooth()
+        {
+            DataTable dt = objcomm.Gettooth();
+
+
+            CheckBoxList1.DataSource = dt;
+            CheckBoxList1.DataTextField = "toothNo";
+            CheckBoxList1.DataValueField = "toothID";
+            CheckBoxList1.DataBind();
+
+
+        }
         public void BindTypeOfwork()
         {
             DataTable dt = objcomm.GetTypeofWorkLab();
@@ -51,17 +73,15 @@ namespace OrthoSquare.Master
             ddlTypeOfwork.Items.Insert(0, new ListItem("--- Select ---", "0"));
         }
 
-
         public void BindPatient()
         {
             ddlpatient.DataSource = objp.GetPatientlist();
-            ddlpatient.DataTextField = "FristName";
+            ddlpatient.DataTextField = "Fname";
             ddlpatient.DataValueField = "patientid";
             ddlpatient.DataBind();
 
             ddlpatient.Items.Insert(0, new ListItem("--- Select ---", "0"));
         }
-
 
         private long Labid
         {
@@ -83,7 +103,42 @@ namespace OrthoSquare.Master
             try
             {
                 int _isInserted = -1;
+                string OutwardDate = "", InwardDate = "";
 
+                if(txtInwardDate .Text =="")
+                {
+                    InwardDate = "01-01-1990";
+                }
+                else
+                {
+                    InwardDate =txtInwardDate .Text;
+                }
+
+                if (txtInwardDate.Text == "")
+                {
+                    OutwardDate = "01-01-1990";
+                }
+                else
+                {
+                    OutwardDate = txtOutwardDate.Text;
+                }
+
+
+                for (int i = 0; i < CheckBoxList1.Items.Count; i++)
+                {
+                    if (CheckBoxList1.Items[i].Selected)
+                    {
+                        lID += CheckBoxList1.Items[i].Value + ",";
+
+
+
+                    }
+                }
+
+                if (lID != "")
+                {
+                    lID = lID.Remove(lID.Length - 1);
+                }
 
 
                 LabDetails objLab = new LabDetails()
@@ -93,9 +148,9 @@ namespace OrthoSquare.Master
 	                 patientid =Convert .ToInt32(ddlpatient .SelectedValue ),
                      TypeOfworkId = Convert.ToInt32(ddlTypeOfwork.SelectedValue),
 	                 LabName =txtLabname .Text ,
-                   	 ToothNo=txtToothNo .Text ,
-	                 OutwardDate=txtOutwardDate .Text ,
-	                 InwardDate = txtInwardDate .Text ,
+                     ToothNo = lID,
+	                 OutwardDate= OutwardDate,
+                     InwardDate = InwardDate,
 	                 Workcompletion =txtWorkcompletion .Text ,
 	                 Notes=txtNotes .Text,
                      billuplod =lbl_filepath1 .Text ,
@@ -119,7 +174,7 @@ namespace OrthoSquare.Master
                 else
                 {
                     Labid = 0;
-                    lblMessage.Text = "Lab Added Successfully";
+                    lblMessage.Text = "Lab details added successfully";
                     lblMessage.ForeColor = System.Drawing.Color.Green;
                     Clear();
 
@@ -135,7 +190,13 @@ namespace OrthoSquare.Master
         {
             Edit.Visible = true;
             Add.Visible = false;
-            getAllLabs();
+
+            if (SessionUtilities.RoleID == 1)
+            {
+                Cid = SessionUtilities.Empid;
+
+            }
+            getAllLabs(Cid);
         }
 
         public void Clear()
@@ -172,25 +233,28 @@ namespace OrthoSquare.Master
 
         }
 
-
-
         protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvShow.PageIndex = e.NewPageIndex;
             btSearch_Click(sender, e);
-            getAllLabs();
+            if (SessionUtilities.RoleID == 1)
+            {
+                Cid = SessionUtilities.Empid;
+
+            }
+            getAllLabs(Cid);
         }
 
         protected void gvShow_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
-            Add.Visible = true;
-            Edit.Visible = false;
-            int ID = Convert.ToInt32(e.CommandArgument);
+          
+           
             if (e.CommandName == "EditEnquiry")
             {
-               
-               
+                Add.Visible = true;
+                Edit.Visible = false;
+                int ID = Convert.ToInt32(e.CommandArgument);
 
                 Labid = ID;
 
@@ -200,7 +264,7 @@ namespace OrthoSquare.Master
                     DataTable dt = objL.GetLabsSelect(ID);
 
                     txtLabname.Text = dt.Rows[0]["LabName"].ToString();
-                    txtToothNo.Text = dt.Rows[0]["ToothNo"].ToString();
+                    TextBox1.Text = dt.Rows[0]["ToothNo"].ToString();
                     txtOutwardDate.Text = dt.Rows[0]["OutwardDate"].ToString();
                     txtInwardDate.Text = dt.Rows[0]["InwardDate"].ToString();
                     txtNotes.Text = dt.Rows[0]["Notes"].ToString();
@@ -222,10 +286,31 @@ namespace OrthoSquare.Master
 
             if (e.CommandName == "SelectTeb")
             {
+                string toothName = "";
+                Add.Visible = true;
+                Edit.Visible = false;
+                int ID = Convert.ToInt32(e.CommandArgument);
                 DataTable dt = objL.GetLabsSelect(ID);
                 Labid = ID;
                 txtLabname.Text = dt.Rows[0]["LabName"].ToString();
-                txtToothNo.Text = dt.Rows[0]["ToothNo"].ToString();
+
+
+
+                DataTable dt1 = objcomm.GettoothDetails(dt.Rows[0]["ToothNo"].ToString());
+
+                if (dt1 != null && dt1.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        toothName += dt1.Rows[i]["toothNo"] + ",";
+
+                    }
+                    TextBox1.Text = toothName;
+                }
+
+
+
+              //  TextBox1.Text = dt.Rows[0]["ToothNo"].ToString();
                 BindPatient();
 
                 ddlpatient.SelectedValue = dt.Rows[0]["patientid"].ToString();
@@ -252,7 +337,12 @@ namespace OrthoSquare.Master
                     lblMessage.ForeColor = System.Drawing.Color.Red;
                     //  Response.Redirect("EnquiryDetails.aspx");
                     btSearch_Click(sender, e);
-                    getAllLabs();
+                    if (SessionUtilities.RoleID == 1)
+                    {
+                        Cid = SessionUtilities.Empid;
+
+                    }
+                    getAllLabs(Cid);
                 }
             }
             catch (Exception ex)
@@ -278,8 +368,17 @@ namespace OrthoSquare.Master
 
                 if (txtSearch.Text != "")
                 {
-                    search += "LabName like '%" + txtSearch.Text + "%'";
+                    search += "LabName like '%" + txtSearch.Text.Trim() + "%'";
                 }
+                if (txtFristNameS.Text != "")
+                {
+                    search += "FristName like '%" + txtFristNameS.Text.Trim() + "%'";
+                }
+                if (txtLastNameS.Text != "")
+                {
+                    search += "LastName like '%" + txtLastNameS.Text.Trim() + "%'";
+                }
+
                 else
                 {
                     // search += "Mobile = " + txtm.Text + "";
@@ -390,20 +489,55 @@ namespace OrthoSquare.Master
 
 
         }
+        protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string name = "";
 
+            for (int i = 0; i < CheckBoxList1.Items.Count; i++)
+            {
+                if (CheckBoxList1.Items[i].Selected)
+                {
+                    name += CheckBoxList1.Items[i].Text + ",";
+                    lID += CheckBoxList1.Items[i].Value + ",";
+                }
+            }
+            TextBox1.Text = name;
+
+        }
         protected void gvShow_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+
+                string toothName = "";
                 Label lblID = (Label)e.Row.FindControl("lblID");
                 Label lblWorkcompletion = (Label)e.Row.FindControl("lblWorkcompletion");
                 Label lblWorkStatus = (Label)e.Row.FindControl("lblWorkStatus");
+                Label lblOutwardDate = (Label)e.Row.FindControl("lblOutwardDate");
+                Label lblInwardDate = (Label)e.Row.FindControl("lblInwardDate");
+                Label lblToothNo = (Label)e.Row.FindControl("lblToothNo");
 
 
                 
                 DataTable dt = objL.GetLabsDetails(Convert.ToInt32(lblID.Text));
 
-                if (dt != null && dt.Rows.Count > 0)
+
+                DataTable dt1 = objcomm.GettoothDetails(lblToothNo.Text.Trim ());
+
+                if (dt1 != null && dt1.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        toothName += dt1.Rows[i]["toothNo"] + ",";
+
+                    }
+                    lblToothNo.Text = toothName;
+                }
+
+
+
+
+                    if (dt != null && dt.Rows.Count > 0)
                 {
                     lblWorkcompletion.Text = dt.Rows[0]["Workcompletion"].ToString();
                     lblWorkStatus.Text = dt.Rows[0]["WorkStatus"].ToString();
@@ -415,6 +549,19 @@ namespace OrthoSquare.Master
 
                     lblWorkcompletion.Text = "NA";
 
+                }
+
+                if(lblOutwardDate.Text =="1990-01-01")
+                {
+
+                    lblOutwardDate.Text = "";
+                }
+
+
+                if (lblInwardDate.Text == "1990-01-01")
+                {
+
+                    lblInwardDate.Text = "";
                 }
 
            }

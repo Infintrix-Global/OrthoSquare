@@ -23,6 +23,9 @@ namespace OrthoSquare.Master
         clsCommonMasters objcommon = new clsCommonMasters();
         BAL_Appointment objApp = new BAL_Appointment();
         BAL_Patient objPatient = new BAL_Patient();
+        BAL_EnquiryDetails objENQ = new BAL_EnquiryDetails();
+        Notificationnew objN = new Notificationnew();
+        BAL_Clinic objc = new BAL_Clinic();
         public static DataTable AllData = new DataTable();
         string DateTimevalue = "";
         protected void Page_Load(object sender, EventArgs e)
@@ -40,31 +43,69 @@ namespace OrthoSquare.Master
                
                 getAllPatient();
 
-                bindDoctorMaster();
+                bindClinic();
 
-                if(lblDocterID .Text !="")
+                if (SessionUtilities.RoleID == 1)
                 {
-                    ddlDocter.SelectedValue = lblDocterID.Text;
+                    ddlClinic.SelectedValue = SessionUtilities.Empid.ToString();
+                    BindDocter(Convert.ToInt32(SessionUtilities.Empid));
+                    // BindPatient();
                 }
             }
 
         }
 
-        public void bindDoctorMaster()
+        public void bindClinic()
         {
-            ddlDocter.DataSource = objcommon.DoctersMaster(SessionUtilities.Empid );
-            ddlDocter.DataValueField = "DoctorID";
-            ddlDocter.DataTextField = "FirstName";
-            ddlDocter.DataBind();
-            ddlDocter.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
 
-            if(SessionUtilities .RoleID ==3)
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
             {
-                ddlDocter.DataValueField = (SessionUtilities.Empid).ToString ();
-                
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                dt = objc.GetAllClinicDetaisNew(SessionUtilities.Empid);
+            }
+            else
+            {
+                dt = objc.GetAllClinicDetais();
+
+            }
+            ddlClinic.DataSource = dt;
+
+            ddlClinic.DataValueField = "ClinicID";
+            ddlClinic.DataTextField = "ClinicName";
+            ddlClinic.DataBind();
+            ddlClinic.Items.Insert(0, new ListItem("-- Select Clinic --", "0", true));
+
+        }
+
+        protected void ddlClinic_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            BindDocter(Convert.ToInt32(ddlClinic.SelectedValue));
+           
+        }
+
+        public void BindDocter(int Cid)
+        {
+            if (SessionUtilities.RoleID == 3 || SessionUtilities.RoleID == 1)
+            {
+
+                ddlDoctor.DataSource = objcommon.DoctersMaster(Cid, SessionUtilities.RoleID);
+
+            }
+            else
+            {
+                ddlDoctor.DataSource = objcommon.DoctersMasterNewENQ11(Cid, SessionUtilities.RoleID);
 
             }
 
+            ddlDoctor.DataTextField = "FirstName";
+            ddlDoctor.DataValueField = "DoctorID";
+            ddlDoctor.DataBind();
+            ddlDoctor.Items.Insert(0, new ListItem("--- Select ---", "0"));
         }
 
         private long Appointmentid
@@ -100,6 +141,22 @@ namespace OrthoSquare.Master
             }
         }
 
+        private long EnquiryID
+        {
+            get
+            {
+                if (ViewState["EnquiryID"] != null)
+                {
+                    return (long)ViewState["EnquiryID"];
+                }
+                return 0;
+            }
+            set
+            {
+                ViewState["EnquiryID"] = value;
+            }
+        }
+
         public void AppoinmentNo()
         {
             txtRegDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
@@ -115,18 +172,67 @@ namespace OrthoSquare.Master
         public void getAllPatient()
         {
 
-            AllData = objPatient.GetPatientlist();
-            gvShow.DataSource = AllData;
-            gvShow.DataBind();
+            if (RadioButtonList1.SelectedValue == "0")
+            {
+                AllData = objENQ.GetAllEnquirynewAppoiment(0);
+                GridEnquiry.DataSource = AllData;
+                GridEnquiry.DataBind();
+            }
+            else
+            {
+                string Cid = "";
+
+                if (SessionUtilities.RoleID == 1)
+                {
+                    Cid = SessionUtilities.Empid.ToString();
+                }
+                else if (SessionUtilities.RoleID == 3)
+                {
+                    string A = "";
+                    DataTable dt23 = objPatient.DoctorByClinicLIST(SessionUtilities.Empid);
+
+                    //for (int i = 0; i < AllData.Rows.Count; i++)
+                    //{
+
+                    //}
+
+                    for (int i = 0; i < dt23.Rows.Count; i++)
+                    {
+                        A += dt23.Rows[i]["ClinicID"].ToString() + ",";
+
+                    }
+
+                    if (A != "")
+                    {
+                        A = A.Remove(A.Length - 1);
+                    }
+
+                    Cid = A;
+                }
+                else
+                {
+                    Cid = "";
+                }
+                AllData = objPatient.NewGetPatientlist1(Cid);
+                // AllData = objPatient.GetPatientlist();
+                gvShow.DataSource = AllData;
+                gvShow.DataBind();
+            }
+
 
         }
 
         protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvShow.PageIndex = e.NewPageIndex;
-            // btSearch_Click(sender, e);
+            getAllPatient();
         }
 
+        protected void GridEnquiry_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridEnquiry.PageIndex = e.NewPageIndex;
+            getAllPatient();
+        }
 
 
         protected void btSearch_Click(object sender, EventArgs e)
@@ -136,27 +242,60 @@ namespace OrthoSquare.Master
                 string search = "";
                 //if (txtSearch.Text != "")
                 //{
-                if (txtPno.Text != "")
-                {
-                    search += "PatientCode like '%" + txtPno.Text + "%'";
-                }
-                else
-                {
-                    search += "Mobile = '" + txtsMobile.Text + "'";
-                }
 
-                DataRow[] dtSearch1 = AllData.Select(search);
-                if (dtSearch1.Count() > 0)
+                if (RadioButtonList1.SelectedValue == "0")
                 {
-                    DataTable dtSearch = dtSearch1.CopyToDataTable();
-                    gvShow.DataSource = dtSearch;
-                    gvShow.DataBind();
+                    if (txtPno.Text != "")
+                    {
+                        search += "FirstName = '" + txtPno.Text + "'";
+                    }
+                    else
+                    {
+                        search += "Mobile = '" + txtsMobile.Text + "'";
+                    }
+
+
+
+                    DataRow[] dtSearch1 = AllData.Select(search);
+                    if (dtSearch1.Count() > 0)
+                    {
+                        DataTable dtSearch = dtSearch1.CopyToDataTable();
+                        GridEnquiry.DataSource = dtSearch;
+                        GridEnquiry.DataBind();
+                    }
+                    else
+                    {
+                        DataTable dt = new DataTable();
+                        GridEnquiry.DataSource = dt;
+                        GridEnquiry.DataBind();
+                    }
                 }
                 else
                 {
-                    DataTable dt = new DataTable();
-                    gvShow.DataSource = dt;
-                    gvShow.DataBind();
+                    if (txtPno.Text != "")
+                    {
+                        search += "FristName = '" + txtPno.Text + "'";
+                    }
+                    else
+                    {
+                        search += "Mobile = '" + txtsMobile.Text + "'";
+                    }
+
+
+
+                    DataRow[] dtSearch1 = AllData.Select(search);
+                    if (dtSearch1.Count() > 0)
+                    {
+                        DataTable dtSearch = dtSearch1.CopyToDataTable();
+                        gvShow.DataSource = dtSearch;
+                        gvShow.DataBind();
+                    }
+                    else
+                    {
+                        DataTable dt = new DataTable();
+                        gvShow.DataSource = dt;
+                        gvShow.DataBind();
+                    }
                 }
                 //}
                 //else
@@ -172,29 +311,78 @@ namespace OrthoSquare.Master
 
         protected void gvShow_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-             
 
-            int Pid = Convert.ToInt32(e.CommandArgument);
+            if (e.CommandName == "SelectP")
+            {
+                int Pid = Convert.ToInt32(e.CommandArgument);
 
-            patientid = Pid;
+                patientid = Pid;
 
-            DataTable dt = objPatient.GetPatient(Pid);
+                EnquiryID = 0;
+           
+                DataTable dt = objPatient.GetPatient(Pid);
 
-            txtFname.Text = dt.Rows[0]["FristName"].ToString();
-            txtLname.Text = dt.Rows[0]["LastName"].ToString();
-            txtBDate.Text = Convert .ToDateTime (dt.Rows[0]["BOD"]).ToString("dd-MM-yyyy");
-            txtAge.Text = dt.Rows[0]["Age"].ToString();
-            RadGender.SelectedItem.Text = dt.Rows[0]["Gender"].ToString();
+                txtFname.Text = dt.Rows[0]["FristName"].ToString();
+                txtLname.Text = dt.Rows[0]["LastName"].ToString();
+                if(dt.Rows[0]["BOD"].ToString() !="")
+                {
+                      txtBDate.Text = Convert.ToDateTime(dt.Rows[0]["BOD"]).ToString("dd-MM-yyyy");
+                }
+                txtAge.Text = dt.Rows[0]["Age"].ToString();
+                // RadGender.SelectedItem.Text = dt.Rows[0]["Gender"].ToString();
+                if (dt.Rows[0]["Gender"].ToString() != "")
+                {
+                    //RadGender.Items.FindByValue(dt.Rows[0]["Gender"].ToString()).Selected = true;
+                    RadGender.Items.FindByText(dt.Rows[0]["Gender"].ToString()).Selected = true;
 
-            txtEmail.Text = dt.Rows[0]["Email"].ToString();
-            txtMobile.Text = dt.Rows[0]["Mobile"].ToString();
-            txtTelephone.Text = dt.Rows[0]["Telephone"].ToString();
+                }
+                txtEmail.Text = dt.Rows[0]["Email"].ToString();
+                txtMobile.Text = dt.Rows[0]["Mobile"].ToString();
+                txtTelephone.Text = dt.Rows[0]["Telephone"].ToString();
+                //bindDoctorMaster();
+                //if (lblDocterID.Text != "")
+                //{
+                //    int IDa= Convert.ToInt32(lblDocterID.Text);
+                //    ddlDoctor.SelectedValue = IDa.ToString();
+                //}
 
-
-            Edit.Visible = false;
-            Add.Visible = true;
+                Edit.Visible = false;
+                Add.Visible = true;
+            }
         }
 
+        protected void GridEnquiry_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+            if (e.CommandName == "SelectP")
+            {
+                int Eid = Convert.ToInt32(e.CommandArgument);
+
+                EnquiryID = Eid;
+                patientid = 0;
+                DataTable dt = objENQ.GetAllEnquirynewAppoiment(Eid);
+
+                txtFname.Text = dt.Rows[0]["FirstName"].ToString();
+                txtLname.Text = dt.Rows[0]["LastName"].ToString();
+                if (dt.Rows[0]["DateBirth"].ToString() != "")
+                {
+                    txtBDate.Text = Convert.ToDateTime(dt.Rows[0]["DateBirth"]).ToString("dd-MM-yyyy");
+                }
+                txtAge.Text = dt.Rows[0]["Age"].ToString();
+                // RadGender.SelectedItem.Text = dt.Rows[0]["Gender"].ToString();
+                if (dt.Rows[0]["Gender"].ToString() != "")
+                {
+                    RadGender.Items.FindByText(dt.Rows[0]["Gender"].ToString()).Selected = true;
+                }
+                txtEmail.Text = dt.Rows[0]["Email"].ToString();
+                txtMobile.Text = dt.Rows[0]["Mobile"].ToString();
+                txtTelephone.Text = dt.Rows[0]["Telephone"].ToString();
+               // bindDoctorMaster();
+              
+                Edit.Visible = false;
+                Add.Visible = true;
+            }
+        }
 
 
         protected void txtBDate_TextChanged(object sender, EventArgs e)
@@ -250,17 +438,18 @@ namespace OrthoSquare.Master
                 Appointment_Details objAppoiment = new Appointment_Details()
                 {
                     Appointmentid = Appointmentid,
-                    ClinicID =SessionUtilities .Empid ,
+                    ClinicID = Convert.ToInt32(ddlClinic.SelectedValue),
                     AppointmenNo = txtPatientNo.Text,
                     patientid = patientid,
-                    DoctorID = Convert.ToInt32(Did),
+                    EnquiryID= EnquiryID,
+                    DoctorID = Convert.ToInt32(ddlDoctor.SelectedValue),
                     FirstName = txtFname.Text,
                     LastName = txtLname.Text,
 
                     DateBirth = txtBDate.Text,
                     Age = txtAge.Text,
 
-                    Gender = RadGender.SelectedItem.Text,
+                    Gender = RadGender.SelectedItem.Text.Trim(),
 
                     Email = txtEmail.Text,
                     Mobile1 = txtMobile.Text,
@@ -287,9 +476,23 @@ namespace OrthoSquare.Master
                 else
                 {
                     Appointmentid = 0;
+                    string msg;
                     lblMessage.Text = "Patient Added Successfully";
                     lblMessage.ForeColor = System.Drawing.Color.Green;
+
+                    DataTable DTP = objPatient.GetPatient(Convert .ToInt32 (patientid));
+
+                    msg = "Your Appoinment Date :" + txtRegDate.Text + " " + "Time : " + Convert .ToDateTime (txtRegDate.Text).ToShortTimeString() + " has been Booked Appoinment";
+
+                    if (DTP.Rows[0]["registrationToken"].ToString() != "")
+                    {
+
+                        objN.SendMessage(patientid.ToString(), DTP.Rows[0]["registrationToken"].ToString(), msg, " Booked Appoinment", "3");
+                    }
                     CleartextBoxes(this);
+
+
+
                     // Clear();
                     Response.Redirect("NewAppointmentClinic.aspx");
 
@@ -338,5 +541,25 @@ namespace OrthoSquare.Master
         {
             Response.Redirect("NewAppointmentClinic.aspx");
         }
-    }
+
+        protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (RadioButtonList1.SelectedValue == "0")
+            {
+                btnAddNew.Visible = true;
+                PanelPatient.Visible = false;
+                PanelEnquiry.Visible = true;
+                getAllPatient();
+            }
+            else
+            {
+                btnAddNew.Visible = false;
+                PanelPatient.Visible = true;
+                PanelEnquiry.Visible = false;
+                getAllPatient();
+
+            }
+
+        }
+            }
 }

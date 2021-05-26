@@ -16,6 +16,8 @@ namespace OrthoSquare.Branch
         BasePage objBasePage = new BasePage();
         clsCommonMasters objcommon = new clsCommonMasters();
         BAL_Clinic objClinic = new BAL_Clinic();
+        BAL_DoctorsDetails objDoc = new BAL_DoctorsDetails();
+        BAL_Appointment objApp = new BAL_Appointment();
         public static DataTable AllData = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,7 +25,18 @@ namespace OrthoSquare.Branch
             {
                 getAllClinic();
                 BindLocation();
+              //  BindCountry();
+
+
                 BindCountry();
+                ddlCountry.SelectedValue = "1";
+                BindState();
+                ddlState.SelectedValue = "2";
+                BindCity();
+                ddlCity.SelectedValue = "34";
+
+
+
                 txtDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
             }
         }
@@ -52,6 +65,16 @@ namespace OrthoSquare.Branch
             gvShow.DataBind();
 
         }
+
+        public void getAllClinicApprove()
+        {
+            DataTable dt;
+            dt = objClinic.GetAllClinicDetaisApprove();
+            Gridapprove.DataSource = dt;
+            Gridapprove.DataBind();
+
+        }
+
 
         public void BindLocation()
         {
@@ -108,6 +131,7 @@ namespace OrthoSquare.Branch
         {
             try
             {
+                string UserName = "", Password = "";
                 int _isInserted = -1;
 
               //  string Password = objBasePage.Encryptdata(txtPassword.Text.Trim());
@@ -127,8 +151,9 @@ namespace OrthoSquare.Branch
 
                 }
 
-
-
+                int Cid = objClinic.GetClinicID() + 1;
+                Password =  "ClinicAdmin@0" + Cid;
+                UserName=  "Admin@" + Cid;
 
 
                 ClinicDetails objClinicDetails = new ClinicDetails()
@@ -149,10 +174,12 @@ namespace OrthoSquare.Branch
                     Noofweek  = ddl_DayOfWeek .SelectedItem .Text ,
                     openTime = txtOpenTime .Text ,
                     CloseTime  = txtCloseTime .Text ,
-                    UserName=txtFristName.Text,
-                    UserPassword = txtFristName.Text+"@123",
+                    UserName= UserName,
+                    UserPassword = Password,
                     LocationName =txtLocation.Text,
-                    IsActive = true
+                    IsActive = true,
+                    IsApprove = true,
+
                 };
 
                 _isInserted = objClinic.Add_Clinic(objClinicDetails);
@@ -165,20 +192,50 @@ namespace OrthoSquare.Branch
                 else
                 {
 
-
-
-                    clinicID = 0;
-
-
                    int CID= objClinic. GetClinicID();
 
-                  int IDC= objClinic.Add_AppointmentDetails
-                      
-                      (CID);
+                  int IDC= objClinic.Add_AppointmentDetails(CID);
 
+                  if (clinicID > 0)
+                  {
+
+                      int Isv = objDoc.GetDoctorsIsvelid(txtTelephone.Text.Trim());
+                      if(Isv == 0)
+                      {
+                          int Did = objDoc.SaveExcelUploadedDotorNew(Convert.ToInt32(clinicID), txtDate.Text.Trim(), txtFristName.Text.Trim(), txtLastName.Text.Trim(), txtEmail.Text.Trim(), txtMobile.Text.Trim(), txtOpenTime.Text.ToString().Trim(), txtCloseTime.Text.ToString().Trim());
+                          int DCid = objDoc.Add_DoctorsDoctorebyClinic(Convert.ToInt32(clinicID), Convert .ToInt32 (Did));
+                          int IDq = objApp.Add_AppointmentDetails(Did);
+
+                      }
+                     
+                     
+                    }
+
+                    else
+                    {
+                      int Isv = objDoc.GetDoctorsIsvelid(txtTelephone.Text.Trim());
+                      if (Isv == 0)
+                      {
+
+                          int Did = objDoc.SaveExcelUploadedDotorNew(CID, txtDate.Text.Trim(), txtFristName.Text.Trim(), txtLastName.Text.Trim(), txtEmail.Text.Trim(), txtMobile.Text.Trim(), txtOpenTime.Text.ToString().Trim(), txtCloseTime.Text.ToString().Trim());
+                          int DCid = objDoc.Add_DoctorsDoctorebyClinic(Convert.ToInt32(CID), Convert.ToInt32(Did));
+                          int IDq = objApp.Add_AppointmentDetails(Did);
+                      }
+                    }
+
+                  //int Did = objDoc.SaveExcelUploadedDotorNew(CID, txtDate.Text.Trim(), txtFristName.Text.Trim(), txtLastName.Text.Trim(), txtEmail.Text.Trim(), txtMobile.Text.Trim(), txtOpenTime.Text.ToString().Trim(), txtCloseTime.Text.ToString().Trim());
+
+                  //int Did = objDoc.GetDoctorsID();
+
+                //  int IDq = objApp.Add_AppointmentDetails(Did);
+
+                //  UserName = txtTelephone.Text.Trim();
+                //  Password = txtFristName.Text.Trim() + "@" + Did;
+                 // int DidL = objDoc.SaveExcelUploadedLoginDotor(UserName, Password, Did);
+                    clinicID = 0;
                     lblMessage.Text = "Clinic Added Successfully";
                     lblMessage.ForeColor = System.Drawing.Color.Green;
-                    SendMail();
+                    SendMail(txtEmail.Text .Trim (), UserName, Password);
                     Clear();
                    // txtDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
                    
@@ -210,12 +267,19 @@ namespace OrthoSquare.Branch
             getAllClinic();
         }
 
-        protected void gvShow_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void Gridapprove_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            // Gridapprove.EditIndex = -1;
+            Gridapprove.PageIndex = e.NewPageIndex;
+            btSearch_Click(sender, e);
+        }
+
+        protected void gvShow11_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "EditEnquiry")
             {
                 Add.Visible = true;
-                btUpdate.Visible = true;
+              //  btUpdate.Visible = true;
                 btAdd.Visible = true;
                 Edit.Visible = false;
                 int ID = Convert.ToInt32(e.CommandArgument);
@@ -226,7 +290,7 @@ namespace OrthoSquare.Branch
                 {
 
                     DataTable dt = objClinic .GetSelectAllClinic(ID);
-                    
+                   
                     txtClinicName.Text = dt.Rows[0]["ClinicName"].ToString();
                     txtAddress1.Text = dt.Rows[0]["AddressLine1"].ToString();
                     txtAddress2.Text = dt.Rows[0]["AddressLine2"].ToString();
@@ -245,9 +309,9 @@ namespace OrthoSquare.Branch
                     ddl_DayOfWeek.SelectedItem.Text = dt.Rows[0]["DayOfWeek"].ToString();
                     txtOpenTime.Text = dt.Rows[0]["OpenTime"].ToString();
                     txtCloseTime.Text = dt.Rows[0]["CloseTime"].ToString();
-                  //  txtUserName.Text = dt.Rows[0]["UserName"].ToString();
-                 //   txtPassword.Text = dt.Rows[0]["Password"].ToString();
-                   
+                    txtFristName.Text = dt.Rows[0]["FirstName"].ToString();
+                    txtLastName.Text = dt.Rows[0]["LastName"].ToString();
+
                 }
                 catch (Exception ex)
                 {
@@ -256,6 +320,28 @@ namespace OrthoSquare.Branch
             }
         }
 
+
+        protected void Gridapprove_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "btbapprove")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                try
+                {
+                    int ID = Convert.ToInt32(index);
+
+                    int _isDeleted = objClinic.UpdateStatClinic(ID);
+                    if (_isDeleted != -1)
+                    {
+                        getAllClinicApprove();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
         protected void gvShow_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int index = Convert.ToInt32(e.RowIndex);
@@ -285,23 +371,24 @@ namespace OrthoSquare.Branch
         }
 
 
-        protected void SendMail()
+        protected void SendMail(string Email, string Username, string Password)
         {
             // Gmail Address from where you send the mail
-            var fromAddress = "infintrix.world@gmail.com";
+            var fromAddress = "orthomail885@gmail.com";
             // any address where the email will be sending
             //var toAddress = "mehulrana1901@gmail.com,urvi.gandhi@infintrixglobal.com,nidhi.mehta@infintrixglobal.com,bhavin.gandhi@infintrixglobal.com,mehul.rana@infintrixglobal.com,naimisha.rohit@infintrixglobal.com";
 
-            var toAddress = txtEmail.Text;
+           // var toAddress = ;
+            var toAddress = Email + ",drshraddhakambale@gmail.com";
 
             //Password of your gmail address
-            const string fromPassword = "Infintrixworld@123";
+            const string fromPassword = "Ortho@1234";
             // Passing the values and make a email formate to display
             string subject = "Your UserName and Password For Ortho Square";
             string body = "Dear ," + "\n";
-            body += "Your UserName and passward For OrthoSquare :" + "\n";
-            body += "UserName : " + txtFristName.Text + " " + "\n\n";
-            body += "Passward : " + txtFristName.Text + "@123" + " " + "\n\n";
+            body += "Your UserName and Password For OrthoSquare :" + "\n";
+            body += "UserName : " + Username + " " + "\n\n";
+            body += "Password : " + Password + " " + "\n\n";
             body += "Thank you!" + "\n";
             body += "Warm Regards," + "\n";
 
@@ -324,6 +411,8 @@ namespace OrthoSquare.Branch
             gvShow.EditIndex = -1;
             btSearch_Click(sender, e);
         }
+
+      
 
         protected void btSearch_Click(object sender, EventArgs e)
         {
@@ -364,12 +453,23 @@ namespace OrthoSquare.Branch
         {
             Edit.Visible = false;
             Add.Visible = true;
+           
         }
+
+        protected void btnApprove_Click(object sender, EventArgs e)
+        {
+            getAllClinicApprove();
+            Edit.Visible = false;
+            Add.Visible = false;
+            Div1.Visible = true;
+        }
+
 
         protected void btBack_Click(object sender, EventArgs e)
         {
             Edit.Visible = true;
             Add.Visible = false;
+            Div1.Visible = false;
         }
 
         public void Clear()
@@ -377,8 +477,10 @@ namespace OrthoSquare.Branch
             CleartextBoxes(this);
             BindCountry();
             BindLocation();
+            getAllClinic();
             ddlState.Items.Insert(0, new ListItem("--- Select ---", "0"));
             ddlCity.Items.Insert(0, new ListItem("--- Select ---", "0"));
+            lblMessage.Text = "";
         }
         public void CleartextBoxes(Control parent)
         {

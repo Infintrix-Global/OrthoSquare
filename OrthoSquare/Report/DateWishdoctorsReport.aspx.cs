@@ -14,7 +14,9 @@ namespace OrthoSquare.Report
     public partial class DateWishdoctorsReport : System.Web.UI.Page
     {
         BAL_DoctorsDetails objdoc = new BAL_DoctorsDetails();
+        clsCommonMasters objcomm = new clsCommonMasters();
          decimal sumFooterValue = 0;
+         int cid = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -29,7 +31,22 @@ namespace OrthoSquare.Report
 
         public void BindDocter()
         {
-            ddlDoctor.DataSource = objdoc.GetAllDocters(SessionUtilities.Empid);
+
+           if (SessionUtilities.RoleID == 3 || SessionUtilities.RoleID == 1)
+            {
+
+                ddlDoctor.DataSource = objcomm.DoctersMasterNew(SessionUtilities.Empid, SessionUtilities.RoleID);
+               
+
+            }
+            else
+            {
+                ddlDoctor.DataSource = objcomm.DoctersMasterNew(0, SessionUtilities.RoleID);
+               
+            }
+
+
+          
             ddlDoctor.DataTextField = "FirstName";
             ddlDoctor.DataValueField = "DoctorID";
             ddlDoctor.DataBind();
@@ -44,13 +61,25 @@ namespace OrthoSquare.Report
         }
          public void BindDocterCollection()
         {
+            if (SessionUtilities.RoleID == 1)
+            {
+                cid = SessionUtilities.Empid;
+            }
 
-            DataTable dt = objdoc.GetDoctersDate_Collection(Convert.ToInt32(ddlDoctor.SelectedValue), txtSFromFollowDate.Text, txtSToFollowDate.Text);
-            GridDocterCollection.DataSource = dt;
+            DataTable dt = objdoc.GetDoctersDate_Collection(Convert.ToInt32(ddlDoctor.SelectedValue), txtSFromFollowDate.Text, txtSToFollowDate.Text,cid);
+            if (dt.Rows.Count > 0 && dt != null)
+            {
+                GridDocterCollection.DataSource = dt;
 
-            GridDocterCollection.DataBind();
+                GridDocterCollection.DataBind();
 
-           
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    sumFooterValue += Convert.ToDecimal(dt.Rows[i]["PaidAmount"]);
+                }
+
+                lblTotalTop.Text = sumFooterValue.ToString();
+            }
         }
          protected void btnSearch_Click(object sender, EventArgs e)
          {
@@ -69,7 +98,7 @@ namespace OrthoSquare.Report
                       sumFooterValue += Convert.ToDecimal(PaidAmount.Text);
                   }
 
-             lblTotalTop.Text = sumFooterValue.ToString();
+           
              //if (e.Row.RowType == DataControlRowType.Footer)
              //     {
              //         Label lblTotal = (Label)e.Row.FindControl("lblTotal");

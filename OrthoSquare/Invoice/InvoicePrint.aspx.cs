@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using OrthoSquare.BAL_Classes;
+using System.Globalization;
 
 namespace OrthoSquare.Invoice
 {
@@ -20,9 +21,21 @@ namespace OrthoSquare.Invoice
             if (Request.QueryString["InvoiceCode"] != null)
             {
                 InvCode = Convert.ToInt32(Request.QueryString["InvoiceCode"]);
+
+                
                 BindInvoice(InvCode);
             }
-           // BindInvoice(16);
+
+            if (Request.QueryString["Back"] != null)
+            {
+                if (Convert.ToInt32(Request.QueryString["Back"]) == 1)
+                {
+                    ImageButton1.Visible = true;
+                    btnBack.Visible = true;
+                }
+            }
+
+            // BindInvoice(16);
         }
 
 
@@ -52,6 +65,8 @@ namespace OrthoSquare.Invoice
                     {
                         lblpatient.Text = dtFid.Rows[0]["PFristName"].ToString() + " " + dtFid.Rows[0]["PLastName"].ToString();
                         lblDoctername.Text = dtFid.Rows[0]["DFirstName"].ToString() + " " + dtFid.Rows[0]["DLastName"].ToString();
+                       
+                          lblDoctorSig.Text = dtFid.Rows[0]["DFirstName"].ToString() + " " + dtFid.Rows[0]["DLastName"].ToString();
                         //lblPanNo.Text = dt.Rows[0]["PatientCode"].ToString();
                         lblMNo.Text = dtFid.Rows[0]["Mobile"].ToString();
                         lblEmail.Text = dtFid.Rows[0]["Email"].ToString();
@@ -59,20 +74,40 @@ namespace OrthoSquare.Invoice
                         lblAge.Text = dtFid.Rows[0]["Age"].ToString();
                         lblBloodGroup.Text = dtFid.Rows[0]["BloodGroup"].ToString();
 
-                        lblAddress.Text = dtFid.Rows[0]["Address"].ToString();
+                        lblAddress.Text = dtFid.Rows[0]["Address"].ToString() + " ," + dtFid.Rows[0]["Area"].ToString();
                       //  lblTotal.Text = Convert.ToDecimal(dt.Rows[0]["GrandTotal"]).ToString("#,##0.00");
                         lblInvoiceDate.Text = Convert.ToDateTime(dtFid.Rows[0]["PayDate"]).ToString("dd-MM-yyyy");
                         lblInvoiceNo.Text = dtFid.Rows[0]["InvoiceCode"].ToString();
 
-                        lblTotalFooter.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalCostAmount"]).ToString("#,##0.00");
-                        lblTaxAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalTax"]).ToString("#,##0.00");
-                        lblNetAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["GrandTotal"]).ToString("#,##0.00");
-                        lblpaidAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["PaidAmount"]).ToString("#,##0.00");
-                        lblpendingAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["PendingAmount"]).ToString("#,##0.00");
+                        //lblTotalFooter.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalCostAmount"]).ToString("N2");
+                        //lblTaxAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalTax"]).ToString("N2");
+                        //lblNetAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["GrandTotal"]).ToString("N2");
 
 
-                        lblTotalCoust1.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalCost"]).ToString("#,##0.00");
-                        lbldiscount1.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalDiscount"]).ToString("#,##0.00");
+                        //lblpaidAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["PaidAmount"]).ToString("N2");
+                        //lblpendingAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["PendingAmount"]).ToString("N2");
+
+
+                        //lblTotalCoust1.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalCost"]).ToString("N2");
+                        //lbldiscount1.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalDiscount"]).ToString("N2");
+
+                     
+                        //------Mehul Rana
+                       // string output = Convert.ToDecimal(dtFid.Rows[0]["PaidAmount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+
+
+                        lblTotalFooter.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalCostAmount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+                        lblTaxAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalTax"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+                        lblNetAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["GrandTotal"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+
+
+                        lblpaidAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["PaidAmount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+                        lblpendingAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["PendingAmount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+
+
+                        lblTotalCoust1.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalCost"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+                        lbldiscount1.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalDiscount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+                       
 
                         lblWordsAmount.Text = "Rupees " + NumberToWords_Large(Convert.ToInt32(dtFid.Rows[0]["PaidAmount"])) + " only";
 
@@ -81,6 +116,7 @@ namespace OrthoSquare.Invoice
                         lblMobailNo.Text = dtFid.Rows[0]["PhoneNo2"].ToString();
                         lblAddress1.Text = dtFid.Rows[0]["AddressLine1"].ToString();
                         lblEmail1.Text = dtFid.Rows[0]["EmailID"].ToString();
+                        patientID.Text = dtFid.Rows[0]["PatientCode"].ToString();
                         BindInvoiceAmount(InvCode);
 
 

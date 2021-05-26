@@ -53,8 +53,8 @@ namespace OrthoSquare.Master
                     lblMessage.Text = "Medical Prolbem  Added Successfully";
                     lblMessage.ForeColor = System.Drawing.Color.Green;
                     txtAdd.Text = "";
-                    getAllEnquirySource();
-                    Response.Redirect("MedicalProblemMaster.aspx");
+                   // getAllEnquirySource();
+                   // Response.Redirect("MedicalProblemMaster.aspx");
                     btSearch_Click(sender, e);
                 }
             }

@@ -81,7 +81,7 @@
 							 
 
                                   <asp:GridView ID="GridinoutLab" runat="server" AllowPaging="true" AutoGenerateColumns="false"     OnPageIndexChanging="gvShow_PageIndexChanging"
-									class="table table-bordered table-hover" >
+									class="table table-bordered table-hover" OnRowDataBound="gvShow_RowDataBound"  >
 
                                          <Columns>
 										<asp:TemplateField HeaderText="Sr. No." >
@@ -140,7 +140,7 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Work Completed" >
                                         <ItemTemplate>
-                                             <asp:Label ID="lblWorkcompletion" runat="server" Text='<%# Eval("WorkStatus") %>'></asp:Label>
+                                             <asp:Label ID="lblWorkcompletion1" runat="server" Text='<%# Eval("WorkStatus") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                              

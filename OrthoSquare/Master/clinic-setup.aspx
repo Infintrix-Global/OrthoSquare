@@ -5,8 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>
+    
 
     <!-- BEGIN CONTENT BODY -->
     <div class="page-content" id="Add" visible="false"  runat="server">
@@ -66,6 +65,8 @@
                             </div>
                         </div>--%>
                     </div>
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
                     <div class="row">
 
                         <div class="col-md-6 ">
@@ -184,7 +185,7 @@
 
                                     </div>
                                     <div class="form-group">
-                                        <label>Open Time  <span class="required">*</span></label>
+                                        <label>Open Time  (HH:MM) <span class="required">*</span></label>
                                         <asp:TextBox ID="txtOpenTime" class="form-control timepicker timepicker-no-seconds" TabIndex="15" runat="server"></asp:TextBox>
                                         <span class="help-block">
                                         <asp:RequiredFieldValidator ID="RequiredFieldValidatorOpenTime" runat="server" ControlToValidate="txtOpenTime"
@@ -294,8 +295,8 @@
                                             </asp:DropDownList>
 
                                              <span class="help-block">
-                                             <asp:RequiredFieldValidator ID="RequiredFieldValidatorddl_DayOfWeek" InitialValue ="0"  runat ="server" ControlToValidate="ddl_DayOfWeek"
-                                                    SetFocusOnError="true" ErrorMessage="Please Enter Day Of Week" ForeColor="Red"></asp:RequiredFieldValidator>
+                                           <%--  <asp:RequiredFieldValidator ID="RequiredFieldValidatorddl_DayOfWeek" InitialValue ="0"  runat ="server" ControlToValidate="ddl_DayOfWeek"
+                                                    SetFocusOnError="true" ErrorMessage="Please Enter Day Of Week" ForeColor="Red"></asp:RequiredFieldValidator>--%>
 
                                                  </span>
 
@@ -328,11 +329,13 @@
                         </div>
                         <!-- END CONTENT BODY -->
                     </div>
+               </ContentTemplate>
+        </asp:UpdatePanel>
                     <div class="row">
                         <div class="form-actions text-center">
 
                             <asp:Button ID="btAdd" runat="server" Text="Submit" class="btn blue" ClientIDMode="Static" OnClick="btAdd_Click" />
-                            <asp:Button ID="btUpdate" ClientIDMode="Static" class="btn blue" runat="server"
+                            <asp:Button ID="btUpdate" ClientIDMode="Static" class="btn blue" runat="server" v
                                 Text="Update" Visible="False" />
                             <asp:Button ID="btBack" runat="server" Text="Cancel" Class="btn default" ClientIDMode="Static"
                                 CausesValidation="False" OnClick="btBack_Click" />
@@ -348,8 +351,6 @@
 
 
     </div>
-
-
 
   
     <div id="Edit" runat="server" class="page-content">
@@ -412,14 +413,16 @@
 
                             <!-- Usage as a class -->
                        <div class="text-right mb-20">
-                                 <asp:Button ID="btnAddNew" runat="server" Text="Add New" class="btn blue-madison" ClientIDMode="Static"
+                                 <asp:Button ID="btnAddNew" runat="server" Text="Add New Clinic" class="btn blue-madison" ClientIDMode="Static"
                                             CausesValidation="False" OnClick="btnAddNew_Click" />
+                            <asp:Button ID="Buttonapprove" runat="server" Text="Approve Branch" class="btn blue-madison" ClientIDMode="Static"
+                                            CausesValidation="False" OnClick="btnApprove_Click" />
                                  </div>
                         <div class="table-scrollable">
                              
                             <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
                                 class="table table-bordered table-hover" DataKeyNames="ClinicID"
-                                GridLines="None" OnPageIndexChanging="gvShow_PageIndexChanging" OnRowCommand="gvShow_RowCommand"
+                                GridLines="None" OnPageIndexChanging="gvShow_PageIndexChanging" OnRowCommand="gvShow11_RowCommand"
                                 OnRowDeleting="gvShow_RowDeleting" OnRowEditing="gvShow_RowEditing" ShowHeaderWhenEmpty="true">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Sr. No." ItemStyle-Width="10%">
@@ -465,12 +468,19 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="" ItemStyle-Width="3%">
                                         <ItemTemplate>
-                                            <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("ClinicID")%>'
-                                                CommandName="EditEnquiry" ImageUrl="../Images/right15x15.png" />
-                                        </ItemTemplate>
+                                           <%-- <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("ClinicID")%>'
+                                                CommandName="EditEnquiry" ImageUrl="../Images/right15x15.png" />--%>
+
+                                      
+                                            </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="" ItemStyle-Width="2%">
                                         <ItemTemplate>
+
+                                             <asp:ImageButton ID="btnUpdate" ToolTip="Edit" CausesValidation="false" runat="server" CommandArgument='<%# Eval("ClinicID") %>'
+                                                CommandName="EditEnquiry" ImageUrl="../Images/right15x15.png" />
+                                           
+
                                             <asp:ImageButton ID="lbtDelete" CausesValidation="false" runat="server" CommandName="delete"
                                                 ImageUrl="../Images/delete15x15.png" OnClientClick="return confirm('Are you sure you want to delete this Clinic?');" />
                                         </ItemTemplate>
@@ -492,12 +502,118 @@
 
     </div>
 
-
-</ContentTemplate>
-        </asp:UpdatePanel>
-
+            <div id="Div1" runat="server" visible="false" class="page-content">
+        <!-- BEGIN PAGE HEADER-->
 
 
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="index-2.html">Home</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <span>Clinic</span>
+                </li>
+            </ul>
 
+        </div>
+        <!-- END PAGE HEADER-->
 
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-settings font-red"></i>
+                            <span class="caption-subject font-red sbold uppercase">Clinic</span>
+                        </div>
+                        <%--<div class="actions">
+                            <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                <label class="btn grey-salsa btn-sm active">
+                                    <input type="radio" name="options" class="toggle" id="option1">Actions</label>
+                                <label class="btn grey-salsa btn-sm">
+                                    <input type="radio" name="options" class="toggle" id="option2">Settings</label>
+                            </div>
+                        </div>--%>
+                    </div>
+                    <div class="portlet-body">
+                        
+                        
+
+                            <!-- Usage as a class -->
+                       
+                        <div class="table-scrollable">
+                             
+                            <asp:GridView ID="Gridapprove" runat="server" AllowPaging="true" AutoGenerateColumns="false"
+                                class="table table-bordered table-hover" DataKeyNames="ClinicID"
+                                GridLines="None" OnPageIndexChanging="Gridapprove_PageIndexChanging" OnRowCommand="Gridapprove_RowCommand"
+                                  ShowHeaderWhenEmpty="true">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="Sr. No." ItemStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="SrNoAP" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
+                                            <asp:Label ID="lblID" runat="server" Text='<%# Eval("ClinicID")%>' Visible="false"></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Clinic Name" ItemStyle-Width="18%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblClinicNameAP" runat="server" Text='<%# Eval("ClinicName")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Address" ItemStyle-Width="35%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblAddressLineAP" runat="server" Text='<%# Eval("AddressLine1") + ", </br> " + Eval("AddressLine2")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Location" ItemStyle-Width="18%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblLocationNameAP" runat="server" Text='<%# Eval("LocationName")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Phone No." ItemStyle-Width="15%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblPhoneNoAP" runat="server" Text='<%# Eval("PhoneNo1") + ",</br> " + Eval("PhoneNo2")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Open Time" ItemStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblOpenTimeAP" runat="server" Text='<%# Eval("OpenTime")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Close Time" ItemStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblCloseTimeAP" runat="server" Text='<%# Eval("CloseTime")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Day Of Week" ItemStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblDayOfWeekAP" runat="server" Text='<%# Eval("DayOfWeek")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="" ItemStyle-Width="3%">
+                                        <ItemTemplate>
+                                            <asp:ImageButton ID="btnUpdateAP" CausesValidation="false" runat="server" CommandArgument='<%# Eval("ClinicID")%>'
+                                                CommandName="btbapprove" ImageUrl="../Images/right15x15.png" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    
+                                </Columns>
+                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
+                                <PagerSettings Mode="NumericFirstLast" />
+                                <EmptyDataTemplate>
+                                    No Record Available
+                                </EmptyDataTemplate>
+                            </asp:GridView>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 </asp:Content>

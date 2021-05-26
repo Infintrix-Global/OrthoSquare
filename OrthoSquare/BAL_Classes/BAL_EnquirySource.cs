@@ -83,5 +83,22 @@ namespace OrthoSquare.BAL_Classes
             }
             return isUpdated;
         }
+
+
+        public int CountEnqirySource(string name)
+        {
+            int _isDeleted = -1;
+            try
+            {
+                string str = "Select count(*) from EnquirySourceMaster where Sourcename='" + name + "'";
+
+                _isDeleted= Convert .ToInt32 (objGeneral.GetExecuteScalarByCommand(str));
+            }
+            catch (Exception ex)
+            {
+            }
+            return _isDeleted;
+        }
+
     }
 }

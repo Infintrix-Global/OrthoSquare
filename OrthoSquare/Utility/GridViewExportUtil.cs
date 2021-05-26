@@ -253,7 +253,7 @@ public class GridViewExportUtil
                             response.AddHeader("Content-Disposition", "attachment; filename=" + strExcelName + "");
                             response.TransmitFile(ExcelPath);
                             response.Flush();
-                            response.End();
+                            //response.End();
                         }
                     }
 

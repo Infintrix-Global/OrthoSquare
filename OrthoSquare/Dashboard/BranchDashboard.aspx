@@ -1,52 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="BranchDashboard.aspx.cs" Inherits="OrthoSquare.Dashboard.BranchDashboard" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
-</script>
-<script type="text/javascript" language="javascript">
-    $(document).ready(function () {
-        ShowImagePreview();
-    });
-    // Configuration of the x and y offsets
-    function ShowImagePreview() {
-        xOffset = -20;
-        yOffset = 40;
+  
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-        $("a.preview").hover(function (e) {
-            this.t = this.title;
-            this.title = "";
-            var c = (this.t != "") ? "<br/>" + this.t : "";
-            $("body").append("<p id='preview'><img src='" + this.href + "' alt='Image preview' />" + c + "</p>");
-            $("#preview")
-            .css("top", (e.pageY - xOffset) + "px")
-            .css("left", (e.pageX + yOffset) + "px")
-            .fadeIn("slow");
-        },
 
-        function () {
-            this.title = this.t;
-            $("#preview").remove();
-        });
-
-        $("a.preview").mousemove(function (e) {
-            $("#preview")
-            .css("top", (e.pageY - xOffset) + "px")
-            .css("left", (e.pageX + yOffset) + "px");
-        });
-    };
-
-</script>
-<style type="text/css">
-#preview{
-position:absolute;
-border:3px solid #ccc;
-background:#333;
-padding:5px;
-display:none;
-color:#fff;
-box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
-}
-</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -60,7 +19,7 @@ box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
             <ul class="page-breadcrumb">
                 <li>
                     <i class="icon-home"></i>
-                    <a href="index-2.html">Home</a>
+                    <a href="#">Home</a>
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
@@ -71,11 +30,11 @@ box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
         </div>
         <!-- END PAGE HEADER-->
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-2 col-xs-6">
                 <!-- BEGIN WIDGET THUMB -->
                 <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
                     <h4 class="widget-thumb-heading">
-                        <asp:LinkButton ID="lbtDoc" PostBackUrl="~/Doctor/Add_Doctor.aspx" runat="server">Doctors</asp:LinkButton>
+                        Doctors
                     </h4>
                     <div class="widget-thumb-wrap">
 
@@ -84,17 +43,17 @@ box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
                         <div class="widget-thumb-body">
                             <span class="widget-thumb-subtitle">TOTAL</span>
                             <span class="widget-thumb-body-stat" data-counter="counterup">
-                                <asp:Label ID="lblDoctors" runat="server" Text=""></asp:Label></span>
+                                <asp:LinkButton ID="lbtDoc" PostBackUrl="~/Doctor/Add_Doctor.aspx" runat="server"><asp:Label ID="lblDoctors" runat="server" Text=""></asp:Label></asp:LinkButton></span>
                         </div>
                     </div>
                 </div>
                 <!-- END WIDGET THUMB -->
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-2 col-xs-6">
                 <!-- BEGIN WIDGET THUMB -->
                 <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
                     <h4 class="widget-thumb-heading">
-                        <asp:LinkButton ID="LbtEnquiries" PostBackUrl="~/Enquiry/EnquiryDetails.aspx" runat="server">Enquiries</asp:LinkButton>
+                       Enquiries
                     </h4>
                     <div class="widget-thumb-wrap">
 
@@ -102,59 +61,59 @@ box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
                         <div class="widget-thumb-body">
                             <span class="widget-thumb-subtitle">TOTAL</span>
                             <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293">
-                                <asp:Label ID="lblEnq" runat="server" Text=""></asp:Label></span>
+                                <asp:LinkButton ID="LbtEnquiries" PostBackUrl="~/Enquiry/EnquiryDetails.aspx" runat="server"> <asp:Label ID="lblEnq" runat="server" Text=""></asp:Label></asp:LinkButton></span>
                         </div>
                     </div>
                 </div>
                 <!-- END WIDGET THUMB -->
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-2 col-xs-6">
                 <!-- BEGIN WIDGET THUMB -->
                 <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
                     <h4 class="widget-thumb-heading">
-                        <asp:LinkButton ID="lbtFollowUps" PostBackUrl="~/Enquiry/FollowupDetails.aspx" runat="server">Follow Ups</asp:LinkButton>
+                        Follow Ups
                     </h4>
                     <div class="widget-thumb-wrap">
                         <i class="fa fa-arrow-up widget-thumb-icon bg-purple"></i>
                         <div class="widget-thumb-body">
                             <span class="widget-thumb-subtitle">TOTAL</span>
                             <span class="widget-thumb-body-stat" data-counter="counterup" data-value="815">
-                                <asp:Label ID="lblFollwupCOunt" runat="server" Text=""></asp:Label>
+                               <asp:LinkButton ID="lbtFollowUps" PostBackUrl="~/Enquiry/ViewFolloupDetials.aspx" runat="server"> <asp:Label ID="lblFollwupCOunt" runat="server" Text=""></asp:Label></asp:LinkButton>
                             </span>
                         </div>
                     </div>
                 </div>
                 <!-- END WIDGET THUMB -->
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-2 col-xs-6">
                 <!-- BEGIN WIDGET THUMB -->
                 <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
                     <h4 class="widget-thumb-heading">
-                        <asp:LinkButton ID="lbtPatient" PostBackUrl="~/patient/PatientMaster.aspx" runat="server">Patient</asp:LinkButton>
+                        Patient
                     </h4>
                     <div class="widget-thumb-wrap">
                         <i class="fa fa-bed widget-thumb-icon bg-blue"></i>
                         <div class="widget-thumb-body">
                             <span class="widget-thumb-subtitle">TOTAL</span>
                             <span class="widget-thumb-body-stat" data-counter="counterup" data-value="5,071">
-                                <asp:Label ID="lblPatient" runat="server" Text=""></asp:Label></span>
+                               <asp:LinkButton ID="lbtPatient" PostBackUrl="~/patient/PatientMaster.aspx" runat="server"> <asp:Label ID="lblPatient" runat="server" Text=""></asp:Label></asp:LinkButton></span>
                         </div>
                     </div>
                 </div>
                 <!-- END WIDGET THUMB -->
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-2 col-xs-6">
                 <!-- BEGIN WIDGET THUMB -->
                 <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                    <h4 class="widget-thumb-heading">Invoices</h4>
+                    <h4 class="widget-thumb-heading">Invoice(Monthly)</h4>
                     <div class="widget-thumb-wrap">
                         <i class="fa fa-copy widget-thumb-icon bg-yellow-gold"></i>
                         <div class="widget-thumb-body">
                             <span class="widget-thumb-subtitle">Rs.</span>
                             <span class="widget-thumb-body-stat" data-counter="counterup" data-value="5,071">
 
-                                <asp:Label ID="totalinvoice" runat="server" Text=""></asp:Label>
+                               <asp:LinkButton ID="LinkButtonINV" PostBackUrl="~/Invoice/ViewInvice.aspx" runat="server"> <asp:Label ID="totalinvoice" runat="server" Text=""></asp:Label> </asp:LinkButton>
                             </span>
                         </div>
                     </div>
@@ -162,15 +121,16 @@ box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
                 <!-- END WIDGET THUMB -->
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-2 col-xs-6">
                 <!-- BEGIN WIDGET THUMB -->
                 <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                    <h4 class="widget-thumb-heading">Expenses</h4>
+                    <h4 class="widget-thumb-heading">Expense(Monthly)</h4>
                     <div class="widget-thumb-wrap">
                         <i class="fa fa-money widget-thumb-icon bg-greens"></i>
                         <div class="widget-thumb-body">
                             <span class="widget-thumb-subtitle">Rs.</span>
-                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="5,071"> <asp:Label ID="lblExp" runat="server" Text=""></asp:Label></span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="5,071">
+                                 <asp:LinkButton ID="LinkButtonEXP" PostBackUrl="~/Report/ViewClinicwishExpenseReport.aspx" runat="server"> <asp:Label ID="lblExp" runat="server" Text=""></asp:Label></asp:LinkButton></span>
                         </div>
                     </div>
                 </div>
@@ -280,8 +240,8 @@ box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
                                         <ItemTemplate>
                                             <div class="grey">
                                                 <asp:Label ID="lblstatus" Visible="false" runat="server" Text='<%# Eval("Status") %>'></asp:Label>
-                                                <asp:LinkButton ID="linkApporuval" CommandArgument='<%# Eval("Appointmentid") %>' CommandName="Approve" runat="server"><i class="fa fa-check"></i></asp:LinkButton>
-                                                <asp:LinkButton ID="LinkRegect" CommandArgument='<%# Eval("Appointmentid") %>' CommandName="Reject" runat="server"> <i class="fa fa-times-circle"></i></asp:LinkButton>
+                                                <asp:LinkButton ID="linkApporuval" CommandArgument='<%# Eval("Appointmentid") %>' CommandName="Approve" ToolTip="Approve" runat="server"><i class="fa fa-check"></i></asp:LinkButton>
+                                                <asp:LinkButton ID="LinkRegect" CommandArgument='<%# Eval("Appointmentid") %>' CommandName="Reject" ToolTip="Reject" runat="server"> <i class="fa fa-times-circle"></i></asp:LinkButton>
 
 
                                             </div>
@@ -375,7 +335,7 @@ box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
                         <div class="actions">
                             <div class="btn-group">
 
-                            <asp:DropDownList ID="ddlpatient" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlpatient_SelectedIndexChanged">
+                            <asp:DropDownList ID="ddlpatient1" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlpatient_SelectedIndexChanged">
                               
                             </asp:DropDownList>
                                 </div>
@@ -431,104 +391,83 @@ box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
                     <div class="portlet-title">
                         <div class="caption caption-md">
                             <i class="icon-bar-chart font-dark hide"></i>
-                            <span class="caption-subject font-dark bold uppercase">Enquiries</span>
+                            <span class="caption-subject font-dark bold uppercase">Today Follow ups</span>
 
                         </div>
                         <div class="actions">
                             <div class="btn-group">
-                                <a class="btn dark btn-outline btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false">Year
-                                                <i class="fa fa-angle-down"></i>
-                                </a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li>
-                                        <a href="javascript:;">2018</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">2019</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">2020</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">2021</a>
-                                    </li>
-                                </ul>
+                               <asp:DropDownList ID="ddlYEARENQ"  Visible="false" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlYEARENQ_SelectedIndexChanged">
+                              
+                            </asp:DropDownList>
+
                             </div>
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <div id="morris_chart_2" style="height: 500px;">
+                          <%--<div id="morris_chart_2" style="height: 500px;">--%>
+                     
+                            <div class="table-responsive">
+                            
+                                <asp:GridView ID="GridViewFolloupDetils1" runat="server" AllowPaging="true" AutoGenerateColumns="false"
+                                        class="table table-bordered table-hover" DataKeyNames="EnquiryID" OnPageIndexChanging="GridViewFolloupDetils1_PageIndexChanging"
+                                        GridLines="None" 
+                                        ShowHeaderWhenEmpty="true">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Sr. No." ItemStyle-Width="10%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="SrNo1" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
+                                                  
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                             <asp:TemplateField HeaderText="Name" ItemStyle-Width="18%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblEnquiryName" runat="server" Text='<%# Eval("Ename") %>'></asp:Label>
 
-                            <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
-                                class="table table-bordered table-hover" DataKeyNames="EnquiryID"
-                                GridLines="None" OnPageIndexChanging="gvShow_PageIndexChanging"
-                                OnRowDeleting="gvShow_RowDeleting" OnRowEditing="gvShow_RowEditing" ShowHeaderWhenEmpty="true">
-                                <Columns>
-                                    <asp:TemplateField HeaderText="Sr. No.">
-                                        <ItemTemplate>
-                                            <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
-                                            <asp:Label ID="lblID" runat="server" Text='<%# Eval("EnquiryID") %>' Visible="false"></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Enquiry No">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblPrice" runat="server" Text='<%# Eval("Enquiryno") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Name">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblCompanyName" runat="server" Text='<%# Eval("FirstName") +"  "+ Eval("LastName") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                              <asp:TemplateField HeaderText="Mobile" ItemStyle-Width="18%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblEnquiryMobile" runat="server" Text='<%# Eval("Mobile") %>'></asp:Label>
 
-                                    <asp:TemplateField HeaderText="Source Name">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblBrandNameSourcename" runat="server" Text='<%# Eval("Sourcename") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                             <asp:TemplateField HeaderText="Date" ItemStyle-Width="18%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblEnquiryDate11" runat="server" Text='<%# Eval("Followupdate","{0:dd/MMM/yyyy}") %>'></asp:Label>
 
-                                    <asp:TemplateField HeaderText="Mobile No">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblBrandNameMobile" runat="server" Text='<%# Eval("Mobile") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                             <asp:TemplateField HeaderText="Follow up Mode" ItemStyle-Width="18%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblFollowupmode1" runat="server" Text='<%# Eval("Followupmode") %>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                         
+                                             <asp:TemplateField HeaderText="Status" ItemStyle-Width="18%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblstatusName1" runat="server" Text='<%# Eval("statusName") %>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                           
 
-                                    <asp:TemplateField HeaderText="Email ID">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblBrandNameEmail" runat="server" Text='<%# Eval("Email") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Date">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblEnquiryDate" runat="server" Text='<%# Eval("EnquiryDate","{0:dd/MMM/yyyy}") %>'></asp:Label>
-
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Edit" Visible="false">
-                                        <ItemTemplate>
-                                            <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("EnquiryID") %>'
-                                                CommandName="EditEnquiry" ImageUrl="../Images/right15x15.png" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Delete" Visible="false">
-                                        <ItemTemplate>
-                                            <asp:ImageButton ID="lbtDelete" CausesValidation="false" runat="server" CommandName="delete"
-                                                ImageUrl="../Images/delete15x15.png" OnClientClick="return confirm('Are you sure you want to delete this Enquiry?');" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
-                                <PagerSettings Mode="NumericFirstLast" />
-                                <EmptyDataTemplate>
-                                    No Record Available
-                                </EmptyDataTemplate>
-                            </asp:GridView>
+                                          <asp:TemplateField HeaderText="Follow up By" ItemStyle-Width="26%">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblCompanyName1" runat="server" Text='<%# Eval("Dname") %>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                        <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
+                                        <PagerSettings Mode="NumericFirstLast" />
+                                        <EmptyDataTemplate>
+                                            No Record Available
+                                        </EmptyDataTemplate>
+                                    </asp:GridView>
 
 
+                             </div>
 
-                        </div>
+
+<%--                        </div>--%>
 
                     </div>
                 </div>
@@ -547,7 +486,16 @@ box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
                         </div>
                         <div class="actions">
                             <div class="btn-group">
-                                <a class="btn dark btn-outline btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true">Year
+                              
+                                  <asp:DropDownList ID="ddlyear" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlYear_SelectedIndexChanged">
+                              
+                            </asp:DropDownList>
+                                
+                                
+                                
+                                
+                                
+                                 <%-- <a class="btn dark btn-outline btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true">Year
                                                 <i class="fa fa-angle-down"></i>
                                 </a>
                                 <ul class="dropdown-menu pull-right">
@@ -563,11 +511,17 @@ box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
                                     <li>
                                         <a href="javascript:;">2021</a>
                                     </li>
-                                </ul>
+                                </ul>--%>
                             </div>
 
                             <div class="btn-group">
-                                <a class="btn dark btn-outline btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true">month
+
+
+                                  <asp:DropDownList ID="ddlMonth" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlMonth_SelectedIndexChanged">
+                              
+                            </asp:DropDownList>
+
+                               <%-- <a class="btn dark btn-outline btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true">month
                                                 <i class="fa fa-angle-down"></i>
                                 </a>
                                 <ul class="dropdown-menu pull-right">
@@ -583,9 +537,9 @@ box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
                                     <li>
                                         <a href="javascript:;">Option 4</a>
                                     </li>
-                                </ul>
+                                </ul>--%>
                             </div>
-                            <div class="btn-group">
+                            <%--<div class="btn-group">
                                 <a class="btn dark btn-outline btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true">Treatment Type
                                                 <i class="fa fa-angle-down"></i>
                                 </a>
@@ -603,11 +557,48 @@ box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
                                         <a href="javascript:;">Option 4</a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div>--%>
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <div id="morris_chart_4" style="height: 500px;"></div>
+                       <%-- <div id="morris_chart_4" style="height: 500px;">--%>
+                          <div id="morris_chart_4" >
+
+                             <asp:GridView ID="GridTREATMENTWISEPATIENT" runat="server" AllowPaging="true" AutoGenerateColumns="false"
+                                class="table table-bordered table-hover" 
+                                GridLines="None" OnPageIndexChanging="GridTREATMENTWISEPATIENT_PageIndexChanging"
+                                 ShowHeaderWhenEmpty="true">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="Sr. No.">
+                                        <ItemTemplate>
+                                            <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
+                                          
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Treatment Name">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblTreatmentName" runat="server" Text='<%# Eval("TreatmentName") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Patient Total">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblPatientTotal" runat="server" Text='<%# Eval("PatientTotal") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    
+
+
+                                   
+                                </Columns>
+                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
+                                <PagerSettings Mode="NumericFirstLast" />
+                                <EmptyDataTemplate>
+                                    No Record Available
+                                </EmptyDataTemplate>
+                            </asp:GridView>
+
+
+                        </div>
                     </div>
                 </div>
 
@@ -622,29 +613,23 @@ box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
                         </div>
                         <div class="actions">
                             <div class="btn-group">
-                                <a class="btn dark btn-outline btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true">Year
-                                                <i class="fa fa-angle-down"></i>
-                                </a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li>
-                                        <a href="javascript:;">2018</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">2019</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">2020</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">2021</a>
-                                    </li>
-                                </ul>
-                            </div>
+
+                                 
+                              
+                                  <asp:DropDownList ID="ddlyesrEXP1"  AutoPostBack="True" OnSelectedIndexChanged="ddlyesrEXP11_SelectedIndexChanged" class="btn dark btn-outline btn-circle btn-sm " runat="server">
+                              
+                                   </asp:DropDownList>
+                          
                         </div>
                     </div>
                     <div class="portlet-body">
 
-                        <div id="morris_chart_3" style="height: 500px;"></div>
+                        <div id="morris_chart_3" style="height: 500px;">
+                             <br />  <br />  <br />
+                             <asp:Literal ID="lt" runat="server"></asp:Literal>   
+                               <div id="chart_div"></div>
+
+                        </div>
 
                     </div>
                 </div>
