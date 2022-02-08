@@ -16,7 +16,7 @@ namespace OrthoSquare.Dashboard
 {
     public partial class DocterDashboard : System.Web.UI.Page
     {
-
+        BAL_Patient objPatient = new BAL_Patient();
         clsCommonMasters objcommon = new clsCommonMasters();
         public static DataTable AllData = new DataTable();
         BAL_EnquirySource objES = new BAL_EnquirySource();
@@ -50,7 +50,7 @@ namespace OrthoSquare.Dashboard
                 TotalTodayAppoimnet();
                 bindYear();
                 GridTodayAppoinmentget();
-
+                SelectSubAdmin();
                 DataTable Dt = pbjD.GetDocInTimeOutTimeNew(0, Convert.ToInt32(SessionUtilities.Empid));
 
 
@@ -211,11 +211,57 @@ namespace OrthoSquare.Dashboard
             lblEnq.Text = Eno.ToString();
         }
 
-        public void PatientNo()
+
+        public void SelectSubAdmin()
         {
 
-            int Eno = objcommon.GetPatientCountDocterCount(SessionUtilities.Empid);
-            lblPatient.Text = Eno.ToString();
+            int Sid = objcommon.GetSubAdminLink(SessionUtilities.Empid);
+            
+            if(Sid >0)
+            {
+                btnSubAdmin.Visible = true;
+            }
+            else
+            {
+                btnSubAdmin.Visible = false;
+            }
+        }
+
+
+
+
+        
+        public void PatientNo()
+        {
+            string Cid = "";
+            string A = "";
+            int PCount = 0;
+            DataTable dt23 = objPatient.DoctorByClinicLIST(SessionUtilities.Empid);
+
+       
+            for (int i = 0; i < dt23.Rows.Count; i++)
+            {
+                A += dt23.Rows[i]["ClinicID"].ToString() + ",";
+
+            }
+
+            if (A != "")
+            {
+                A = A.Remove(A.Length - 1);
+            }
+
+            Cid = A;
+
+            AllData = objPatient.NewGetPatientlist1(Cid);
+            if (AllData != null && AllData.Rows.Count > 0)
+            {
+
+                PCount = AllData.Rows.Count;
+
+            }
+
+                //int Eno = objcommon.GetPatientCountDocterCount(SessionUtilities.Empid);
+            lblPatient.Text = PCount.ToString();
         }
 
         public void FollowupNo()
@@ -235,8 +281,9 @@ namespace OrthoSquare.Dashboard
 
         public void TotalInvoice()
         {
+            int DID = SessionUtilities.Empid;
 
-            decimal Totalinv = objcommon.GetTotalPaidAmountDocter(SessionUtilities.Empid);
+            decimal Totalinv = objcommon.GetTotalPaidAmountDocter(DID);
 
             if (Totalinv != 0)
             {
@@ -568,6 +615,11 @@ namespace OrthoSquare.Dashboard
             {
             }
 
+        }
+
+        protected void btnSubAdmin_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Report/AllClinicDetails.aspx");
         }
     }
 }

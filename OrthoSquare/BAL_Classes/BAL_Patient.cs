@@ -142,7 +142,9 @@ namespace OrthoSquare.BAL_Classes
                 }
                 else
                 {
-                    objGeneral.AddParameterWithValueToSQLCommand("@DateBirth", objGeneral.getDatetime(bojpatient.DateBirth));
+                    //objGeneral.AddParameterWithValueToSQLCommand("@DateBirth", objGeneral.getDatetime(bojpatient.DateBirth));
+                    objGeneral.AddParameterWithValueToSQLCommand("@DateBirth", bojpatient.DateBirth);
+
                 }
                 objGeneral.AddParameterWithValueToSQLCommand("@Age", bojpatient.Age);
                 objGeneral.AddParameterWithValueToSQLCommand("@BloodGroup", bojpatient.boolgroup);
@@ -204,6 +206,7 @@ namespace OrthoSquare.BAL_Classes
                 {
                     objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
                 }
+
                 isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_ADDPatient");
 
 
@@ -267,7 +270,7 @@ namespace OrthoSquare.BAL_Classes
         public DataTable NewGetPatientlist(int Cid)
         {
 
-             strQuery = " Select *,P.FristName +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1";
+             strQuery = " Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1";
 
             if (Cid > 0)
                 strQuery += " and P.ClinicID ='" + Cid + "'";
@@ -277,6 +280,22 @@ namespace OrthoSquare.BAL_Classes
           
 
         }
+
+
+        public DataTable NewGetPatientlistSearch(string PatientName)
+        {
+
+            strQuery = " Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ( '+P.Mobile +' )' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1";
+
+            strQuery += " and  P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')'  like  '%" + PatientName + "%'";
+            strQuery += "order by patientid DESC ";
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+
+
+        }
+
+
 
         public DataTable NewGetPatientlist1(string  Cid)
         {

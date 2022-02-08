@@ -399,7 +399,7 @@ namespace OrthoSquare.Dashboard
             string cmd = "Select * from ( Select  M.MonthsName, Sum(IM.PaidAmount) COLLECTION  from  MonthsMaster M Left  join InvoiceMaster IM on M.MonthsName = MONTH(IM.PayDate) where IM.ClinicID ='" + SessionUtilities.Empid + "' and  YEAR(IM.PayDate) ='"+ddlyesrEXP1.SelectedItem .Text +"' "
         + " Group by MonthsName ) T1 "
         + " Join (Select  M.MonthsName, Sum(IM.Amount) EXPENSES from  MonthsMaster M "
-        + "  Left  join ExpenseMaster IM on M.MonthsName = MONTH(IM.ExpDate)  where YEAR(IM.ExpDate) ='" + ddlyesrEXP1.SelectedItem.Text + "' "
+        + "  Left  join ExpenseMaster IM on M.MonthsName = MONTH(IM.ExpDate)  where YEAR(IM.ExpDate) ='" + ddlyesrEXP1.SelectedItem.Text + "' and IM.ClinicID='" + SessionUtilities.Empid + "' "
         + " Group by MonthsName )T2 "
         + " ON T1.MonthsName = T2 .MonthsName ";
 

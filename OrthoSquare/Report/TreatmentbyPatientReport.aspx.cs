@@ -51,7 +51,7 @@ namespace OrthoSquare.Report
 
             }
 
-            ddlDocterSearch.DataTextField = "FirstName";
+            ddlDocterSearch.DataTextField = "DoctorName";
             ddlDocterSearch.DataValueField = "DoctorID";
             ddlDocterSearch.DataBind();
 

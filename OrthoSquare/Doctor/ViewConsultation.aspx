@@ -145,6 +145,13 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
+
+                                    <asp:TemplateField HeaderText="Clinic Name">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("ClinicName") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
                                     <asp:TemplateField HeaderText="Doctors">
                                         <ItemTemplate>
                                             <asp:Label ID="lblDocterName" runat="server" Text='<%# Eval("DFirstName") +"  "+ Eval("DLastName") %>'></asp:Label>

@@ -53,7 +53,7 @@ namespace OrthoSquare.Invoice
 
             ddlDoctors.DataSource = objcomm.DoctersMasterNewENQ11(Cid, SessionUtilities.RoleID);
 
-            ddlDoctors.DataTextField = "FirstName";
+            ddlDoctors.DataTextField = "DoctorName";
             ddlDoctors.DataValueField = "DoctorID";
             ddlDoctors.DataBind();
             ddlDoctors.Items.Insert(0, new ListItem("--- Select Doctor---", "0"));

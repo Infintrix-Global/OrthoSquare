@@ -257,7 +257,8 @@ namespace OrthoSquare.Enquiry1
                         txtTodayFollowupdate.Text = Convert.ToDateTime(System.DateTime.Now).ToString("dd-MM-yyyy");
 
                     }
-                    txtEmployee.Text = dt.Rows[0]["FirstName"].ToString() + " " + dt.Rows[0]["LastName"].ToString();
+                    txtFname.Text = dt.Rows[0]["FirstName"].ToString();
+                    txtLname.Text = dt.Rows[0]["LastName"].ToString();
                     lblEqNo.Text = dt.Rows[0]["Enquiryno"].ToString();
                     lblEmpNo.Text = dt.Rows[0]["AssignToEmpId"].ToString();
                     lblEnqID.Text = dt.Rows[0]["EnquiryID"].ToString();
@@ -349,6 +350,8 @@ namespace OrthoSquare.Enquiry1
                     Statusid = Convert.ToInt32(ddlStatus.SelectedValue),
                     Remak = txtRemark.Text,
                     FollowupmodeNew = Followupmode,
+                    Fname = txtFname.Text,
+                    LName = txtLname.Text,
                     CreatedBy = 1
 
                 };
@@ -649,7 +652,8 @@ namespace OrthoSquare.Enquiry1
                     txtTodayFollowupdate.Text = Convert.ToDateTime(System.DateTime.Now).ToString("dd-MM-yyyy");
 
                 }
-                txtEmployee.Text = dt.Rows[0]["FirstName"].ToString() + " " + dt.Rows[0]["LastName"].ToString();
+                txtFname.Text = dt.Rows[0]["FirstName"].ToString();
+                txtLname.Text = dt.Rows[0]["LastName"].ToString();
                 lblEqNo.Text = dt.Rows[0]["Enquiryno"].ToString();
                 lblEmpNo.Text = dt.Rows[0]["AssignToEmpId"].ToString();
                 lblEnqID.Text = dt.Rows[0]["EnquiryID"].ToString();

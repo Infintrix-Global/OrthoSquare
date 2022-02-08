@@ -35,6 +35,10 @@
                 <div class="portlet light ">
                     <div class="portlet-body">
                         <div class="row">
+                              <div class="col-md-2">
+                                  <asp:Button ID="btnSubAdmin" Visible="false"  CausesValidation="false"  class="btn  green btn-outline btn-sm" runat="server" Text="Clinic Activity" OnClick="btnSubAdmin_Click" ValidationGroup="P" />
+
+                            </div>
                             <div class="col-md-2">
 
                                 <asp:DropDownList ID="ddlClinic" OnSelectedIndexChanged="ddlClinic_SelectedIndexChanged1" class="btn dark btn-outline btn-circle btn-sm " AutoPostBack="true" runat="server">
@@ -60,6 +64,8 @@
                             <div class="col-md-2">
                                 <asp:Label ID="lblDate" runat="server" Text=""></asp:Label>
                             </div>
+
+                            
 
                         </div>
                     </div>

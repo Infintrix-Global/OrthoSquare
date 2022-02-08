@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="LabMaster.aspx.cs" Inherits="OrthoSquare.Master.LabMaster" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
-
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -38,31 +38,6 @@
                             <i class="icon-settings font-red-sunglo"></i>
                             <span class="caption-subject bold uppercase">Lab</span>
                         </div>
-                        <%-- <div class="actions">
-                            <div class="btn-group">
-                                <a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown">Actions
-                                                <i class="fa fa-angle-down"></i>
-                                </a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-pencil"></i>Edit </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-trash-o"></i>Delete </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-ban"></i>Ban </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="javascript:;">Make admin </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>--%>
                     </div>
                     <div class="row">
 
@@ -74,7 +49,18 @@
 
                                 <div class="form-group col-md-6">
                                     <label>Patient Name</label>
-                                    <asp:DropDownList ID="ddlpatient" class="form-control" runat="server" AutoPostBack="True"></asp:DropDownList>
+                                  <%--  <asp:DropDownList ID="ddlpatient" class="form-control" runat="server" AutoPostBack="True"></asp:DropDownList>--%>
+
+
+
+                                     <asp:TextBox ID="txtPatient" runat="server" OnTextChanged="txtPatient_TextChanged" placeholder="Patient Name" AutoPostBack="true" class="form-control"></asp:TextBox>
+
+                                <cc1:AutoCompleteExtender ServiceMethod="SearchCustomers"
+                                    MinimumPrefixLength="2"
+                                    CompletionInterval="100" EnableCaching="false" CompletionSetCount="10"
+                                    TargetControlID="txtPatient"
+                                    ID="AutoCompleteExtender1" runat="server" FirstRowSelected="false">
+                                </cc1:AutoCompleteExtender>
 
                                 </div>
                                 <div class="form-group col-md-6">
@@ -119,8 +105,6 @@
 
 
 
-                                    <%--                                        <asp:TextBox ID="txtToothNo" class="form-control" runat="server"
-                                            ></asp:TextBox>--%>
                                 </div>
 
 
@@ -310,23 +294,23 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                   
+
                                     <asp:TextBox ID="txtSearch" runat="server" class="form-control" placeholder="Lab Name"
                                         ClientIDMode="Static"></asp:TextBox>
 
                                 </div>
                             </div>
-                             <div class="col-md-3">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                  
+
                                     <asp:TextBox ID="txtFristNameS" runat="server" class="form-control" placeholder="Patient First Name"
                                         ClientIDMode="Static"></asp:TextBox>
 
                                 </div>
                             </div>
-                             <div class="col-md-3">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                 
+
                                     <asp:TextBox ID="txtLastNameS" runat="server" class="form-control" placeholder="Patient Last Name"
                                         ClientIDMode="Static"></asp:TextBox>
 
@@ -334,7 +318,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group form-md-line-input ">
-                                    
+
                                     <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
                                         OnClick="btSearch_Click" />
 
@@ -344,7 +328,7 @@
 
 
                         <!-- Usage as a class -->
-                        <div class="text-right mb-20">
+                        <div class="text-right mb-5">
                             <asp:Button ID="btnAddNew" runat="server" Text="Add New" class="btn blue-madison" ClientIDMode="Static"
                                 CausesValidation="False" OnClick="btnAddNew_Click" />
                         </div>
@@ -376,7 +360,7 @@
                                             <asp:Label ID="lblPatient" runat="server" Text='<%# Eval("FristName") + "  " + Eval("LastName")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                     <asp:TemplateField HeaderText="Clinic Name">
+                                    <asp:TemplateField HeaderText="Clinic Name">
                                         <ItemTemplate>
                                             <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("ClinicName") %>'></asp:Label>
                                         </ItemTemplate>

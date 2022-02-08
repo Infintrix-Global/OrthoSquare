@@ -17,27 +17,19 @@ namespace OrthoSquare.Report
 
         BAL_Patient objp = new BAL_Patient();
         BAL_LabsDetails objLab = new BAL_LabsDetails();
-
+        clsCommonMasters objcomm = new clsCommonMasters();
         int cid = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack )
             {
-                BindPatient();
+              
                 BindInoutRepot();
             }
         }
 
 
-        public void BindPatient()
-        {
-            ddlpatient.DataSource = objp.GetPatientlist();
-            ddlpatient.DataTextField = "Fname";
-            ddlpatient.DataValueField = "patientid";
-            ddlpatient.DataBind();
-            ddlpatient.Items.Insert(0, new ListItem("--- Select ---", "0"));
-        }
-
+     
 
         public void BindInoutRepot()
         {
@@ -46,7 +38,7 @@ namespace OrthoSquare.Report
                 cid = SessionUtilities.Empid;
             }
 
-            DataTable dt = objLab.GetLabsInoutReport(Convert.ToInt32(ddlpatient.SelectedValue), cid);
+            DataTable dt = objLab.GetLabsInoutReportnew(txtNameS.Text,txtLastNameS.Text,txtLabName.Text, cid);
             GridinoutLab.DataSource = dt;
             GridinoutLab.DataBind();
         }
@@ -66,8 +58,9 @@ namespace OrthoSquare.Report
 
                 Label lbloutEnqDate = (Label)e.Row.FindControl("lbloutEnqDate");
 
+                Label lblToothNo = (Label)e.Row.FindControl("lblToothNo");
 
-                
+
                 if (lblinEnqDate.Text == "01-01-1990")
                 {
                     lblinEnqDate.Text = "";
@@ -79,11 +72,24 @@ namespace OrthoSquare.Report
                     lbloutEnqDate.Text = "";
                 }
 
+                string toothName = "";
+                DataTable dt1 = objcomm.GettoothDetails(lblToothNo.Text.Trim());
+
+                if (dt1 != null && dt1.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        toothName += dt1.Rows[i]["toothNo"] + ",";
+
+                    }
+                    lblToothNo.Text = toothName;
+                }
             }
         }
 
 
-        protected void ddlpatient_SelectedIndexChanged(object sender, EventArgs e)
+
+        protected void btSearch_Click(object sender, EventArgs e)
         {
             BindInoutRepot();
         }

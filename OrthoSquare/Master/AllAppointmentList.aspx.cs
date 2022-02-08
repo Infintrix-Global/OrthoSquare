@@ -115,7 +115,7 @@ namespace OrthoSquare.Master
 
             }
 
-            ddlDocter.DataTextField = "FirstName";
+            ddlDocter.DataTextField = "DoctorName";
             ddlDocter.DataValueField = "DoctorID";
             ddlDocter.DataBind();
             ddlDocter.Items.Insert(0, new ListItem("--- Select ---", "0"));

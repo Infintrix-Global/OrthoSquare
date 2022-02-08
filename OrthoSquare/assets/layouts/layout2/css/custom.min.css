@@ -5,3 +5,79 @@ thead {
   .grey{color:#8e8d8d;} 
 
   .form-actions1{padding:10px;margin:0;background-color:#f5f5f5;border-top:1px solid #e7ecf1}
+
+.multiselect-container {
+    max-height: 200px;
+    overflow: hidden auto;
+    min-width: 100%;
+    max-width: 100%;
+    /*z-index: 5;*/
+}
+
+.multiselect-selected-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.multiselect-container button.multiselect-option.dropdown-item {
+    pointer-events: none;
+}
+
+.multiselect-container span.form-check input, .multiselect-container span.form-check label {
+    pointer-events: all;
+}
+
+.custom__dropdown, .filter__control, .input__control, .SumoSelect > .SelectBox, .goog-te-combo, .multiselect {
+    font-size: 16px;
+    width: 100%;
+   /* height: 54px;*/
+    line-height: 35px;
+    padding: 0 28px;
+    border-radius: 15px;
+    border: 1.5px solid #c8e0c9;
+    outline: none;
+}
+
+select.SelectBox {
+    visibility: hidden;
+}
+
+.SumoSelect, .multiselect, .multiselect-native-select .btn-group {
+    width: 100%;
+    vertical-align: middle;
+}
+
+
+.robotomd {
+    font-family: 'roboto-medium', sans-serif;
+}
+
+.multiselect-container.dropdown-menu {
+    margin-top: 0;
+  /*  -webkit-box-shadow: 0 6px 12px rgb(0 0 0 / 18%);*/
+   /* box-shadow: 0 6px 12px rgb(0 0 0 / 18%);*/
+}
+
+.multiselect-container.dropdown-menu > * {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: transparent !important;
+    border: 0;
+    border-bottom: 1px solid #d8d8d8;
+}
+
+.multiselect-container .multiselect-option .form-check {
+    display: flex;
+    padding: 5px 0;
+}
+
+.multiselect-container .multiselect-option .form-check-label {
+    padding-left: 10px;
+    margin-bottom: 0;
+    flex: 1 0;
+}
+
+button.multiselect.dropdown-toggle.custom-select.text-center {
+    background: #ffffff;
+}

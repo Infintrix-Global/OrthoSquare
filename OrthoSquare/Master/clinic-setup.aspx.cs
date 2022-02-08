@@ -8,6 +8,8 @@ using OrthoSquare.BAL_Classes;
 using System.Data;
 using OrthoSquare.Utility;
 using System.Net;
+using System.Configuration;
+using System.Net.Mail;
 
 namespace OrthoSquare.Branch
 {
@@ -153,15 +155,15 @@ namespace OrthoSquare.Branch
 
                 int Cid = objClinic.GetClinicID() + 1;
                 Password =  "ClinicAdmin@0" + Cid;
-                UserName=  "Admin@" + Cid;
+                UserName = txtUserName.Text;
 
 
                 ClinicDetails objClinicDetails = new ClinicDetails()
                 {
                     clinicID = clinicID,
                     ClinicName  = txtClinicName .Text ,
-                    FirstName = txtFristName .Text ,
-                    LastName =txtLastName .Text ,
+                    FirstName = "" ,
+                    LastName ="" ,
                     AddressLine1  = txtAddress1.Text,
                     AddressLine2  = txtAddress2.Text,
                     CountryID  = Convert .ToInt32(ddlCountry.SelectedValue) ,
@@ -194,50 +196,15 @@ namespace OrthoSquare.Branch
 
                    int CID= objClinic. GetClinicID();
 
-                  int IDC= objClinic.Add_AppointmentDetails(CID);
+                    int IDC= objClinic.Add_AppointmentDetails(CID);
 
-                  if (clinicID > 0)
-                  {
-
-                      int Isv = objDoc.GetDoctorsIsvelid(txtTelephone.Text.Trim());
-                      if(Isv == 0)
-                      {
-                          int Did = objDoc.SaveExcelUploadedDotorNew(Convert.ToInt32(clinicID), txtDate.Text.Trim(), txtFristName.Text.Trim(), txtLastName.Text.Trim(), txtEmail.Text.Trim(), txtMobile.Text.Trim(), txtOpenTime.Text.ToString().Trim(), txtCloseTime.Text.ToString().Trim());
-                          int DCid = objDoc.Add_DoctorsDoctorebyClinic(Convert.ToInt32(clinicID), Convert .ToInt32 (Did));
-                          int IDq = objApp.Add_AppointmentDetails(Did);
-
-                      }
-                     
-                     
-                    }
-
-                    else
-                    {
-                      int Isv = objDoc.GetDoctorsIsvelid(txtTelephone.Text.Trim());
-                      if (Isv == 0)
-                      {
-
-                          int Did = objDoc.SaveExcelUploadedDotorNew(CID, txtDate.Text.Trim(), txtFristName.Text.Trim(), txtLastName.Text.Trim(), txtEmail.Text.Trim(), txtMobile.Text.Trim(), txtOpenTime.Text.ToString().Trim(), txtCloseTime.Text.ToString().Trim());
-                          int DCid = objDoc.Add_DoctorsDoctorebyClinic(Convert.ToInt32(CID), Convert.ToInt32(Did));
-                          int IDq = objApp.Add_AppointmentDetails(Did);
-                      }
-                    }
-
-                  //int Did = objDoc.SaveExcelUploadedDotorNew(CID, txtDate.Text.Trim(), txtFristName.Text.Trim(), txtLastName.Text.Trim(), txtEmail.Text.Trim(), txtMobile.Text.Trim(), txtOpenTime.Text.ToString().Trim(), txtCloseTime.Text.ToString().Trim());
-
-                  //int Did = objDoc.GetDoctorsID();
-
-                //  int IDq = objApp.Add_AppointmentDetails(Did);
-
-                //  UserName = txtTelephone.Text.Trim();
-                //  Password = txtFristName.Text.Trim() + "@" + Did;
-                 // int DidL = objDoc.SaveExcelUploadedLoginDotor(UserName, Password, Did);
+                
                     clinicID = 0;
                     lblMessage.Text = "Clinic Added Successfully";
                     lblMessage.ForeColor = System.Drawing.Color.Green;
                     SendMail(txtEmail.Text .Trim (), UserName, Password);
                     Clear();
-                   // txtDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
+                  
                    
                 }
             }
@@ -309,9 +276,10 @@ namespace OrthoSquare.Branch
                     ddl_DayOfWeek.SelectedItem.Text = dt.Rows[0]["DayOfWeek"].ToString();
                     txtOpenTime.Text = dt.Rows[0]["OpenTime"].ToString();
                     txtCloseTime.Text = dt.Rows[0]["CloseTime"].ToString();
-                    txtFristName.Text = dt.Rows[0]["FirstName"].ToString();
-                    txtLastName.Text = dt.Rows[0]["LastName"].ToString();
-
+                    //txtFristName.Text = dt.Rows[0]["FirstName"].ToString();
+                    // txtLastName.Text = dt.Rows[0]["LastName"].ToString();
+                    txtUserName.Text= dt.Rows[0]["UserName"].ToString();
+                    UserNameId.Visible = false;
                 }
                 catch (Exception ex)
                 {
@@ -373,18 +341,18 @@ namespace OrthoSquare.Branch
 
         protected void SendMail(string Email, string Username, string Password)
         {
-            // Gmail Address from where you send the mail
-            var fromAddress = "orthomail885@gmail.com";
-            // any address where the email will be sending
-            //var toAddress = "mehulrana1901@gmail.com,urvi.gandhi@infintrixglobal.com,nidhi.mehta@infintrixglobal.com,bhavin.gandhi@infintrixglobal.com,mehul.rana@infintrixglobal.com,naimisha.rohit@infintrixglobal.com";
-
-           // var toAddress = ;
+            string EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"].ToString();
+            string EmailPassword = ConfigurationManager.AppSettings["EmailPassword"].ToString();
+            var fromAddress = EmailFromAddress;
+            
             var toAddress = Email + ",drshraddhakambale@gmail.com";
 
-            //Password of your gmail address
-            const string fromPassword = "Ortho@1234";
-            // Passing the values and make a email formate to display
-            string subject = "Your UserName and Password For Ortho Square";
+            string fromPassword = EmailPassword.ToString();
+
+
+            string subject = "Ortho Square";
+
+
             string body = "Dear ," + "\n";
             body += "Your UserName and Password For OrthoSquare :" + "\n";
             body += "UserName : " + Username + " " + "\n\n";
@@ -491,8 +459,6 @@ namespace OrthoSquare.Branch
                 if ((c.GetType() == typeof(TextBox)))
                 {
 
-
-
                     ((TextBox)(c)).Text = "";
 
                 }
@@ -507,6 +473,10 @@ namespace OrthoSquare.Branch
 
             }
 
-        } 
+        }
+
+
+     
+
     }
 }

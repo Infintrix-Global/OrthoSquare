@@ -8,6 +8,8 @@ using OrthoSquare.BAL_Classes;
 using System.Data;
 using OrthoSquare.Utility;
 using System.IO;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace OrthoSquare.Report
 {
@@ -52,7 +54,21 @@ namespace OrthoSquare.Report
             }
         }
 
-
+        private long DoctorId
+        {
+            get
+            {
+                if (ViewState["DoctorId"] != null)
+                {
+                    return (long)ViewState["DoctorId"];
+                }
+                return 0;
+            }
+            set
+            {
+                ViewState["DoctorId"] = value;
+            }
+        }
 
         public void bindClinic()
         {
@@ -69,7 +85,15 @@ namespace OrthoSquare.Report
             }
             else
             {
-                dt = objc.GetAllClinicDetais();
+                if(DoctorId >0)
+                {
+                    dt = objcommon.GetDoctorByClinic(Convert.ToInt32(DoctorId));
+                }
+                else
+                {
+                    dt = objc.GetAllClinicDetais();
+                }
+             
 
             }
             ddlClinic.DataSource = dt;
@@ -97,13 +121,14 @@ namespace OrthoSquare.Report
           
             else
             {
+
                 ddlDocter.DataSource = objcommon.DoctersMaster123(0, 3);
 
             }
 
 
             ddlDocter.DataValueField = "DoctorID";
-            ddlDocter.DataTextField = "FirstName";
+            ddlDocter.DataTextField = "DoctorName";
             ddlDocter.DataBind();
             ddlDocter.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
 
@@ -130,7 +155,7 @@ namespace OrthoSquare.Report
 
 
             ddlDocter.DataValueField = "DoctorID";
-            ddlDocter.DataTextField = "FirstName";
+            ddlDocter.DataTextField = "DoctorName";
             ddlDocter.DataBind();
             ddlDocter.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
 
@@ -146,8 +171,15 @@ namespace OrthoSquare.Report
         public void getAllCollection()
         {
 
-            AllData = objExp.GetAllDocterCollectionReportNew1(Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlDocter.SelectedValue));
-
+            AllData = objExp.GetAllDocterCollectionReportNew11(ddlClinic.SelectedValue,txtDocter.Text);
+            if (txtDocter.Text != "")
+            {
+                DoctorId = Convert.ToInt64(AllData.Rows[0]["DoctorId"]);
+            }
+            else
+            {
+                DoctorId = 0;
+            }
             gvShow.DataSource = AllData;
             gvShow.DataBind();
 
@@ -160,6 +192,11 @@ namespace OrthoSquare.Report
 
         }
 
+        protected void txtDocter_TextChanged(object sender, EventArgs e)
+        {
+            getAllCollection();
+            bindClinic();
+        }
 
 
         protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -209,11 +246,11 @@ namespace OrthoSquare.Report
                 sumFooterPendingValue += Convert.ToDecimal(lblPendingAmount.Text);
                 Total+= Convert.ToDecimal(lblTotal.Text);
 
-                if (lblTotal.Text == "0.00" && lblIsDelete.Text== "True")
-                {
-                    e.Row.Visible = false;
+                //if (lblTotal.Text == "0.00" && lblIsDelete.Text== "True")
+                //{
+                //    e.Row.Visible = false;
 
-                }
+                //}
 
             }
 
@@ -231,5 +268,62 @@ namespace OrthoSquare.Report
                
             }
         }
+
+
+        [System.Web.Script.Services.ScriptMethod()]
+        [System.Web.Services.WebMethod]
+        public static List<string> SearchCustomers(string prefixText, int count) 
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = ConfigurationManager.ConnectionStrings["OrthoSquareDBConnectionString"].ConnectionString;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    int DoctorID = 0;
+                    int RoleId = Convert.ToInt32(HttpContext.Current.Session["RoleID"]);
+                    //cmd.CommandText = " select distinct GPD.jobcode from gti_jobs_seeds_plan GTS inner join GrowerPutAwayDetails GPD on GPD.wo=GTS.wo  where  GPD.FacilityID ='" + Facility + "'  AND GPD.jobcode like '%" + prefixText + "%' union select distinct jobcode from gti_jobs_seeds_plan_Manual where loc_seedline ='" + Facility + "'  AND jobcode like '%" + prefixText + "%' order by jobcode" +
+                    //    "";
+                    //SessionUtilities.Empid, SessionUtilities.RoleID
+                    if (RoleId == 3)
+                    {
+
+                        DoctorID = Convert.ToInt32(HttpContext.Current.Session["Empid"]);
+
+
+                    }
+
+                    else
+                    {
+
+                        DoctorID = 0;
+
+                    }
+
+                    cmd.CommandText = "Select FirstName+' '+ isnull(LastName,' ') as DoctorName,* from tbl_DoctorDetails where  IsActive =1 and IsDeleted=0  AND FirstName like '%" + prefixText + "%' ";
+
+
+                    cmd.CommandText += "  order by FirstName ASC";
+
+                    cmd.Parameters.AddWithValue("@SearchText", prefixText);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    List<string> customers = new List<string>();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            customers.Add(sdr["DoctorName"].ToString());
+                        }
+                    }
+                    conn.Close();
+
+                    return customers;
+                }
+            }
+        }
+
+      
     }
+
+
 }

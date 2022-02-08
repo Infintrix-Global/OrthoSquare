@@ -188,7 +188,7 @@ namespace OrthoSquare.Invoice
 
             }
 
-            ddlDoctor.DataTextField = "FirstName";
+            ddlDoctor.DataTextField = "DoctorName";
             ddlDoctor.DataValueField = "DoctorID";
             ddlDoctor.DataBind();
             ddlDoctor.Items.Insert(0, new ListItem("--- Select ---", "0"));
@@ -326,8 +326,12 @@ namespace OrthoSquare.Invoice
             PaidAmount = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue)));
 
             txtPAID1.Text = PaidAmount.ToString();
+
             txtPendingAmount.Text = (Convert.ToDecimal(lblGrandTotal.Text) - PaidAmount).ToString();
+
         }
+
+
 
 
 
@@ -640,6 +644,7 @@ namespace OrthoSquare.Invoice
 
             }
 
+           
 
             //}
 
@@ -710,7 +715,7 @@ namespace OrthoSquare.Invoice
 
             if (_isInserted1 == -1)
             {
-                lblMessage.Text = "Failed to Add Invoice";
+                lblMessage.Text = "Failed to Add Invoice (Please make sure you have filled all fields, where not required there should be 0)";
                 lblMessage.ForeColor = System.Drawing.Color.Red;
             }
             else
@@ -721,6 +726,15 @@ namespace OrthoSquare.Invoice
                 lblMessage.Text = "Invoice Added Successfully";
                 lblMessage.ForeColor = System.Drawing.Color.Green;
                 btFeedback.Visible = true;
+
+                //  btAdd.Attributes["disabled"] == "disabled"; // Attributes["disabled"] = "disabled";
+                // btAdd.Attributes.Add["disabled"];
+
+                // btAdd.Style["disabled"] = "disabled";
+
+
+
+                btAdd.Attributes.Add("class", "btn blue disabled");
 
                 DataTable DTP = objp.GetPatient(Convert.ToInt32(ddlpatient.SelectedValue));
 
@@ -750,21 +764,28 @@ namespace OrthoSquare.Invoice
         protected void txtPaidAmount_TextChanged(object sender, EventArgs e)
         {
             //  txtPendingAmount.Text = "";
-
-            if (Convert.ToDecimal(txtPaidAmount.Text) > Convert.ToDecimal(txtPendingAmount.Text))
-            {
-                txtPaidAmount.Text = "";
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "Message", "alert('Pay Amount must be less than or equal to Pending Amount.');", true);
-                CalData();
-
-            }
-            else
+            if(Convert.ToDecimal(txtPaidAmount.Text) == Convert.ToDecimal(txtPendingAmount.Text))
             {
                 CalData();
                 txtPendingAmount.Text = (Convert.ToDecimal(txtPendingAmount.Text) - Convert.ToDecimal(txtPaidAmount.Text)).ToString();
 
             }
+            else
+            {
+                if (Convert.ToDecimal(txtPaidAmount.Text) > Convert.ToDecimal(txtPendingAmount.Text))
+                {
+                    txtPaidAmount.Text = "";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "Message", "alert('Pay Amount must be less than or equal to Pending Amount.');", true);
+                    CalData();
 
+                }
+                else
+                {
+                    CalData();
+                    txtPendingAmount.Text = (Convert.ToDecimal(txtPendingAmount.Text) - Convert.ToDecimal(txtPaidAmount.Text)).ToString();
+
+                }
+            }
 
 
             // DataTable dt = objinv.GetAllInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue));
@@ -1194,7 +1215,6 @@ namespace OrthoSquare.Invoice
                     }
                     else
                     {
-
                         EMIDate1 = (Convert.ToDateTime(lblSdate.Text)).AddDays(1).AddMonths(1).AddDays(-1);
                         txtDateofEMI.Text = EMIDate1.ToString("dd-MM-yyyy");
                         lblSdate.Text = EMIDate1.ToString("dd-MM-yyyy");
@@ -1202,23 +1222,9 @@ namespace OrthoSquare.Invoice
                 }
 
 
-
-
-
-                txtEMIsAmount.Text = EMIAMT.ToString("#,##0.00");
-
-                sumFooterValue += Convert.ToDecimal(txtEMIsAmount.Text);
-
-
             }
 
-            if (e.Row.RowType == DataControlRowType.Footer)
-            {
-                Label lblTotal = (Label)e.Row.FindControl("lblTotal");
-                lblTotal.Text = sumFooterValue.ToString();
-
-
-            }
+       
 
         }
 

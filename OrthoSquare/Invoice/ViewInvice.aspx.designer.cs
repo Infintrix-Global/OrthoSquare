@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OrthoSquare.Invoice {
-    
-    
-    public partial class ViewInvice {
-        
+namespace OrthoSquare.Invoice
+{
+
+
+    public partial class ViewInvice
+    {
+
         /// <summary>
         /// Edit control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Edit;
-        
+
         /// <summary>
         /// ddlClinic control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlClinic;
-        
+
         /// <summary>
         /// ddlDoctor control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDoctor;
-        
+
         /// <summary>
         /// txtSearch control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSearch;
-        
+
         /// <summary>
         /// txtMobileNo control.
         /// </summary>
@@ -56,7 +58,43 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMobileNo;
-        
+
+        /// <summary>
+        /// txtFromEnquiryDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFromEnquiryDate;
+
+        /// <summary>
+        /// txtFromEnquiryDate_CalendarExtender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.CalendarExtender txtFromEnquiryDate_CalendarExtender;
+
+        /// <summary>
+        /// txtToEnquiryDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtToEnquiryDate;
+
+        /// <summary>
+        /// txtToEnquiryDate_CalendarExtender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.CalendarExtender txtToEnquiryDate_CalendarExtender;
+
         /// <summary>
         /// btSearch control.
         /// </summary>
@@ -65,7 +103,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btSearch;
-        
+
         /// <summary>
         /// btnAddNew control.
         /// </summary>
@@ -74,7 +112,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddNew;
-        
+
         /// <summary>
         /// gvShow control.
         /// </summary>

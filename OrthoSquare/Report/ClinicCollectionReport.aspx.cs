@@ -63,9 +63,10 @@ namespace OrthoSquare.Report
         public void getAllCollection()
         {
 
-            AllData = objExp.GetAllClinicCollectionReport(Convert.ToInt32(ddlClinic.SelectedValue));
+            AllData = objExp.GetAllClinicCollectionReportNew(Convert.ToInt32(ddlClinic.SelectedValue),txtFromPayDate.Text,txtToPayDate.Text);
             gvShow.DataSource = AllData;
             gvShow.DataBind();
+
 
         }
 

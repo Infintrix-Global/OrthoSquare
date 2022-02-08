@@ -369,9 +369,9 @@ namespace OrthoSquare.BAL_Classes
             DataTable dt = new DataTable();
             try
             {
-                strQuery = " Select PM.patientid,PM.PatientCode,PM.FristName as PFristName,PM.LastName as PLastName,PM.Mobile as PMobile,DM.FirstName as DFirstName,DM.LastName as DLastName from TreatmentbyPatient AM  ";
+                strQuery = " Select PM.patientid,PM.PatientCode,PM.FristName as PFristName,PM.LastName as PLastName,PM.Mobile as PMobile,DM.FirstName as DFirstName,DM.LastName as DLastName,CD.ClinicName from TreatmentbyPatient AM  ";
                 strQuery += " Join PatientMaster PM on PM.patientid = AM.patientid ";
-                strQuery += " Join tbl_DoctorDetails DM on DM.DoctorID = AM.DoctorID ";
+                strQuery += " Join tbl_DoctorDetails DM on DM.DoctorID = AM.DoctorID  Join tbl_ClinicDetails CD on PM.ClinicID=CD.ClinicID ";
                 strQuery += " where PM.IsActive =1 ";
 
                 if (Did > 0)
@@ -380,11 +380,13 @@ namespace OrthoSquare.BAL_Classes
                 if (Cid > 0)
                     strQuery += " and PM.ClinicID ='" + Cid + "'";
                 if (pname != "")
-                    strQuery += " and PM.FristName like '" + pname + "%'";
+                    strQuery += " and PM.FristName like '%" + pname + "%'";
                 if (pcode != "")
                     strQuery += " and PM.PatientCode ='" + pcode + "'";
-                strQuery += " Group by PM.patientid,PM.FristName,PM.LastName,PM.PatientCode ,PM.Mobile,DM.FirstName,DM.LastName";
+                strQuery += " Group by PM.patientid,PM.FristName,PM.LastName,PM.PatientCode ,PM.Mobile,DM.FirstName,DM.LastName,CD.ClinicName";
                 dt = objGeneral.GetDatasetByCommand(strQuery);
+
+
             }
             catch (Exception ex)
             {

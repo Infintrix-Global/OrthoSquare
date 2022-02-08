@@ -162,13 +162,9 @@ namespace OrthoSquare
                         rowslogin.Mobile = res.Mobile1;
                         rowslogin.ProfileImage = res.ProfileImageUrl;
 
-
-
                         check.data = rowslogin;
                         check.message = "success";
                         check.status = "1";
-
-
 
                     }
                     else
@@ -409,8 +405,8 @@ namespace OrthoSquare
                             changePassword.Name = res.FristName.ToString() + " " + res.LastName.ToString();
                             check.Data = changePassword;
                             check.message = "success";
-
                             SendMail(changePassword.Email, changePassword.UserName, changePassword.Password);
+
 
 
                             //string strmsg = "Dear " + changePassword.Name + ", your new password for SuperDr is " + changePassword.Password;
@@ -418,10 +414,14 @@ namespace OrthoSquare
                             //WebClient client = new WebClient();
                             //string URL = "http://alerts.solutionsinfini.com/api/v3/index.php?method=sms&api_key=Ac797fa388f3d813c7590337ebacec9a1&to=" + changePassword.Mobile + "&sender=SUPERD&message=" + strmsg + "&unicode=1";
                             //SmsStatusMsg = client.DownloadString(URL);
+                           
+
                             //if (SmsStatusMsg.Contains("<br>"))
                             //{
                             //    SmsStatusMsg = SmsStatusMsg.Replace("<br>", ", ");
                             //}
+
+
 
 
                             check.status = "1";
@@ -1543,15 +1543,11 @@ namespace OrthoSquare
 
             try
             {
-
                 strQuery = "Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,DD.LastName as DLastName from InvoiceMaster IM join PatientMaster PM on PM.patientid = IM.patientid  ";
                 strQuery += " JOin tbl_DoctorDetails DD on DD.DoctorID = IM.DoctorID  ";
                 if (patientid > 0)
                     strQuery += " where  IM.patientid ='" + patientid + "'";
-
                 strQuery += " Order by IM.InvoiceTid DESC ";
-
-
 
                 DataTable dt = objg.GetDatasetByCommand(strQuery);
 
@@ -1635,9 +1631,6 @@ namespace OrthoSquare
                         objInv.ClinicAddressLine = dt11.Rows[0]["AddressLine1"].ToString();
                         objInv.ClinicEmailID = dt11.Rows[0]["EmailID"].ToString();
 
-
-
-
                         objInv.Payment = list1;
 
                         list.Add(objInv);
@@ -1674,8 +1667,6 @@ namespace OrthoSquare
 
         public File_Upload_Response UploadPics(Stream stream)
         {
-
-
             File_Upload_Response FUR = new File_Upload_Response();
             A_File_Upload FU = new A_File_Upload();
 
@@ -1739,7 +1730,7 @@ namespace OrthoSquare
                         FUR.status = "1";
                         FUR.path = ServerResponse + FU.Fname;
 
-                        ErrorMessage(" Fur.path" + ServerResponse + FU.Fname);
+                        ErrorMessage("Fur.path" + ServerResponse + FU.Fname);
                         f_path = ServerResponse + FU.Fname;
 
                         ErrorMessage(" Fur.path" + f_path);
@@ -1758,7 +1749,7 @@ namespace OrthoSquare
 
                     }
 
-                    ErrorMessage("SecID = Convert.ToInt32(SID)zzzz;");
+                    ErrorMessage("SecID = Convert.ToInt32(SID);");
 
                 }
 
@@ -2330,6 +2321,278 @@ namespace OrthoSquare
             }
             return check;
         }
+        #endregion
+
+
+        #region GET Appointment
+        public checkGetAppointment GetAppointment(int PatientId, int ClinicId,int DoctorId)
+        {
+            checkGetAppointment check = new checkGetAppointment();
+
+            List<GetAppointment> list = new List<GetAppointment>();
+            string ServerResponse = ConfigurationManager.AppSettings["FileStreamPath"].ToString();
+            GetAppointment objupAp = null;
+
+            try
+            {
+
+                strQuery = "Select *, D.FirstName +' '+ D.LastName as Dname, AM.FirstName +' '+ AM.LastName as AMname from AppointmentMaster AM join tbl_ClinicDetails C on C.ClinicID = AM.ClinicID join tbl_DoctorDetails D on D.DoctorID = AM.DoctorID ";
+                strQuery += " where  AM.IsActive =1 and AM.Status Not In (2) and convert(date,AM.start_date,101) >  CONVERT(date,GETDATE(),101) ";
+                if(PatientId > 0)
+                {
+                    strQuery += "  and  AM.patientid = '" + PatientId + "' ";
+                }
+                if(ClinicId >0)
+                {
+                    strQuery += "  and  AM.ClinicID = '" + ClinicId + "' ";
+                }
+                if (DoctorId > 0)
+                {
+                    strQuery += "  and  AM.DoctorID = '" + DoctorId + "' ";
+                }
+
+                strQuery += "Order by convert(date,AM.start_date,101) ASC";
+               
+
+                DataTable dt = objg.GetDatasetByCommand(strQuery);
+
+
+                if (dt != null)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        string status = "";
+                        if (dt.Rows[i]["Status"].ToString() == "1")
+                        {
+                            status = "Approved";
+                        }
+                        else if (dt.Rows[i]["Status"].ToString() == "2")
+                        {
+
+                            status = "Cancel";
+                        }
+                        else
+                        {
+                            status = "Pending";
+
+                        }
+                        objupAp = new GetAppointment();
+                        objupAp.AppointmentId = Convert.ToInt32(dt.Rows[i]["Appointmentid"]);
+                        objupAp.DoctorId = Convert.ToInt32(dt.Rows[i]["DoctorID"]);
+                        objupAp.PatientId = Convert.ToInt32(dt.Rows[i]["patientid"]);
+                        objupAp.PatientName = dt.Rows[i]["AMname"].ToString();
+                        objupAp.ClinicId = Convert.ToInt32(dt.Rows[i]["ClinicID"]);
+
+                        objupAp.ClinicName = dt.Rows[i]["ClinicName"].ToString();
+                        objupAp.Address = dt.Rows[i]["AddressLine1"].ToString();
+                        objupAp.DoctorName = dt.Rows[i]["Dname"].ToString();
+                        objupAp.AppointmentDate = Convert.ToDateTime(dt.Rows[i]["start_date"]).ToString("dd-MM-yyyy HH:MM");
+                        objupAp.Status = status;
+                        if (dt.Rows[i]["ProfileImageUrl"].ToString() != "")
+                        {
+                            objupAp.ProfileImageUrl = ServerResponse + dt.Rows[i]["ProfileImageUrl"].ToString();
+                        }
+                        list.Add(objupAp);
+
+                    }
+
+                    check.Data = list;
+                    check.message = "success";
+
+                    check.status = "1";
+                }
+                else
+                {
+                    check.Data = null;
+                    check.message = "No Record Found";
+
+                    check.status = "2";
+                }
+            }
+            catch (Exception ex)
+            {
+                check.Data = null;
+                check.message = ex.Message;
+                check.status = "0";
+            }
+            return check;
+        }
+        #endregion
+
+
+
+        #region ClinicList
+        public checkGetClinicList GetClinicList()
+        {
+            checkGetClinicList check = new checkGetClinicList();
+
+            List<GetClinicList> list = new List<GetClinicList>();
+
+            GetClinicList objClinic = null;
+            db = new NewOrthoSquare2210Entities();
+            try
+            {
+                var res = (from C in db.tbl_ClinicDetails
+                           where C.IsActive == true
+                           select C).ToList();
+
+
+                if (res != null)
+                {
+                    foreach (var item in res)
+                    {
+                        objClinic = new GetClinicList();
+                        objClinic.ClinicId = item.ClinicID;
+                        objClinic.ClinicName = item.ClinicName;
+                       
+                        list.Add(objClinic);
+                    }
+
+
+                    check.Data = list;
+                    check.message = "success";
+
+                    check.status = "1";
+                }
+                else
+                {
+                    check.Data = null;
+                    check.message = "failed";
+                    check.status = "-1";
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage(ex.Message);
+                check.Data = null;
+                check.message = ex.Message;
+                check.status = "0";
+            }
+            return check;
+        }
+        #endregion
+
+        #region GetDoctorList
+        public checkGetDoctorList GetDoctorList(int ClinicId)
+        {
+            checkGetDoctorList check = new checkGetDoctorList();
+
+            List<GetDoctorList> list = new List<GetDoctorList>();
+          
+            GetDoctorList objDoctor = null;
+
+            try
+            {
+
+
+                strQuery = " Select *,D.FirstName+' '+ isnull(D.LastName,' ') as DoctorName from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID where D.IsActive =1   and D.IsDeleted=0 and DBC.IsDeactive=1";
+                if (ClinicId > 0)
+                    strQuery += " and DBC.ClinicID ='"+ ClinicId + "'";
+                strQuery += "  order by D.FirstName ASC";
+
+
+                DataTable dt = objg.GetDatasetByCommand(strQuery);
+
+                if (dt != null)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        objDoctor = new GetDoctorList();
+                        objDoctor.DoctorId = Convert.ToInt32(dt.Rows[i]["DoctorID"]);
+                       
+                        objDoctor.Name = dt.Rows[i]["DoctorName"].ToString();
+                       
+                        objDoctor.ClinicId = dt.Rows[i]["ClinicID"].ToString();
+                        list.Add(objDoctor);
+
+                    }
+
+                    check.Data = list;
+                    check.message = "success";
+
+                    check.status = "1";
+                }
+                else
+                {
+                    check.Data = null;
+                    check.message = "failed";
+
+                    check.status = "-1";
+                }
+            }
+            catch (Exception ex)
+            {
+                check.Data = null;
+                check.message = ex.Message;
+                check.status = "0";
+            }
+            return check;
+        }
+
+        #endregion
+
+
+        #region GetPatientList
+        public checkGetPatientList GetPatientList(int ClinicId)
+        {
+            checkGetPatientList check = new checkGetPatientList();
+
+            List<GetPatientList> list = new List<GetPatientList>();
+
+            GetPatientList objPatient = null;
+
+            try
+            {
+
+              
+                strQuery = " Select *,FristName+' '+ isnull(LastName,' ') as PatientName,Address+','+Area as AddressDetails from PatientMaster P  where P.IsActive =1";
+
+                if (ClinicId > 0)
+                    strQuery += " and ClinicID ='" + ClinicId + "'";
+
+                strQuery += "order by patientid DESC ";
+
+                DataTable dt = objg.GetDatasetByCommand(strQuery);
+
+                if (dt != null)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        objPatient = new GetPatientList();
+                        objPatient.PatientId = Convert.ToInt32(dt.Rows[i]["patientid"]);
+
+                        objPatient.Name = dt.Rows[i]["PatientName"].ToString();
+                        objPatient.Address = dt.Rows[i]["AddressDetails"].ToString();
+                        objPatient.PhoneNo = dt.Rows[i]["Mobile"].ToString();
+                        objPatient.EmaiId = dt.Rows[i]["Email"].ToString();
+
+                        objPatient.ClinicId = Convert.ToInt32(dt.Rows[i]["ClinicID"]);
+                        list.Add(objPatient);
+
+                    }
+
+                    check.Data = list;
+                    check.message = "success";
+
+                    check.status = "1";
+                }
+                else
+                {
+                    check.Data = null;
+                    check.message = "failed";
+
+                    check.status = "-1";
+                }
+            }
+            catch (Exception ex)
+            {
+                check.Data = null;
+                check.message = ex.Message;
+                check.status = "0";
+            }
+            return check;
+        }
+
         #endregion
 
         protected void SendMail(string Email, string Username, string Password)

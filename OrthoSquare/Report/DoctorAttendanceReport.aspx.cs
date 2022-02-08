@@ -52,7 +52,7 @@ namespace OrthoSquare.Report
 
 
            // ddlDoctor.DataSource = objdoc.GetAllDocters(Did);
-            ddlDoctor.DataTextField = "FirstName";
+            ddlDoctor.DataTextField = "DoctorName";
             ddlDoctor.DataValueField = "DoctorID";
             ddlDoctor.DataBind();
 

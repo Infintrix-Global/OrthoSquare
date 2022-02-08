@@ -8,6 +8,8 @@ using OrthoSquare.BAL_Classes;
 using System.Data;
 using OrthoSquare.Utility;
 using System.IO;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace OrthoSquare.Master
 {
@@ -19,13 +21,13 @@ namespace OrthoSquare.Master
         public static DataTable AllData = new DataTable();
 
         string lID = "";
-        int Cid = 0; 
+        int Cid = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
-                
-                if(SessionUtilities .RoleID ==1)
+
+                if (SessionUtilities.RoleID == 1)
                 {
                     Cid = SessionUtilities.Empid;
 
@@ -75,12 +77,12 @@ namespace OrthoSquare.Master
 
         public void BindPatient()
         {
-            ddlpatient.DataSource = objp.GetPatientlist();
-            ddlpatient.DataTextField = "Fname";
-            ddlpatient.DataValueField = "patientid";
-            ddlpatient.DataBind();
+            //ddlpatient.DataSource = objp.GetPatientlist();
+            //ddlpatient.DataTextField = "Fname";
+            //ddlpatient.DataValueField = "patientid";
+            //ddlpatient.DataBind();
 
-            ddlpatient.Items.Insert(0, new ListItem("--- Select ---", "0"));
+            //ddlpatient.Items.Insert(0, new ListItem("--- Select ---", "0"));
         }
 
         private long Labid
@@ -98,6 +100,24 @@ namespace OrthoSquare.Master
                 ViewState["Labid"] = value;
             }
         }
+
+
+
+        private long PatientId
+        {
+            get
+            {
+                if (ViewState["PatientId"] != null)
+                {
+                    return (long)ViewState["PatientId"];
+                }
+                return 0;
+            }
+            set
+            {
+                ViewState["PatientId"] = value;
+            }
+        }
         protected void btAdd_Click(object sender, EventArgs e)
         {
             try
@@ -105,13 +125,13 @@ namespace OrthoSquare.Master
                 int _isInserted = -1;
                 string OutwardDate = "", InwardDate = "";
 
-                if(txtInwardDate .Text =="")
+                if (txtInwardDate.Text == "")
                 {
                     InwardDate = "01-01-1990";
                 }
                 else
                 {
-                    InwardDate =txtInwardDate .Text;
+                    InwardDate = txtInwardDate.Text;
                 }
 
                 if (txtInwardDate.Text == "")
@@ -143,28 +163,28 @@ namespace OrthoSquare.Master
 
                 LabDetails objLab = new LabDetails()
                 {
-                  
-                     Labid =Labid,
-	                 patientid =Convert .ToInt32(ddlpatient .SelectedValue ),
-                     TypeOfworkId = Convert.ToInt32(ddlTypeOfwork.SelectedValue),
-	                 LabName =txtLabname .Text ,
-                     ToothNo = lID,
-	                 OutwardDate= OutwardDate,
-                     InwardDate = InwardDate,
-	                 Workcompletion =txtWorkcompletion .Text ,
-	                 Notes=txtNotes .Text,
-                     billuplod =lbl_filepath1 .Text ,
-                     CreateID = SessionUtilities.Empid,
-                     WorkStatus=RADWorkStatus.SelectedItem.Text 
+
+                    Labid = Labid,
+                    patientid = Convert.ToInt32(PatientId),
+                    TypeOfworkId = Convert.ToInt32(ddlTypeOfwork.SelectedValue),
+                    LabName = txtLabname.Text,
+                    ToothNo = lID,
+                    OutwardDate = OutwardDate,
+                    InwardDate = InwardDate,
+                    Workcompletion = txtWorkcompletion.Text,
+                    Notes = txtNotes.Text,
+                    billuplod = lbl_filepath1.Text,
+                    CreateID = SessionUtilities.Empid,
+                    WorkStatus = RADWorkStatus.SelectedItem.Text
 
 
                 };
 
-               
+
 
                 _isInserted = objL.Add_LabDetails(objLab);
 
-              
+
 
                 if (_isInserted == -1)
                 {
@@ -204,7 +224,7 @@ namespace OrthoSquare.Master
             CleartextBoxes(this);
             BindPatient();
             BindTypeOfwork();
-        
+
         }
         public void CleartextBoxes(Control parent)
         {
@@ -248,8 +268,8 @@ namespace OrthoSquare.Master
         protected void gvShow_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
-          
-           
+
+
             if (e.CommandName == "EditEnquiry")
             {
                 Add.Visible = true;
@@ -271,11 +291,12 @@ namespace OrthoSquare.Master
                     txtWorkcompletion.Text = dt.Rows[0]["Workcompletion"].ToString();
                     BindPatient();
 
-                    ddlpatient.SelectedValue = dt.Rows[0]["patientid"].ToString();
+                  //  ddlpatient.SelectedValue = dt.Rows[0]["patientid"].ToString();
+                    txtPatient.Text = dt.Rows[0]["patientid"].ToString();
                     BindTypeOfwork();
 
                     ddlTypeOfwork.SelectedValue = dt.Rows[0]["TypeOfworkId"].ToString();
-                   
+
 
                 }
                 catch (Exception ex)
@@ -310,16 +331,16 @@ namespace OrthoSquare.Master
 
 
 
-              //  TextBox1.Text = dt.Rows[0]["ToothNo"].ToString();
+                //  TextBox1.Text = dt.Rows[0]["ToothNo"].ToString();
                 BindPatient();
 
-                ddlpatient.SelectedValue = dt.Rows[0]["patientid"].ToString();
+               txtPatient.Text= dt.Rows[0]["patientid"].ToString();
                 BindTypeOfwork();
 
                 ddlTypeOfwork.SelectedValue = dt.Rows[0]["TypeOfworkId"].ToString();
 
             }
-            
+
         }
 
         protected void gvShow_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -426,7 +447,7 @@ namespace OrthoSquare.Master
                 this.Page.ClientScript.RegisterStartupScript(GetType(), "ShowAlert", "alert('Please select a file.');", true);
                 FuImage1.Focus();
             }
-           
+
             string aa = FuImage1.FileName;
             string ext = System.IO.Path.GetExtension(FuImage1.PostedFile.FileName).ToLower();
             bool isValidFile = false;
@@ -461,13 +482,13 @@ namespace OrthoSquare.Master
 
                             //int AddImageiD = imgID + 1;
 
-                            string Imgname = txtLabname.Text + ddlTypeOfwork.SelectedItem.Text + ddlpatient.SelectedValue;
+                            string Imgname = txtLabname.Text + ddlTypeOfwork.SelectedItem.Text + txtPatient.Text;
 
                             string path = Server.MapPath(@"~\BajajFinanceDoc\");
                             System.IO.Directory.CreateDirectory(path);
-                            FuImage1.SaveAs(path + @"\" + txtLabname.Text + ddlTypeOfwork.SelectedItem.Text + ddlpatient.SelectedValue + ext);
+                            FuImage1.SaveAs(path + @"\" + txtLabname.Text + ddlTypeOfwork.SelectedItem.Text + txtPatient.Text + ext);
 
-                            ImagePhoto1.ImageUrl = @"~\BajajFinanceDoc\" + txtLabname.Text + ddlTypeOfwork.SelectedItem.Text + ddlpatient.SelectedValue + ext;
+                            ImagePhoto1.ImageUrl = @"~\BajajFinanceDoc\" + txtLabname.Text + ddlTypeOfwork.SelectedItem.Text + txtPatient.Text + ext;
                             ImagePhoto1.Visible = true;
 
                             lbl_filepath1.Text = Imgname + ext;
@@ -518,11 +539,11 @@ namespace OrthoSquare.Master
                 Label lblToothNo = (Label)e.Row.FindControl("lblToothNo");
 
 
-                
+
                 DataTable dt = objL.GetLabsDetails(Convert.ToInt32(lblID.Text));
 
 
-                DataTable dt1 = objcomm.GettoothDetails(lblToothNo.Text.Trim ());
+                DataTable dt1 = objcomm.GettoothDetails(lblToothNo.Text.Trim());
 
                 if (dt1 != null && dt1.Rows.Count > 0)
                 {
@@ -536,22 +557,19 @@ namespace OrthoSquare.Master
 
 
 
-
-                    if (dt != null && dt.Rows.Count > 0)
+                if (dt != null && dt.Rows.Count > 0)
                 {
                     lblWorkcompletion.Text = dt.Rows[0]["Workcompletion"].ToString();
                     lblWorkStatus.Text = dt.Rows[0]["WorkStatus"].ToString();
 
-                    
                 }
                 else
                 {
-
                     lblWorkcompletion.Text = "NA";
 
                 }
 
-                if(lblOutwardDate.Text =="1990-01-01")
+                if (lblOutwardDate.Text == "1990-01-01")
                 {
 
                     lblOutwardDate.Text = "";
@@ -564,7 +582,58 @@ namespace OrthoSquare.Master
                     lblInwardDate.Text = "";
                 }
 
-           }
+            }
         }
+
+        protected void txtPatient_TextChanged(object sender, EventArgs e)
+        {
+
+            DataTable dt = objp.NewGetPatientlistSearch(txtPatient.Text);
+            PatientId = Convert.ToInt32(dt.Rows[0]["patientid"].ToString());
+
+        }
+
+        [System.Web.Script.Services.ScriptMethod()]
+        [System.Web.Services.WebMethod]
+        public static List<string> SearchCustomers(string prefixText, int count)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = ConfigurationManager.ConnectionStrings["OrthoSquareDBConnectionString"].ConnectionString;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    int DoctorID = 0, ClinicId = 0; ;
+                    int RoleId = Convert.ToInt32(HttpContext.Current.Session["RoleID"]);
+                    DoctorID = Convert.ToInt32(HttpContext.Current.Session["UserID"]);
+                    ClinicId = Convert.ToInt32(HttpContext.Current.Session["UserID"]);
+
+
+
+
+                    cmd.CommandText = " Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1 ";
+                    cmd.CommandText += "and  P.FristName +' ' + P.LastName like '%" + prefixText + "%' ";
+                    cmd.CommandText += "  order by FristName ASC";
+
+
+
+                    cmd.Parameters.AddWithValue("@SearchText", prefixText);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    List<string> customers = new List<string>();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            customers.Add(sdr["Fname"].ToString());
+                        }
+                    }
+                    conn.Close();
+
+                    return customers;
+                }
+            }
+        }
+
+
     }
 }

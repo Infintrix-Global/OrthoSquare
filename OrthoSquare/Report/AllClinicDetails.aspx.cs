@@ -16,7 +16,7 @@ namespace OrthoSquare.Report
 {
     public partial class AllClinicDetails : System.Web.UI.Page
     {
-
+        BAL_DoctorsDetails objDoc = new BAL_DoctorsDetails();
         clsCommonMasters objcommon = new clsCommonMasters();
         BAL_Clinic objclinic = new BAL_Clinic();
 
@@ -24,17 +24,20 @@ namespace OrthoSquare.Report
         string FromDate = "", Todate = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
                 Bindddlclinic();
                 txtFromEnquiryDate.Text = (Convert.ToDateTime(System.DateTime.Now)).ToString("dd-MM-yyyy");
                 txtToEnquiryDate.Text = (Convert.ToDateTime(System.DateTime.Now)).ToString("dd-MM-yyyy");
-                biendConsultation();
-                biendAppointments();
-                biendEnquiry();
-                biendFollowup();
-                biendExpenseMaster();
-                biendInvoiceMaster();
+                if (SessionUtilities.RoleID != 3)
+                {
+                    biendConsultation();
+                    biendAppointments();
+                    biendEnquiry();
+                    biendFollowup();
+                    biendExpenseMaster();
+                    biendInvoiceMaster();
+                }
             }
         }
 
@@ -44,7 +47,9 @@ namespace OrthoSquare.Report
             DataTable dt;
             if (SessionUtilities.RoleID == 3)
             {
-                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+               // dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+
+                dt = objcommon.GetSubAdminClinic(Convert.ToInt32(SessionUtilities.Empid));
             }
             else if (SessionUtilities.RoleID == 1)
             { // dt = objclinic.GetAllClinicDetaisNew(SessionUtilities.Empid);
@@ -52,6 +57,7 @@ namespace OrthoSquare.Report
             }
             else
             {
+
                 dt = objclinic.GetAllClinicDetais();
 
             }
@@ -70,7 +76,7 @@ namespace OrthoSquare.Report
         protected void ddlClinic_SelectedIndexChanged1(object sender, EventArgs e)
         {
             BindDocter(Convert.ToInt32(ddlClinic.SelectedValue));
-           
+
         }
 
         public void BindDocter(int Cid)
@@ -87,25 +93,96 @@ namespace OrthoSquare.Report
 
             }
 
-            ddlDoctors.DataTextField = "FirstName";
+            ddlDoctors.DataTextField = "DoctorName";
             ddlDoctors.DataValueField = "DoctorID";
             ddlDoctors.DataBind();
             ddlDoctors.Items.Insert(0, new ListItem("--- Select ---", "0"));
         }
 
+        private string ClinicID
+        {
+            get
+            {
+                if (Request.QueryString["ClinicID"] != null)
+                {
+                    return Request.QueryString["ClinicID"].ToString();
+                }
+                return "";
+            }
+            set
+            {
+
+            }
+        }
+
+        private String Clinic_ID
+        {
+            get
+            {
+                if (ViewState["Clinic_ID"] != null)
+                {
+                    return (String)ViewState["Clinic_ID"];
+                }
+                return "";
+            }
+            set
+            {
+                ViewState["Clinic_ID"] = value;
+            }
+        }
+
+        public void SelectClinic()
+        {
+            DataTable dt111SP = objDoc.GetSubAdminClinicSelect(Convert.ToInt32(SessionUtilities.Empid));
+
+            string Cid = "";
+
+            if (dt111SP != null && dt111SP.Rows.Count > 0)
+            {
+                for (int j = 0; j < dt111SP.Rows.Count; j++)
+                {
+
+                    Cid +=  dt111SP.Rows[j]["ClinicID"].ToString() + ",";
+
+                }
+
+                if (Cid != "")
+                {
+                    Clinic_ID = Cid.Remove(Cid.Length - 1, 1);
+                }
+                else
+                {
+                    Clinic_ID = Cid;
+                }
+            }
+            else
+            {
+                ClinicID = "";
+            }
+
+           
+        }
+
+
 
         public void biendConsultation()
         {
+            if(ddlClinic.SelectedValue=="0")
+            {
+                SelectClinic();
+            }
+            else
+            {
+                Clinic_ID = ddlClinic.SelectedValue;
+            }
 
-            DataTable dt = objcommon.clinicVSConsultation(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue),ddlDoctors .SelectedValue);
-          
-                gvShowConsultation.DataSource = dt;
-                gvShowConsultation.DataBind();
-           
-                //gvShowConsultation.DataSource = null;
-                //gvShowConsultation.DataBind();
-           
+            DataTable dt = objcommon.clinicVSConsultation(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Clinic_ID, ddlDoctors.SelectedValue,SessionUtilities.RoleID);
 
+            gvShowConsultation.DataSource = dt;
+            gvShowConsultation.DataBind();
+            lblConsultationCount.Text = dt.Rows.Count.ToString();
+            //gvShowConsultation.DataSource = null;
+            //gvShowConsultation.DataBind();
 
         }
 
@@ -118,12 +195,13 @@ namespace OrthoSquare.Report
         public void biendAppointments()
         {
 
-            DataTable dt = objcommon.clinicVSAppointments( txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue),ddlDoctors.SelectedValue);
-            
+            DataTable dt = objcommon.clinicVSAppointments(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue), ddlDoctors.SelectedValue, SessionUtilities.RoleID);
 
-                GridAppoinment.DataSource = dt;
-                GridAppoinment.DataBind();
-           
+
+            GridAppoinment.DataSource = dt;
+            GridAppoinment.DataBind();
+
+            lblAppointmentsCount.Text = dt.Rows.Count.ToString();
         }
 
         protected void GridAppoinment_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -137,11 +215,11 @@ namespace OrthoSquare.Report
         public void biendEnquiry()
         {
 
-            DataTable dt = objcommon.clinicVSEnquiry(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue),ddlDoctors.SelectedValue);
-           
-                GridViewEnquiry.DataSource = dt;
-                GridViewEnquiry.DataBind();
-          
+            DataTable dt = objcommon.clinicVSEnquiry(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue), ddlDoctors.SelectedValue, SessionUtilities.RoleID);
+
+            GridViewEnquiry.DataSource = dt;
+            GridViewEnquiry.DataBind();
+            lblEnquiriesCount.Text = dt.Rows.Count.ToString();
         }
 
         protected void GridViewEnquiry_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -154,11 +232,11 @@ namespace OrthoSquare.Report
         public void biendFollowup()
         {
 
-            DataTable dt = objcommon.clinicVSFollowup(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue),ddlDoctors.SelectedValue);
-           
-                GridViewFollowup.DataSource = dt;
-                GridViewFollowup.DataBind();
-           
+            DataTable dt = objcommon.clinicVSFollowup(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue), ddlDoctors.SelectedValue, SessionUtilities.RoleID);
+
+            GridViewFollowup.DataSource = dt;
+            GridViewFollowup.DataBind();
+            lblFollowupCount.Text = dt.Rows.Count.ToString();
         }
 
         protected void GridViewFollowup_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -172,11 +250,25 @@ namespace OrthoSquare.Report
         public void biendExpenseMaster()
         {
 
-            DataTable dt = objcommon.clinicVSExpenseMaster(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue),ddlDoctors.SelectedValue);
-           
-                GridViewExpenseMaster.DataSource = dt;
-                GridViewExpenseMaster.DataBind();
-           
+            DataTable dt = objcommon.clinicVSExpenseMaster(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue), ddlDoctors.SelectedValue, SessionUtilities.RoleID);
+
+            GridViewExpenseMaster.DataSource = dt;
+            GridViewExpenseMaster.DataBind();
+            if (dt.Rows.Count >= 0 && dt != null)
+            {
+                double Expense = 0;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    Expense += Convert.ToDouble(dt.Rows[i]["Amount"]);
+
+                }
+
+                lblExpenseTotal.Text = Expense.ToString("n2");
+            }
+            else
+            {
+                lblExpenseTotal.Text = "0.00";
+            }
         }
 
         protected void GridViewExpenseMaster_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -190,12 +282,24 @@ namespace OrthoSquare.Report
         public void biendInvoiceMaster()
         {
 
-            DataTable dt = objcommon.clinicVSInvoiceMaster(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue),ddlDoctors.SelectedValue);
-            
+            DataTable dt = objcommon.clinicVSInvoiceMaster(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue), ddlDoctors.SelectedValue, SessionUtilities.RoleID);
+            if (dt.Rows.Count >= 0 && dt != null)
+            {
                 GridViewInvoiceMaster.DataSource = dt;
                 GridViewInvoiceMaster.DataBind();
-           
+                double Invoice = 0;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    Invoice += Convert.ToDouble(dt.Rows[i]["PaidAmount"]);
 
+                }
+
+                lblCollectionCount.Text = Invoice.ToString("n2");
+            }
+            else
+            {
+                lblCollectionCount.Text = "0.00";
+            }
         }
 
         protected void GridViewInvoiceMaster_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -217,5 +321,5 @@ namespace OrthoSquare.Report
             biendInvoiceMaster();
         }
 
-     }
+    }
 }

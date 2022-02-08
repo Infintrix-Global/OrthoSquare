@@ -126,7 +126,9 @@
                     <div class="portlet-title">
                         <div class="caption">
                             <span class="caption-subject bold uppercase font-dark">Enquiries</span>
-                            <span class="badge badge-info badge-roundless"></span>
+                            <span class="badge badge-info badge-roundless">
+                                <asp:Label ID="lblEnquiriesCount" runat="server" Text="0"></asp:Label>
+                            </span>
                         </div>
                         <div class="actions">
                         </div>
@@ -196,7 +198,9 @@
                     <div class="portlet-title">
                         <div class="caption ">
                             <span class="caption-subject font-dark bold uppercase">Followup</span>
-
+                               <span class="badge badge-info badge-roundless">
+                                <asp:Label ID="lblFollowupCount" runat="server" Text="0"></asp:Label>
+                            </span>
                         </div>
                         <div class="actions">
                             <div class="btn-group">
@@ -263,7 +267,9 @@
                     <div class="portlet-title">
                         <div class="caption">
                             <span class="caption-subject bold uppercase font-dark">Appointments</span>
-                            <span class="badge badge-info badge-roundless"></span>
+                            <span class="badge badge-info badge-roundless">
+                                <asp:Label ID="lblAppointmentsCount" runat="server" Text="0"></asp:Label>
+                            </span>
                         </div>
                         <div class="actions">
                         </div>
@@ -335,7 +341,9 @@
                     <div class="portlet-title">
                         <div class="caption ">
                             <span class="caption-subject font-dark bold uppercase">Consultation</span>
-
+                               <span class="badge badge-info badge-roundless">
+                                <asp:Label ID="lblConsultationCount" runat="server" Text="0"></asp:Label>
+                            </span>
                         </div>
                         <div class="actions">
                             <div class="btn-group">
@@ -398,7 +406,9 @@
                     <div class="portlet-title">
                         <div class="caption">
                             <span class="caption-subject bold uppercase font-dark">Expense</span>
-                            <span class="badge badge-info badge-roundless"></span>
+                             <span class="badge badge-info badge-roundless">
+                                <asp:Label ID="lblExpenseTotal" runat="server" Text="0"></asp:Label>
+                            </span>
                         </div>
                         <div class="actions">
                         </div>
@@ -477,7 +487,9 @@
                     <div class="portlet-title">
                         <div class="caption ">
                             <span class="caption-subject font-dark bold uppercase">Collection</span>
-
+                             <span class="badge badge-info badge-roundless">
+                                <asp:Label ID="lblCollectionCount" runat="server" Text="0"></asp:Label>
+                            </span>
                         </div>
                         <div class="actions">
                             <div class="btn-group">

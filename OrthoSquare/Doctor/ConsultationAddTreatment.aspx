@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="ConsultationAddTreatment.aspx.cs" Inherits="OrthoSquare.Doctor.ConsultationAddTreatment" %>
 
+<%@ Register Assembly="DropDownCheckBoxes" Namespace="Saplin.Controls" TagPrefix="cc1" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -11,7 +13,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $(<%=ddlTreatment.ClientID%>).SumoSelect({ selectAll: true });
+           // $(<%=ddlTreatment.ClientID%>).SumoSelect({ selectAll: true });
         });
     </script>
 
@@ -253,7 +255,7 @@
                             <i class="icon-settings font-red-sunglo"></i>
                             <span class="caption-subject bold uppercase">Consultation Add Treatment</span>
                         </div>
-                        
+
                     </div>
 
 
@@ -284,7 +286,7 @@
                                         </tr>
                                     </table>
 
-                                  
+
                                 </div>
                             </div>
 
@@ -319,35 +321,48 @@
 
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 10px;">
 
-                            <div class="col-md-4 ">
-                                <div class="form-body">
-                                    
-                                    <asp:DropDownList ID="ddl_DocterDetils" class="form-control" runat="server"></asp:DropDownList>
+                        <div class="col-md-4">
+                            <div class="form-body">
 
-                                    <asp:RequiredFieldValidator ID="RequiredFieldddl_DocterDetils" runat="server" ControlToValidate="ddl_DocterDetils" InitialValue="0"
-                                        SetFocusOnError="true" ErrorMessage="Please Select Doctor" ForeColor="Red"></asp:RequiredFieldValidator>
+                                <%-- <asp:DropDownList ID="ddl_DocterDetils" class="form-control" runat="server"></asp:DropDownList>
+
+                                <asp:RequiredFieldValidator ID="RequiredFieldddl_DocterDetils" runat="server" ControlToValidate="ddl_DocterDetils" InitialValue="0"
+                                    SetFocusOnError="true" ErrorMessage="Please Select Doctor" ForeColor="Red"></asp:RequiredFieldValidator>--%>
 
 
-                                     </div>
+                                <asp:TextBox ID="txtDocter" runat="server" OnTextChanged="txtDocter_TextChanged" placeholder="Doctor Name" AutoPostBack="true" class="form-control"></asp:TextBox>
+
+                                <cc1:AutoCompleteExtender ServiceMethod="SearchCustomers"
+                                    MinimumPrefixLength="2"
+                                    CompletionInterval="100" EnableCaching="false" CompletionSetCount="10"
+                                    TargetControlID="txtDocter"
+                                    ID="AutoCompleteExtender1" runat="server" FirstRowSelected="false">
+                                </cc1:AutoCompleteExtender>
+
+                                  <asp:RequiredFieldValidator ID="RequiredFieldddl_DocterDetils" runat="server" ControlToValidate="txtDocter" 
+                                    SetFocusOnError="true" ErrorMessage="Please Select Doctor" ForeColor="Red"></asp:RequiredFieldValidator>
+
+
                             </div>
-                        
-                            <div class="col-md-8 ">
-                                <div class="form-body">
-                                      <asp:RadioButtonList ID="RBtnLstPsta" runat="server" RepeatDirection="Horizontal" TabIndex="21" AutoPostBack="true"
-                                        Width="500px" OnSelectedIndexChanged="RBtnLstPsta_SelectedIndexChanged">
-                                        <asp:ListItem Value="1">Less Co-operative </asp:ListItem>
-                                        <asp:ListItem Selected="True" Value="2">Co-operative </asp:ListItem>
-                                        <asp:ListItem Value="3">Very Co-operative </asp:ListItem>
+                        </div>
 
-                                    </asp:RadioButtonList>
+                        <div class="col-md-8 ">
+                            <div class="form-body">
+                                <asp:RadioButtonList ID="RBtnLstPsta" runat="server" RepeatDirection="Horizontal" TabIndex="21" AutoPostBack="true"
+                                    Width="500px" OnSelectedIndexChanged="RBtnLstPsta_SelectedIndexChanged">
+                                    <asp:ListItem Value="1">Less Co-operative </asp:ListItem>
+                                    <asp:ListItem Selected="True" Value="2">Co-operative </asp:ListItem>
+                                    <asp:ListItem Value="3">Very Co-operative </asp:ListItem>
 
-                                     </div>
+                                </asp:RadioButtonList>
+
                             </div>
-                        
+                        </div>
+
                     </div>
-                    
+
 
 
                     <div class="row">
@@ -417,7 +432,7 @@
                                                                         
                                                                     </asp:DropDownList>--%>
 
-                                                                    <asp:UpdatePanel ID="updatepanel3" runat="server">
+                                                                    <%--<asp:UpdatePanel ID="updatepanel3" runat="server">
                                                                         <ContentTemplate>
                                                                             <asp:TextBox ID="TextBox1" class="form-control " runat="server"></asp:TextBox>
                                                                             <asp:PopupControlExtender ID="TextBox1_PopupControlExtender" runat="server"
@@ -434,8 +449,10 @@
 
                                                                             </asp:Panel>
                                                                         </ContentTemplate>
-                                                                    </asp:UpdatePanel>
+                                                                    </asp:UpdatePanel>--%>
 
+
+                                                                    <asp:ListBox ID="ddltooth11" SelectionMode="Multiple" runat="server" CssClass="multiSelect custom__dropdown robotomd"></asp:ListBox>
 
 
                                                                 </div>
@@ -446,12 +463,12 @@
 
                                                 </div>
                                             </div>
-                                           <div class="text-center" style="padding:10px;margin:0;background-color:#f5f5f5;border-top:1px solid #e7ecf1">
+                                            <div class="text-center" style="padding: 10px; margin: 0; background-color: #f5f5f5; border-top: 1px solid #e7ecf1">
 
-                                                    <asp:Button ID="btnCompains" runat="server" OnClick="btAddCompains_Click" Text="Submit" class="btn blue" ClientIDMode="Static" />
+                                                <asp:Button ID="btnCompains" runat="server" OnClick="btAddCompains_Click" Text="Submit" class="btn blue" ClientIDMode="Static" />
 
-                                                </div>
-                                            
+                                            </div>
+
 
                                         </asp:Panel>
 
@@ -611,9 +628,8 @@
                                                                         <asp:TextBox ID="txtMedicinesName" Text="" MaxLength="100" runat="server"></asp:TextBox>
 
 
-<%--                                                                        <asp:RequiredFieldValidator ID="RequiredFieldddl_txtMedicinesName" runat="server" ControlToValidate="txtMedicinesName"
+                                                                        <%--                                                                        <asp:RequiredFieldValidator ID="RequiredFieldddl_txtMedicinesName" runat="server" ControlToValidate="txtMedicinesName"
                                                                             SetFocusOnError="true" ErrorMessage="Please Enter Medicines Name" ForeColor="Red"></asp:RequiredFieldValidator>--%>
-
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField HeaderText="Medicines Type">
@@ -626,9 +642,8 @@
                                                                     <ItemTemplate>
                                                                         <asp:TextBox ID="txtTotal" Text="" MaxLength="20" Width="100%" runat="server"></asp:TextBox>
 
-                                                                       <%-- <asp:RequiredFieldValidator ID="RequiredFieldddl_txtTotal"  ValidationGroup="aa"  runat="server" ControlToValidate="txtTotal"
+                                                                        <%-- <asp:RequiredFieldValidator ID="RequiredFieldddl_txtTotal"  ValidationGroup="aa"  runat="server" ControlToValidate="txtTotal"
                                                                             SetFocusOnError="true" ErrorMessage="Please Enter Dose" InitialValue="Select an item" ForeColor="Red"></asp:RequiredFieldValidator>--%>
-
                                                                     </ItemTemplate>
 
                                                                 </asp:TemplateField>
@@ -690,7 +705,7 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="text-center" style="padding:10px;margin:0;background-color:#f5f5f5;border-top:1px solid #e7ecf1">
+                                            <div class="text-center" style="padding: 10px; margin: 0; background-color: #f5f5f5; border-top: 1px solid #e7ecf1">
 
                                                 <asp:Button ID="btnMedicines" runat="server" ValidationGroup="aa" Text="Submit" class="btn blue" ClientIDMode="Static" OnClick="btnMedicines_Click" />
 
@@ -776,6 +791,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
@@ -832,7 +848,7 @@
 
                                             </div>
                                         </asp:Panel>
-                                    
+
                                         <div class="row">
                                             <div class="col-xs-12">
 
@@ -848,12 +864,12 @@
                                                     </div>
 
                                                 </div>
-                                               
+
                                             </div>
                                         </div>
-                                       
+
                                         <div class="row">
-                                            <div class="text-center" style="padding:10px;margin:0;background-color:#f5f5f5;border-top:1px solid #e7ecf1">
+                                            <div class="text-center" style="padding: 10px; margin: 0; background-color: #f5f5f5; border-top: 1px solid #e7ecf1">
 
                                                 <asp:Button ID="btnTplan" runat="server" OnClick="btAddTreatmentPlan_Click" Text="Submit" class="btn blue" ClientIDMode="Static" />
 
@@ -886,15 +902,16 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-md-9">
-                                                                <div class="form-group">
+                                                                <div class="form-group griddata">
 
-                                                                    <div class="table-scrollable">
+                                                                    <div class="table-responsive">
 
                                                                         <asp:GridView ID="GridTreatment" runat="server" class="table table-bordered table-hover" OnRowCommand="GridTreatment_OnRowCommand"
                                                                             GridLines="None" DataKeyNames="ID" AutoGenerateColumns="false" OnRowDataBound="GridTreatment_RowDataBound"
                                                                             ShowHeaderWhenEmpty="true" AllowPaging="true">
 
                                                                             <Columns>
+
                                                                                 <asp:TemplateField HeaderText="#">
                                                                                     <ItemTemplate>
                                                                                         <asp:Button ID="btnSelect" class="btn blue" Visible="false" CommandArgument='<%# Eval("ID") %>' CommandName="SelectT" runat="server" Text="Select" />
@@ -927,14 +944,21 @@
                                                                                 </asp:TemplateField>
 
 
-                                                                                <asp:TemplateField HeaderText="Tooth No">
+                                                                                <%--                                                                                <asp:TemplateField HeaderText="Tooth No">
                                                                                     <ItemTemplate>
                                                                                         <asp:DropDownList ID="ddltooth" runat="server"></asp:DropDownList>
 
                                                                                         <asp:Label ID="lblTooth" runat="server" Visible="false" Text='<%# Eval("toothNo") %>'></asp:Label>
                                                                                     </ItemTemplate>
-                                                                                </asp:TemplateField>
+                                                                                </asp:TemplateField>--%>
 
+
+                                                                                <asp:TemplateField HeaderText="Tooth No">
+                                                                                    <ItemTemplate>
+                                                                                        <asp:ListBox ID="ddltoothM" SelectionMode="Multiple" runat="server" CssClass="multiSelect custom__dropdown robotomd"></asp:ListBox>
+                                                                                        <asp:Label ID="lblTooth1" runat="server" Visible="false" Text='<%# Eval("toothNo") %>'></asp:Label>
+                                                                                    </ItemTemplate>
+                                                                                </asp:TemplateField>
 
 
                                                                                 <asp:TemplateField HeaderText="Started">
@@ -949,15 +973,15 @@
                                                                                 <asp:TemplateField HeaderText="Date">
                                                                                     <ItemTemplate>
                                                                                         <asp:Label ID="lblstart_date" Visible="false" runat="server" Text='<%# Eval("CtrateDate","{0:dd/MM/yyyy}") %>'></asp:Label>
-                                                                                        <asp:TextBox ID="txtSdate"  Text='<%# Eval("CtrateDate","{0:dd/MM/yyyy}") %>' runat="server"></asp:TextBox>
-                                                                                         <asp:CalendarExtender  ID="txtBDate_CalendarExtender" runat="server" Enabled="True"
-                                                            TargetControlID="txtSdate" Format="dd-MM-yyyy">
-                                                        </asp:CalendarExtender>
-                                                                                        
-                                                                                   </ItemTemplate>
+                                                                                        <asp:TextBox ID="txtSdate" Text='<%# Eval("CtrateDate","{0:dd/MM/yyyy}") %>' runat="server"></asp:TextBox>
+                                                                                        <asp:CalendarExtender ID="txtBDate_CalendarExtender" runat="server" Enabled="True"
+                                                                                            TargetControlID="txtSdate" Format="dd-MM-yyyy">
+                                                                                        </asp:CalendarExtender>
+
+                                                                                    </ItemTemplate>
                                                                                 </asp:TemplateField>
 
-                                                                                <asp:TemplateField HeaderText="Date">
+                                                                                <asp:TemplateField HeaderText="#">
                                                                                     <ItemTemplate>
                                                                                         <asp:ImageButton ID="lbtDelete" CausesValidation="false" runat="server" CommandName="delete123" ToolTip="Delete" CommandArgument='<%# Eval("ID") %>'
                                                                                             ImageUrl="../Images/delete15x15.png" OnClientClick="return confirm('Are you sure you want to delete this Doctor?');" />
@@ -980,9 +1004,9 @@
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
+                                                                    <asp:ListBox ID="ddlTreatment" SelectionMode="Multiple" runat="server" CssClass="multiSelect custom__dropdown robotomd"></asp:ListBox>
 
-
-                                                                    <asp:UpdatePanel ID="updatepanel1" runat="server">
+                                                                    <%--                                                                    <asp:UpdatePanel ID="updatepanel1" runat="server">
                                                                         <ContentTemplate>
                                                                             <asp:TextBox ID="txtTreatment" class="form-control " placeholder="Select Treatment" runat="server"></asp:TextBox>
                                                                             <asp:PopupControlExtender ID="PopupControlExtender1" runat="server"
@@ -992,7 +1016,7 @@
 
                                                                             <asp:Panel ID="Panel8" Height="300px" Width="256px"
                                                                                 BorderWidth="2px" Direction="LeftToRight" ScrollBars="Auto" runat="server">
-                                                                                 <asp:CheckBoxList ID="ddlTreatment" runat="server" BackColor="White" Height="300px" Width="256px"
+                                                                                <asp:CheckBoxList ID="ddlTreatment" runat="server" BackColor="White" Height="300px" Width="256px"
                                                                                     DataTextField="holiday_name" DataValueField="holiday_name" AutoPostBack="True"
                                                                                     OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChangedTreatment">
                                                                                 </asp:CheckBoxList>
@@ -1003,14 +1027,13 @@
                                                                             <asp:Panel ID="Panel6" runat="server" Height="300px" Width="256px"
                                                                                 BorderWidth="2px" Direction="LeftToRight" ScrollBars="Auto"
                                                                                 Style="display: none;">
-                                                                               
-
                                                                             </asp:Panel>
                                                                         </ContentTemplate>
-                                                                    </asp:UpdatePanel>
+                                                                    </asp:UpdatePanel>--%>
 
                                                                     <%--   <asp:ListBox ID="ddlTreatment" runat="server" SelectionMode="Multiple"></asp:ListBox>--%>
 
+                                                                    <br />
                                                                     <br />
                                                                     <asp:Button ID="btnAdd" class="btn yellow-gold" runat="server" Text="ADD DETAILS" OnClick="btnAdd_Click" />
 
@@ -1024,13 +1047,29 @@
                                                                     <label>
                                                                         Notes</label>
                                                                     <asp:TextBox ID="txtNots" TextMode="MultiLine" class="form-control" runat="server"></asp:TextBox>
+
+
                                                                 </div>
                                                             </div>
                                                         </div>
 
+                                                        <%--<div class="col-xl-2 col-md-4 col-sm-6 mb-3">
+                                                            <label>Bench Location </label>
+                                                            <div class="notranslate">
+                                                                <asp:ListBox ID="ddlBenchLocation" SelectionMode="Multiple" runat="server" CssClass="multiSelect custom__dropdown robotomd form-control">
+                                                                    <asp:ListItem Text="AAA" Value="AAA"></asp:ListItem>
+                                                                    <asp:ListItem Text="bbb" Value="bbb"></asp:ListItem>
+                                                                    <asp:ListItem Text="ccc" Value="ccc"></asp:ListItem>
 
-                                                        <div class="row">
-                                                            <div class="text-center" style="padding:10px;margin:0;background-color:#f5f5f5;border-top:1px solid #e7ecf1">
+                                                                    <asp:ListItem Text="ddd" Value="ddd"></asp:ListItem>
+                                                                </asp:ListBox>
+
+                                                            </div>
+                                                        </div>--%>
+
+
+                                                        <div class="row" runat="server" visible="false" id="TreatmentSubmit">
+                                                            <div class="text-center" style="padding: 10px; margin: 0; background-color: #f5f5f5; border-top: 1px solid #e7ecf1">
 
                                                                 <asp:Button ID="btnUpdateTreatment" runat="server" Text="Submit" class="btn blue" ClientIDMode="Static" OnClick="btnUpdateTreatment_Clicklab" />
 
@@ -1083,8 +1122,8 @@
                                                                 <div class="col-md-3 ">
                                                                     <div class="form-group">
                                                                         <label>Tooth No.</label>
-                                                                        <asp:DropDownList ID="ddlToothNoWOrkname" class="form-control" runat="server"></asp:DropDownList>
-
+                                                                        <%--   <asp:DropDownList ID="ddlToothNoWOrkname" class="form-control" runat="server"></asp:DropDownList>--%>
+                                                                        <asp:ListBox ID="ddlToothNoWOrkname" SelectionMode="Multiple" runat="server" CssClass="multiSelect custom__dropdown robotomd"></asp:ListBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1123,7 +1162,7 @@
 
                                                                         <div class="table-scrollable">
 
-                                                                            <asp:GridView ID="GridTretmetWorkDone" runat="server" class="table table-bordered table-hover"
+                                                                            <asp:GridView ID="GridTretmetWorkDone" runat="server" class="table table-bordered table-hover" OnPageIndexChanging="GridTretmetWorkDone_PageIndexChanging"
                                                                                 GridLines="None" AutoGenerateColumns="false"
                                                                                 ShowHeaderWhenEmpty="true" AllowPaging="true">
 
@@ -1216,7 +1255,7 @@
                                                             <%-- <asp:TextBox ID="txtToothNo" class="form-control" runat="server"></asp:TextBox>--%>
 
 
-                                                            <asp:UpdatePanel ID="updatepanel2" runat="server">
+                                                            <%--<asp:UpdatePanel ID="updatepanel2" runat="server">
                                                                 <ContentTemplate>
                                                                     <asp:TextBox ID="txtToothNo" class="form-control " runat="server"></asp:TextBox>
                                                                     <asp:PopupControlExtender ID="PopupControlExtender2" runat="server"
@@ -1233,8 +1272,10 @@
 
                                                                     </asp:Panel>
                                                                 </ContentTemplate>
-                                                            </asp:UpdatePanel>
+                                                            </asp:UpdatePanel>--%>
 
+
+                                                            <asp:ListBox ID="ddlToothNo1" SelectionMode="Multiple" runat="server" CssClass="multiSelect custom__dropdown robotomd"></asp:ListBox>
 
 
 
@@ -1277,7 +1318,7 @@
                                             <!-- END CONTENT BODY -->
                                         </div>
                                         <div class="row">
-                                          <div class="text-center" style="padding:10px;margin:0;background-color:#f5f5f5;border-top:1px solid #e7ecf1">
+                                            <div class="text-center" style="padding: 10px; margin: 0; background-color: #f5f5f5; border-top: 1px solid #e7ecf1">
 
                                                 <asp:Button ID="Button4" runat="server" Text="Submit" class="btn blue" ClientIDMode="Static" OnClick="btAdd_Clicklab" />
                                                 <asp:Button ID="btUpdate" ClientIDMode="Static" class="btn blue" runat="server"
@@ -1381,12 +1422,12 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="DueDate">
                                                                         <ItemTemplate>
-                                                                                                    
-                                                                              
-                                                            <asp:Label ID="lblDueDate" runat="server" Text='<%# Eval("DueDate","{0:dd/MM/yyyy}") %>'></asp:Label>
 
-                                                                            
-                                                                              </ItemTemplate>
+
+                                                                            <asp:Label ID="lblDueDate" runat="server" Text='<%# Eval("DueDate","{0:dd/MM/yyyy}") %>'></asp:Label>
+
+
+                                                                        </ItemTemplate>
                                                                     </asp:TemplateField>
 
                                                                     <asp:TemplateField HeaderText="PanMasala Chewing">
@@ -1801,7 +1842,7 @@
                                             </div>
 
                                             <div class="row">
-                                              <div class="text-center" style="padding:10px;margin:0;background-color:#f5f5f5;border-top:1px solid #e7ecf1">
+                                                <div class="text-center" style="padding: 10px; margin: 0; background-color: #f5f5f5; border-top: 1px solid #e7ecf1">
 
                                                     <asp:Button ID="Button2" runat="server" Text="Submit" class="btn blue" ClientIDMode="Static"
                                                         OnClick="btAdd_Click1" />
@@ -1903,7 +1944,7 @@
                                         <br />
 
                                         <div class="row">
-                                           <div class="text-center" style="padding:10px;margin:0;background-color:#f5f5f5;border-top:1px solid #e7ecf1">
+                                            <div class="text-center" style="padding: 10px; margin: 0; background-color: #f5f5f5; border-top: 1px solid #e7ecf1">
 
                                                 <asp:Button ID="btAddPTDetails" runat="server" Text="Submit" class="btn blue" ClientIDMode="Static" OnClick="btAddPTDetails_Click" />
 
@@ -1933,5 +1974,19 @@
 
         </div>
     </div>
+    <%--  <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example-getting-started').multiselect();
+        });
+    </script>--%>
 
+    <script type="text/javascript">
+        $('.griddata .table-responsive').on('show.bs.dropdown', function () {
+            $('.griddata .table-responsive').css("overflow", "inherit");
+        });
+
+        $('griddata .table-responsive').on('hide.bs.dropdown', function () {
+            $('.griddata .table-responsive').css("overflow", "auto");
+        })
+    </script>
 </asp:Content>

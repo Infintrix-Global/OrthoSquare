@@ -52,14 +52,47 @@ namespace OrthoSquare.BAL_Classes
                 if (dtExpInfo != null && dtExpInfo.Rows.Count > 0)
                 {
                     int RowCNT = 1;
+
                     foreach (DataRow item in dtExpInfo.Rows)
                     {
+                        string TCost = "0", TUNit = "0", TDiscount = "0";
+
+                        if (item["TreatmentsCost"].ToString() == "")
+                        {
+                            TCost ="0";
+                        }
+                        else
+                        {
+                            TCost=item["TreatmentsCost"].ToString();
+                        }
+
+
+
+                        if (item["Unit"].ToString() == "")
+                        {
+                            TUNit = "0";
+                        }
+                        else
+                        {
+                            TUNit = item["Unit"].ToString();
+                        }
+
+                        if (item["Discount"].ToString() == "")
+                        {
+                            TDiscount = "0";
+                        }
+                        else
+                        {
+                            TDiscount = item["Discount"].ToString();
+                        }
+
+
                         invoiceDetils objNewRow = new invoiceDetils();
                         objNewRow.ID = Convert.ToInt32(item["ID"]);
                         objNewRow.TreatmentID = Convert.ToInt32(item["TreatmentID"]);
-                        objNewRow.Cost = item["TreatmentsCost"].ToString();
-                        objNewRow.Unit = item["Unit"].ToString();
-                        objNewRow.Discount = item["Discount"].ToString();
+                        objNewRow.Cost = TCost;
+                        objNewRow.Unit = TUNit;
+                        objNewRow.Discount = TDiscount;
                         objNewRow.Tex = "0";
                         objNewRow.ISInvoice = Convert.ToInt32(item["ISInvoice"]);
                         objNewRow.RowNumber = RowCNT;
@@ -170,7 +203,7 @@ namespace OrthoSquare.BAL_Classes
 
 
 
-        public int Add_complaintinsert(long patientid, string Complaint, string DentalTreatment, string ToothNo)
+        public int Add_complaintinsert(long patientid, string Complaint, string DentalTreatment, string ToothNo, int Doctorid)
         {
             int isInserted = -1;
             try
@@ -178,14 +211,14 @@ namespace OrthoSquare.BAL_Classes
 
                 General objGeneral = new General();
 
-                strQuery = "insert into PatientbyDentalinfo (patientid,Complaint,DentalTreatment,ToothNo) values(@patientid,@Complaint,@DentalTreatment,@ToothNo) ";
+                strQuery = "insert into PatientbyDentalinfo (patientid,Complaint,DentalTreatment,ToothNo,CreateOn,DoctorID) values(@patientid,@Complaint,@DentalTreatment,@ToothNo,GETDATE(),@Doctorid) ";
 
 
                 objGeneral.AddParameterWithValueToSQLCommand("@patientid", patientid);
                 objGeneral.AddParameterWithValueToSQLCommand("@Complaint", Complaint);
                 objGeneral.AddParameterWithValueToSQLCommand("@DentalTreatment", DentalTreatment);
                 objGeneral.AddParameterWithValueToSQLCommand("@ToothNo", ToothNo);
-
+                objGeneral.AddParameterWithValueToSQLCommand("@Doctorid", Doctorid);
 
 
                 objGeneral.GetExecuteNonQueryByCommand(strQuery);
@@ -297,7 +330,7 @@ namespace OrthoSquare.BAL_Classes
 
 
 
-        public int Update_TreatmentbyPatient(long TPID, string Cost, string Tooth, string StartedTreatments, string Notes,string sdate)
+        public int Update_TreatmentbyPatient(long TPID, string Cost, string Tooth, string StartedTreatments, string Notes, string sdate)
         {
             int isInserted = -1;
             try
@@ -321,7 +354,7 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
-        public int Update_TreatmentbyPatientYES(long TPID, string Cost, string Tooth, string StartedTreatments, string Notes,string sDate)
+        public int Update_TreatmentbyPatientYES(long TPID, string Cost, string Tooth, string StartedTreatments, string Notes, string sDate)
         {
             int isInserted = -1;
             try
@@ -401,7 +434,7 @@ namespace OrthoSquare.BAL_Classes
 
                 General objGeneral = new General();
 
-                strQuery = "insert into   TreatmentPlan (patientid,DoctorID,PlanDetails,IsActive) values ('" + Pid + "','" + Did + "','" + PlanDetails + "',1)  ";
+                strQuery = "insert into   TreatmentPlan (patientid,DoctorID,PlanDetails,IsActive,CreateOn) values ('" + Pid + "','" + Did + "','" + PlanDetails + "',1,GETDATE())  ";
 
 
                 objGeneral.GetExecuteNonQueryByCommand(strQuery);

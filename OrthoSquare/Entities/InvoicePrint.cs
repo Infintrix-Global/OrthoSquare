@@ -39,7 +39,6 @@ namespace OrthoSquare.Entities
         public List<InvoiceTritment1> Payment { get; set; }
         [DataMember]
 
-      
         public string Mobile { get; set; }
         [DataMember]
 

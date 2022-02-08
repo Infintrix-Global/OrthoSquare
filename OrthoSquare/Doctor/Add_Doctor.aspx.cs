@@ -195,8 +195,6 @@ namespace OrthoSquare.Doctor
         public void BindddlclinicAS(int DoctorID)
         {
 
-
-
             CheckBoxList1.DataSource = objcommon.clinicMaster();
             CheckBoxList1.DataTextField = "ClinicName";
             CheckBoxList1.DataValueField = "ClinicID";
@@ -502,7 +500,6 @@ namespace OrthoSquare.Doctor
                     lblMessage.Text = "Doctor Added Successfully";
                     lblMessage.ForeColor = System.Drawing.Color.Green;
                     SendMail(txtEmail.Text, txtMobileNo1.Text, Password1);
-
                     Clear();
                     txtDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
 
@@ -1658,17 +1655,12 @@ namespace OrthoSquare.Doctor
 
         protected void SendMail(string Email, string Username, string Password)
         {
-            // Gmail Address from where you send the mail
-            var fromAddress = "orthomail885@gmail.com";
-            // any address where the email will be sending
-            // var toAddress = "mehulrana1901@gmail.com,urvi.gandhi@infintrixglobal.com,nidhi.mehta@infintrixglobal.com,bhavin.gandhi@infintrixglobal.com,mehul.rana@infintrixglobal.com,naimisha.rohit@infintrixglobal.com";
-
+            string EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"].ToString();
+            string EmailPassword = ConfigurationManager.AppSettings["EmailPassword"].ToString();
+            var fromAddress = EmailFromAddress;
             var toAddress = Email + ",drshraddhakambale@gmail.com";
-
-            //Password of your gmail address
-            const string fromPassword = "Ortho@1234";
-            // Passing the values and make a email formate to display
-            string subject = "Your UserName and Password For Ortho Square";
+            string fromPassword = EmailPassword.ToString();
+            string subject = "Ortho Square";
             string body = "Dear ," + "\n";
             body += "Your UserName and Password For OrthoSquare :" + "\n";
             body += "UserName : " + Username + " " + "\n\n";
@@ -1681,16 +1673,50 @@ namespace OrthoSquare.Doctor
             {
                 smtp.Host = "smtp.gmail.com";
                 smtp.Port = 587;
-                //smtp.Port = 465;
                 smtp.EnableSsl = true;
-
                 smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
                 smtp.Credentials = new NetworkCredential(fromAddress, fromPassword);
                 smtp.Timeout = 50000;
             }
-            // Passing values to smtp object
+           
             smtp.Send(fromAddress, toAddress, subject, body);
         }
+
+        //protected void SendMail(string Email, string Username, string Password)
+        //{
+        //    // Gmail Address from where you send the mail
+        //    var fromAddress = "orthomail885@gmail.com";
+        //    // any address where the email will be sending
+        //    // var toAddress = "mehulrana1901@gmail.com,urvi.gandhi@infintrixglobal.com,nidhi.mehta@infintrixglobal.com,bhavin.gandhi@infintrixglobal.com,mehul.rana@infintrixglobal.com,naimisha.rohit@infintrixglobal.com";
+
+        //    var toAddress = Email + ",drshraddhakambale@gmail.com";
+
+        //    //Password of your gmail address
+        //    const string fromPassword = "Ortho@1234";
+        //    // Passing the values and make a email formate to display
+        //    string subject = "Your UserName and Password For Ortho Square";
+        //    string body = "Dear ," + "\n";
+        //    body += "Your UserName and Password For OrthoSquare :" + "\n";
+        //    body += "UserName : " + Username + " " + "\n\n";
+        //    body += "Password : " + Password + " " + "\n\n";
+        //    body += "Thank you!" + "\n";
+        //    body += "Warm Regards," + "\n";
+
+        //    // smtp settings
+        //    var smtp = new System.Net.Mail.SmtpClient();
+        //    {
+        //        smtp.Host = "smtp.gmail.com";
+        //        smtp.Port = 587;
+        //        //smtp.Port = 465;
+        //        smtp.EnableSsl = true;
+
+        //        smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+        //        smtp.Credentials = new NetworkCredential(fromAddress, fromPassword);
+        //        smtp.Timeout = 50000;
+        //    }
+        //    // Passing values to smtp object
+        //    smtp.Send(fromAddress, toAddress, subject, body);
+        //}
 
 
         #endregion

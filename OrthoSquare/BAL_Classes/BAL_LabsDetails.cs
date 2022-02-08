@@ -46,6 +46,7 @@ namespace OrthoSquare.BAL_Classes
 
                 }
 
+
                 isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("sp_AddLabDetails");
 
 
@@ -57,9 +58,7 @@ namespace OrthoSquare.BAL_Classes
             return isInserted;
         }
 
-
-
-        public DataTable GetLabsInoutReport(long Pid,int cid)
+        public DataTable GetLabsInoutReport(long Pid, int cid)
         {
 
             //objGeneral.AddParameterWithValueToSQLCommand("@mode", 4);
@@ -72,6 +71,29 @@ namespace OrthoSquare.BAL_Classes
                 strQuery += "  and LD.patientid='" + Pid + "'";
             if (cid > 0)
                 strQuery += "  and PM.ClinicID='" + cid + "'";
+          
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+        }
+
+        public DataTable GetLabsInoutReportnew(string Fname,string Lname,string LabName,int cid)
+        {
+
+            //objGeneral.AddParameterWithValueToSQLCommand("@mode", 4);
+            //objGeneral.AddParameterWithValueToSQLCommand("@Labid", Lid);
+            //ds = objGeneral.GetDatasetByCommand_SP("GET_Labs");
+
+            strQuery = " Select * from LabDetails  LD Join LabMaster LM on LM.Labid= LD.Labid Join TypeofWorkLab T on T.TypeOfworkId = LD.TypeOfworkId Join PatientMaster PM  on PM.patientid = LD.patientid where LM.IsActive = 1 ";
+
+          
+            if (cid > 0)
+                strQuery += "  and PM.ClinicID='" + cid + "'";
+            if (Fname != "")
+                strQuery += " and PM.FristName like '%" + Fname + "%'";
+            if (Lname != "")
+                strQuery += " and PM.LastName like '%" + Lname + "%'";
+            if (Lname != "")
+                strQuery += " and LM.LabName like '%" + Lname + "%'";
 
             return objGeneral.GetDatasetByCommand(strQuery);
 

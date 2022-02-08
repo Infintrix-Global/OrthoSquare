@@ -141,7 +141,7 @@
 
                                         <div class="form-group col-md-6">
                                             <label>Date of Birth</label>
-                                            <asp:TextBox ID="txtBDate" class="form-control" placeholder="Date of Birth" OnTextChanged="txtBDate_TextChanged" TabIndex="5" AutoPostBack="true" runat="server"></asp:TextBox>
+                                            <asp:TextBox ID="txtBDate" class="form-control" autocomplete="Off" placeholder="Date of Birth" OnTextChanged="txtBDate_TextChanged" TabIndex="5" AutoPostBack="true" runat="server"></asp:TextBox>
                                             <asp:CalendarExtender ID="txtBDate_CalendarExtender" runat="server" Enabled="True" OnClientDateSelectionChanged="checkDate1"
                                                 TargetControlID="txtBDate" Format="dd-MM-yyyy">
                                             </asp:CalendarExtender>
@@ -282,9 +282,9 @@
                                                 Width="300px">
                                                 <asp:ListItem Text="Doctors" Selected="True" Value="3"></asp:ListItem>
                                                 <asp:ListItem Text="Telecaller" Value="9"></asp:ListItem>
-                                                     <asp:ListItem Text="Receptionist" Value="5"></asp:ListItem>
+                                                <asp:ListItem Text="Receptionist" Value="5"></asp:ListItem>
 
-                                                 
+
                                             </asp:RadioButtonList>
                                         </div>
 
@@ -310,7 +310,7 @@
                                                 <label>Assign To <span class="required">*</span></label>
                                                 <asp:DropDownList ID="ddlAssign" class="form-control" TabIndex="18" runat="server">
                                                 </asp:DropDownList>
-                                               <%-- <span class="help-block">
+                                                <%-- <span class="help-block">
                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="ddlAssign" InitialValue="0"
                                                         SetFocusOnError="true" ErrorMessage="Please Select Assign To" ForeColor="Red"></asp:RequiredFieldValidator>
                                                 </span>--%>
@@ -322,7 +322,7 @@
                                                 <label>Assign To <span class="required">*</span></label>
                                                 <asp:DropDownList ID="ddlTelecaller" class="form-control" TabIndex="18" runat="server">
                                                 </asp:DropDownList>
-                                              <%--  <span class="help-block">
+                                                <%--  <span class="help-block">
                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="ddlAssign" InitialValue="0"
                                                         SetFocusOnError="true" ErrorMessage="Please Select Assign To" ForeColor="Red"></asp:RequiredFieldValidator>
                                                 </span>--%>
@@ -770,6 +770,74 @@
 							</div>
 						</div>--%>
                     </div>
+
+                    <div class="row">
+
+
+
+                        <div class="col-xs-12">
+                            <div class="form-group col-md-6">
+
+                                <asp:RadioButtonList ID="ExcelRadioButtonList" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ExcelRadioButtonList_SelectedIndexChanged" RepeatDirection="Horizontal"
+                                    Width="300px">
+                                    <asp:ListItem Text="Doctors" Selected="True" Value="3"></asp:ListItem>
+                                    <asp:ListItem Text="Telecaller" Value="9"></asp:ListItem>
+                                    <asp:ListItem Text="Receptionist" Value="5"></asp:ListItem>
+
+
+                                </asp:RadioButtonList>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+
+
+                        <div class="col-xs-12">
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>
+                                        Clinic
+                                    </label>
+                                    <asp:DropDownList ID="ddlClinicUploadExcel" class="form-control" TabIndex="17" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlClinicUploadExcel_SelectedIndexChanged">
+                                    </asp:DropDownList>
+                                    <span class="help-block">
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="ddlClinicUploadExcel" InitialValue="0"
+                                            SetFocusOnError="true" ErrorMessage="Please Select Clinic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <asp:Panel ID="ExcelDocPanel1" Visible="true" runat="server">
+                                <div class="form-group col-md-4">
+                                    <label>Assign To <span class="required">*</span></label>
+                                    <asp:DropDownList ID="ddlExDoctor" class="form-control" TabIndex="17" runat="server">
+                                    </asp:DropDownList>
+                                    <span class="help-block">
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="ddlClinicUploadExcel" InitialValue="0"
+                                            SetFocusOnError="true" ErrorMessage="Please Select Clinic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    </span>
+                                </div>
+
+                            </asp:Panel>
+                            <asp:Panel ID="ExcelTelPanel2" Visible="false" runat="server">
+                                <div class="form-group col-md-4">
+                                    <label>Assign To <span class="required">*</span></label>
+                                    <asp:DropDownList ID="ddlExcelTelecaller" class="form-control" TabIndex="18" runat="server">
+                                    </asp:DropDownList>
+
+                                </div>
+
+                            </asp:Panel>
+
+                            
+                        </div>
+                    </div>
+
+
                     <div class="row">
 
 

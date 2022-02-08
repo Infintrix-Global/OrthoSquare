@@ -45,8 +45,8 @@ public class clsCommonMasters
             //Change by Nidhi: To get doctor detail instead of clinic
             // check in login table for userid and role. if 
             strQuery = "Select  (FirstName + ' ' + LastName ) As DoctorName,* from ReportIssue R left join tbl_DoctorDetails D on D.DoctorID =R.UserId where R.IsActive =1";
-                 if (empid > 0)
-                      strQuery += " and R.UserId =@empid";
+            if (empid > 0)
+                strQuery += " and R.UserId =@empid";
             if (IssueType != "--- Select ---")
                 strQuery += " and R.IssueType =@IssueType";
             if (Status != "--- Select ---")
@@ -62,13 +62,13 @@ public class clsCommonMasters
             objGeneral.AddParameterWithValueToSQLCommand("@IssueType", IssueType);
             objGeneral.AddParameterWithValueToSQLCommand("@Status", Status);
             objGeneral.AddParameterWithValueToSQLCommand("@empid", empid);
-            dt= objGeneral.GetDatasetByCommand(strQuery);
-         
+            dt = objGeneral.GetDatasetByCommand(strQuery);
+
         }
         catch (Exception ex)
         {
         }
-         return dt;
+        return dt;
     }
     public DataTable GetAllClinicDetaisNew1(int Sid)
     {
@@ -242,7 +242,27 @@ public class clsCommonMasters
     }
 
 
-    public DataTable GetByTelecallerClinic(int EMPID,int RoleId)
+
+    public DataTable GetSubAdminClinic(int Did)
+    {
+        DataTable dt = new DataTable();
+        try
+        {
+            strQuery = "Select * from SubAdminClinic DBC join tbl_ClinicDetails C on C.ClinicID = DBC.ClinicID where C.IsActive =1  and DBC.IsActive=1";
+            strQuery += " and DBC.Doctorid="+ Did + "";
+            strQuery += " ORDER BY ClinicName ASC";
+            dt = objGeneral.GetDatasetByCommand(strQuery);
+        }
+        catch (Exception ex)
+        {
+
+        }
+        return dt;
+    }
+
+
+
+    public DataTable GetByTelecallerClinic(int EMPID, int RoleId)
     {
         DataTable dt = new DataTable();
         try
@@ -348,7 +368,7 @@ public class clsCommonMasters
         DataTable dt = new DataTable();
         try
         {
-            strQuery = "Select * from ToothNoMaster where toothID in ("+ toothid + ")";
+            strQuery = "Select * from ToothNoMaster where toothID in (" + toothid + ")";
             dt = objGeneral.GetDatasetByCommand(strQuery);
         }
         catch (Exception ex)
@@ -443,7 +463,7 @@ public class clsCommonMasters
         {
             General objGeneral = new General();
 
-            strQuery = " Select * from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID where D.IsActive =1   and D.IsDeleted=0";
+            strQuery = " Select D.FirstName+' '+ isnull(D.LastName,' ') as DoctorName,* from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID where D.IsActive =1   and D.IsDeleted=0";
 
             strQuery += "and DBC.ClinicID =@ClinicID";
 
@@ -473,10 +493,12 @@ public class clsCommonMasters
                 ////strQuery = "Select * from tbl_DoctorDetails where  IsActive =1 ";
                 ////strQuery += " and ClinicID=@ClinicID";
 
-                strQuery = " Select *,FirstName +' '+ LastName as DoctorName from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID where D.IsActive =1   and D.IsDeleted=0 and DBC.IsDeactive=1";
+                strQuery = " Select *,D.FirstName+' '+ isnull(D.LastName,' ') as DoctorName from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID where D.IsActive =1   and D.IsDeleted=0 and DBC.IsDeactive=1";
                 if (Cid > 0)
                     strQuery += "and DBC.ClinicID =@ClinicID";
                 strQuery += "  order by D.FirstName ASC";
+
+
             }
             else if (Rolid == 3)
             {
@@ -484,10 +506,13 @@ public class clsCommonMasters
                 // strQuery = "Select *,FirstName +' '+ MiddleName as DoctorName from tbl_DoctorDetails where  IsActive =1 ";
                 // strQuery += " and ClinicID=@ClinicID";
 
-                strQuery = " Select *,FirstName +' '+ LastName as DoctorName from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID where D.IsActive =1  and D.IsDeleted=0 and DBC.IsDeactive=1";
+
+                strQuery = " Select *,D.FirstName+' '+ isnull(D.LastName,' ') as DoctorName from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID where D.IsActive =1  and D.IsDeleted=0 and DBC.IsDeactive=1";
                 if (Cid > 0)
                     strQuery += "and DBC.ClinicID =@ClinicID";
                 strQuery += "  order by D.FirstName ASC";
+
+
             }
             else
             {
@@ -497,7 +522,7 @@ public class clsCommonMasters
                 //    strQuery += "and ClinicID =@ClinicID";
                 //strQuery += "  order by FirstName ASC";
 
-                strQuery = " Select *,FirstName +' '+ LastName as DoctorName from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID where D.IsActive =1  and D.IsDeleted=0 and DBC.IsDeactive=1";
+                strQuery = " Select *,D.FirstName+' '+ isnull(D.LastName,' ') as DoctorName from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID where D.IsActive =1  and D.IsDeleted=0 and DBC.IsDeactive=1";
                 if (Cid > 0)
                     strQuery += "and DBC.ClinicID =@ClinicID";
                 strQuery += "  order by D.FirstName ASC";
@@ -527,7 +552,7 @@ public class clsCommonMasters
 
             if (Rolid == 1)
             {
-                strQuery = "Select * from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID  where  IsActive =1  and IsDeleted=0 and DBC.IsDeactive=1 ";
+                strQuery = "Select D.FirstName+' '+ isnull(D.LastName,' ') as DoctorName,* from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID  where  IsActive =1  and IsDeleted=0 and DBC.IsDeactive=1 ";
 
                 strQuery += " and DBC.ClinicID=@ClinicID";
                 strQuery += "  order by FirstName ASC";
@@ -538,7 +563,7 @@ public class clsCommonMasters
                 //strQuery += " and D.DoctorID=@ClinicID";
                 //strQuery += "  order by FirstName ASC";
 
-                strQuery = "Select * from  tbl_DoctorDetails  where IsDeleted=0";
+                strQuery = "Select  FirstName+' '+ isnull(LastName,' ') as DoctorName,* from  tbl_DoctorDetails  where IsDeleted=0";
                 strQuery += " and DoctorID=@ClinicID";
                 strQuery += "  order by FirstName ASC";
 
@@ -546,7 +571,7 @@ public class clsCommonMasters
             else
             {
 
-                strQuery = "Select * from tbl_DoctorDetails where  IsActive =1  and IsDeleted=0";
+                strQuery = "Select  FirstName+' '+ isnull(LastName,' ') as DoctorName,* from tbl_DoctorDetails where  IsActive =1  and IsDeleted=0";
                 strQuery += "  order by FirstName ASC";
             }
 
@@ -570,7 +595,7 @@ public class clsCommonMasters
         {
             General objGeneral = new General();
 
-            strQuery = "Select * from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID  where  IsActive =1  and IsDeleted=0  and DBC.IsDeactive =1";
+            strQuery = "Select D.FirstName+' '+ isnull(D.LastName,' ') as DoctorName,* from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID  where  IsActive =1  and IsDeleted=0  and DBC.IsDeactive =1";
 
             strQuery += " and DBC.ClinicID=@ClinicID";
             strQuery += "  order by FirstName ASC";
@@ -598,7 +623,7 @@ public class clsCommonMasters
             General objGeneral = new General();
 
 
-            strQuery = "Select * from tbl_DoctorDetails where  IsActive =1 and IsDeleted=0";
+            strQuery = "Select FirstName+' '+ isnull(LastName,' ') as DoctorName,* from tbl_DoctorDetails where  IsActive =1 and IsDeleted=0";
             if (Cid > 0)
             {
                 strQuery += " and ClinicID=@ClinicID";
@@ -627,7 +652,7 @@ public class clsCommonMasters
             General objGeneral = new General();
 
 
-            strQuery = "Select * from tbl_DoctorDetails where  IsActive =1 and IsDeleted=0";
+            strQuery = "Select FirstName+' '+ isnull(LastName,' ') as DoctorName,* from tbl_DoctorDetails where  IsActive =1 and IsDeleted=0";
             if (DoctorID > 0)
             {
                 strQuery += " and DoctorID=@DoctorID";
@@ -637,6 +662,27 @@ public class clsCommonMasters
 
 
             objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", DoctorID);
+
+            dt = objGeneral.GetDatasetByCommand(strQuery);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        return dt;
+    }
+
+
+    public DataTable DoctersSelectDoctorID(string DoctorName)
+    {
+        DataTable dt = new DataTable();
+        try
+        {
+            General objGeneral = new General();
+
+
+            strQuery = "Select * from tbl_DoctorDetails where  IsActive =1 and IsDeleted=0";
+            strQuery += " and FirstName +' ' +LastName like '%" + DoctorName + "%'";
 
             dt = objGeneral.GetDatasetByCommand(strQuery);
         }
@@ -688,6 +734,27 @@ public class clsCommonMasters
         return Id;
 
     }
+
+
+    public int GetEnquirySourceId(string Sourcename)
+    {
+        int Id = 0;
+        try
+        {
+            General objGeneral = new General();
+
+
+            objGeneral.AddParameterWithValueToSQLCommand("@Sourcename", Sourcename);
+            Id = objGeneral.GetExecuteScalarByCommand_SP("GET_EnquirySourceId");
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        return Id;
+
+    }
+
 
     public int GetPatient_No()
     {
@@ -745,7 +812,7 @@ public class clsCommonMasters
 
             General objGeneral = new General();
             objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
-          
+
             ds = objGeneral.GetDatasetByCommand_SP("GET_FinancialYear");
         }
         catch (Exception ex)
@@ -793,8 +860,8 @@ public class clsCommonMasters
 
 
             strQuery = " Select IsNull(Sum (PaidAmount),0) TotalAmount from InvoiceMaster  ";
-           
-                strQuery += " where   convert(date,PayDate,105) between convert(date,'"+ TDate + "',105) and convert(date,'"+ FDate + "',105)  ";
+
+            strQuery += " where   convert(date,PayDate,105) between convert(date,'" + TDate + "',105) and convert(date,'" + FDate + "',105)  ";
 
             TOtal = Convert.ToDecimal(objGeneral.GetExecuteScalarByCommand(strQuery));
         }
@@ -1080,6 +1147,26 @@ public class clsCommonMasters
 
         return TOtal;
     }
+
+
+    public int GetSubAdminLink(int Did)
+    {
+        int TOtal = 0;
+        try
+        {
+            strQuery = "Select Count(*) Did From [ortho_admin].[SubAdminClinic]  where DoctorId='" + Did + "'";
+            TOtal = Convert.ToInt32(objGeneral.GetExecuteScalarByCommand(strQuery));
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
+        return TOtal;
+    }
+
+
+
 
     public int GetTelecallerEmp(int TelecallerToEmpId)
     {
@@ -1448,7 +1535,6 @@ public class clsCommonMasters
     {
         try
         {
-
             General objGeneral = new General();
             objGeneral.AddParameterWithValueToSQLCommand("@mode", 21);
             objGeneral.AddParameterWithValueToSQLCommand("@stateID", 0);
@@ -1486,8 +1572,6 @@ public class clsCommonMasters
 
         return TOtal;
     }
-
-
 
     public int GetpatientNo()
     {
@@ -1826,7 +1910,6 @@ public class clsCommonMasters
     {
         try
         {
-
             strQuery = "insert into UserLoginHistory (EmployeeId,RoleId,LoginDateTime)Values (" + Empid + "," + RoleID + ",GETDATE())";
             objGeneral.GetExecuteNonQueryByCommand(strQuery);
             return 1;
@@ -1855,7 +1938,7 @@ public class clsCommonMasters
 
 
 
-    public DataTable clinicVSAppointments(string FromDate, string Todate, int ClinicID,string  DoctorsID)
+    public DataTable clinicVSAppointments(string FromDate, string Todate, int ClinicID, string DoctorsID, int RoleId)
     {
         try
         {
@@ -1864,20 +1947,33 @@ public class clsCommonMasters
             objGeneral.AddParameterWithValueToSQLCommand("@mode", 3);
             objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
             objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
-            objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
-            objGeneral.AddParameterWithValueToSQLCommand("@DoctorsID", DoctorsID);
 
-            ds = objGeneral.GetDatasetByCommand_SP("Get_ReportAllDetilsOfClinic");
+            objGeneral.AddParameterWithValueToSQLCommand("@DoctorsID", DoctorsID);
+            if (RoleId == 3)
+            {
+
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+                ds = objGeneral.GetDatasetByCommand_SP("Get_ReportSubAdminDetilsOfClinic");
+            }
+            else
+            {
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+                ds = objGeneral.GetDatasetByCommand_SP("Get_ReportAllDetilsOfClinic");
+
+            }
+
+
+
         }
         catch (Exception ex)
         {
-            
+
         }
         return ds.Tables[0];
 
     }
 
-    public DataTable clinicVSConsultation(string FromDate, string Todate, int ClinicID, string DoctorsID)
+    public DataTable clinicVSConsultation(string FromDate, string Todate, string ClinicID, string DoctorsID, int RoleId)
     {
         try
         {
@@ -1886,20 +1982,38 @@ public class clsCommonMasters
             objGeneral.AddParameterWithValueToSQLCommand("@mode", 4);
             objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
             objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
-            objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+
             objGeneral.AddParameterWithValueToSQLCommand("@DoctorsID", DoctorsID);
-            
-            ds = objGeneral.GetDatasetByCommand_SP("Get_ReportAllDetilsOfClinic");
+
+            if (RoleId == 3)
+            {
+
+
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+                ds = objGeneral.GetDatasetByCommand_SP("Get_ReportSubAdminDetilsOfClinic");
+            }
+            else
+            {
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+                //  ds = objGeneral.GetDatasetByCommand_SP("Get_ReportAllDetilsOfClinic");
+
+
+                ds = objGeneral.GetDatasetByCommand_SP("Get_ReportAllConsultationDetilsOfClinic");
+            }
+
+
+
+
         }
         catch (Exception ex)
         {
-            
+
         }
         return ds.Tables[0];
 
     }
 
-    public DataTable clinicVSEnquiry(string FromDate, string Todate, int ClinicID, string DoctorsID)
+    public DataTable clinicVSEnquiry(string FromDate, string Todate, int ClinicID, string DoctorsID, int RoleId)
     {
         try
         {
@@ -1915,14 +2029,14 @@ public class clsCommonMasters
         }
         catch (Exception ex)
         {
-            
+
         }
         return ds.Tables[0];
 
     }
 
 
-    public DataTable clinicVSFollowup(string FromDate, string Todate, int ClinicID, string DoctorsID)
+    public DataTable clinicVSFollowup(string FromDate, string Todate, int ClinicID, string DoctorsID, int RoleId)
     {
         try
         {
@@ -1938,14 +2052,14 @@ public class clsCommonMasters
         }
         catch (Exception ex)
         {
-           
+
         }
         return ds.Tables[0];
 
     }
 
 
-    public DataTable clinicVSExpenseMaster(string FromDate, string Todate, int ClinicID, string DoctorsID)
+    public DataTable clinicVSExpenseMaster(string FromDate, string Todate, int ClinicID, string DoctorsID, int RoleId)
     {
         try
         {
@@ -1961,13 +2075,13 @@ public class clsCommonMasters
         }
         catch (Exception ex)
         {
-           
+
         }
         return ds.Tables[0];
 
     }
 
-    public DataTable clinicVSInvoiceMaster(string FromDate, string Todate, int ClinicID, string DoctorsID)
+    public DataTable clinicVSInvoiceMaster(string FromDate, string Todate, int ClinicID, string DoctorsID, int RoleId)
     {
         try
         {
@@ -1983,7 +2097,7 @@ public class clsCommonMasters
         }
         catch (Exception ex)
         {
-           
+
         }
         return ds.Tables[0];
 
@@ -1998,7 +2112,7 @@ public class invoiceDetils
     public int ID { get; set; }
     public int TreatmentID { get; set; }
     public int RowNumber { get; set; }
-    public string Unit { get; set; }
+    public string Unit { get; set; } 
     public string Cost { get; set; }
     public string Discount { get; set; }
     public int ISInvoice { get; set; }
@@ -2165,7 +2279,7 @@ public class Enquiry_Details
     public long TreatmentID;
     public long RoleId;
     public long TelecallerToEmpId;
-    
+
 
     public string Enquiryno;
     public string EnquiryDate;
@@ -2334,7 +2448,8 @@ public class Followup_Details
     public string Remak;
     public int CreatedBy;
     public int ModifiedBy;
-
+    public string Fname;
+    public string LName;
 }
 
 [Serializable]
@@ -2471,4 +2586,15 @@ public class FailedQuestionList
     public bool IsClinicIDMismatch { get; set; }
     public bool IsDoctorIDMismatch { get; set; }
 
+}
+
+
+[Serializable]
+public class EnqyiryExcel
+{
+    public int srno { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public string Mobile  { get; set; }
+ 
 }

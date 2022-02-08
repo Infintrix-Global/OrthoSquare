@@ -81,7 +81,14 @@
         }
     </style>
 
-
+    <script type="text/javascript">
+        function DateSelectionChanged() {
+            var today = new Date();
+            var dob = new Date(document.getElementById('<%=txtBDate.ClientID%>').value);
+             var months = (today.getMonth() - dob.getMonth() + (12 * (today.getFullYear() - dob.getFullYear())));
+             document.getElementById('<%=txtAge.ClientID%>').value = Math.round(months / 12);
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -179,219 +186,204 @@
                             <asp:TabPanel ID="tabPersonal" class="tab-pane" HeaderText="Personal Information " runat="server">
                                 <ContentTemplate>
 
-                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                                        <ContentTemplate>
-                                            <div class="row">
+                                    <%--   <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                        <ContentTemplate>--%>
+                                    <div class="row">
 
 
 
-                                                <%--<div class="col-md-6 ">--%>
+                                        <%--<div class="col-md-6 ">--%>
 
-                                                <div class="portlet-body form">
+                                        <div class="portlet-body form">
 
-                                                    <div class="form-body">
+                                            <div class="form-body">
 
-                                                        <div class="form-group col-md-6">
-                                                            <label>Patient No.</label>
-                                                            <asp:TextBox ID="txtPatientNo" class="form-control" ReadOnly="true" TabIndex="1" placeholder="Enter Patient No"
-                                                                runat="server"></asp:TextBox>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Date</label>
-                                                            <asp:TextBox ID="txtRegDate" ReadOnly="true" TabIndex="2" class="form-control" runat="server"></asp:TextBox>
-                                                            <asp:CalendarExtender ID="txtENqDate_CalendarExtender" runat="server" Enabled="True"
-                                                                TargetControlID="txtRegDate" Format="dd-MM-yyyy">
-                                                            </asp:CalendarExtender>
+                                                <div class="form-group col-md-6">
+                                                    <label>Patient No.</label>
+                                                    <asp:TextBox ID="txtPatientNo" class="form-control" ReadOnly="true" TabIndex="1" placeholder="Enter Patient No"
+                                                        runat="server"></asp:TextBox>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Date</label>
+                                                    <asp:TextBox ID="txtRegDate" ReadOnly="true" TabIndex="2" class="form-control" runat="server"></asp:TextBox>
+                                                    <asp:CalendarExtender ID="txtENqDate_CalendarExtender" runat="server" Enabled="True"
+                                                        TargetControlID="txtRegDate" Format="dd-MM-yyyy">
+                                                    </asp:CalendarExtender>
 
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>First Name <span class="required">*</span></label>
-                                                            <asp:TextBox ID="txtFname" class="form-control" placeholder="First Name" TabIndex="3" runat="server"></asp:TextBox>
-                                                            <span class="help-block">
-                                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtFname" ValidationGroup="a"
-                                                                    SetFocusOnError="true" ErrorMessage="Please Enter First name" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                <asp:RegularExpressionValidator ID="RegularExpressionValidator27" runat="server" ValidationGroup="a"
-                                                                    ForeColor="Red" ErrorMessage="Only text is allowed" Display="Dynamic" ControlToValidate="txtFname"
-                                                                    SetFocusOnError="True" ValidationExpression="^\s*[a-zA-Z,\s]+\s*$">
-                                                                </asp:RegularExpressionValidator>
-                                                            </span>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Last Name </label>
-                                                            <asp:TextBox ID="txtLname" class="form-control" placeholder="Enter Last Name" TabIndex="4" runat="server"></asp:TextBox>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="form-group col-md-6">
+                                                    <label>First Name <span class="required">*</span></label>
+                                                    <asp:TextBox ID="txtFname" class="form-control" placeholder="First Name" TabIndex="3" runat="server"></asp:TextBox>
+                                                    <span class="help-block">
+                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtFname" ValidationGroup="a"
+                                                            SetFocusOnError="true" ErrorMessage="Please Enter First name" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                        <asp:RegularExpressionValidator ID="RegularExpressionValidator27" runat="server" ValidationGroup="a"
+                                                            ForeColor="Red" ErrorMessage="Only text is allowed" Display="Dynamic" ControlToValidate="txtFname"
+                                                            SetFocusOnError="True" ValidationExpression="^\s*[a-zA-Z,\s]+\s*$">
+                                                        </asp:RegularExpressionValidator>
+                                                    </span>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Last Name </label>
+                                                    <asp:TextBox ID="txtLname" class="form-control" placeholder="Enter Last Name" TabIndex="4" runat="server"></asp:TextBox>
 
-                                                            <span class="help-block">
-                                                                <%--<asp:RequiredFieldValidator ID="RequiredLname" runat="server" ControlToValidate="txtLname" ValidationGroup="a"
-                                                                SetFocusOnError="true" ErrorMessage="Please Enter Last name" ForeColor="Red"></asp:RequiredFieldValidator>--%>
-                                                                <asp:RegularExpressionValidator ID="RegularExpressionValidatorLname" runat="server" ValidationGroup="a"
-                                                                    ForeColor="Red" ErrorMessage="Only text is allowed" Display="Dynamic" ControlToValidate="txtLname"
-                                                                    SetFocusOnError="True" ValidationExpression="^\s*[a-zA-Z,\s]+\s*$">
-                                                                </asp:RegularExpressionValidator>
-                                                            </span>
+                                                    <span class="help-block">
+                                                        <asp:RequiredFieldValidator ID="RequiredLname" runat="server" ControlToValidate="txtLname" ValidationGroup="a"
+                                                            SetFocusOnError="true" ErrorMessage="Please Enter Last name" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                        <asp:RegularExpressionValidator ID="RegularExpressionValidatorLname" runat="server" ValidationGroup="a"
+                                                            ForeColor="Red" ErrorMessage="Only text is allowed" Display="Dynamic" ControlToValidate="txtLname"
+                                                            SetFocusOnError="True" ValidationExpression="^\s*[a-zA-Z,\s]+\s*$">
+                                                        </asp:RegularExpressionValidator>
+                                                    </span>
 
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Date of Birth</label>
-                                                            <asp:TextBox ID="txtBDate" class="form-control" placeholder="Date of Birth" TabIndex="5" OnTextChanged="txtBDate_TextChanged" AutoPostBack="true" runat="server"></asp:TextBox>
-                                                            <asp:CalendarExtender ID="txtBDate_CalendarExtender" OnClientDateSelectionChanged="checkDate" runat="server" Enabled="True"
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Date of Birth</label>
+                                                    <%--   <asp:TextBox ID="txtBDate" class="form-control" TextMode="Date"  TabIndex="5" OnTextChanged="txtBDate_TextChanged" AutoPostBack="true" runat="server"></asp:TextBox>
+                                                    --%>
+
+                                                    <asp:TextBox ID="txtBDate" class="form-control" TextMode="Date" TabIndex="5" onchange="DateSelectionChanged()" runat="server"></asp:TextBox>
+
+
+
+                                                    <%--<asp:CalendarExtender ID="txtBDate_CalendarExtender" OnClientDateSelectionChanged="checkDate" runat="server" Enabled="True"
                                                                 TargetControlID="txtBDate" Format="dd-MM-yyyy">
-                                                            </asp:CalendarExtender>
+                                                            </asp:CalendarExtender>--%>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Gender</label>
 
+                                                    <asp:RadioButtonList ID="RadGender" runat="server" Width="300px" TabIndex="7" RepeatDirection="Horizontal">
+                                                        <asp:ListItem Selected="True" Value="Male">Male</asp:ListItem>
+                                                        <asp:ListItem Value="Female">Female</asp:ListItem>
+                                                    </asp:RadioButtonList>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Address</label>
+                                                    <asp:TextBox ID="txtAddress" class="form-control" placeholder="Enter Address" TabIndex="9" runat="server"
+                                                        TextMode="MultiLine"></asp:TextBox>
 
+                                                    <span class="help-block">
+                                                        <asp:RequiredFieldValidator ID="RequiredtxtAddress" runat="server" ControlToValidate="txtAddress" ValidationGroup="a"
+                                                            SetFocusOnError="true" ErrorMessage="Please Enter Address" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                    </span>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Country</label>
+                                                    <asp:DropDownList ID="ddlCountry" class="form-control" runat="server" AutoPostBack="True" TabIndex="11"
+                                                        OnSelectedIndexChanged="ddlCountry_SelectedIndexChanged">
+                                                    </asp:DropDownList>
 
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Gender</label>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="form-group col-md-6">
+                                                    <label>State</label>
+                                                    <asp:DropDownList ID="ddlState" class="form-control" runat="server" AutoPostBack="True" TabIndex="12"
+                                                        OnSelectedIndexChanged="ddlState_SelectedIndexChanged">
+                                                    </asp:DropDownList>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>City</label>
+                                                    <asp:DropDownList ID="ddlCity" class="form-control" TabIndex="13" runat="server">
+                                                    </asp:DropDownList>
 
-                                                            <asp:RadioButtonList ID="RadGender" runat="server" Width="300px" TabIndex="7" RepeatDirection="Horizontal">
-                                                                <asp:ListItem Selected="True" Value="Male">Male</asp:ListItem>
-                                                                <asp:ListItem Value="Female">Female</asp:ListItem>
-                                                            </asp:RadioButtonList>
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Address</label>
-                                                            <asp:TextBox ID="txtAddress" class="form-control" placeholder="Enter Address" TabIndex="9" runat="server"
-                                                                TextMode="MultiLine"></asp:TextBox>
-
-                                                            <span class="help-block">
-                                                                <%--<asp:RequiredFieldValidator ID="RequiredtxtAddress" runat="server" ControlToValidate="txtAddress"
-											SetFocusOnError="true" ErrorMessage="Please Enter Address" ForeColor="Red"></asp:RequiredFieldValidator>--%>
-                                                            </span>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Country</label>
-                                                            <asp:DropDownList ID="ddlCountry" class="form-control" runat="server" AutoPostBack="True" TabIndex="11"
-                                                                OnSelectedIndexChanged="ddlCountry_SelectedIndexChanged">
-                                                            </asp:DropDownList>
-
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>State</label>
-                                                            <asp:DropDownList ID="ddlState" class="form-control" runat="server" AutoPostBack="True" TabIndex="12"
-                                                                OnSelectedIndexChanged="ddlState_SelectedIndexChanged">
-                                                            </asp:DropDownList>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>City</label>
-                                                            <asp:DropDownList ID="ddlCity" class="form-control" TabIndex="13" runat="server">
-                                                            </asp:DropDownList>
-
-                                                        </div>
-
-
-
-                                                        <%--                                            </div>
-
-                                        </div>
-
-                                    </div>--%>
-
-
-                                                        <%-- <div class="col-md-6">
-                                        <div class="portlet light form-fit ">
-
-                                            <div class="portlet-body form">
-                                                <!-- BEGIN FORM-->
-                                                <div class="form-body">--%>
-
-
-
-                                                        <div class="clearfix"></div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Age</label>
-                                                            <%--Dhaval--%>
-                                                            <%-- <asp:TextBox ID="txtAge" class="form-control" ReadOnly ="true" TabIndex ="6" placeholder="Enter Age" runat="server"></asp:TextBox>--%>
-                                                            <asp:TextBox ID="txtAge" class="form-control" value="0" TabIndex="6" placeholder="Enter Age" runat="server"></asp:TextBox>
-
-                                                            <span class="help-block">
-                                                                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ForeColor="Red" ValidationGroup="a"
-                                                                    ErrorMessage="Only Number is allowed" Display="Dynamic" ControlToValidate="txtAge"
-                                                                    SetFocusOnError="True" ValidationExpression="^\d+$">
-                                                                </asp:RegularExpressionValidator>
-                                                            </span>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Blood Group</label>
-
-                                                            <asp:TextBox ID="txtBoolGroup" class="form-control" placeholder="Enter Blood Group" TabIndex="8" runat="server"></asp:TextBox>
-
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Area  </label>
-
-                                                            <asp:TextBox ID="txtArea" class="form-control" placeholder="Enter Area" TextMode="MultiLine" TabIndex="10"
-                                                                runat="server"></asp:TextBox>
-
-                                                        </div>
-
-                                                        <div class="form-group col-md-6">
-                                                            <label>Email</label>
-                                                            <asp:TextBox ID="txtEmail" class="form-control" placeholder="Enter Email" TabIndex="14" runat="server"></asp:TextBox>
-
-                                                            <span class="help-block">
-                                                                <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ValidationGroup="a"
-                                                                    ForeColor="Red" ErrorMessage="Enter Proper Email ID" Display="Dynamic" ControlToValidate="txtEmail"
-                                                                    SetFocusOnError="True" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$">
-                                                                </asp:RegularExpressionValidator>
-                                                            </span>
-                                                        </div>
-
-                                                        <div class="clearfix"></div>
-
-                                                        <div class="form-group col-md-6">
-                                                            <label>Mobile No.  <span class="required">*</span></label>
-
-                                                            <asp:TextBox ID="txtMobile" class="form-control" placeholder="Enter Mobile" TabIndex="15" runat="server"></asp:TextBox>
-
-
-
-                                                            <span class="help-block">
-                                                                <asp:RequiredFieldValidator ID="RequiredMobile" runat="server" ControlToValidate="txtMobile" ValidationGroup="a"
-                                                                    SetFocusOnError="true" ErrorMessage="Please Enter Mobile Number" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                                <asp:RegularExpressionValidator ID="RegularExpressionValidatorMobile" runat="server" ValidationGroup="a"
-                                                                    Display="Dynamic" ErrorMessage="Please enter valid Mobile Number" ControlToValidate="txtMobile"
-                                                                    SetFocusOnError="True" ValidationExpression="\+?\d[\d -]{8,12}\d" ForeColor="Red"></asp:RegularExpressionValidator>
-                                                            </span>
+                                                </div>
 
 
 
 
 
 
-                                                        </div>
+                                                <div class="clearfix"></div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Age</label>
+                                                    <%--Dhaval--%>
+                                                    <%-- <asp:TextBox ID="txtAge" class="form-control" ReadOnly ="true" TabIndex ="6" placeholder="Enter Age" runat="server"></asp:TextBox>--%>
+                                                    <asp:TextBox ID="txtAge" class="form-control" value="0" TabIndex="6" placeholder="Enter Age" runat="server"></asp:TextBox>
+
+                                                    <span class="help-block">
+                                                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ForeColor="Red" ValidationGroup="a"
+                                                            ErrorMessage="Only Number is allowed" Display="Dynamic" ControlToValidate="txtAge"
+                                                            SetFocusOnError="True" ValidationExpression="^\d+$">
+                                                        </asp:RegularExpressionValidator>
+                                                    </span>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Blood Group</label>
+
+                                                    <asp:TextBox ID="txtBoolGroup" class="form-control" placeholder="Enter Blood Group" TabIndex="8" runat="server"></asp:TextBox>
+
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Area  </label>
+
+                                                    <asp:TextBox ID="txtArea" class="form-control" placeholder="Enter Area" TextMode="MultiLine" TabIndex="10"
+                                                        runat="server"></asp:TextBox>
+
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label>Email</label>
+                                                    <asp:TextBox ID="txtEmail" class="form-control" placeholder="Enter Email" TabIndex="14" runat="server"></asp:TextBox>
+
+                                                    <span class="help-block">
+                                                        <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ValidationGroup="a"
+                                                            ForeColor="Red" ErrorMessage="Enter Proper Email ID" Display="Dynamic" ControlToValidate="txtEmail"
+                                                            SetFocusOnError="True" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$">
+                                                        </asp:RegularExpressionValidator>
+                                                    </span>
+                                                </div>
+
+                                                <div class="clearfix"></div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label>Mobile No.  <span class="required">*</span></label>
+
+                                                    <asp:TextBox ID="txtMobile" class="form-control" placeholder="Enter Mobile" TabIndex="15" runat="server"></asp:TextBox>
+
+
+
+                                                    <span class="help-block">
+                                                        <asp:RequiredFieldValidator ID="RequiredMobile" runat="server" ControlToValidate="txtMobile" ValidationGroup="a"
+                                                            SetFocusOnError="true" ErrorMessage="Please Enter Mobile Number" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                        <asp:RegularExpressionValidator ID="RegularExpressionValidatorMobile" runat="server" ValidationGroup="a"
+                                                            Display="Dynamic" ErrorMessage="Please enter valid Mobile Number" ControlToValidate="txtMobile"
+                                                            SetFocusOnError="True" ValidationExpression="\+?\d[\d -]{8,12}\d" ForeColor="Red"></asp:RegularExpressionValidator>
+                                                    </span>
+
+                                                </div>
 
 
 
 
-                                                        <div class="form-group col-md-6">
-                                                            <label>Telephone No.</label>
-                                                            <asp:TextBox ID="txtTelephone" class="form-control" placeholder="Enter Telephone" TabIndex="16"
-                                                                runat="server"></asp:TextBox>
+                                                <div class="form-group col-md-6">
+                                                    <label>Telephone No.</label>
+                                                    <asp:TextBox ID="txtTelephone" class="form-control" placeholder="Enter Telephone" TabIndex="16"
+                                                        runat="server"></asp:TextBox>
 
-                                                        </div>
-                                                        <div class="clearfix"></div>
+                                                </div>
+                                                <div class="clearfix"></div>
 
 
-                                                        <div class="form-group col-md-6">
-                                                            <label>Enquiry Source</label>
-                                                            <asp:DropDownList ID="ddlEnquirysource" class="form-control" runat="server"></asp:DropDownList>
+                                                <div class="form-group col-md-6">
+                                                    <label>Enquiry Source</label>
+                                                    <asp:DropDownList ID="ddlEnquirysource" class="form-control" runat="server"></asp:DropDownList>
 
-                                                        </div>
+                                                </div>
 
-                                                        <%--  </div>
+                                                <%--  </div>
 
                                             </div>--%>
-                                                    </div>
-                                                </div>
-                                                <!-- END CONTENT BODY -->
                                             </div>
-                                        </ContentTemplate>
-                                    </asp:UpdatePanel>
+                                        </div>
+                                        <!-- END CONTENT BODY -->
+                                    </div>
+                                    <%--  </ContentTemplate>
+                                    </asp:UpdatePanel>--%>
 
 
                                     <div class="row">
@@ -486,7 +478,7 @@
                                                 <div class="col-xs-12">
                                                     <div class="form-group">
                                                         <div class="col-sm-12">
-                                                            <asp:CheckBoxList ID="ChkMedicalProblem1" Width="800px" RepeatColumns="4" RepeatDirection="Vertical" class="mt-checkbox-list" runat="server"></asp:CheckBoxList>
+                                                            <asp:CheckBoxList ID="ChkMedicalProblem1" Width="100%" RepeatColumns="6" RepeatDirection="Vertical" class="mt-checkbox-list" runat="server"></asp:CheckBoxList>
 
                                                         </div>
 
@@ -502,7 +494,7 @@
 
 
                                             <div class="text-right mb-20">
-                                                <asp:Button ID="btnMedicalProblem" class="btn green" ClientIDMode="Static" CausesValidation="false"
+                                                <asp:Button ID="btnMedicalProblem" class="btn green" ClientIDMode="Static" CausesValidation="false" Visible="false"
                                                     runat="server" Text="Add" OnClick="btnAddMedicalProblem123_Click" />
                                             </div>
                                             <br />
@@ -816,13 +808,12 @@
 
 
                                                     <div class="form-group">
-                                                        <div class="col-sm-10">
-                                                            <div class="form-body">
-
-                                                                <div class="form-group">
-                                                                    <asp:CheckBoxList ID="checkallergic" Width="600px" RepeatDirection="Horizontal" RepeatColumns="6" runat="server">
+                                                        <div class="col-sm-12">
+                                                          
+                                                                <div class="mt-checkbox-inline">
+                                                                    <asp:CheckBoxList ID="checkallergic" Width="100%" RepeatDirection="Horizontal" RepeatColumns="6" runat="server">
                                                                     </asp:CheckBoxList>
-                                                                </div>
+                                                            
                                                             </div>
 
                                                         </div>
@@ -845,7 +836,7 @@
 
 
                                             <div class="text-right mb-20">
-                                                <asp:Button ID="Button1" class="btn green" ClientIDMode="Static" CausesValidation="false"
+                                                <asp:Button ID="Button1" class="btn green" ClientIDMode="Static" CausesValidation="false" Visible="false"
                                                     runat="server" Text="Add" OnClick="btnAddAllergic123_Click" />
                                             </div>
                                             <br />
@@ -1251,13 +1242,13 @@
                                 GridLines="None" OnPageIndexChanging="gvShow_PageIndexChanging" OnRowCommand="gvShow_RowCommand"
                                 OnRowDeleting="gvShow_RowDeleting" OnRowEditing="gvShow_RowEditing" ShowHeaderWhenEmpty="true">
                                 <Columns>
-                                    <asp:TemplateField HeaderText="Sr. No." >
+                                    <asp:TemplateField HeaderText="Sr. No.">
                                         <ItemTemplate>
                                             <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
                                             <asp:Label ID="lblID" runat="server" Text='<%# Eval("patientid") %>' Visible="false"></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Patient No" >
+                                    <asp:TemplateField HeaderText="Patient No">
                                         <ItemTemplate>
                                             <asp:Label ID="lblPrice" runat="server" Visible="false" Text='<%# Eval("PatientCode") %>'></asp:Label>
 
@@ -1267,7 +1258,7 @@
                                     </asp:TemplateField>
 
 
-                                    <asp:TemplateField HeaderText="Name" >
+                                    <asp:TemplateField HeaderText="Name">
                                         <ItemTemplate>
                                             <asp:Label ID="lblPName" runat="server" Text='<%# Eval("FristName") +"  "+ Eval("LastName") %>'></asp:Label>
                                         </ItemTemplate>
@@ -1275,7 +1266,7 @@
 
 
 
-                                    <asp:TemplateField HeaderText="Mobile No" >
+                                    <asp:TemplateField HeaderText="Mobile No">
                                         <ItemTemplate>
                                             <asp:Label ID="lblMobile" runat="server" Text='<%# Eval("Mobile") %>'></asp:Label>
                                         </ItemTemplate>
@@ -1288,13 +1279,13 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <%--Dhaval--%>
-                                    <asp:TemplateField HeaderText="Patient Status" >
+                                    <asp:TemplateField HeaderText="Patient Status">
                                         <ItemTemplate>
                                             <asp:Label ID="lblPstatus" runat="server" Text='<%# Eval("PCstatus") %>'></asp:Label>
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Clinic Name" Visible="false" >
+                                    <asp:TemplateField HeaderText="Clinic Name" Visible="false">
                                         <ItemTemplate>
                                             <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("ClinicName") %>'></asp:Label>
                                         </ItemTemplate>
@@ -1479,7 +1470,7 @@
 
 
 
-    </script>
+     </script>
 
     <script type="text/javascript">
         function Confirm() {

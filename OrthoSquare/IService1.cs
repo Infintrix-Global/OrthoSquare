@@ -52,14 +52,38 @@ namespace OrthoSquare
         /*  /ChangePassword?roleID=1&UserID=1&oldPassword=tausif@1234&newPassword=tausif@123 */
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, UriTemplate = "ClinicAllList")]
         checkClinicList ClinicAllList();
-
         #endregion
+
+
+        #region ClinicList
+        [OperationContract]
+        /*  /ChangePassword?roleID=1&UserID=1&oldPassword=tausif@1234&newPassword=tausif@123 */
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, UriTemplate = "GetClinicList")]
+        checkGetClinicList GetClinicList();
+        #endregion
+
 
         #region Doctor
         [OperationContract]
         /*  /ChangePassword?roleID=1&UserID=1&oldPassword=tausif@1234&newPassword=tausif@123 */
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, UriTemplate = "DoctorAllList")]
         checkDoctorList DoctorAllList(int ClinicID);
+
+        #endregion
+
+        #region Doctor List
+        [OperationContract]
+        /*  /ChangePassword?roleID=1&UserID=1&oldPassword=tausif@1234&newPassword=tausif@123 */
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, UriTemplate = "GetDoctorList")]
+        checkGetDoctorList GetDoctorList(int ClinicId);
+
+        #endregion
+
+        #region Patient List
+        [OperationContract]
+        /*  /ChangePassword?roleID=1&UserID=1&oldPassword=tausif@1234&newPassword=tausif@123 */
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, UriTemplate = "GetPatientList")]
+        checkGetPatientList GetPatientList(int ClinicId);
 
         #endregion
 
@@ -77,6 +101,13 @@ namespace OrthoSquare
 
         #endregion
 
+        #region Get Appointment
+        [OperationContract]
+        /*  /ChangePassword?roleID=1&UserID=1&oldPassword=tausif@1234&newPassword=tausif@123 */
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, UriTemplate = "GetAppointment")]
+        checkGetAppointment GetAppointment(int PatientId, int ClinicId, int DoctorId);
+
+        #endregion
 
         #region Last Appointment
         [OperationContract]

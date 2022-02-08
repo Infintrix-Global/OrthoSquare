@@ -1,5 +1,4 @@
-﻿.
-
+﻿
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="OrthoSquare.Login" EnableEventValidation="false" %>
 
 <!DOCTYPE html>

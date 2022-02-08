@@ -7,11 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OrthoSquare.Invoice {
-    
-    
-    public partial class InvoiceAdd {
-        
+namespace OrthoSquare.Invoice
+{
+
+
+    public partial class InvoiceAdd
+    {
+
+        /// <summary>
+        /// upFilter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upFilter;
+
         /// <summary>
         /// Add control.
         /// </summary>
@@ -20,7 +31,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Add;
-        
+
         /// <summary>
         /// lblMessage control.
         /// </summary>
@@ -29,7 +40,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMessage;
-        
+
         /// <summary>
         /// lblinvCode control.
         /// </summary>
@@ -38,7 +49,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblinvCode;
-        
+
         /// <summary>
         /// ddlClinic control.
         /// </summary>
@@ -47,7 +58,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlClinic;
-        
+
         /// <summary>
         /// RequiredFieldValidator3 control.
         /// </summary>
@@ -56,7 +67,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
-        
+
         /// <summary>
         /// ddlDoctor control.
         /// </summary>
@@ -65,7 +76,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDoctor;
-        
+
         /// <summary>
         /// RequiredFieldValidator2 control.
         /// </summary>
@@ -74,7 +85,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
-        
+
         /// <summary>
         /// ddlpatient control.
         /// </summary>
@@ -83,7 +94,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlpatient;
-        
+
         /// <summary>
         /// RequiredFieldValidator1 control.
         /// </summary>
@@ -92,7 +103,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
-        
+
         /// <summary>
         /// txtPAID1 control.
         /// </summary>
@@ -101,7 +112,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPAID1;
-        
+
         /// <summary>
         /// gvInformation control.
         /// </summary>
@@ -110,7 +121,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvInformation;
-        
+
         /// <summary>
         /// GridinvoiceDetails control.
         /// </summary>
@@ -119,7 +130,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridinvoiceDetails;
-        
+
         /// <summary>
         /// lblTotalCost control.
         /// </summary>
@@ -128,7 +139,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotalCost;
-        
+
         /// <summary>
         /// lblTotalDiscount control.
         /// </summary>
@@ -137,7 +148,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotalDiscount;
-        
+
         /// <summary>
         /// lblTotalTax control.
         /// </summary>
@@ -146,7 +157,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotalTax;
-        
+
         /// <summary>
         /// lblGrandTotal control.
         /// </summary>
@@ -155,7 +166,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblGrandTotal;
-        
+
         /// <summary>
         /// txtPaidAmount control.
         /// </summary>
@@ -164,7 +175,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPaidAmount;
-        
+
         /// <summary>
         /// txtPendingAmount control.
         /// </summary>
@@ -173,7 +184,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPendingAmount;
-        
+
         /// <summary>
         /// DropDownList1 control.
         /// </summary>
@@ -182,7 +193,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
-        
+
         /// <summary>
         /// Panel1 control.
         /// </summary>
@@ -191,7 +202,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel Panel1;
-        
+
         /// <summary>
         /// txtBankName control.
         /// </summary>
@@ -200,7 +211,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtBankName;
-        
+
         /// <summary>
         /// txtBranchName control.
         /// </summary>
@@ -209,7 +220,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtBranchName;
-        
+
         /// <summary>
         /// txtIRFC control.
         /// </summary>
@@ -218,7 +229,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtIRFC;
-        
+
         /// <summary>
         /// txtCheckNO control.
         /// </summary>
@@ -227,7 +238,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCheckNO;
-        
+
         /// <summary>
         /// txtCheckDate control.
         /// </summary>
@@ -236,7 +247,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCheckDate;
-        
+
         /// <summary>
         /// txtCheckDate_CalendarExtender control.
         /// </summary>
@@ -245,7 +256,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.CalendarExtender txtCheckDate_CalendarExtender;
-        
+
         /// <summary>
         /// Panel2 control.
         /// </summary>
@@ -254,7 +265,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel Panel2;
-        
+
         /// <summary>
         /// txtCardNo control.
         /// </summary>
@@ -263,7 +274,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCardNo;
-        
+
         /// <summary>
         /// Panel3 control.
         /// </summary>
@@ -272,7 +283,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel Panel3;
-        
+
         /// <summary>
         /// RadioButtonListFinance control.
         /// </summary>
@@ -281,7 +292,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonListFinance;
-        
+
         /// <summary>
         /// txtApprovalAmount control.
         /// </summary>
@@ -290,7 +301,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtApprovalAmount;
-        
+
         /// <summary>
         /// txtInterest control.
         /// </summary>
@@ -299,7 +310,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtInterest;
-        
+
         /// <summary>
         /// txtDownpayment control.
         /// </summary>
@@ -308,7 +319,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDownpayment;
-        
+
         /// <summary>
         /// txtEMIStartDate control.
         /// </summary>
@@ -317,7 +328,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEMIStartDate;
-        
+
         /// <summary>
         /// txtTextBox1_CalendarExtender control.
         /// </summary>
@@ -326,7 +337,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.CalendarExtender txtTextBox1_CalendarExtender;
-        
+
         /// <summary>
         /// lblSdate control.
         /// </summary>
@@ -335,7 +346,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSdate;
-        
+
         /// <summary>
         /// txtTotalEmi control.
         /// </summary>
@@ -344,7 +355,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTotalEmi;
-        
+
         /// <summary>
         /// AddInstmt control.
         /// </summary>
@@ -353,7 +364,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button AddInstmt;
-        
+
         /// <summary>
         /// GridViewInstallment control.
         /// </summary>
@@ -362,7 +373,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridViewInstallment;
-        
+
         /// <summary>
         /// FuImage1 control.
         /// </summary>
@@ -371,7 +382,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload FuImage1;
-        
+
         /// <summary>
         /// btnUploadimage control.
         /// </summary>
@@ -380,7 +391,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnUploadimage;
-        
+
         /// <summary>
         /// ImagePhoto1 control.
         /// </summary>
@@ -389,7 +400,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image ImagePhoto1;
-        
+
         /// <summary>
         /// lbl_filepath1 control.
         /// </summary>
@@ -398,7 +409,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_filepath1;
-        
+
         /// <summary>
         /// btAdd control.
         /// </summary>
@@ -407,7 +418,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btAdd;
-        
+
         /// <summary>
         /// btFeedback control.
         /// </summary>
@@ -416,7 +427,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btFeedback;
-        
+
         /// <summary>
         /// btBack control.
         /// </summary>
@@ -425,7 +436,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btBack;
-        
+
         /// <summary>
         /// btninvoice control.
         /// </summary>
@@ -434,7 +445,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btninvoice;
-        
+
         /// <summary>
         /// Div1 control.
         /// </summary>
@@ -443,7 +454,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
-        
+
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -452,7 +463,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-        
+
         /// <summary>
         /// txtFreedbackDetails control.
         /// </summary>
@@ -461,7 +472,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFreedbackDetails;
-        
+
         /// <summary>
         /// btnSendSendFeedback control.
         /// </summary>
@@ -470,7 +481,7 @@ namespace OrthoSquare.Invoice {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSendSendFeedback;
-        
+
         /// <summary>
         /// btnSkit control.
         /// </summary>

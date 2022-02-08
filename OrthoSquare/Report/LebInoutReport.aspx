@@ -41,33 +41,31 @@
                         <div class="form-body">
                             .
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                         <label>Patient Name</label>
-											 
-										<asp:DropDownList ID="ddlpatient"  class="form-control" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlpatient_SelectedIndexChanged"></asp:DropDownList>
-									   
-                                    </div>
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <asp:TextBox ID="txtNameS" runat="server" class="form-control" placeholder="First Name"
+                                        ClientIDMode="Static"></asp:TextBox>
                                 </div>
-                                
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                       
-                                       
-                                    </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <asp:TextBox ID="txtLastNameS" runat="server" class="form-control" placeholder="Last Name"
+                                        ClientIDMode="Static"></asp:TextBox>
                                 </div>
+                            </div>
                                 <!-- Usage as a class -->
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        
+                                         <asp:TextBox ID="txtLabName" runat="server" class="form-control" placeholder="Lab Name"
+                                        ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="form_control_1">
-                                           
-                                        </label>
+                                          <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
+                                        OnClick="btSearch_Click" />
+
                                        
                                         
                                     </div>

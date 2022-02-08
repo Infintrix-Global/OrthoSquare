@@ -120,6 +120,28 @@ namespace OrthoSquare.BAL_Classes
             return isInserted;
         }
 
+        public int Add_SubAdminClinicDelete(int Did)
+        {
+            int isInserted = -1;
+            try
+            {
+
+                General objGeneral = new General();
+
+                strQuery = "Delete From SubAdminClinic where  DoctorID =@Did";
+
+                objGeneral.AddParameterWithValueToSQLCommand("@Did", Did);
+
+                objGeneral.GetExecuteNonQueryByCommand(strQuery);
+                isInserted = 1;
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return isInserted;
+        }
 
 
         public int Add_DoctorsDoctorebyClinic(int Cid, int Did)
@@ -147,6 +169,33 @@ namespace OrthoSquare.BAL_Classes
             return isInserted;
         }
 
+        public int Add_SubAdminClinicClinic(int Cid, int Did)
+        {
+            int isInserted = -1;
+            try
+            {
+
+                General objGeneral = new General();
+
+                strQuery = "insert into SubAdminClinic (DoctorId,ClinicId,CreateDate,IsActive) values (@Did,@ClinicID,GetDate(),1)";
+
+                objGeneral.AddParameterWithValueToSQLCommand("@Did", Did);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", Cid);
+
+
+                objGeneral.GetExecuteNonQueryByCommand(strQuery);
+                isInserted = 1;
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return isInserted;
+        }
+
+
+
         public DataTable GetDoctersByClinicSelect(int DoctorID)
         {
             DataTable dt = new DataTable();
@@ -163,6 +212,26 @@ namespace OrthoSquare.BAL_Classes
             }
             return dt;
         }
+
+
+
+        public DataTable GetSubAdminClinicSelect(int DoctorID)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+
+                strQuery = "Select * from SubAdminClinic where  DoctorID=@DoctorID";
+                objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", DoctorID);
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
+        }
+
 
 
         public int Add_DoctorDegree(string Dname)

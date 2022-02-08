@@ -265,7 +265,7 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
-        public DataTable GetAllInvoicDispaly(int ClinicID, int DoctorID, string Name,string Mno)
+        public DataTable GetAllInvoicDispaly(int ClinicID, int DoctorID, string Name,string Mno, string FromEnquiryDate, string ToEnquiryDate)
         {
             try
             {
@@ -281,8 +281,12 @@ namespace OrthoSquare.BAL_Classes
                     strQuery += " and PM.FristName like '%" + Name + "%'";
                 if (Mno != "")
                     strQuery += " and PM.Mobile='" + Mno + "'";
-                
+                if (FromEnquiryDate != "" && ToEnquiryDate != "")
+                    strQuery += " and convert(date,IM.PayDate,105) between convert(date,@FromEnquiryDate,105) and convert(date,@ToEnquiryDate,105)";
                 strQuery +=" Order by IM.InvoiceTid DESC";
+
+                objGeneral.AddParameterWithValueToSQLCommand("@FromEnquiryDate", FromEnquiryDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@ToEnquiryDate", ToEnquiryDate);
 
                 return objGeneral.GetDatasetByCommand(strQuery);
                 //objGeneral.AddParameterWithValueToSQLCommand("@InvCode ", 0);

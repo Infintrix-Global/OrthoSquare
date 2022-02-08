@@ -117,6 +117,49 @@ namespace OrthoSquare.Entities
     }
 
 
+    [DataContract]
+    public class GetAppointment
+    {
+        [DataMember]
+        public int AppointmentId { get; set; }
+        [DataMember]
+        public int PatientId { get; set; }
+
+        [DataMember]
+        public string PatientName { get; set; }
+
+        [DataMember]
+        public int ClinicId { get; set; }
+
+        [DataMember]
+        public int DoctorId { get; set; }
+
+        [DataMember]
+        public string DoctorType { get; set; }
+
+        [DataMember]
+        public string DoctorName { get; set; }
+
+
+        [DataMember]
+        public string Address { get; set; }
+
+
+        [DataMember]
+        public string ClinicName { get; set; }
+
+        [DataMember]
+        public string AppointmentDate { get; set; }
+
+        [DataMember]
+        public string Status { get; set; }
+
+        [DataMember]
+        public string ProfileImageUrl { get; set; }
+    }
+
+
+
     public class checkUpcomingAppointment
     {
         public List<UpcomingAppointment> Data { get; set; }
@@ -126,6 +169,15 @@ namespace OrthoSquare.Entities
 
     }
 
+
+    public class checkGetAppointment
+    {
+        public List<GetAppointment> Data { get; set; }
+        public string status { get; set; }
+
+        public string message { get; set; }
+
+    }
 
     public class checkCancelAppointment
     {

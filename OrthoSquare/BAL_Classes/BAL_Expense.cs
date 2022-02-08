@@ -153,6 +153,21 @@ namespace OrthoSquare.BAL_Classes
 
         }
 
+        public DataTable GetAllClinicCollectionReportNew(int Cid, string FromDate, string Todate)
+        {
+            strQuery = "Select Sum(PaidAmount) as PaidAmount,sum(PendingAmount) as PendingAmount,C.ClinicName,IM.ClinicID  from InvoiceMaster IM join tbl_ClinicDetails  C on C.ClinicID = IM.ClinicID   ";
+
+            if (Cid > 0)
+                strQuery += " where IM.ClinicID='" + Cid + "'";
+            if (FromDate != "" && Todate != "")
+                strQuery += " and convert(date,IM.PayDate,105) between convert(date,@FromEnquiryDate,105) and convert(date,@ToEnquiryDate,105)";
+            strQuery += " Group by ClinicName,IM.ClinicID  ";
+            objGeneral.AddParameterWithValueToSQLCommand("@FromEnquiryDate", FromDate);
+            objGeneral.AddParameterWithValueToSQLCommand("@ToEnquiryDate", Todate);
+
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+        }
 
 
         public DataTable GetAllClinicCollectionReport(int Cid)
@@ -256,28 +271,36 @@ namespace OrthoSquare.BAL_Classes
 
         public DataTable GetAllDocterCollectionReportNew11(int Cid, int Did, string FromDate, string Todate)
         {
-            strQuery = "Select IsNull(SUM(PaidAmount), 0) as PaidAmount,IsNull(SUM(PendingAmount), 0) as PendingAmount,IsNull(SUM(GrandTotal), 0) as Total from InvoiceMaster where ";
-           
+
+            General objGeneral11 = new General();
+            // strQuery = "Select IsNull(SUM(PaidAmount), 0) as PaidAmount,IsNull(SUM(PendingAmount), 0) as PendingAmount,IsNull(SUM(GrandTotal), 0) as Total from InvoiceMaster where ";
+            strQuery = "Select IsNull(SUM(IM.PaidAmount), 0) as PaidAmount,IsNull(SUM(ID.GrandTotal), 0) as Total , IsNull(SUM(ID.GrandTotal), 0)- IsNull(SUM(IM.PaidAmount), 0)  as PendingAmount ";
+            strQuery += " From InvoiceMaster IM  Join InvoiceDetails ID on IM.InvoiceNo=ID.InvoiceNo where 1=1 ";
+
+
             if (Cid > 0)
-                strQuery += "ClinicID='" + Cid + "'";
+                strQuery += " and IM.ClinicID='" + Cid + "'";
             if (Did > 0)
-                strQuery += " and DoctorID='" + Did + "'";
-            if (FromDate != "" && Todate != "")
-                strQuery += " and convert(date,PayDate,105) between convert(date,'" + Convert.ToDateTime(FromDate) + "',105) and convert(date,'" + Convert.ToDateTime(Todate) + "',105)";
-         
-            return objGeneral.GetDatasetByCommand(strQuery);
+                strQuery += " and IM.DoctorID='" + Did + "'";
+
+            if (FromDate != "" && FromDate != "")
+                strQuery += " and convert(date,IM.PayDate,105) between convert(date,@FromDate,105) and convert(date,@Todate,105)";
+
+            objGeneral11.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+            objGeneral11.AddParameterWithValueToSQLCommand("@Todate", Todate);
+            return objGeneral11.GetDatasetByCommand(strQuery);
 
         }
 
 
-        public DataTable GetAllDocterCollectionReportNew1(int Cid, int Did)
+        public DataTable GetAllDocterCollectionReportNew1(string Cid, string Did)
         {
             strQuery = "Select DBC.DoctorId,D.FirstName +' ' +D.LastName as DoctorName,D.Mobile1,C.ClinicName,DBC.ClinicId,DBC.DoctorID,D.isDeleted from tbl_DoctorDetails D   ";
-            strQuery += " left Join DoctorByClinic DBC on D.DoctorId = DBC.DoctorID left Join tbl_ClinicDetails C on DBC.ClinicId = C.ClinicId   ";
+            strQuery += "  Join DoctorByClinic DBC on D.DoctorId = DBC.DoctorID  Join tbl_ClinicDetails C on DBC.ClinicId = C.ClinicId   ";
 
-            if (Cid > 0)
+            if (Cid != "0")
                 strQuery += " where DBC.ClinicID='" + Cid + "'";
-            if (Did > 0)
+            if (Did != "0")
                 strQuery += " and DBC.DoctorID='" + Did + "'";
            
            // strQuery += "  Group by  D.FirstName,D.LastName,DBC.DoctorId,D.Mobile1,C.ClinicName,DBC.ClinicId,DBC.DoctorID ";
@@ -285,6 +308,24 @@ namespace OrthoSquare.BAL_Classes
             return objGeneral.GetDatasetByCommand(strQuery);
 
         }
+
+
+        public DataTable GetAllDocterCollectionReportNew11(string Cid, string Did)
+        {
+            strQuery = "Select DBC.DoctorId,D.FirstName +' ' +D.LastName as DoctorName,D.Mobile1,C.ClinicName,DBC.ClinicId,DBC.DoctorID,D.isDeleted from tbl_DoctorDetails D   ";
+            strQuery += "  Join DoctorByClinic DBC on D.DoctorId = DBC.DoctorID  Join tbl_ClinicDetails C on DBC.ClinicId = C.ClinicId  where 1=1 ";
+
+            if (Cid != "0")
+                strQuery += " and DBC.ClinicID='" + Cid + "'";
+            if (Did != "")
+                strQuery += " and D.FirstName +' ' +D.LastName like '%" + Did + "%'";
+
+            // strQuery += "  Group by  D.FirstName,D.LastName,DBC.DoctorId,D.Mobile1,C.ClinicName,DBC.ClinicId,DBC.DoctorID ";
+
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+        }
+
 
 
         public DataTable GetAllDocterCollectionReportNew1Account(string FromDate, string Todate)

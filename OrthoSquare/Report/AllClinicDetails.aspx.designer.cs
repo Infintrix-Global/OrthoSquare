@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OrthoSquare.Report {
-    
-    
-    public partial class AllClinicDetails {
-        
+namespace OrthoSquare.Report
+{
+
+
+    public partial class AllClinicDetails
+    {
+
         /// <summary>
         /// ddlClinic control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlClinic;
-        
+
         /// <summary>
         /// ddlDoctors control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDoctors;
-        
+
         /// <summary>
         /// txtFromEnquiryDate control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFromEnquiryDate;
-        
+
         /// <summary>
         /// txtFromEnquiryDate_CalendarExtender control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.CalendarExtender txtFromEnquiryDate_CalendarExtender;
-        
+
         /// <summary>
         /// txtToEnquiryDate control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtToEnquiryDate;
-        
+
         /// <summary>
         /// txtToEnquiryDate_CalendarExtender control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.CalendarExtender txtToEnquiryDate_CalendarExtender;
-        
+
         /// <summary>
         /// btSearch control.
         /// </summary>
@@ -74,7 +76,16 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btSearch;
-        
+
+        /// <summary>
+        /// lblEnquiriesCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEnquiriesCount;
+
         /// <summary>
         /// GridViewEnquiry control.
         /// </summary>
@@ -83,7 +94,16 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridViewEnquiry;
-        
+
+        /// <summary>
+        /// lblFollowupCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFollowupCount;
+
         /// <summary>
         /// GridViewFollowup control.
         /// </summary>
@@ -92,7 +112,16 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridViewFollowup;
-        
+
+        /// <summary>
+        /// lblAppointmentsCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAppointmentsCount;
+
         /// <summary>
         /// GridAppoinment control.
         /// </summary>
@@ -101,7 +130,16 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridAppoinment;
-        
+
+        /// <summary>
+        /// lblConsultationCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblConsultationCount;
+
         /// <summary>
         /// gvShowConsultation control.
         /// </summary>
@@ -110,7 +148,16 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvShowConsultation;
-        
+
+        /// <summary>
+        /// lblExpenseTotal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblExpenseTotal;
+
         /// <summary>
         /// GridViewExpenseMaster control.
         /// </summary>
@@ -119,7 +166,16 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridViewExpenseMaster;
-        
+
+        /// <summary>
+        /// lblCollectionCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCollectionCount;
+
         /// <summary>
         /// GridViewInvoiceMaster control.
         /// </summary>

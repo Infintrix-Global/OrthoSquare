@@ -138,7 +138,7 @@ namespace OrthoSquare.Master
 
 
             ddlDoctor1.DataValueField = "DoctorID";
-            ddlDoctor1.DataTextField = "FirstName";
+            ddlDoctor1.DataTextField = "DoctorName";
             ddlDoctor1.DataBind();
             ddlDoctor1.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
 
@@ -169,7 +169,7 @@ namespace OrthoSquare.Master
 
 
             ddlDocterSearch.DataValueField = "DoctorID";
-            ddlDocterSearch.DataTextField = "FirstName";
+            ddlDocterSearch.DataTextField = "DoctorName";
             ddlDocterSearch.DataBind();
             ddlDocterSearch.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
 
@@ -193,7 +193,7 @@ namespace OrthoSquare.Master
 
             
            // ddlDoctor1.DataSource = objdoc.GetAllDocters(Did);
-            ddlDoctor1.DataTextField = "FirstName";
+            ddlDoctor1.DataTextField = "DoctorName";
             ddlDoctor1.DataValueField = "DoctorID";
             ddlDoctor1.DataBind();
 

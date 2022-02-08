@@ -159,13 +159,14 @@ namespace OrthoSquare.BAL_Classes
 
 
 
-        public DataTable GetAllEnquirynew(string Cid, string Name, String Mno, int Sourceid, string FromEnquiryDate, string ToEnquiryDate,int  RoleId)
+        public DataTable GetAllEnquirynew(string Cid, string Name, String Mno, int Sourceid, string FromEnquiryDate, string ToEnquiryDate,int  RoleId,int CreateBy)
         {
 
             DataTable dt = new DataTable();
             try
             {
-                strQuery = "Select * from Enquiry E left Join  EnquirySourceMaster ES on ES.Sourceid =E.Sourceid left Join  tbl_ClinicDetails CD on CD.ClinicID =E.ClinicID  where E.IsActive =1 and E.IsPatient=0";
+                strQuery = "Select * from Enquiry E left Join  EnquirySourceMaster ES on ES.Sourceid =E.Sourceid left Join  tbl_ClinicDetails CD on CD.ClinicID =E.ClinicID  " +
+                    "where E.IsActive =1 and E.IsPatient=0 and  E.CreatedBy ="+ CreateBy + " and RoleId="+ RoleId +" ";
 
                 if (Cid != "0")
                     strQuery += " and E.ClinicID in (" + Cid + ")";
@@ -175,8 +176,7 @@ namespace OrthoSquare.BAL_Classes
                     strQuery += " and E.Mobile  = '" + Mno + "'";
                 if (Sourceid > 0)
                     strQuery += " and E.Sourceid = " + Sourceid + "";
-                if (RoleId > 0)
-                    strQuery += " and E.RoleId = " + RoleId + "";
+               
                 //if (ClinicID > 0)
                 //    strQuery += " and E.ClinicID = " + ClinicID + "";
 
@@ -528,7 +528,12 @@ namespace OrthoSquare.BAL_Classes
 
                 objGeneral.AddParameterWithValueToSQLCommand("@FollowupmodeNew", bojFollowup.FollowupmodeNew);
 
+                objGeneral.AddParameterWithValueToSQLCommand("@Fname", bojFollowup.Fname);
+                objGeneral.AddParameterWithValueToSQLCommand("@LName", bojFollowup.LName);
+
                 objGeneral.AddParameterWithValueToSQLCommand("@ModifiedBy", 0);
+
+
                 isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_Followup");
             }
             catch (Exception ex)
@@ -623,7 +628,7 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
-        public bool SaveExcelUploadedEnquiry(int TreatmentID, int ClinicID, string Enquiryno, string FirstName, string LastName, string Email, string Mobile, string Conversation)
+        public bool SaveExcelUploadedEnquiry(int TreatmentID, int ClinicID, string Enquiryno, string FirstName, string LastName, string Email, string Mobile, string Conversation,int CreateBy,int RoleId,int SourceId,int AID,int Tid)
         {
             try
             {
@@ -632,8 +637,8 @@ namespace OrthoSquare.BAL_Classes
 
 
 
-                strQuery = "INSERT INTO Enquiry (TreatmentID,ClinicID,DateBirth,Folllowupdate,IsPatient,Enquiryno,EnquiryDate,FirstName,LastName,Email,Mobile,Conversation,IsActive)";
-                strQuery += "VALUES (@TreatmentID,@ClinicID,'01-01-1999','01-01-1999',0,@Enquiryno,GETDATE(),@FirstName,@LastName,@Email,@Mobile,@Conversation,1) ; Select @@IDENTITY ";
+                strQuery = "INSERT INTO Enquiry (TreatmentID,ClinicID,DateBirth,Folllowupdate,IsPatient,Enquiryno,EnquiryDate,FirstName,LastName,Email,Mobile,Conversation,IsActive,CreatedBy,RoleId,SourceId,AssignToEmpId,TelecallerToEmpId)";
+                strQuery += "VALUES (@TreatmentID,@ClinicID,'01-01-1999','01-01-1999',0,@Enquiryno,GETDATE(),@FirstName,@LastName,@Email,@Mobile,@Conversation,1,@CreateBy,@RoleId,@SourceId,@AID,@Tid) ; Select @@IDENTITY ";
 
 
                 objGeneral.AddParameterWithValueToSQLCommand("@TreatmentID", TreatmentID);
@@ -650,8 +655,11 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@Mobile", Mobile);
 
                 objGeneral.AddParameterWithValueToSQLCommand("@Conversation", Conversation);
-
-
+                objGeneral.AddParameterWithValueToSQLCommand("@CreateBy", CreateBy);
+                objGeneral.AddParameterWithValueToSQLCommand("@RoleId", RoleId);
+                objGeneral.AddParameterWithValueToSQLCommand("@Sourceid", SourceId);
+                objGeneral.AddParameterWithValueToSQLCommand("@AID", AID);
+                objGeneral.AddParameterWithValueToSQLCommand("@Tid", Tid);
 
                 int NewID = int.Parse(objGeneral.GetExecuteScalarByCommand(strQuery));
 

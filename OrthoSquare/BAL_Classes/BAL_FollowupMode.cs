@@ -96,10 +96,15 @@ namespace OrthoSquare.BAL_Classes
             strQuery += " Join tbl_ClinicDetails CD on CD .ClinicID =E.ClinicID ";
             strQuery += "  Join TreatmentMASTER TM on TM.TreatmentID=E.TreatmentID where E.IsActive =1 and E.IsPatient=0";
             
+
+
             if (UserID > 1)
                 if (Rolid == 1)
                 {
                     strQuery += " and E.ClinicID  ="+UserID+"";
+
+                    if (ReceivedByEmpId > 0)
+                        strQuery += " and E.ClinicID=@ReceivedByEmpId";
                 }
                 else
                 {
@@ -113,16 +118,15 @@ namespace OrthoSquare.BAL_Classes
             if (SourceType > 0)
                 strQuery += " and E.Sourceid=@SourceType";
 
-            if (ReceivedByEmpId > 0)
-                strQuery += " and E.ClinicID=@ReceivedByEmpId";
+           
 
             if (FromEnquiryDate != "" && ToEnquiryDate != "")
                 strQuery += " and convert(date,E.EnquiryDate,105) between convert(date,@FromEnquiryDate,105) and convert(date,@ToEnquiryDate,105)";
 
             if (FromFollowDate != "" && ToFollowDate != "")
                 strQuery += " and convert(date,E.Folllowupdate,105) between convert(date,@FromFollowDate,105) and convert(date,@ToFollowDate,105)";
-
-            strQuery += " order by convert(date,E.Folllowupdate,105) DESC";
+       
+            strQuery += " order by E.Folllowupdate DESC";
 
             objGeneral.AddParameterWithValueToSQLCommand("@Name", Name);
             objGeneral.AddParameterWithValueToSQLCommand("@MobileNo", MobileNo);
@@ -226,6 +230,8 @@ namespace OrthoSquare.BAL_Classes
                 {
                     strQuery += " and  E.AssignToEmpId =" + UserID + "";
                 }
+
+
             if (Name != "")
                 strQuery += " and E.FirstName like '%" + Name + "%'";
             if (MobileNo != "")

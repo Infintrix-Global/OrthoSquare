@@ -95,7 +95,7 @@ namespace OrthoSquare.Invoice
 
             }
 
-            ddlDoctor.DataTextField = "FirstName";
+            ddlDoctor.DataTextField = "DoctorName";
             ddlDoctor.DataValueField = "DoctorID";
             ddlDoctor.Items.Remove(ddlDoctor.Items.FindByValue("0"));
             ddlDoctor.DataBind();
@@ -109,7 +109,7 @@ namespace OrthoSquare.Invoice
         public void getAllInvoice(int Cid,int Did,string Search,string MNo)
         {
 
-            AllData = objinv.GetAllInvoicDispaly(Cid, Did, Search, MNo);
+            AllData = objinv.GetAllInvoicDispaly(Cid, Did, Search, MNo, txtFromEnquiryDate.Text, txtToEnquiryDate.Text);
             gvShow.DataSource = AllData;
             gvShow.DataBind();
 
@@ -118,15 +118,32 @@ namespace OrthoSquare.Invoice
         protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvShow.PageIndex = e.NewPageIndex;
-            getAllInvoice(Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), txtSearch.Text,txtMobileNo .Text );
-            btSearch_Click(sender, e);
+
+
+            if (SessionUtilities.RoleID == 1)
+            {
+                getAllInvoice(Convert.ToInt32(SessionUtilities.Empid), 0, "", "");
+            }
+            else if (SessionUtilities.RoleID == 3)
+            {
+            
+                getAllInvoice(0, Convert.ToInt32(SessionUtilities.Empid), "", "");
+            }
+            else
+            {
+                getAllInvoice(0, 0, "", "");
+            }
+
+
+          //  btSearch_Click(sender, e);
         }
 
         protected void gvShow_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            int invCode = Convert.ToInt32(e.CommandArgument);
+           
             if (e.CommandName == "Viewinv")
             {
+                int invCode = Convert.ToInt32(e.CommandArgument);
                 GridViewRow gvRow = (GridViewRow)((Control)e.CommandSource).NamingContainer;
                 Int32 rowind = gvRow.RowIndex;
                 Label lblInvoiceCode = (Label)gvRow.FindControl("lblInvoiceCode");
@@ -137,6 +154,7 @@ namespace OrthoSquare.Invoice
 
             if (e.CommandName == "delete1")
             {
+            
                 int invCode1 = Convert.ToInt32(e.CommandArgument);
                 
                 int I = objinv.Deleteinvoice(invCode1);

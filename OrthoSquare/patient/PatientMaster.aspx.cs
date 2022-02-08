@@ -505,17 +505,6 @@ namespace OrthoSquare.patient
                 {
 
 
-
-                    //if (System.Windows.Forms.MessageBox.Show("Mobile number already in use?", "Confirm", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
-                    //{
-
-                    //    _isInserted = objPatient.Add_Patient(objPatientDetails);
-                    //}
-
-                    //  ClientScript.RegisterStartupScript(typeof(Page), "Confirm", "<script type='text/javascript'>Confirm();</script>");
-
-
-
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "Confirm()", true);
                     string confirmValue = Request.Form["confirm_value"];
                     if (confirmValue == "Yes")
@@ -592,6 +581,7 @@ namespace OrthoSquare.patient
         }
         protected void txtBDate_TextChanged(object sender, EventArgs e)
         {
+
             DateTime now = DateTime.Today;
             DateTime birthday = Convert.ToDateTime(txtBDate.Text);
             int age = now.Year - birthday.Year;

@@ -162,11 +162,28 @@ namespace OrthoSquare.Entities
     }
 
 
+    [DataContract]
+    public class GetClinicList
+    {
+
+        [DataMember]
+        public int ClinicId { get; set; }
+        [DataMember]
+        public string ClinicName { get; set; }
+
+    }
+
+    public class checkGetClinicList
+    {
+        public List<GetClinicList> Data { get; set; }
+        public string status { get; set; }
+
+        public string message { get; set; }
+
+    }
 
 
-
-
-     [DataContract]
+    [DataContract]
      public class DoctorDetailsAll
      {
 
@@ -209,13 +226,73 @@ namespace OrthoSquare.Entities
 
          public string message { get; set; }
 
-
-
-
      }
 
 
-     public class checkMiscellaneousList
+    [DataContract]
+    public class GetDoctorList
+    {
+
+        [DataMember]
+        public int DoctorId { get; set; }
+      
+        [DataMember]
+        public string ClinicId { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+
+    }
+
+
+    public class checkGetDoctorList
+    {
+        public List<GetDoctorList> Data { get; set; }
+        public string status { get; set; }
+
+        public string message { get; set; }
+
+    }
+
+
+    [DataContract]
+    public class GetPatientList
+    {
+
+        [DataMember]
+        public int ClinicId { get; set; }
+
+        [DataMember]
+        public int PatientId { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string EmaiId { get; set; }
+
+        [DataMember]
+        public string PhoneNo { get; set; }
+
+        [DataMember]
+        public string Address { get; set; }
+
+        [DataMember]
+        public int DoctorId { get; set; }
+    }
+
+
+    public class checkGetPatientList
+    {
+        public List<GetPatientList> Data { get; set; }
+        public string status { get; set; }
+
+        public string message { get; set; }
+
+    }
+
+    public class checkMiscellaneousList
      {
          public string status { get; set; }
          public string Detail { get; set; }

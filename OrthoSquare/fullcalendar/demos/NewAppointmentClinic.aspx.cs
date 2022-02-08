@@ -67,7 +67,7 @@ namespace OrthoSquare.Master
             }
 
             ddlDocter.DataValueField = "DoctorID";
-            ddlDocter.DataTextField = "FirstName";
+            ddlDocter.DataTextField = "DoctorName";
             ddlDocter.DataBind();
             ddlDocter.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
 
@@ -117,17 +117,17 @@ namespace OrthoSquare.Master
             {
                 if (SessionUtilities.RoleID == 2)
                 {
-                    query = "SELECT * FROM AppointmentMaster A  Join tbl_ClinicDetails C on C.ClinicID =A.ClinicID where  Year (CreatedDate) =Year(GETDATE())";
+                    query = "SELECT top 500 * FROM AppointmentMaster A  Join tbl_ClinicDetails C on C.ClinicID =A.ClinicID where  Year (CreatedDate) =Year(GETDATE()) order by Appointmentid Desc ";
                 }
                else if (SessionUtilities.RoleID == 1)
                 {
-                    query = "SELECT * FROM AppointmentMaster A left Join tbl_ClinicDetails C on C.ClinicID =A.ClinicID where A.ClinicID=" + SessionUtilities .Empid + " and Year (CreatedDate) =Year(GETDATE()) Or A.IsActive =0";
+                    query = "SELECT top 500 * FROM AppointmentMaster A left Join tbl_ClinicDetails C on C.ClinicID =A.ClinicID where A.ClinicID=" + SessionUtilities .Empid + " and Year (CreatedDate) =Year(GETDATE()) Or A.IsActive =0 order by Appointmentid Desc";
 
                 }
                 else
                {
 
-                   query = "SELECT * FROM AppointmentMaster A left Join tbl_ClinicDetails C on C.ClinicID =A.ClinicID where A.DoctorID=" + SessionUtilities.Empid + " and Year (CreatedDate) =Year(GETDATE()) Or A.IsActive =0";
+                   query = "SELECT top 500  * FROM AppointmentMaster A left Join tbl_ClinicDetails C on C.ClinicID =A.ClinicID where A.DoctorID=" + SessionUtilities.Empid + " and Year (CreatedDate) =Year(GETDATE()) Or A.IsActive =0 order by Appointmentid Desc ";
 
                }
             }
@@ -140,7 +140,7 @@ namespace OrthoSquare.Master
                 // if(dt != null && dt.Rows.Count )
 
 
-                query = "SELECT * FROM AppointmentMaster A left Join tbl_ClinicDetails C on C.ClinicID =A.ClinicID where A.DoctorID='" + Docterid + "' and Year (CreatedDate) =Year(GETDATE()) Or A.IsActive =0";
+                query = "SELECT top 500 * FROM AppointmentMaster A left Join tbl_ClinicDetails C on C.ClinicID =A.ClinicID where A.DoctorID='" + Docterid + "' and Year (CreatedDate) =Year(GETDATE()) Or A.IsActive =0 order by Appointmentid Desc ";
             }
             SqlCommand cmd = new SqlCommand(query, myConnection);
 
