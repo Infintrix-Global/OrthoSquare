@@ -615,6 +615,10 @@
                             <asp:Button ID="btnAddNew" runat="server" Text="Add New Enquiry" class="btn blue-madison" ClientIDMode="Static"
                                 CausesValidation="False" OnClick="btnAddNew_Click" />
                         </div>
+
+
+
+
                         <div class="table-scrollable">
 
                             <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
@@ -744,31 +748,7 @@
                             <i class="icon-settings font-red-sunglo"></i>
                             <span class="caption-subject bold uppercase">Enquiry</span>
                         </div>
-                        <%-- <div class="actions">
-							<div class="btn-group">
-								<a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown">Actions
-												<i class="fa fa-angle-down"></i>
-								</a>
-								<ul class="dropdown-menu pull-right">
-									<li>
-										<a href="javascript:;">
-											<i class="fa fa-pencil"></i>Edit </a>
-									</li>
-									<li>
-										<a href="javascript:;">
-											<i class="fa fa-trash-o"></i>Delete </a>
-									</li>
-									<li>
-										<a href="javascript:;">
-											<i class="fa fa-ban"></i>Ban </a>
-									</li>
-									<li class="divider"></li>
-									<li>
-										<a href="javascript:;">Make admin </a>
-									</li>
-								</ul>
-							</div>
-						</div>--%>
+                        
                     </div>
 
                     <div class="row">
@@ -833,7 +813,7 @@
 
                             </asp:Panel>
 
-                            
+
                         </div>
                     </div>
 
@@ -864,6 +844,59 @@
                             </div>
                         </div>
                     </div>
+
+                    <br />
+
+                    <asp:Panel ID="PanelNotSaveEnquiry" Visible="false" runat="server">
+                        <div class="row">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-settings font-red"></i>
+                                    <span class="caption-subject font-red sbold uppercase">RECORDS WHICH ARE NOT SAVED</span>
+                                </div>
+
+                            </div>
+                            <div class="table-scrollable">
+                                <asp:GridView ID="GridViewExcelNotSave" runat="server" AllowPaging="true" AutoGenerateColumns="false"
+                                    class="table table-bordered table-hover" PageSize="20"
+                                    GridLines="None" OnPageIndexChanging="GridViewExcelNotSave_PageIndexChanging"
+                                    ShowHeaderWhenEmpty="true">
+                                    <Columns>
+                                        <asp:TemplateField HeaderText="Sr.No.">
+                                            <ItemTemplate>
+                                                <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
+
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Name">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Email">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblEmail" runat="server" Text='<%# Eval("Email") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Mobile No">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblMobile" runat="server" Text='<%# Eval("Mobile") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+
+
+                                    </Columns>
+                                    <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
+                                    <PagerSettings Mode="NumericFirstLast" />
+                                    <EmptyDataTemplate>
+                                        No Record Available
+                                    </EmptyDataTemplate>
+                                </asp:GridView>
+                            </div>
+                        </div>
+                    </asp:Panel>
+
                     <br />
                     <div class="row">
                         <div class="form-actions text-center">

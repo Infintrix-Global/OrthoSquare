@@ -704,7 +704,7 @@
                             <div class="row">
                                 <div class="form-actions text-center">
 
-                                    <asp:Button ID="btAdd" runat="server" Text="Submit" class="btn blue" ValidationGroup="e" OnClientClick="return Disable();" ClientIDMode="Static" OnClick="btAdd_Click" />
+                                    <asp:Button ID="btAdd" runat="server" Text="Submit" Enabled="false" class="btn blue" ValidationGroup="e" OnClientClick="return Disable();" ClientIDMode="Static" OnClick="btAdd_Click" />
                                     <asp:Button ID="btFeedback" ClientIDMode="Static" class="btn blue" runat="server" Visible="false" CausesValidation="false" OnClick="btFeedback_Click"
                                         Text="Feedback" />
                                     <asp:Button ID="btBack" runat="server" Text="Cancel" Class="btn default" ClientIDMode="Static"

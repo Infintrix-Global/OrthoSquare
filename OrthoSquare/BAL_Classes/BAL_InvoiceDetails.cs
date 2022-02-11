@@ -271,8 +271,13 @@ namespace OrthoSquare.BAL_Classes
             {
 
 
-                strQuery = "Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,PM.Mobile,DD.LastName as DLastName from InvoiceMaster IM join PatientMaster PM on PM.patientid = IM.patientid ";
-                strQuery += " JOin tbl_DoctorDetails DD on DD.DoctorID = IM.DoctorID where  PM.IsActive =1";
+                // strQuery = "Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,PM.Mobile,DD.LastName as DLastName from InvoiceMaster IM join PatientMaster PM on PM.patientid = IM.patientid ";
+                // strQuery += " JOin tbl_DoctorDetails DD on DD.DoctorID = IM.DoctorID where  PM.IsActive =1";
+                strQuery = " Select  IM.GrandTotal as GrandTotal,SUM(IM.PaidAmount) as PaidAmount ,IM.GrandTotal - SUM(IM.PaidAmount) as PendingAmount,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,PM.Mobile,DD.LastName as DLastName,IM.InvoiceCode,IM.InvoiceNo,convert(date,PayDate,105) as PayDate,IM.InvoiceTid ";
+                strQuery += " from InvoiceMaster IM join PatientMaster PM on PM.patientid = IM.patientid JOin tbl_DoctorDetails DD on DD.DoctorID = IM.DoctorID where  PM.IsActive =1";
+
+
+
                 if (ClinicID > 0)
                     strQuery += " and IM.ClinicID=" + ClinicID + "";
                 if(DoctorID > 0)
@@ -283,7 +288,7 @@ namespace OrthoSquare.BAL_Classes
                     strQuery += " and PM.Mobile='" + Mno + "'";
                 if (FromEnquiryDate != "" && ToEnquiryDate != "")
                     strQuery += " and convert(date,IM.PayDate,105) between convert(date,@FromEnquiryDate,105) and convert(date,@ToEnquiryDate,105)";
-                strQuery +=" Order by IM.InvoiceTid DESC";
+                strQuery += " Group By PM.FristName,PM.LastName,DD.FirstName,PM.Mobile,DD.LastName,IM.InvoiceCode,IM.InvoiceNo,IM.GrandTotal,IM.InvoiceTid,convert(date,PayDate,105) Order by IM.InvoiceTid DESC";
 
                 objGeneral.AddParameterWithValueToSQLCommand("@FromEnquiryDate", FromEnquiryDate);
                 objGeneral.AddParameterWithValueToSQLCommand("@ToEnquiryDate", ToEnquiryDate);

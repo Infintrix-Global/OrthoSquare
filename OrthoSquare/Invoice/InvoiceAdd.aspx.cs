@@ -328,6 +328,7 @@ namespace OrthoSquare.Invoice
             txtPAID1.Text = PaidAmount.ToString();
 
             txtPendingAmount.Text = (Convert.ToDecimal(lblGrandTotal.Text) - PaidAmount).ToString();
+            btAdd.Enabled = true;
 
         }
 

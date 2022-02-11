@@ -10,6 +10,7 @@ using OrthoSquare.Utility;
 using System.Data.OleDb;
 using System.IO;
 using PreconFinal.Utility;
+using System.Reflection;
 
 namespace OrthoSquare.Enquiry1
 {
@@ -592,7 +593,7 @@ namespace OrthoSquare.Enquiry1
         protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvShow.PageIndex = e.NewPageIndex;
-            btSearch_Click(sender, e);
+            getAllEnquiry();
         }
 
         protected void gvShow_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -1088,26 +1089,26 @@ namespace OrthoSquare.Enquiry1
                     else
                     {
                         Result = true;
-                        // divOptionalMessage.Visible = true;
-                        // divOptionalMessageSub.Attributes.Remove("class");
-                        //  divOptionalMessageSub.Attributes.Add("class", "confirmmsg");
-                        // lblOptionalmsg.Attributes.Add("style", "color:Green");
-                        //  lblMSG1.Text = "Enquiry Information have been uploaded sucessfully.";
-                        //ErrorName = ErrorName;
+                       
 
                         string url = "EnquiryDetails.aspx";
 
 
-                        string message = "Enquiry Added Successfully";
-                        string script = "window.onload = function(){ alert('";
-                        script += message;
-                        script += "');";
-                        script += "window.location = '";
-                        script += url;
-                        script += "'; }";
-                        this.Page.ClientScript.RegisterStartupScript(this.GetType(), "Redirect", script, true);
+                        string message = "Enquiry Added Successfully. No of Save records " + iResult;
+                        //string script = "window.onload = function(){ alert('";
+                        //script += message;
+                        //script += "');";
+                        //script += "window.location = '";
+                        //script += url;
+                        //script += "'; }";
+                        //this.Page.ClientScript.RegisterStartupScript(this.GetType(), "Redirect", script, true);
 
+                        //   string url = "MyTaskGrower.aspx";
+                        //   string message = "Assignment Successful";
 
+                        //  ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect", "alert('" + message + "'); window.location='" + url + "';", true);
+
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "Message", "alert('"+ message + "');", true);
                     }
                 }
                 catch (Exception ex)
@@ -1163,28 +1164,39 @@ namespace OrthoSquare.Enquiry1
                                 objNewRow.Email = item["Email"].ToString().Trim();
                                 objNewRow.Mobile = item["Mobile"].ToString().Trim();
                                 objNewRow.srno = NotSaveCount;
-
-
                                 objEnq.Add(objNewRow);
-
                             }
                             else
                             {
                                 SaveCount++;
-                                int SourceId = objcommon.GetEnquirySourceId(item["EnquirySource"].ToString().Trim());
-
-                                objENQ.SaveExcelUploadedEnquiry(Convert.ToInt32(item["Treatment1"]), Convert.ToInt32(ddlClinicUploadExcel.SelectedValue), EnquiryNO, item["FirstName"].ToString().Trim(), item["LastName"].ToString().Trim(), item["Email"].ToString().Trim(), item["Mobile"].ToString().Trim(), item["Conversation"].ToString().Trim(), SessionUtilities.Empid, SessionUtilities.RoleID, SourceId, Convert.ToInt32(ddlExDoctor.SelectedValue), Convert.ToInt32(ddlExcelTelecaller.SelectedValue));
-
+                                int SourceId = 0;
+                                SourceId = objcommon.GetEnquirySourceId(item["EnquirySource"].ToString().Trim()); 
+                                if(SourceId==0)
+                                {
+                                    SourceId = 29;
+                                }
+                                objENQ.SaveExcelUploadedEnquiry(Convert.ToInt32(item["Treatment"]), Convert.ToInt32(ddlClinicUploadExcel.SelectedValue), EnquiryNO, item["FirstName"].ToString().Trim(), item["LastName"].ToString().Trim(), item["Email"].ToString().Trim(), item["Mobile"].ToString().Trim(), item["Conversation"].ToString().Trim(), SessionUtilities.Empid, SessionUtilities.RoleID, SourceId, Convert.ToInt32(ddlExDoctor.SelectedValue), Convert.ToInt32(ddlExcelTelecaller.SelectedValue));
 
                             }
                         }
                         reccount++;
                     }
+
+                   
                 }
-                return Convert.ToInt32(Result);
 
+                ListtoDataTable lsttodt = new ListtoDataTable();
+                DataTable dt = lsttodt.ToDataTable(objEnq);
+                if(dt!=null && dt.Rows.Count>0)
+                {
+                    GridViewExcelNotSave.DataSource = dt;
+                    GridViewExcelNotSave.DataBind();
+                    PanelNotSaveEnquiry.Visible = true;
+                }
+           
 
-               
+                return Convert.ToInt32(SaveCount);
+
             }
             catch (Exception ex)
             {
@@ -1194,30 +1206,48 @@ namespace OrthoSquare.Enquiry1
             //return 1;
         }
 
-        public void getAlltodayConsultation(long Pid)
+
+
+        public class ListtoDataTable
         {
-
-
-
-        ///    txtPAID1.Text = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue))).ToString();
-
-            List<EnqyiryExcel> objinvoice = objCT.GetInvoiceDetailsyId(Pid);
-
-
-            if (objinvoice != null && objinvoice.Count > 0)
+            public DataTable ToDataTable<T>(List<T> items)
             {
+                DataTable dataTable = new DataTable(typeof(T).Name);
+                //Get all the properties by using reflection   
+                PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                foreach (PropertyInfo prop in Props)
+                {
+                    //Setting column names as Property names  
+                    dataTable.Columns.Add(prop.Name);
+                }
+                foreach (T item in items)
+                {
+                    var values = new object[Props.Length];
+                    for (int i = 0; i < Props.Length; i++)
+                    {
 
-              //  gvInformation.DataSource = objinvoice;
-              // gvInformation.DataBind();
+                        values[i] = Props[i].GetValue(item, null);
+                    }
+                    dataTable.Rows.Add(values);
+                }
 
-            }
-            else
-            {
-               
+                return dataTable;
             }
         }
+        protected void GridViewExcelNotSave_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewExcelNotSave.PageIndex = e.NewPageIndex;
 
-
+            List<EnqyiryExcel> objEnq = new List<EnqyiryExcel>();
+            ListtoDataTable lsttodt = new ListtoDataTable();
+            DataTable dt = lsttodt.ToDataTable(objEnq);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                GridViewExcelNotSave.DataSource = dt;
+                GridViewExcelNotSave.DataBind();
+                PanelNotSaveEnquiry.Visible = true;
+            }
+        }
 
         protected void btndownloadOptional_Click(object sender, EventArgs e)
         {

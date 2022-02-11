@@ -717,6 +717,24 @@ namespace OrthoSquare.Enquiry1
         protected global::System.Web.UI.WebControls.Button btndownloadOptional;
 
         /// <summary>
+        /// PanelNotSaveEnquiry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelNotSaveEnquiry;
+
+        /// <summary>
+        /// GridViewExcelNotSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewExcelNotSave;
+
+        /// <summary>
         /// btnExlCancel control.
         /// </summary>
         /// <remarks>

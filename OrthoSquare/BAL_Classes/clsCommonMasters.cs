@@ -67,6 +67,8 @@ public class clsCommonMasters
         }
         catch (Exception ex)
         {
+
+
         }
         return dt;
     }
@@ -2279,8 +2281,6 @@ public class Enquiry_Details
     public long TreatmentID;
     public long RoleId;
     public long TelecallerToEmpId;
-
-
     public string Enquiryno;
     public string EnquiryDate;
     public string FirstName;
@@ -2290,7 +2290,6 @@ public class Enquiry_Details
     public string Gender;
     public string Address;
     public long CountryId;
-
     public long stateid;
     public long Cityid;
     public string Area;
@@ -2308,7 +2307,6 @@ public class Enquiry_Details
     public int ModifiedBy;
     public string ModifiedDate;
     public bool IsActive;
-
     public string Conversation;
     public string Pstatus;
 
