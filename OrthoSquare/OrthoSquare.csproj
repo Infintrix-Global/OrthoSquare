@@ -1025,6 +1025,7 @@
     <Content Include="Master\MaterialInOutDetails.aspx" />
     <Content Include="Master\MaterialMaster.aspx" />
     <Content Include="Master\MaterialUsed.aspx" />
+    <Content Include="Master\MateriaType.aspx" />
     <Content Include="Master\MedicalProblemMaster.aspx" />
     <Content Include="Master\PackMaster.aspx" />
     <Content Include="Master\PushNotification.aspx" />
@@ -1631,6 +1632,7 @@
     <Compile Include="BAL_Classes\BAL_LabsDetails.cs" />
     <Compile Include="BAL_Classes\BAL_Login.cs" />
     <Compile Include="BAL_Classes\BAL_MaterialMaster.cs" />
+    <Compile Include="BAL_Classes\Bal_MaterilaType.cs" />
     <Compile Include="BAL_Classes\BAL_MedicalProblem.cs" />
     <Compile Include="BAL_Classes\BAL_Pack.cs" />
     <Compile Include="BAL_Classes\BAL_Patient.cs" />
@@ -2223,6 +2225,13 @@
     </Compile>
     <Compile Include="Master\MaterialUsed.aspx.designer.cs">
       <DependentUpon>MaterialUsed.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Master\MateriaType.aspx.cs">
+      <DependentUpon>MateriaType.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Master\MateriaType.aspx.designer.cs">
+      <DependentUpon>MateriaType.aspx</DependentUpon>
     </Compile>
     <Compile Include="Master\MedicalProblemMaster.aspx.cs">
       <DependentUpon>MedicalProblemMaster.aspx</DependentUpon>
