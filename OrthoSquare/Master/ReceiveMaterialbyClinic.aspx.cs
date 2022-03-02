@@ -286,6 +286,12 @@ namespace OrthoSquare.Master
 
 
                 lblPending.Text = (Convert.ToInt32(lblOrderQty.Text) - RecQty).ToString ();
+
+                if(lblPending.Text=="0")
+                {
+                    e.Row.Visible = false;
+                }
+
             }   
         }
     }

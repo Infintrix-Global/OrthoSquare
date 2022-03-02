@@ -176,37 +176,9 @@
                     </div>
 
 
-                    <%--  <div class="col-md-6">
-                            <div class="portlet light form-fit ">
+                    
 
-                                <div class="portlet-body form">
-                                    <!-- BEGIN FORM-->
-                                    <div class="form-body">
-
-
-                                       
-                                          
-
-
-                                        
-
-                                           
-                                        
-                                       
-
-                                        
-                                      
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>--%>
-
-                    <!-- END CONTENT BODY -->
-                    <%--  </div>--%>
-
+                 
 
                     <div class="row">
                         <div class="col-xs-12">

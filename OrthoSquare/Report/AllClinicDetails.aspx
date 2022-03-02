@@ -385,6 +385,14 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
+                                 <asp:TemplateField HeaderText="Date">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblDateC" runat="server" Text='<%# Eval("TDate") %>'></asp:Label>
+
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                
+
                             </Columns>
                             <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
                             <PagerSettings Mode="NumericFirstLast" />

@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using OrthoSquare.BAL_Classes;
 using System.Data;
 using OrthoSquare.Utility;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace OrthoSquare.Master
 {
@@ -21,13 +23,14 @@ namespace OrthoSquare.Master
         {
             if (!IsPostBack)
             {
+                bindClinic();
                 BindMaterial();
-                BindPatient();
                 getAllTreatment(0);
+                BindPatient();
 
                 //  getAllGridplaceorder(0);
 
-                bindClinic();
+           
 
 
                 ddlDoctor.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
@@ -41,6 +44,22 @@ namespace OrthoSquare.Master
             }
         }
 
+
+        private long MaterialId
+        {
+            get
+            {
+                if (ViewState["MaterialId"] != null)
+                {
+                    return (long)ViewState["MaterialId"];
+                }
+                return 0;
+            }
+            set
+            {
+                ViewState["MaterialId"] = value;
+            }
+        }
 
         public void getAllTreatment(int Mid)
         {
@@ -93,7 +112,7 @@ namespace OrthoSquare.Master
         }
         public void BindPatient()
         {
-            ddlpatient.DataSource = objp.GetPatientlist();
+            ddlpatient.DataSource = objp.NewGetPatientlist(Convert.ToInt32(ddlClinic.SelectedValue));
             ddlpatient.DataTextField = "Fname";
             ddlpatient.DataValueField = "patientid";
             ddlpatient.DataBind();
@@ -157,7 +176,7 @@ namespace OrthoSquare.Master
         }
         protected void btSearch_Click(object sender, EventArgs e)
         {
-            getAllTreatment(Convert.ToInt32(ddlMaterialSearch.SelectedValue));
+            getAllTreatment(Convert.ToInt32(MaterialId));
 
 
         }
@@ -219,5 +238,52 @@ namespace OrthoSquare.Master
             {
             }
         }
+
+        protected void txtMaterial_TextChanged(object sender, EventArgs e)
+        {
+            DataTable dt= objM.MaterialSelectID(txtMaterial.Text);
+            if(dt !=null && dt.Rows.Count >0)
+            {
+                MaterialId = Convert.ToInt32(dt.Rows[0]["MaterialId"]);
+            }
+            getAllTreatment(Convert.ToInt32(MaterialId));
+
+        }
+
+
+
+        [System.Web.Script.Services.ScriptMethod()]
+        [System.Web.Services.WebMethod]
+        public static List<string> SearchCustomers(string prefixText, int count)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = ConfigurationManager.ConnectionStrings["OrthoSquareDBConnectionString"].ConnectionString;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    int DoctorID = 0, ClinicId = 0;
+                    int RoleId = Convert.ToInt32(HttpContext.Current.Session["RoleID"]);
+                 
+                    cmd.CommandText = " Select* from MaterialMaster MM  join BrandMaster BM on MM.BrandId = BM.BrandId Join PackMaster PM on MM.PackId = PM.PackId    where MM.IsActive = 1 and  MaterialName like '%" + prefixText + "%' ";
+                    cmd.CommandText += "  order by MaterialName ASC";
+                   
+                    cmd.Parameters.AddWithValue("@SearchText", prefixText);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    List<string> customers = new List<string>();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            customers.Add(sdr["MaterialName"].ToString());
+                        }
+                    }
+                    conn.Close();
+
+                    return customers;
+                }
+            }
+        }
+
     }
 }

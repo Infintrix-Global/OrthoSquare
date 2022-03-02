@@ -12,7 +12,7 @@ namespace OrthoSquare.BAL_Classes
         General objGeneral = new General();
         DataSet ds = new DataSet();
         private string strQuery = string.Empty;
-        public int Add_LabDetails(LabDetails objLab)
+        public int Add_LabDetails(LabDetails1 objLab)
         {
             int isInserted = -1;
             try

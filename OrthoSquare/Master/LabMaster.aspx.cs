@@ -161,7 +161,7 @@ namespace OrthoSquare.Master
                 }
 
 
-                LabDetails objLab = new LabDetails()
+                LabDetails1 objLab = new LabDetails1()
                 {
 
                     Labid = Labid,

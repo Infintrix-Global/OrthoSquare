@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Web.Hosting;
+using System.Collections.Specialized;
 
 namespace OrthoSquare.BAL_Classes
 {
@@ -69,6 +70,50 @@ namespace OrthoSquare.BAL_Classes
             {
                 throw new Exception("Error disposing data class." + Environment.NewLine + ex.Message);
             }
+        }
+
+
+        public DataTable GetDataTable(string storedProcedure, NameValueCollection nv)
+        {
+
+            DataTable dt = new DataTable();
+
+            using (SqlConnection con = new SqlConnection(mstr_ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(storedProcedure, con);
+
+                for (int i = 0; i < nv.Count; i++)
+                {
+                    SqlParameter Param;
+                    if ((nv.Get(nv.AllKeys[i])) == null)
+                        Param = new SqlParameter(nv.AllKeys[i], DBNull.Value);
+                    else
+                        Param = new SqlParameter(nv.AllKeys[i], nv.Get(nv.AllKeys[i]));
+                    cmd.Parameters.Add(Param);
+
+                }
+
+                cmd.CommandTimeout = 0;
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                try
+                {
+                    con.Open();
+                    da.Fill(dt);
+                }
+                catch (Exception ex)
+                {
+                    ex.Message.ToString();
+                    da.Dispose();
+                    cmd.Connection.Close();
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+
+            return dt;
         }
 
 

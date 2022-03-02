@@ -1964,8 +1964,6 @@ public class clsCommonMasters
 
             }
 
-
-
         }
         catch (Exception ex)
         {
@@ -1984,28 +1982,20 @@ public class clsCommonMasters
             objGeneral.AddParameterWithValueToSQLCommand("@mode", 4);
             objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
             objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
-
             objGeneral.AddParameterWithValueToSQLCommand("@DoctorsID", DoctorsID);
+            //if (RoleId == 3)
+            //{
+            //    objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+            //    ds = objGeneral.GetDatasetByCommand_SP("Get_ReportSubAdminDetilsOfClinic");
+            //}
+            //else
+            //{
+            //    objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+            //    //  ds = objGeneral.GetDatasetByCommand_SP("Get_ReportAllDetilsOfClinic");
 
-            if (RoleId == 3)
-            {
-
-
-                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
-                ds = objGeneral.GetDatasetByCommand_SP("Get_ReportSubAdminDetilsOfClinic");
-            }
-            else
-            {
-                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
-                //  ds = objGeneral.GetDatasetByCommand_SP("Get_ReportAllDetilsOfClinic");
-
-
-                ds = objGeneral.GetDatasetByCommand_SP("Get_ReportAllConsultationDetilsOfClinic");
-            }
-
-
-
-
+            //}
+            objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+            ds = objGeneral.GetDatasetByCommand_SP("Get_ReportAllConsultationDetilsOfClinic");
         }
         catch (Exception ex)
         {
@@ -2122,7 +2112,7 @@ public class invoiceDetils
 }
 
 [Serializable]
-public class LabDetails
+public class LabDetails1
 {
     public long Labid;
 

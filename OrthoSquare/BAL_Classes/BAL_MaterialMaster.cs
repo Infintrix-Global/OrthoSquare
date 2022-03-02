@@ -46,6 +46,26 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
+        public DataTable MaterialSelectID(string MaterialName)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                General objGeneral = new General();
+
+
+                strQuery = "Select * from MaterialMaster where  IsActive =1 ";
+                strQuery += " and MaterialName like '%" + MaterialName + "%'";
+
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
+        }
+
         public DataTable GetAllMaterial(int Mid)
         {
            
@@ -54,7 +74,6 @@ namespace OrthoSquare.BAL_Classes
                     strQuery += " and MM.MaterialId ='" + Mid + "'";
             strQuery += "  ORDER BY MM.MaterialId DESC";
                 return objGeneral.GetDatasetByCommand(strQuery);
-
 
                 //objGeneral.AddParameterWithValueToSQLCommand("@IsActive", true);
                 //objGeneral.AddParameterWithValueToSQLCommand("@MaterialName","");

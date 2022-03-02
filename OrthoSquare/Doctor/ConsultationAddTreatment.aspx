@@ -341,7 +341,7 @@
                                     ID="AutoCompleteExtender1" runat="server" FirstRowSelected="false">
                                 </cc1:AutoCompleteExtender>
 
-                                  <asp:RequiredFieldValidator ID="RequiredFieldddl_DocterDetils" runat="server" ControlToValidate="txtDocter" 
+                                <asp:RequiredFieldValidator ID="RequiredFieldddl_DocterDetils" runat="server" ControlToValidate="txtDocter"
                                     SetFocusOnError="true" ErrorMessage="Please Select Doctor" ForeColor="Red"></asp:RequiredFieldValidator>
 
 
@@ -509,7 +509,11 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
 
-
+                                                    <asp:TemplateField HeaderText="Date">
+                                                        <ItemTemplate>
+                                                         <asp:Label ID="lblDate" runat="server" Text='<%# Eval("CreateOn","{0:dd/MM/yyyy}") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
 
                                                 </Columns>
                                                 <PagerStyle HorizontalAlign="Right" CssClass="pagination-ys" />

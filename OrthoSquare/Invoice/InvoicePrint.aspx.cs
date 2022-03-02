@@ -102,7 +102,7 @@ namespace OrthoSquare.Invoice
 
 
                         lblpaidAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["PaidAmount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
-                        lblpendingAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["PendingAmount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+                        lblpendingAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["Pending_Amount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
 
 
                         lblTotalCoust1.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalCost"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));

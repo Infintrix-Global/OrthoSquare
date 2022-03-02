@@ -9,6 +9,17 @@
     <link rel='stylesheet' href='https://afeld.github.io/emoji-css/emoji.css'>
 
     <link rel="stylesheet" href="../feedback/css/style.css">
+
+    <script type="text/javascript">
+        function checkDate1(sender, args) {
+            if (sender._selectedDate > new Date()) {
+                alert("You cannot select future Date!");
+                sender._selectedDate = new Date();
+                // set the date back to the current date
+                sender._textbox.set_Value(sender._selectedDate.format(sender._format))
+            }
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
@@ -47,34 +58,9 @@
                                     <i class="icon-settings font-red-sunglo"></i>
                                     <span class="caption-subject bold uppercase">Generate Invoice</span>
                                 </div>
-                                <%-- <div class="actions">
-							<div class="btn-group">
-								<a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown">Actions
-												<i class="fa fa-angle-down"></i>
-								</a>
-								<ul class="dropdown-menu pull-right">
-									<li>
-										<a href="javascript:;">
-											<i class="fa fa-pencil"></i>Edit </a>
-									</li>
-									<li>
-										<a href="javascript:;">
-											<i class="fa fa-trash-o"></i>Delete </a>
-									</li>
-									<li>
-										<a href="javascript:;">
-											<i class="fa fa-ban"></i>Ban </a>
-									</li>
-									<li class="divider"></li>
-									<li>
-										<a href="javascript:;">Make admin </a>
-									</li>
-								</ul>
-							</div>
-						</div>--%>
+                                
                             </div>
-                            <%--    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-         <ContentTemplate>--%>
+                        
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
@@ -111,6 +97,13 @@
                                                     SetFocusOnError="true" ErrorMessage="Please Enter patient" ForeColor="Red"></asp:RequiredFieldValidator>
                                             </span>
                                         </div>
+                                        <div class="col-sm-3">
+                                             <label>Payment Date</label>
+                                            <asp:TextBox ID="txtPayDate" class="form-control" autocomplete="Off" placeholder="Payment Date"  TabIndex="5" AutoPostBack="true" runat="server"></asp:TextBox>
+                                            <asp:CalendarExtender ID="txtBDate_CalendarExtender" runat="server" Enabled="True" OnClientDateSelectionChanged="checkDate1"
+                                                TargetControlID="txtPayDate" Format="dd-MM-yyyy">
+                                            </asp:CalendarExtender>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -132,8 +125,7 @@
 
 
                                         </div>
-                                        <div class="col-sm-3">
-                                        </div>
+                                        
                                         <div class="col-sm-3">
                                         </div>
                                         <div class="col-sm-3">
@@ -217,9 +209,7 @@
                                                     </asp:TemplateField>
                                                 </Columns>
 
-                                                <%-- <EmptyDataTemplate>
-                                        There is no Record exist.
-                                    </EmptyDataTemplate>--%>
+
                                             </asp:GridView>
 
 
@@ -235,59 +225,7 @@
                                 <div class="col-xs-12">
                                     <div class="form-group">
 
-                                        <%--<asp:GridView ID="Gridinvoice" runat="server" Width="100%" ShowFooter="true" class=""
-										AutoGenerateColumns="false" OnRowDataBound="Gridinvoice_RowDataBound">
-										<Columns>
 
-
-											<asp:BoundField DataField="RowNumber" HeaderText="NO." />
-											<asp:TemplateField HeaderText="TREATMENTS"   ItemStyle-Width="5%">
-												<ItemTemplate>
-                                                 
-													<asp:DropDownList ID="ddlTreatment" runat="server"></asp:DropDownList>
-													
-												</ItemTemplate>
-											</asp:TemplateField>
-											<asp:TemplateField HeaderText="UNIT" ItemStyle-Width="10%">
-												<ItemTemplate>
-													<asp:TextBox ID="txtSeatings" Text="" runat="server"></asp:TextBox>
-												</ItemTemplate>
-											</asp:TemplateField>
-											<asp:TemplateField HeaderText="Cost(₹)"  ItemStyle-Width="10%">
-												<ItemTemplate>
-													<asp:TextBox ID="txtCost" runat="server"></asp:TextBox>
-												</ItemTemplate>
-											  
-											</asp:TemplateField>
-										   
-												<asp:TemplateField HeaderText="DISCOUNT(₹)"  ItemStyle-Width="10%">
-												<ItemTemplate>
-													<asp:TextBox ID="txtDiscount" runat="server"></asp:TextBox>
-												</ItemTemplate>
-											</asp:TemplateField>  
-										   
-										  
-										   
-												<asp:TemplateField HeaderText="TAX"  ItemStyle-Width="10%">
-												<ItemTemplate>
-													
-                                                    <asp:DropDownList ID="ddlTAX" runat="server" AutoPostBack="true" OnSelectedIndexChanged="Invoice_SelectedIndexChanged">
-                                                         <asp:ListItem  Value="0">------ Select ------</asp:ListItem>
-                                                          <asp:ListItem  Value ="12"></asp:ListItem>
-                                                    </asp:DropDownList>
-                                                
-                                                
-                                                </ItemTemplate>
-
-												  <FooterStyle HorizontalAlign="Right" />
-												<FooterTemplate>
-													<asp:Button ID="ButtonAdd" OnClick="ButtonAddGridInvoice_Click" runat="server" CausesValidation="false"
-														Text="Add New Row" />
-												</FooterTemplate>
-											</asp:TemplateField> 
-
-										</Columns>
-									</asp:GridView>--%>
 
                                         <asp:GridView ID="GridinvoiceDetails" runat="server" AllowPaging="true" AutoGenerateColumns="false"
                                             class="table table-bordered table-hover">
@@ -391,7 +329,7 @@
 
                                             <label>PENDING AMOUNT(₹)</label>
                                             <br />
-                                            <asp:TextBox ID="txtPendingAmount" class="form-control" runat="server"></asp:TextBox>
+                                            <asp:TextBox ID="txtPendingAmount" ReadOnly="true" class="form-control" runat="server"></asp:TextBox>
 
                                         </div>
 

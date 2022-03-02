@@ -31,14 +31,24 @@ namespace OrthoSquare.Help
 
         protected void btnissue_Click(object sender, EventArgs e)
         {
+            int Dcotorid = 0;
+            int ClinicId = 0;
+            if(SessionUtilities.RoleID==3)
+            {
+                Dcotorid = SessionUtilities.Empid;
+            }
+            else
+            {
+                ClinicId = SessionUtilities.Empid;
+            }
 
 
-            objClinic.AddIssue(SessionUtilities.UserID,ddlIssueType .SelectedItem .Text ,txtTitle .Text  ,txtissue.Text,lblAttachment .Text );
+            objClinic.AddIssue(SessionUtilities.Empid,ddlIssueType .SelectedItem .Text ,txtTitle .Text  ,txtissue.Text,lblAttachment .Text , Dcotorid, ClinicId);
             BindGridIssue();
             Edit.Visible = true;
             Add.Visible = false;
             SendHelpMail(ddlIssueType.SelectedItem.Text, txtTitle.Text.Trim(), txtissue.Text.Trim());
-
+             
 
             txtissue.Text = "";
         

@@ -293,6 +293,30 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
+        public DataTable GetAllDocterCollectionAmount(int Cid, int Did, string FromDate, string Todate)
+        {
+
+            General objGeneral11 = new General();
+            // strQuery = "Select IsNull(SUM(PaidAmount), 0) as PaidAmount,IsNull(SUM(PendingAmount), 0) as PendingAmount,IsNull(SUM(GrandTotal), 0) as Total from InvoiceMaster where ";
+            strQuery = " Select IsNull(SUM(ID.GrandTotal), 0) as Total ,IM.PaidAmount  ";
+            strQuery += "  From InvoiceMaster IM  Join InvoiceDetails ID on IM.InvoiceNo=ID.InvoiceNo where 1=1 ";
+
+
+            if (Cid > 0)
+                strQuery += " and IM.ClinicID='" + Cid + "'";
+            if (Did > 0)
+                strQuery += " and IM.DoctorID='" + Did + "'";
+
+            if (FromDate != "" && FromDate != "")
+                strQuery += " and convert(date,IM.PayDate,105) between convert(date,@FromDate,105) and convert(date,@Todate,105)";
+            strQuery += " Group By IM.PaidAmount ";
+         
+            objGeneral11.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+            objGeneral11.AddParameterWithValueToSQLCommand("@Todate", Todate);
+            return objGeneral11.GetDatasetByCommand(strQuery);
+
+        }
+
         public DataTable GetAllDocterCollectionReportNew1(string Cid, string Did)
         {
             strQuery = "Select DBC.DoctorId,D.FirstName +' ' +D.LastName as DoctorName,D.Mobile1,C.ClinicName,DBC.ClinicId,DBC.DoctorID,D.isDeleted from tbl_DoctorDetails D   ";

@@ -985,7 +985,7 @@ namespace OrthoSquare.Doctor
                     ToothNo1 = ToothNo1.Remove(ToothNo1.Length - 1);
                 }
 
-                LabDetails objLab = new LabDetails()
+                LabDetails1 objLab = new LabDetails1()
                 {
 
                     Labid = 0,

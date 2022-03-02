@@ -112,14 +112,14 @@ namespace OrthoSquare.BAL_Classes
             }
         }
 
-        public void AddIssue(int empid, string IssueType, string Title, string Description, string Attachment)
+        public void AddIssue(int empid, string IssueType, string Title, string Description, string Attachment,int Docotrid,int Clinicid )
         {
 
             try
             {
                 General objGeneral = new General();
                 string dateTime1 = Convert.ToDateTime(DateTime.Now.ToShortDateString()).ToString("yyyy-MM-dd");
-                string query = "insert into ReportIssue(UserId,IssueType,Title,Description,Attachment,Date,Status,CreatedBy,CreatedOn,IsActive)values(@empid,@IssueType,@Title,@Description,@Attachment,GETDATE(),@Status,@empid,GETDATE(),1)";
+                string query = "insert into ReportIssue(UserId,IssueType,Title,Description,Attachment,Date,Status,CreatedBy,CreatedOn,IsActive,ClinicId,DoctorId)values(@empid,@IssueType,@Title,@Description,@Attachment,GETDATE(),@Status,@empid,GETDATE(),1,@Clinicid,@Docotrid)";
 
                 objGeneral.AddParameterWithValueToSQLCommand("@empid", empid);
                 objGeneral.AddParameterWithValueToSQLCommand("@IssueType", IssueType);
@@ -127,6 +127,8 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@Description", Description);
                 objGeneral.AddParameterWithValueToSQLCommand("@Attachment", Attachment);
                 objGeneral.AddParameterWithValueToSQLCommand("@Status", "Pending");
+                objGeneral.AddParameterWithValueToSQLCommand("@Docotrid", Docotrid);
+                objGeneral.AddParameterWithValueToSQLCommand("@Clinicid", Clinicid);
                 objGeneral.GetExecuteNonQueryByCommand(query);
             }
             catch (Exception ex)

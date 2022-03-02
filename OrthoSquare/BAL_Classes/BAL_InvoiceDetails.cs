@@ -11,7 +11,7 @@ namespace OrthoSquare.BAL_Classes
         General objGeneral = new General();
         DataSet ds = new DataSet();
         private string strQuery = string.Empty;
-        public int Add_InvoiceDetails(int invid, int InvoiceNo, int patientid, int DoctorID1,int Cid, int TreatmentID, string Unit, string Cost, string Discount, string Tax, decimal TotalCost, decimal TotalDiscount, decimal TotalTax, decimal GrandTotal, string PaidAmount, string PendingAmount, int CreateID)
+        public int Add_InvoiceDetails(int invid, int InvoiceNo, int patientid, int DoctorID1,int Cid, int TreatmentID, string Unit, string Cost, string Discount, string Tax, decimal TotalCost, decimal TotalDiscount, decimal TotalTax, decimal GrandTotal, string PaidAmount, string PendingAmount, int CreateID,string PayDate)
         {
             int isInserted = -1;
             try
@@ -39,7 +39,8 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@PaidAmount", PaidAmount);
                 objGeneral.AddParameterWithValueToSQLCommand("@PendingAmount", Convert .ToDecimal (PendingAmount));
                 objGeneral.AddParameterWithValueToSQLCommand("@CreateID", CreateID);
-
+                objGeneral.AddParameterWithValueToSQLCommand("@PayDate", objGeneral.getDatetime(PayDate));
+                
 
 
                 if (invid > 0)
@@ -258,8 +259,9 @@ namespace OrthoSquare.BAL_Classes
         public DataTable GetAllInvoiceDetailsFid(int InvCode,string InvoiceCode)
         {
             //strQuery = "  Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,DD.LastName as DLastName from InvoiceMaster IM join PatientMaster PM on PM.patientid= IM.patientid ";
-            strQuery += " Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,DD.LastName as DLastName from InvoiceMaster IM join PatientMaster PM on PM.patientid= IM.patientid ";
+            strQuery += " Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,DD.LastName as DLastName ,IM.GrandTotal - IM.PaidAmount as Pending_Amount  from InvoiceMaster IM join PatientMaster PM on PM.patientid= IM.patientid ";
             strQuery += " Join tbl_DoctorDetails DD on DD.DoctorID = IM.DoctorID Join tbl_ClinicDetails CD on CD.ClinicID =IM.ClinicID    where IM.InvoiceNo ='" + InvCode + "' and IM.InvoiceCode='" + InvoiceCode + "'";
+           
             return objGeneral.GetDatasetByCommand(strQuery);
 
         }

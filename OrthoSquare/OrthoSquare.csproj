@@ -102,6 +102,7 @@
     <Content Include="admin_2\login.html" />
     <Content Include="admin_2\super-admin.html" />
     <Content Include="admin_2\ui_tabs_accordions_navs.html" />
+    <Content Include="assets\global\css\components.min.css" />
     <Content Include="assets\global\plugins\bootstrap\css\bootstrap-multiselect.min.css" />
     <Content Include="assets\global\plugins\bootstrap\js\bootstrap-multiselect.min.js" />
     <Content Include="assets\layouts\layout2\css\style.min.css" />
@@ -978,6 +979,7 @@
     <Content Include="Images\minus.png" />
     <Content Include="Images\no-photo.jpg" />
     <Content Include="Images\Orthosquarelogo-s.jpg" />
+    <Content Include="Images\plus.png" />
     <Content Include="Images\printdetail.jpg" />
     <Content Include="Images\remove-icon-png-26.png" />
     <Content Include="Images\right15x15.png" />
@@ -1016,7 +1018,9 @@
     <Content Include="Master\clinic-setup.aspx" />
     <Content Include="Master\DentalCategory.aspx" />
     <Content Include="Master\ExpenseMaster.aspx" />
+    <Content Include="Master\LabDetails.aspx" />
     <Content Include="Master\LabMaster.aspx" />
+    <Content Include="Master\LeadDetailsNew.aspx" />
     <Content Include="Master\ManageMaterialStock.aspx" />
     <Content Include="Master\MaterialInOutDetails.aspx" />
     <Content Include="Master\MaterialMaster.aspx" />
@@ -1065,6 +1069,7 @@
     <Content Include="Report\MaterialPurchased.aspx" />
     <Content Include="Report\MaterialStockHistory.aspx" />
     <Content Include="Report\PatientCollectionReport.aspx" />
+    <Content Include="Report\PaymentModeReport.aspx" />
     <Content Include="Report\TreatmentbyPatientReport.aspx" />
     <Content Include="Report\ViewClinicwishExpenseReport.aspx" />
     <Content Include="Service1.svc" />
@@ -1153,7 +1158,6 @@
     <Content Include="assets\apps\scripts\timeline.min.html" />
     <Content Include="assets\apps\scripts\todo-2.min.js" />
     <Content Include="assets\apps\scripts\todo.min.js" />
-    <Content Include="assets\global\css\components.min.css" />
     <Content Include="assets\global\css\plugins.min.css" />
     <Content Include="assets\global\img\accordion-plusminus.png" />
     <Content Include="assets\global\img\datatable-row-openclose.png" />
@@ -1623,6 +1627,7 @@
     <Compile Include="BAL_Classes\BAL_Expense.cs" />
     <Compile Include="BAL_Classes\BAL_FollowupMode.cs" />
     <Compile Include="BAL_Classes\BAL_InvoiceDetails.cs" />
+    <Compile Include="BAL_Classes\BAL_LabMasterNew.cs" />
     <Compile Include="BAL_Classes\BAL_LabsDetails.cs" />
     <Compile Include="BAL_Classes\BAL_Login.cs" />
     <Compile Include="BAL_Classes\BAL_MaterialMaster.cs" />
@@ -2170,12 +2175,26 @@
     <Compile Include="Master\ExpenseMaster.aspx.designer.cs">
       <DependentUpon>ExpenseMaster.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Master\LabDetails.aspx.cs">
+      <DependentUpon>LabDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Master\LabDetails.aspx.designer.cs">
+      <DependentUpon>LabDetails.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Master\LabMaster.aspx.cs">
       <DependentUpon>LabMaster.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Master\LabMaster.aspx.designer.cs">
       <DependentUpon>LabMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Master\LeadDetailsNew.aspx.cs">
+      <DependentUpon>LeadDetailsNew.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Master\LeadDetailsNew.aspx.designer.cs">
+      <DependentUpon>LeadDetailsNew.aspx</DependentUpon>
     </Compile>
     <Compile Include="Master\ManageMaterialStock.aspx.cs">
       <DependentUpon>ManageMaterialStock.aspx</DependentUpon>
@@ -2444,6 +2463,13 @@
     <Compile Include="Report\PatientCollectionReport.aspx.designer.cs">
       <DependentUpon>PatientCollectionReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Report\PaymentModeReport.aspx.cs">
+      <DependentUpon>PaymentModeReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\PaymentModeReport.aspx.designer.cs">
+      <DependentUpon>PaymentModeReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Report\TreatmentbyPatientReport.aspx.cs">
       <DependentUpon>TreatmentbyPatientReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2514,6 +2540,7 @@
     <Folder Include="EmployeeProfile\" />
     <Folder Include="ExlData\" />
     <Folder Include="Files\" />
+    <Folder Include="JS1\" />
     <Folder Include="temp\" />
     <Folder Include="TreatmentDoc\" />
   </ItemGroup>

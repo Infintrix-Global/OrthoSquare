@@ -46,8 +46,7 @@ namespace OrthoSquare.Report
                 {
                     bindClinic();
                     bindDoctorMasterNew();
-                    //  ddlClinic.Enabled = false;
-                    //   bindDoctorMaster(SessionUtilities.Empid);
+                 
                     getAllCollection();
 
                 }
@@ -97,7 +96,6 @@ namespace OrthoSquare.Report
 
             }
             ddlClinic.DataSource = dt;
-
 
             ddlClinic.DataValueField = "ClinicID";
             ddlClinic.DataTextField = "ClinicName";
@@ -225,12 +223,30 @@ namespace OrthoSquare.Report
                 //  Label lblDoctor = (Label)e.Row.FindControl("lblDoctor");
                 //    Label lblClinicName = (Label)e.Row.FindControl("lblClinicName");
 
-                DataTable dt =objExp.GetAllDocterCollectionReportNew11(Convert .ToInt32 (lblClinicID.Text ), Convert.ToInt32(lblDoctor.Text), txtSFromFollowDate.Text.Trim(), txtSToFollowDate.Text.Trim());
+                // DataTable dt =objExp.GetAllDocterCollectionReportNew11(Convert .ToInt32 (lblClinicID.Text ), Convert.ToInt32(lblDoctor.Text), txtSFromFollowDate.Text.Trim(), txtSToFollowDate.Text.Trim());
+                DataTable dt = objExp.GetAllDocterCollectionAmount(Convert.ToInt32(lblClinicID.Text), Convert.ToInt32(lblDoctor.Text), txtSFromFollowDate.Text.Trim(), txtSToFollowDate.Text.Trim());
+
+                
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    lblPaidAmount.Text = dt.Rows[0]["PaidAmount"].ToString();
-                    lblPendingAmount.Text = dt.Rows[0]["PendingAmount"].ToString();
-                    lblTotal.Text = dt.Rows[0]["Total"].ToString();
+                    decimal PaidAmount = 0;
+                    decimal TotalAmount = 0;
+                    decimal Pending = 0;
+
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        PaidAmount += Convert.ToDecimal(dt.Rows[i]["PaidAmount"]);
+                        TotalAmount += Convert.ToDecimal(dt.Rows[i]["Total"]);
+                       
+                    }
+                    Pending = TotalAmount - PaidAmount;
+                    lblPaidAmount.Text = PaidAmount.ToString();
+                    lblPendingAmount.Text = Pending.ToString();
+                    lblTotal.Text = TotalAmount.ToString();
+
+                    //lblPaidAmount.Text = dt.Rows[0]["PaidAmount"].ToString();
+                    //lblPendingAmount.Text = dt.Rows[0]["PendingAmount"].ToString();
+                    //lblTotal.Text = dt.Rows[0]["Total"].ToString();
                 }
                 else
                 {
