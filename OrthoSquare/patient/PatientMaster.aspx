@@ -124,31 +124,7 @@
                             <i class="icon-settings font-red-sunglo"></i>
                             <span class="caption-subject bold uppercase">Patient</span>
                         </div>
-                        <%-- <div class="actions">
-							<div class="btn-group">
-								<a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown">Actions
-												<i class="fa fa-angle-down"></i>
-								</a>
-								<ul class="dropdown-menu pull-right">
-									<li>
-										<a href="javascript:;">
-											<i class="fa fa-pencil"></i>Edit </a>
-									</li>
-									<li>
-										<a href="javascript:;">
-											<i class="fa fa-trash-o"></i>Delete </a>
-									</li>
-									<li>
-										<a href="javascript:;">
-											<i class="fa fa-ban"></i>Ban </a>
-									</li>
-									<li class="divider"></li>
-									<li>
-										<a href="javascript:;">Make admin </a>
-									</li>
-								</ul>
-							</div>
-						</div>--%>
+                        
                     </div>
                     <div class="tabbable-custom ">
                         <div class="row">
@@ -1279,12 +1255,13 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <%--Dhaval--%>
-                                    <asp:TemplateField HeaderText="Patient Status">
+                                    <asp:TemplateField Visible="false" HeaderText="Patient Status">
                                         <ItemTemplate>
                                             <asp:Label ID="lblPstatus" runat="server" Text='<%# Eval("PCstatus") %>'></asp:Label>
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
+
                                     <asp:TemplateField HeaderText="Clinic Name" Visible="false">
                                         <ItemTemplate>
                                             <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("ClinicName") %>'></asp:Label>

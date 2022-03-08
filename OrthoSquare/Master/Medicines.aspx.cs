@@ -7,55 +7,105 @@ using System.Web.UI.WebControls;
 using OrthoSquare.BAL_Classes;
 using System.Data;
 using OrthoSquare.Utility;
-
+using System.Runtime.InteropServices;
 namespace OrthoSquare.Master
 {
-    public partial class UnitMaster : System.Web.UI.Page
+    public partial class Medicines : System.Web.UI.Page
     {
+        Bal_MaterilaType objMT = new Bal_MaterilaType();
         Bal_UnitMaster objUnit = new Bal_UnitMaster();
+        BAL_Medicines objMedicines = new BAL_Medicines();
+
         public static DataTable AllData = new DataTable();
         General objGeneral = new General();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                Session["Searched"] = null;
-                getAllUnit();
+                MaterialType();
+                BindUnit();
+                getAllMedicines();
             }
         }
 
-        private long UnitId
+        private long MedicinesId
         {
             get
             {
-                if (ViewState["UnitId"] != null)
+                if (ViewState["MedicinesId"] != null)
                 {
-                    return (long)ViewState["UnitId"];
+                    return (long)ViewState["MedicinesId"];
                 }
                 return 0;
             }
             set
             {
-                ViewState["UnitId"] = value;
+                ViewState["MedicinesId"] = value;
             }
         }
 
-        public DataTable getAllUnit()
+        public void MaterialType()
         {
             try
             {
-                string IsMedi = "";
+                ddlMaterialType.DataSource = objMT.GetAllMaterialType("", "Medicine");
+                ddlMaterialType.DataValueField = "MaterialTypeId";
+                ddlMaterialType.DataTextField = "MaterialName";
+                ddlMaterialType.DataBind();
+                ddlMaterialType.Items.Insert(0, new ListItem("--- Select Medicines Type---", "0"));
 
-                if (RadioBtnIsMedicalSearch.SelectedValue == "All")
+                ddlMaterialTypeSearch.DataSource = objMT.GetAllMaterialType("", "Material");
+                ddlMaterialTypeSearch.DataValueField = "MaterialTypeId";
+                ddlMaterialTypeSearch.DataTextField = "MaterialName";
+                ddlMaterialTypeSearch.DataBind();
+                ddlMaterialTypeSearch.Items.Insert(0, new ListItem("--- Select Medicines Type---", "0"));
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public void BindUnit()
+        {
+            try
+            {
+                DataTable dt = objUnit.GetAllUnit("", "Medicine");
+                ddlUnit.DataSource = dt;
+                ddlUnit.DataValueField = "UnitId";
+                ddlUnit.DataTextField = "UnitName";
+                ddlUnit.DataBind();
+                ddlUnit.Items.Insert(0, new ListItem("--- Select Unit---", "0"));
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public DataTable getAllMedicines()
+        {
+            try
+            {
+                string MaterialType = "";
+
+                if (ddlMaterialType.SelectedValue == "0")
                 {
-                    IsMedi = "";
+                    MaterialType = "";
                 }
                 else
                 {
-                    IsMedi = RadioBtnIsMedicalSearch.SelectedValue;
+                    MaterialType = ddlMaterialType.SelectedValue;
                 }
 
-                AllData = objUnit.GetAllUnit(txtSearch.Text.Trim(), IsMedi);
+                AllData = objMedicines.GetAllMedicines(txtMedicinesSearch.Text.Trim(), MaterialType);
                 gvShow.DataSource = AllData;
                 gvShow.DataBind();
 
@@ -77,25 +127,23 @@ namespace OrthoSquare.Master
                 int _isInserted = -1;
 
 
-                _isInserted = objUnit.AddUnit(UnitId, txtAdd.Text, RadioBtnIsMedical.SelectedValue);
+                _isInserted = objMedicines.AddMedicines(MedicinesId, Convert.ToInt32(ddlMaterialType.SelectedValue), txtMedicines.Text.Trim(), txtCompanyName.Text.Trim(), Convert.ToInt32(ddlUnit.SelectedValue),txtPrice.Text);
 
                 if (_isInserted == -1)
                 {
-                    string CloseWindow;
-                    CloseWindow = "alert('Failed to Add Unit')";
-                    ScriptManager.RegisterStartupScript(UpdatePanel1, UpdatePanel1.GetType(), "CloseWindow", CloseWindow, true);
 
+
+                    string CloseWindow;
+                    CloseWindow = "alert('Failed to Add Medicines')";
+                    ScriptManager.RegisterStartupScript(UpdatePanel1, UpdatePanel1.GetType(), "CloseWindow", CloseWindow, true);
                 }
                 else
                 {
-
                     string CloseWindow;
-                    CloseWindow = "alert('Unit Added Successfully')";
+                    CloseWindow = "alert('Medicines Added Successfully')";
                     ScriptManager.RegisterStartupScript(UpdatePanel1, UpdatePanel1.GetType(), "CloseWindow", CloseWindow, true);
 
-                    txtAdd.Text = "";
-                    RadioBtnIsMedical.ClearSelection();
-                    getAllUnit();
+                    ClearData();
 
                 }
             }
@@ -106,25 +154,55 @@ namespace OrthoSquare.Master
             }
         }
 
+
+        public void CleartextBoxes(Control parent)
+        {
+            foreach (Control c in parent.Controls)
+            {
+
+                if ((c.GetType() == typeof(TextBox)))
+                {
+
+
+
+                    ((TextBox)(c)).Text = "";
+
+                }
+
+
+                if (c.HasControls())
+                {
+
+                    CleartextBoxes(c);
+
+                }
+
+            }
+        }
+
+
+        public void ClearData()
+        {
+            CleartextBoxes(this);
+            BindUnit();
+            MaterialType();
+            getAllMedicines();
+        }
+
+
+
         protected void btnClear_Click(object sender, EventArgs e)
         {
-            txtSearch.Text = "";
-            RadioBtnIsMedicalSearch.ClearSelection();
-            RadioBtnIsMedicalSearch.Items.FindByText("All").Selected = true;
-            getAllUnit();
+            ClearData();
 
         }
 
-        protected void RadioBtnIsMedicalSearch_Select(object sender, EventArgs e)
-        {
 
-            getAllUnit();
-        }
         protected void btSearch_Click(object sender, EventArgs e)
         {
             try
             {
-                getAllUnit();
+                getAllMedicines();
             }
             catch (Exception ex)
             {
@@ -136,7 +214,7 @@ namespace OrthoSquare.Master
         protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvShow.PageIndex = e.NewPageIndex;
-            getAllUnit();
+            getAllMedicines();
         }
 
 
@@ -148,10 +226,10 @@ namespace OrthoSquare.Master
             {
                 int ID = Convert.ToInt32(gvShow.DataKeys[e.RowIndex].Value);
 
-                int _isDeleted = objUnit.DeleteUnit(ID);
+                int _isDeleted = objMedicines.DeleteMedicines(ID);
                 if (_isDeleted != -1)
                 {
-                    getAllUnit();
+                    getAllMedicines();
                 }
             }
             catch (Exception ex)
@@ -193,17 +271,15 @@ namespace OrthoSquare.Master
                 sortingDirection = "Asc";
 
             }
-            DataView sortedView = new DataView(getAllUnit());
+            DataView sortedView = new DataView(getAllMedicines());
             sortedView.Sort = e.SortExpression + " " + sortingDirection;
             gvShow.DataSource = sortedView;
             gvShow.DataBind();
         }
 
-
-
         protected void gvShow_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Edit1")
+            if (e.CommandName == "UpdateDetials")
             {
                 try
                 {
@@ -211,14 +287,22 @@ namespace OrthoSquare.Master
                     Edit.Visible = false;
                     Add.Visible = true;
                     int Id = Convert.ToInt32(e.CommandArgument);
-                    UnitId = Id;
-                    DataTable Dt = objUnit.GetSelectUnit(Id);
+                    MedicinesId = Id;
+                    DataTable Dt = objMedicines.GetSelectMedicines(Id);
                     if (Dt != null && Dt.Rows.Count > 0)
                     {
-                        txtAdd.Text = Dt.Rows[0]["UnitName"].ToString();
-                        if (Dt.Rows[0]["IsMedical"].ToString() != "")
+                        txtMedicines.Text = Dt.Rows[0]["MedicinesName"].ToString();
+                        txtCompanyName.Text = Dt.Rows[0]["MedicinesCompany"].ToString();
+                        txtPrice.Text = Dt.Rows[0]["Price"].ToString();
+                        MaterialType();
+                        if (Dt.Rows[0]["MaterialTypeId"].ToString() != "")
                         {
-                            RadioBtnIsMedical.Items.FindByText(Dt.Rows[0]["IsMedical"].ToString()).Selected = true;
+                            ddlMaterialType.SelectedValue = Dt.Rows[0]["MaterialTypeId"].ToString();
+                        }
+                        BindUnit();
+                        if (Dt.Rows[0]["UnitId"].ToString() != "")
+                        {
+                            ddlUnit.SelectedValue = Dt.Rows[0]["UnitId"].ToString();
                         }
                     }
                 }
@@ -236,17 +320,15 @@ namespace OrthoSquare.Master
             Edit.Visible = true;
             Add.Visible = false;
 
-            getAllUnit();
+            getAllMedicines();
 
         }
 
         protected void btnAddNew_Click(object sender, EventArgs e)
         {
-            txtAdd.Text = "";
+            ClearData();
             Edit.Visible = false;
             Add.Visible = true;
         }
-
-
     }
 }

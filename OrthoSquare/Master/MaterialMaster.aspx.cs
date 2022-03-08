@@ -16,6 +16,7 @@ namespace OrthoSquare.Master
         BAL_MaterialMaster objM = new BAL_MaterialMaster();
         BAL_Brand objBrand = new BAL_Brand();
         BAL_Pack objPack = new BAL_Pack();
+        Bal_MaterilaType objMtype = new Bal_MaterilaType();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -23,6 +24,7 @@ namespace OrthoSquare.Master
                 Session["Searched"] = null;
                 BindBrand();
                 BindPack();
+                MaterialType();
                 getAllTreatment();
             }
         }
@@ -43,6 +45,22 @@ namespace OrthoSquare.Master
             }
         }
 
+        public void MaterialType()
+        {
+            try
+            {
+                ddlMaterialType.DataSource = objMtype.GetAllMaterialType("", "Material");
+                ddlMaterialType.DataValueField = "MaterialTypeId";
+                ddlMaterialType.DataTextField = "MaterialName";
+                ddlMaterialType.DataBind();
+                ddlMaterialType.Items.Insert(0, new ListItem("--- Select Material Type---", "0"));
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
         public void BindBrand()
         {
             ddlBrand.DataSource = objBrand.GetAllBrand();
@@ -79,7 +97,7 @@ namespace OrthoSquare.Master
                 int _isInserted = -1;
 
 
-                _isInserted = objM.AddMaterial(Mid, txtAdd.Text, Convert.ToInt32(ddlBrand.SelectedValue), Convert.ToInt32(ddlPack.SelectedValue), txtPrice.Text);
+                _isInserted = objM.AddMaterial(Mid,ddlMaterialType.SelectedValue, txtAdd.Text, Convert.ToInt32(ddlBrand.SelectedValue), Convert.ToInt32(ddlPack.SelectedValue), txtPrice.Text);
 
                 if (_isInserted == -1)
                 {
@@ -212,6 +230,12 @@ namespace OrthoSquare.Master
                 {
                     ddlPack.SelectedValue = dt.Rows[0]["PackId"].ToString();
                 }
+                MaterialType();
+                if (dt.Rows[0]["MaterialTypeId"].ToString() != "")
+                {
+                    ddlMaterialType.SelectedValue = dt.Rows[0]["MaterialTypeId"].ToString();
+                }
+
                 Edit.Visible = false;
                 Add.Visible = true;
             }

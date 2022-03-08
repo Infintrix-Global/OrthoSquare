@@ -77,8 +77,8 @@ namespace OrthoSquare.BAL_Classes
                 }
                 else
                 {
-                    strQuery = "insert into  TreatmentbyPatient(patientid,DoctorID,TreatmentID,StartedTreatments,TreatmentsCost,IsActive,Unit,Discount,Tex,ISInvoice)";
-                    strQuery += "  Values (@Pid,@Did,@TreatmentID,'Yes',@Cost,1,@Unit,@Discount,@Tax,1)";
+                    strQuery = "insert into  TreatmentbyPatient(patientid,DoctorID,TreatmentID,StartedTreatments,TreatmentsCost,IsActive,Unit,Discount,Tex,ISInvoice,CtrateDate)";
+                    strQuery += "  Values (@Pid,@Did,@TreatmentID,'Yes',@Cost,1,@Unit,@Discount,@Tax,1,GETDATE())";
                
                 }
 

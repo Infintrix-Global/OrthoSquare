@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OrthoSquare.Master {
-    
-    
-    public partial class UnitMaster {
-        
+namespace OrthoSquare.Master
+{
+
+
+    public partial class UnitMaster
+    {
+
         /// <summary>
         /// UpdatePanel1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
+
         /// <summary>
         /// Add control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Add;
-        
+
         /// <summary>
         /// lblMessage control.
         /// </summary>
@@ -38,7 +40,16 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMessage;
-        
+
+        /// <summary>
+        /// RadioBtnIsMedical control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList RadioBtnIsMedical;
+
         /// <summary>
         /// txtAdd control.
         /// </summary>
@@ -47,7 +58,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAdd;
-        
+
         /// <summary>
         /// RequiredtxtAdd control.
         /// </summary>
@@ -56,7 +67,16 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredtxtAdd;
-        
+
+        /// <summary>
+        /// RegularExpressionValidator27 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator27;
+
         /// <summary>
         /// btAdd control.
         /// </summary>
@@ -65,7 +85,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btAdd;
-        
+
         /// <summary>
         /// btBack control.
         /// </summary>
@@ -74,7 +94,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btBack;
-        
+
         /// <summary>
         /// Edit control.
         /// </summary>
@@ -83,7 +103,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Edit;
-        
+
         /// <summary>
         /// txtSearch control.
         /// </summary>
@@ -92,7 +112,16 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSearch;
-        
+
+        /// <summary>
+        /// RadioBtnIsMedicalSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList RadioBtnIsMedicalSearch;
+
         /// <summary>
         /// btSearch control.
         /// </summary>
@@ -101,7 +130,16 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btSearch;
-        
+
+        /// <summary>
+        /// btnClear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClear;
+
         /// <summary>
         /// btnAddNew control.
         /// </summary>
@@ -110,7 +148,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddNew;
-        
+
         /// <summary>
         /// gvShow control.
         /// </summary>

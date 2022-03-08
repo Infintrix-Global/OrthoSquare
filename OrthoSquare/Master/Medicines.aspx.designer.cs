@@ -11,7 +11,7 @@ namespace OrthoSquare.Master
 {
 
 
-    public partial class MaterialMaster
+    public partial class Medicines
     {
 
         /// <summary>
@@ -51,40 +51,40 @@ namespace OrthoSquare.Master
         protected global::System.Web.UI.WebControls.DropDownList ddlMaterialType;
 
         /// <summary>
-        /// ddlBrand control.
+        /// txtMedicines control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlBrand;
+        protected global::System.Web.UI.WebControls.TextBox txtMedicines;
 
         /// <summary>
-        /// txtAdd control.
+        /// RequiredMedicines control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAdd;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredMedicines;
 
         /// <summary>
-        /// RequiredFieldValidatorddlDesignation control.
+        /// RegularExpressionValidator27 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorddlDesignation;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator27;
 
         /// <summary>
-        /// ddlPack control.
+        /// ddlUnit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPack;
+        protected global::System.Web.UI.WebControls.DropDownList ddlUnit;
 
         /// <summary>
         /// txtPrice control.
@@ -94,6 +94,15 @@ namespace OrthoSquare.Master
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPrice;
+
+        /// <summary>
+        /// txtCompanyName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCompanyName;
 
         /// <summary>
         /// btAdd control.
@@ -123,13 +132,22 @@ namespace OrthoSquare.Master
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Edit;
 
         /// <summary>
-        /// txtSearch control.
+        /// txtMedicinesSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearch;
+        protected global::System.Web.UI.WebControls.TextBox txtMedicinesSearch;
+
+        /// <summary>
+        /// ddlMaterialTypeSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlMaterialTypeSearch;
 
         /// <summary>
         /// btSearch control.
@@ -139,6 +157,15 @@ namespace OrthoSquare.Master
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btSearch;
+
+        /// <summary>
+        /// btnClear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClear;
 
         /// <summary>
         /// btnAddNew control.

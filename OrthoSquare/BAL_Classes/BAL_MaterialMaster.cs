@@ -14,14 +14,14 @@ namespace OrthoSquare.BAL_Classes
 
 
         private string strQuery = string.Empty;
-        public int AddMaterial(long Mid, string MaterialName, int BrandId, int PackId, string Price)
+        public int AddMaterial(long Mid,string MaterialTypeId, string MaterialName, int BrandId, int PackId, string Price)
         {
             int isInserted = -1;
             try
             {
                 General objGeneral = new General();
                 objGeneral.AddParameterWithValueToSQLCommand("@MaterialName", MaterialName);
-
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialTypeId", MaterialTypeId);
                 objGeneral.AddParameterWithValueToSQLCommand("@BrandId", BrandId);
                 objGeneral.AddParameterWithValueToSQLCommand("@PackId", PackId);
                 objGeneral.AddParameterWithValueToSQLCommand("@Price", Price);
@@ -96,7 +96,7 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@BrandId", "");
                 objGeneral.AddParameterWithValueToSQLCommand("@PackId", "");
                 objGeneral.AddParameterWithValueToSQLCommand("@Price", "");
-
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialTypeId", "0");
                 objGeneral.AddParameterWithValueToSQLCommand("@MaterialId ", Mid);
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 5);
                 ds = objGeneral.GetDatasetByCommand_SP("SP_MaterialMaster");
@@ -128,6 +128,7 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@PackId", "");
                 objGeneral.AddParameterWithValueToSQLCommand("@Price", "");
                 objGeneral.AddParameterWithValueToSQLCommand("@MaterialId ", MID);
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialTypeId", "0");
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 2);
                 _isDeleted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_MaterialMaster");
             }
@@ -149,6 +150,7 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@PackId", PackId);
                 objGeneral.AddParameterWithValueToSQLCommand("@Price", Price);
                 objGeneral.AddParameterWithValueToSQLCommand("@MaterialId ", MID);
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialTypeId", "0");
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 3);
                 isUpdated = objGeneral.GetExecuteScalarByCommand_SP("SP_MaterialMaster");
             }

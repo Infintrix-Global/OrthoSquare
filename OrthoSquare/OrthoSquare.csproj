@@ -1027,6 +1027,7 @@
     <Content Include="Master\MaterialUsed.aspx" />
     <Content Include="Master\MateriaType.aspx" />
     <Content Include="Master\MedicalProblemMaster.aspx" />
+    <Content Include="Master\Medicines.aspx" />
     <Content Include="Master\PackMaster.aspx" />
     <Content Include="Master\PushNotification.aspx" />
     <Content Include="Master\ReceiveMaterialbyClinic.aspx" />
@@ -1634,6 +1635,7 @@
     <Compile Include="BAL_Classes\BAL_MaterialMaster.cs" />
     <Compile Include="BAL_Classes\Bal_MaterilaType.cs" />
     <Compile Include="BAL_Classes\BAL_MedicalProblem.cs" />
+    <Compile Include="BAL_Classes\BAL_Medicines.cs" />
     <Compile Include="BAL_Classes\BAL_Pack.cs" />
     <Compile Include="BAL_Classes\BAL_Patient.cs" />
     <Compile Include="BAL_Classes\BAL_Treatment.cs" />
@@ -2239,6 +2241,13 @@
     </Compile>
     <Compile Include="Master\MedicalProblemMaster.aspx.designer.cs">
       <DependentUpon>MedicalProblemMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Master\Medicines.aspx.cs">
+      <DependentUpon>Medicines.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Master\Medicines.aspx.designer.cs">
+      <DependentUpon>Medicines.aspx</DependentUpon>
     </Compile>
     <Compile Include="Master\PackMaster.aspx.cs">
       <DependentUpon>PackMaster.aspx</DependentUpon>
