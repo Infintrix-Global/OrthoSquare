@@ -521,5 +521,24 @@ namespace OrthoSquare.BAL_Classes
 
 
         }
+
+        public DataTable GetPatientInvoiceNo(int PatientId)
+        {
+            try
+            {
+                General objGeneral = new General();
+
+                objGeneral.AddParameterWithValueToSQLCommand("@PatientId", PatientId);
+                ds = objGeneral.GetDatasetByCommand_SP("Get_PatientInvoiceNo");
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+        }
     }
+
+   
+
 }

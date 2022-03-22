@@ -58,9 +58,9 @@
                                     <i class="icon-settings font-red-sunglo"></i>
                                     <span class="caption-subject bold uppercase">Generate Invoice</span>
                                 </div>
-                                
+
                             </div>
-                        
+
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
@@ -98,11 +98,8 @@
                                             </span>
                                         </div>
                                         <div class="col-sm-3">
-                                             <label>Payment Date</label>
-                                            <asp:TextBox ID="txtPayDate" class="form-control" autocomplete="Off" placeholder="Payment Date"  TabIndex="5" AutoPostBack="true" runat="server"></asp:TextBox>
-                                            <asp:CalendarExtender ID="txtBDate_CalendarExtender" runat="server" Enabled="True" OnClientDateSelectionChanged="checkDate1"
-                                                TargetControlID="txtPayDate" Format="dd-MM-yyyy">
-                                            </asp:CalendarExtender>
+                                            <label>Invoice No</label>
+                                            <asp:DropDownList ID="ddlInvoiceNo" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlInvoiceNo_SelectedIndexChanged" runat="server"></asp:DropDownList>
                                         </div>
 
                                     </div>
@@ -125,8 +122,14 @@
 
 
                                         </div>
-                                        
+
                                         <div class="col-sm-3">
+
+                                            <label>Payment Date</label>
+                                            <asp:TextBox ID="txtPayDate" class="form-control" autocomplete="Off" placeholder="Payment Date" TabIndex="5" AutoPostBack="true" runat="server"></asp:TextBox>
+                                            <asp:CalendarExtender ID="txtBDate_CalendarExtender" runat="server" Enabled="True" OnClientDateSelectionChanged="checkDate1"
+                                                TargetControlID="txtPayDate" Format="dd-MM-yyyy">
+                                            </asp:CalendarExtender>
                                         </div>
                                         <div class="col-sm-3">
                                         </div>

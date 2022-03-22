@@ -2051,6 +2051,26 @@ public class clsCommonMasters
     }
 
 
+    public int GetPaymentinvoiceNo()
+    {
+        try
+        {
+            General objGeneral = new General();
+            objGeneral.AddParameterWithValueToSQLCommand("@mode", 25);
+            objGeneral.AddParameterWithValueToSQLCommand("@stateID", 0);
+            objGeneral.AddParameterWithValueToSQLCommand("@Countryid", 0);
+            objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", 0);
+            return objGeneral.GetExecuteScalarByCommand_SP("GET_Common");
+        }
+        catch (Exception e)
+        {
+
+            throw e;
+        }
+
+    }
+
+
     public DataTable clinicVSExpenseMaster(string FromDate, string Todate, int ClinicID, string DoctorsID, int RoleId)
     {
         try
@@ -2585,4 +2605,24 @@ public class EnqyiryExcel
     public string Email { get; set; }
     public string Mobile  { get; set; }
  
+}
+
+
+
+
+[Serializable]
+public class MedicinesDetails
+{
+    public int ID { get; set; }
+    public int RowNumber { get; set; }
+    public string MedicinesName { get; set; }
+    public string MedicinesType { get; set; }
+    public string Dose { get; set; }
+    public string NoOfDays { get; set; }
+    public string Morning { get; set; }
+    public string Afternoon { get; set; }
+    public string Evening { get; set; }
+    public string Remarks { get; set; }
+
+
 }

@@ -54,9 +54,9 @@
                                             <asp:RequiredFieldValidator ID="RequiredMedicines" runat="server" ControlToValidate="txtMedicines"
                                                 SetFocusOnError="true" ErrorMessage="Please Enter Medicines Name" ForeColor="Red"></asp:RequiredFieldValidator>
 
-                                            <asp:RegularExpressionValidator ID="RegularExpressionValidator27" runat="server"
+                                          <%--  <asp:RegularExpressionValidator ID="RegularExpressionValidator27" runat="server"
                                                 ForeColor="Red" ErrorMessage="Only text is allowed" Display="Dynamic" ControlToValidate="txtMedicines"
-                                                SetFocusOnError="True" ValidationExpression="^\s*[a-zA-Z,\s]+\s*$"> </asp:RegularExpressionValidator>
+                                                SetFocusOnError="True" ValidationExpression="^\s*[a-zA-Z,\s]+\s*$"> </asp:RegularExpressionValidator>--%>
                                         </span>
                                     </div>
                                 </div>

@@ -33,9 +33,7 @@ namespace OrthoSquare.BAL_Classes
             return ds.Tables[0];
         }
 
-
-
-        public List<invoiceDetils> GetInvoiceDetailsyId(long PID)
+        public List<invoiceDetils> GetInvoiceDetailsyId(long PID, int invNo)
         {
             List<invoiceDetils> objtWorkorderEmployeesInfo = new List<invoiceDetils>();
             try
@@ -45,8 +43,16 @@ namespace OrthoSquare.BAL_Classes
                 //    " FROM WorkorderEmployees WE Left outer join tblEmployeePersonal Emp on WE.EmployeeID=Emp.EmployeeID " +
                 //    " WHERE  WE.WorkOrderID ='" + WorkOrderID + "' and WE.IsActive='1'";
 
+                if (invNo == 0)
+                {
+                    strQuery = "Select * from TreatmentbyPatient where IsActive =1 and ISInvoice in (2,0) and patientid='" + PID + "' and StartedTreatments ='Yes'";
 
-                strQuery = "Select * from TreatmentbyPatient where IsActive =1 and patientid='" + PID + "' and StartedTreatments ='Yes'";
+                }
+                else
+                {
+                    strQuery = "Select T.* from TreatmentbyPatient T Join InvoiceDetails InvD on T.TreatmentID=InvD.TreatmentID where T.IsActive =1 and T.ISInvoice =1 and T.patientid='" + PID + "' and InvD.InvoiceNo=" + invNo + "  and T.StartedTreatments ='Yes' ";
+
+                }
 
                 DataTable dtExpInfo = objGeneral.GetDatasetByCommand(strQuery);
                 if (dtExpInfo != null && dtExpInfo.Rows.Count > 0)
@@ -59,11 +65,11 @@ namespace OrthoSquare.BAL_Classes
 
                         if (item["TreatmentsCost"].ToString() == "")
                         {
-                            TCost ="0";
+                            TCost = "0";
                         }
                         else
                         {
-                            TCost=item["TreatmentsCost"].ToString();
+                            TCost = item["TreatmentsCost"].ToString();
                         }
 
 
@@ -109,6 +115,8 @@ namespace OrthoSquare.BAL_Classes
             }
             return objtWorkorderEmployeesInfo;
         }
+
+
 
 
 

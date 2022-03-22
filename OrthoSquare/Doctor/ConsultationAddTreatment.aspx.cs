@@ -21,6 +21,8 @@ namespace OrthoSquare.Doctor
         public static DataTable AllData2 = new DataTable();
         public static DataTable AllData3 = new DataTable();
         public static DataTable AllData4 = new DataTable();
+        Bal_MaterilaType objMT = new Bal_MaterilaType();
+        BAL_Medicines objMedicines = new BAL_Medicines();
         BAL_Appointment ojbApp = new BAL_Appointment();
         BAL_Patient objPatient = new BAL_Patient();
         BAL_ConsultationAddTreatment objCT = new BAL_ConsultationAddTreatment();
@@ -54,7 +56,7 @@ namespace OrthoSquare.Doctor
 
                 }
 
-
+                AddMedicinesRow(true);
                 bindDentalTreatmentWorkDone();
                 invoiceTreatmen();
                 bindDentalTreatment();
@@ -183,7 +185,7 @@ namespace OrthoSquare.Doctor
             ddlToothNo1.DataValueField = "toothID";
             ddlToothNo1.DataBind();
 
-          //  ddlToothNo1.Items.Insert(0, new ListItem("--- Select ---", "0"));
+            //  ddlToothNo1.Items.Insert(0, new ListItem("--- Select ---", "0"));
         }
 
 
@@ -475,7 +477,7 @@ namespace OrthoSquare.Doctor
             DataTable dt = objPatient.GetPatient(pid);
 
             patientid = pid;
-            if(SessionUtilities.RoleID==3)
+            if (SessionUtilities.RoleID == 3)
             {
                 DoctorID = Convert.ToInt32(SessionUtilities.Empid);
             }
@@ -599,62 +601,62 @@ namespace OrthoSquare.Doctor
             int SelectedItems = 0;
             foreach (GridViewRow item in GridTreatment.Rows)
             {
-               
-                    string StartedTreatments = "";
-                    CheckBox chkSelect = (CheckBox)item.FindControl("CheckBoxT");
 
-                    Label lblID = (item.Cells[0].FindControl("lblID") as Label);
-                    //  DropDownList ddltooth = (item.Cells[0].FindControl("ddltooth") as DropDownList);
-                    ListBox ddltooth = (item.Cells[0].FindControl("ddltoothM") as ListBox);
-                    TextBox txtCost = (item.Cells[0].FindControl("txtCost") as TextBox);
-                    Label lblStartedTreatments = (item.Cells[0].FindControl("lblStartedTreatments") as Label);
-                    TextBox txtSdate = (item.Cells[0].FindControl("txtSdate") as TextBox);
+                string StartedTreatments = "";
+                CheckBox chkSelect = (CheckBox)item.FindControl("CheckBoxT");
 
-                    int c = 0;
-                    string x = "";
-                    string chkSelectedTooth = "";
-                    foreach (ListItem item1 in ddltooth.Items)
+                Label lblID = (item.Cells[0].FindControl("lblID") as Label);
+                //  DropDownList ddltooth = (item.Cells[0].FindControl("ddltooth") as DropDownList);
+                ListBox ddltooth = (item.Cells[0].FindControl("ddltoothM") as ListBox);
+                TextBox txtCost = (item.Cells[0].FindControl("txtCost") as TextBox);
+                Label lblStartedTreatments = (item.Cells[0].FindControl("lblStartedTreatments") as Label);
+                TextBox txtSdate = (item.Cells[0].FindControl("txtSdate") as TextBox);
+
+                int c = 0;
+                string x = "";
+                string chkSelectedTooth = "";
+                foreach (ListItem item1 in ddltooth.Items)
+                {
+                    if (item1.Selected)
                     {
-                        if (item1.Selected)
-                        {
-                            c = 1;
-                            x += item1.Text + ",";
-                        }
+                        c = 1;
+                        x += item1.Text + ",";
                     }
-                    if (c > 0)
+                }
+                if (c > 0)
+                {
+                    chkSelectedTooth = x.Remove(x.Length - 1, 1);
+                }
+
+
+
+                if (item.RowType == DataControlRowType.DataRow)
+                {
+                    if (chkSelect.Checked == true)
                     {
-                        chkSelectedTooth = x.Remove(x.Length - 1, 1);
-                    }
+                        StartedTreatments = "Yes";
 
-
-
-                    if (item.RowType == DataControlRowType.DataRow)
-                    {
-                        if (chkSelect.Checked == true)
+                        if (lblStartedTreatments.Text == "No" || lblStartedTreatments.Text == "")
                         {
-                            StartedTreatments = "Yes";
-
-                            if (lblStartedTreatments.Text == "No" || lblStartedTreatments.Text == "")
-                            {
-                                int TPD = objCT.Update_TreatmentbyPatientYES(Convert.ToInt32(lblID.Text), txtCost.Text, chkSelectedTooth, StartedTreatments, txtNots.Text, txtSdate.Text);
-                                //int TPD = objCT.Update_TreatmentbyPatientYES(Convert.ToInt32(lblID.Text), txtCost.Text, ddltooth.SelectedItem.Text, StartedTreatments, txtNots.Text, txtSdate.Text);
-
-                            }
-
-
-                        }
-                        else
-                        {
-                            StartedTreatments = "No";
-                            //  int TPD = objCT.Update_TreatmentbyPatient(Convert.ToInt32(lblID.Text), txtCost.Text, ddltooth.SelectedItem.Text, StartedTreatments, txtNots.Text, txtSdate.Text);
-                            int TPD = objCT.Update_TreatmentbyPatient(Convert.ToInt32(lblID.Text), txtCost.Text, chkSelectedTooth, StartedTreatments, txtNots.Text, txtSdate.Text);
+                            int TPD = objCT.Update_TreatmentbyPatientYES(Convert.ToInt32(lblID.Text), txtCost.Text, chkSelectedTooth, StartedTreatments, txtNots.Text, txtSdate.Text);
+                            //int TPD = objCT.Update_TreatmentbyPatientYES(Convert.ToInt32(lblID.Text), txtCost.Text, ddltooth.SelectedItem.Text, StartedTreatments, txtNots.Text, txtSdate.Text);
 
                         }
 
-                        SelectedItems++;
 
                     }
-                
+                    else
+                    {
+                        StartedTreatments = "No";
+                        //  int TPD = objCT.Update_TreatmentbyPatient(Convert.ToInt32(lblID.Text), txtCost.Text, ddltooth.SelectedItem.Text, StartedTreatments, txtNots.Text, txtSdate.Text);
+                        int TPD = objCT.Update_TreatmentbyPatient(Convert.ToInt32(lblID.Text), txtCost.Text, chkSelectedTooth, StartedTreatments, txtNots.Text, txtSdate.Text);
+
+                    }
+
+                    SelectedItems++;
+
+                }
+
             }
 
             this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Added Successfully')", true);
@@ -1251,7 +1253,7 @@ namespace OrthoSquare.Doctor
 
 
 
-            _isInserted = objCT.Add_complaintinsert(patientid, txtcomplaint.Text, txtlistDentalTreatment.Text, lID,Convert.ToInt32(DoctorID));
+            _isInserted = objCT.Add_complaintinsert(patientid, txtcomplaint.Text, txtlistDentalTreatment.Text, lID, Convert.ToInt32(DoctorID));
             //    _isInserted = objCT.Add_ADDPatientByToothno(patientid, lID);
 
 
@@ -1368,8 +1370,8 @@ namespace OrthoSquare.Doctor
                 lblMessage.Text = "Medicines Added Successfully";
                 lblMessage.ForeColor = System.Drawing.Color.Green;
                 Clear();
-               
-               
+
+
                 getAlaGridViewViewMedicines(patientid);
 
             }
@@ -1539,9 +1541,6 @@ namespace OrthoSquare.Doctor
 
 
 
-
-
-
             }
         }
 
@@ -1567,22 +1566,6 @@ namespace OrthoSquare.Doctor
 
 
 
-        //protected void CheckBoxList1_SelectedIndexChangedTreatment(object sender, EventArgs e)
-        //{
-        //    string name = "";
-
-        //    for (int i = 0; i < ddlTreatment.Items.Count; i++)
-        //    {
-        //        if (ddlTreatment.Items[i].Selected)
-        //        {
-        //            name += ddlTreatment.Items[i].Text + ",";
-        //            lID += ddlTreatment.Items[i].Value + ",";
-        //        }
-        //    }
-        //    txtTreatment.Text = name;
-
-        //}
-
         protected void GridMedicalHistoryBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -1601,10 +1584,8 @@ namespace OrthoSquare.Doctor
 
         protected void txtDocter_TextChanged(object sender, EventArgs e)
         {
-         DataTable dt= objcommon.DoctersSelectDoctorID(txtDocter.Text);
-
+            DataTable dt = objcommon.DoctersSelectDoctorID(txtDocter.Text);
             DoctorID = Convert.ToInt32(dt.Rows[0]["DoctorID"]);
-
         }
 
 
@@ -1619,26 +1600,23 @@ namespace OrthoSquare.Doctor
                 {
                     int DoctorID = 0, ClinicId = 0;
                     int RoleId = Convert.ToInt32(HttpContext.Current.Session["RoleID"]);
-                    DoctorID =Convert.ToInt32(HttpContext.Current.Session["Empid"]);
+                    DoctorID = Convert.ToInt32(HttpContext.Current.Session["Empid"]);
                     ClinicId = Convert.ToInt32(HttpContext.Current.Session["Empid"]);
                     //cmd.CommandText = " select distinct GPD.jobcode from gti_jobs_seeds_plan GTS inner join GrowerPutAwayDetails GPD on GPD.wo=GTS.wo  where  GPD.FacilityID ='" + Facility + "'  AND GPD.jobcode like '%" + prefixText + "%' union select distinct jobcode from gti_jobs_seeds_plan_Manual where loc_seedline ='" + Facility + "'  AND jobcode like '%" + prefixText + "%' order by jobcode" +
                     //    "";
                     //SessionUtilities.Empid, SessionUtilities.RoleID
 
-
-
                     if (RoleId == 1)
                     {
                         cmd.CommandText = "Select D.FirstName+' '+ isnull(D.LastName,' ') as DoctorName,* from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID  where  IsActive =1  and IsDeleted=0 and DBC.IsDeactive=1 ";
-                        cmd.CommandText += " and DBC.ClinicID='"+ ClinicId + "' and  D.FirstName +' ' + D.LastName like '%" + prefixText + "%' ";
+                        cmd.CommandText += " and DBC.ClinicID='" + ClinicId + "' and  D.FirstName +' ' + D.LastName like '%" + prefixText + "%' ";
                         cmd.CommandText += "  order by FirstName ASC";
                     }
                     else if (RoleId == 3)
                     {
-                       
 
                         cmd.CommandText = "Select  FirstName+' '+ isnull(LastName,' ') as DoctorName,* from  tbl_DoctorDetails  where IsDeleted=0 and  FirstName +' ' + LastName like '%" + prefixText + "%'";
-                        cmd.CommandText += " and DoctorID='"+ DoctorID + "'";
+                        cmd.CommandText += " and DoctorID='" + DoctorID + "'";
                         cmd.CommandText += "  order by FirstName ASC";
 
                     }
@@ -1674,12 +1652,157 @@ namespace OrthoSquare.Doctor
             BindTreatmentStartedNotesWorkDones(Convert.ToInt32(Request.QueryString["pid"]));
         }
 
+        //-- Medicinec Add and Invoice Details Set
+        //Change on Mehul Rana 
+        // on 11-03-2022
+
+        private void AddMedicinesRow(bool AddBlankRow)
+        {
+            try
+            {
+
+                string MedicinesType = "", MedicinesName = "", hdnWOEmployeeIDVal = "";
+                string SlotPositionStart = "", SlotPositionEnd = "";
+
+                List<MedicinesDetails> objMedi = new List<MedicinesDetails>();
+
+                foreach (GridViewRow item in GridMedicinesDetails.Rows)
+                {
+                    hdnWOEmployeeIDVal = ((HiddenField)item.FindControl("hdnWOEmployeeID")).Value;
+                    MedicinesType = ((DropDownList)item.FindControl("ddlMedicinesType")).SelectedValue;
+                    MedicinesName = ((DropDownList)item.FindControl("ddlMedicinesName")).SelectedValue;
+                    TextBox txtTotalDose = (TextBox)item.FindControl("txtTotalDose");
+                    TextBox txtTotalNoofDays = (TextBox)item.FindControl("txtTotalNoofDays");
+                    TextBox txtRemarksN = (TextBox)item.FindControl("txtRemarksN");
+                    AddMedicines(ref objMedi, Convert.ToInt32(hdnWOEmployeeIDVal), MedicinesType, MedicinesName, txtTotalDose.Text, txtTotalNoofDays.Text, "", "", "", txtRemarksN.Text);
+                }
+                if (AddBlankRow)
+                    AddMedicines(ref objMedi, 1, "", "0", "0", "0", "", "", "", "");
+                //GrowerPutData = objinvoice;
+                GridMedicinesDetails.DataSource = objMedi;
+                GridMedicinesDetails.DataBind();
+                ViewState["Data"] = objMedi;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
 
-        //protected void BtnTphotos_Click(object sender, EventArgs e)
-        //{
+
+        public void GridSplitjob()
+        {
+            GridMedicinesDetails.DataSource = ViewState["Data"];
+            GridMedicinesDetails.DataBind();
+        }
+
+        private void AddMedicines(ref List<MedicinesDetails> objGP, int ID, string MedicinesType, string MedicinesName, string Dose, string NoOfDays, string Morning, string Afternoon, string Evening, string Remarks)
+        {
+            MedicinesDetails objM = new MedicinesDetails();
+            objM.ID = ID;
+            objM.RowNumber = objGP.Count + 1;
+            objM.MedicinesType = MedicinesType;
+            objM.MedicinesName = MedicinesName;
+            objM.Dose = Dose;
+            objM.NoOfDays = NoOfDays;
+            objM.Morning = Morning;
+            objM.Afternoon = Afternoon;
+            objM.Evening = Evening;
+            objM.Remarks = Remarks;
+            objGP.Add(objM);
+
+            ViewState["ojbpro"] = objGP;
+        }
 
 
-        //}
+        protected void GridMedicinesDetails_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DropDownList ddlMedicinesType = (DropDownList)e.Row.FindControl("ddlMedicinesType");
+                DropDownList ddlMedicinesName = (DropDownList)e.Row.FindControl("ddlMedicinesName");
+                Label lblMedicinesType = (Label)e.Row.FindControl("lblMedicinesType");
+                Label lblMedicines_Name = (Label)e.Row.FindControl("lblMedicines_Name");
+
+                ddlMedicinesType.DataSource = objMT.GetAllMaterialType("", "Medicine");
+                ddlMedicinesType.DataValueField = "MaterialTypeId";
+                ddlMedicinesType.DataTextField = "MaterialName";
+                ddlMedicinesType.DataBind();
+                ddlMedicinesType.Items.Insert(0, new ListItem("--- Select Medicines Type---", "0"));
+                ddlMedicinesType.Items.Insert(ddlMedicinesType.Items.Count, new ListItem("Other", "Other"));
+                ddlMedicinesType.SelectedValue = lblMedicinesType.Text;
+                BindMedicines(ref ddlMedicinesName, lblMedicinesType.Text);
+
+            }
+        }
+
+
+        public void BindMedicines(ref DropDownList ddlMedicinesName, string MaterialType)
+        {
+
+
+            AllData = objMedicines.GetAllMedicines("", MaterialType);
+
+            ddlMedicinesName.DataSource = AllData;
+            ddlMedicinesName.DataTextField = "MedicinesName";
+            ddlMedicinesName.DataValueField = "MedicinesId";
+            ddlMedicinesName.DataBind();
+            ddlMedicinesName.Items.Insert(0, new ListItem("--- Select Medicines---", "0"));
+         
+        }
+
+
+
+        protected void ButtonAdd_Click(object sender, EventArgs e)
+        {
+            AddMedicinesRow(true);
+        }
+
+        protected void GridMedicinesDetails_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            List<MedicinesDetails> objinvoice = ViewState["ojbpro"] as List<MedicinesDetails>;
+            objinvoice.RemoveAt(e.RowIndex);
+            GridMedicinesDetails.DataSource = objinvoice;
+            GridMedicinesDetails.DataBind();
+
+
+        }
+
+        protected void ddlMedicinesType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            DropDownList ddlMedicinesType = (DropDownList)sender;
+            GridViewRow row = (GridViewRow)ddlMedicinesType.NamingContainer;
+            if (row != null)
+            {
+                DropDownList ddlMedicinesName = (DropDownList)row.FindControl("ddlMedicinesName");
+                TextBox txtMedicinesName = (TextBox)row.FindControl("txtMedicinesName");
+                string MedicinesType = "0";
+                if (ddlMedicinesType.SelectedItem.Text == "Other")
+                {
+                    txtMedicinesName.Visible = true;
+                    ddlMedicinesName.Visible = false;
+                    MedicinesType = "0";
+                }
+                else
+                {
+                    txtMedicinesName.Visible = false;
+                    ddlMedicinesName.Visible = true;
+                    MedicinesType = ddlMedicinesType.SelectedValue;
+                    AllData = objMedicines.GetAllMedicines("", MedicinesType);
+                    ddlMedicinesName.DataSource = AllData;
+                    ddlMedicinesName.DataTextField = "MedicinesName";
+                    ddlMedicinesName.DataValueField = "MedicinesId";
+                    ddlMedicinesName.DataBind();
+                    ddlMedicinesName.Items.Insert(0, new ListItem("--- Select Medicines---", "0"));
+                }
+
+            }
+
+
+        }
+
+      
     }
 }

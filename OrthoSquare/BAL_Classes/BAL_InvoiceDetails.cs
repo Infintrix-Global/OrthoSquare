@@ -11,7 +11,7 @@ namespace OrthoSquare.BAL_Classes
         General objGeneral = new General();
         DataSet ds = new DataSet();
         private string strQuery = string.Empty;
-        public int Add_InvoiceDetails(int invid, int InvoiceNo, int patientid, int DoctorID1,int Cid, int TreatmentID, string Unit, string Cost, string Discount, string Tax, decimal TotalCost, decimal TotalDiscount, decimal TotalTax, decimal GrandTotal, string PaidAmount, string PendingAmount, int CreateID,string PayDate)
+        public int Add_InvoiceDetails(int invid, int InvoiceNo, int patientid, int DoctorID1,int Cid, int TreatmentID, string Unit, string Cost, string Discount, string Tax, decimal TotalCost, decimal TotalDiscount, decimal TotalTax, decimal GrandTotal, string PaidAmount, string PendingAmount, int CreateID,string PayDate, int ISInvoice, string InvoiceCode)
         {
             int isInserted = -1;
             try
@@ -39,10 +39,12 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@PaidAmount", PaidAmount);
                 objGeneral.AddParameterWithValueToSQLCommand("@PendingAmount", Convert .ToDecimal (PendingAmount));
                 objGeneral.AddParameterWithValueToSQLCommand("@CreateID", CreateID);
+                objGeneral.AddParameterWithValueToSQLCommand("@ISInvoice", ISInvoice);
+                objGeneral.AddParameterWithValueToSQLCommand("@InvoiceCode", InvoiceCode);
+
+
                 objGeneral.AddParameterWithValueToSQLCommand("@PayDate", objGeneral.getDatetime(PayDate));
                 
-
-
                 if (invid > 0)
                 {
 
@@ -54,7 +56,7 @@ namespace OrthoSquare.BAL_Classes
 
                 }
 
-                isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_AddInvoiceDetails");
+                isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_AddInvoiceDetailsNew");
 
             }
             catch (Exception ex)
@@ -77,8 +79,8 @@ namespace OrthoSquare.BAL_Classes
                 }
                 else
                 {
-                    strQuery = "insert into  TreatmentbyPatient(patientid,DoctorID,TreatmentID,StartedTreatments,TreatmentsCost,IsActive,Unit,Discount,Tex,ISInvoice,CtrateDate)";
-                    strQuery += "  Values (@Pid,@Did,@TreatmentID,'Yes',@Cost,1,@Unit,@Discount,@Tax,1,GETDATE())";
+                    strQuery = "insert into  TreatmentbyPatient(patientid,DoctorID,TreatmentID,StartedTreatments,TreatmentsCost,IsActive,Unit,Discount,Tex,ISInvoice)";
+                    strQuery += "  Values (@Pid,@Did,@TreatmentID,'Yes',@Cost,1,@Unit,@Discount,@Tax,1)";
                
                 }
 
@@ -352,9 +354,9 @@ namespace OrthoSquare.BAL_Classes
 
         }
 
-        public decimal GetPaidInvoicMaster(int Pid)
+        public decimal GetPaidInvoicMaster(int Pid ,int InvoiceNo)
         {
-            strQuery = "Select  IsNull(Sum(PaidAmount),0)  from InvoiceMaster where  patientid=" + Pid + "";
+            strQuery = "Select  IsNull(Sum(PaidAmount),0)  from InvoiceMaster where  patientid=" + Pid + " and InvoiceNo ="+ InvoiceNo + "";
             return Convert .ToDecimal  (objGeneral.GetExecuteScalarByCommand(strQuery));
 
         }

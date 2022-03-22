@@ -94,6 +94,12 @@ namespace OrthoSquare
                     Response.Redirect("Dashboard/TelecallerDashoard.aspx");
 
                 }
+                else if (SessionUtilities.RoleID == 10)
+                {
+
+                    Response.Redirect("Dashboard/TelecallerDashoard.aspx");
+
+                }
                 else
                 {
 

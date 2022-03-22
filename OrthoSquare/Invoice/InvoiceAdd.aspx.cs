@@ -55,8 +55,13 @@ namespace OrthoSquare.Invoice
                     if (PID > 0)
                     {
                         BindPatient();
+                        bindPatientInvoiceNo(Convert.ToInt32(ddlpatient.SelectedValue));
+
                         ddlpatient.SelectedValue = PID.ToString();
-                        ddlpatient.Enabled = false;
+                        bindPatientInvoiceNo(Convert.ToInt32(ddlpatient.SelectedValue));
+                        //   ddlpatient.Enabled = false;
+                        ddlpatient.Attributes.Add("disabled", "disabled");
+                        ddlInvoiceNo.Attributes.Add("disabled", "disabled");
                         BindTOClinicandDOctor(PID);
                         bindDetilsOfinvoice(PID);
                     }
@@ -120,9 +125,9 @@ namespace OrthoSquare.Invoice
 
 
 
-            txtPAID1.Text = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue))).ToString();
+            txtPAID1.Text = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlInvoiceNo.SelectedValue))).ToString();
 
-            List<invoiceDetils> objinvoice = objCT.GetInvoiceDetailsyId(Pid);
+            List<invoiceDetils> objinvoice = objCT.GetInvoiceDetailsyId(Pid, Convert.ToInt32(ddlInvoiceNo.SelectedValue));
 
 
             if (objinvoice != null && objinvoice.Count > 0)
@@ -139,6 +144,21 @@ namespace OrthoSquare.Invoice
                 // AddEmployeeRow(true);
             }
         }
+
+        public void bindPatientInvoiceNo(int  Pid)
+        {
+
+            DataTable dt;
+
+            dt = objp.GetPatientInvoiceNo(Pid);
+            ddlInvoiceNo.DataSource = dt;
+            ddlInvoiceNo.DataValueField = "InvoiceNo";
+            ddlInvoiceNo.DataTextField = "InvoiceCode";
+            ddlInvoiceNo.DataBind();
+            ddlInvoiceNo.Items.Insert(0, new ListItem("-- Select Invoice No --", "0", true));
+
+        }
+
 
         public void bindClinic()
         {
@@ -324,7 +344,7 @@ namespace OrthoSquare.Invoice
 
             lblGrandTotal.Text = ((Convert.ToDecimal(lblTotalCost.Text) + (TextTotal)) - Convert.ToDecimal(lblTotalDiscount.Text)).ToString();
 
-            PaidAmount = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue)));
+            PaidAmount = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlInvoiceNo.SelectedValue)));
 
             txtPAID1.Text = PaidAmount.ToString();
 
@@ -333,15 +353,10 @@ namespace OrthoSquare.Invoice
 
         }
 
-
-
-
-
-
         protected void txtSeatings1_TextChanged(object sender, EventArgs e)
         {
             CalData();
-         
+
 
         }
 
@@ -350,18 +365,13 @@ namespace OrthoSquare.Invoice
 
         protected void txtCost1_TextChanged(object sender, EventArgs e)
         {
-
             CalData();
-         
-
         }
 
 
         protected void txtDiscount1_TextChanged(object sender, EventArgs e)
         {
             CalData();
-          
-
         }
 
 
@@ -370,10 +380,8 @@ namespace OrthoSquare.Invoice
         protected void Invoice_SelectedIndexChanged(object sender, EventArgs e)
         {
             CalData();
-          
             GridViewRow gvr = (GridViewRow)(((Control)sender).NamingContainer);
             TextBox txtSeatings = (TextBox)gvr.FindControl("txtSeatings1");
-          
 
         }
 
@@ -383,7 +391,7 @@ namespace OrthoSquare.Invoice
             int _isInserted1 = -1;
             int _isInserted2 = -1;
             int SelectedItems = 0;
-
+            int InvoiceCode = 0;
             decimal TotalCost1 = 0;
             decimal TotalDiscount1 = 0;
             decimal Discount1 = 0;
@@ -393,77 +401,88 @@ namespace OrthoSquare.Invoice
             string ApprovalAmount = "0";
             string Interest = "0";
             string Finance = "";
-
+            string InvCode = "";
             // AllData = objinv.GetAllInvoicTreatment(Convert.ToInt32(ddlpatient.SelectedValue));
             decimal paidAmount;
             // if (AllData.Rows.Count == 0)
             //  {
 
             invoiceNo = 0;
-            invoiceNo = objcomm.GetinvoiceNo();
-            lblinvCode.Text = invoiceNo.ToString();
+         
 
             //int INVDELETE = objinv.InvoiceDetilsDelete(Convert.ToInt32(ddlpatient.SelectedValue));
 
-            foreach (GridViewRow row in gvInformation.Rows)
+            if (ddlInvoiceNo.SelectedValue == "0")
             {
-                if (row.RowType == DataControlRowType.DataRow)
+                invoiceNo = objcomm.GetinvoiceNo();
+                lblinvCode.Text = invoiceNo.ToString();
+
+                InvoiceCode = objcomm.GetPaymentinvoiceNo();
+
+                InvCode = "INV" + InvoiceCode;
+
+                foreach (GridViewRow row in gvInformation.Rows)
                 {
-                    TextBox txtUnit = (row.Cells[0].FindControl("txtSeatings1") as TextBox);
-                    TextBox txtCost = (row.Cells[0].FindControl("txtCost1") as TextBox);
-                    TextBox txtDiscount = (row.Cells[0].FindControl("txtDiscount1") as TextBox);
-                    DropDownList ddlTreatment = (row.Cells[0].FindControl("ddlTreatment1") as DropDownList);
-                    DropDownList ddlTAX = (row.Cells[0].FindControl("ddlTAX1") as DropDownList);
-                    HiddenField Tid = (row.Cells[0].FindControl("hdnWOEmployeeID") as HiddenField);
-                    Label lblISInvoice = (row.Cells[0].FindControl("lblISInvoice") as Label);
-                    TotalCost1 = Convert.ToDecimal(txtCost.Text) * Convert.ToDecimal(txtUnit.Text);
-                    if (txtDiscount.Text != "")
+                    if (row.RowType == DataControlRowType.DataRow)
                     {
-                        Discount1 = Convert.ToDecimal(txtDiscount.Text);
-                        TotalDiscount1 = TotalCost1 - Convert.ToDecimal(txtDiscount.Text);
+                        TextBox txtUnit = (row.Cells[0].FindControl("txtSeatings1") as TextBox);
+                        TextBox txtCost = (row.Cells[0].FindControl("txtCost1") as TextBox);
+                        TextBox txtDiscount = (row.Cells[0].FindControl("txtDiscount1") as TextBox);
+                        DropDownList ddlTreatment = (row.Cells[0].FindControl("ddlTreatment1") as DropDownList);
+                        DropDownList ddlTAX = (row.Cells[0].FindControl("ddlTAX1") as DropDownList);
+                        HiddenField Tid = (row.Cells[0].FindControl("hdnWOEmployeeID") as HiddenField);
+                        Label lblISInvoice = (row.Cells[0].FindControl("lblISInvoice") as Label);
+                        TotalCost1 = Convert.ToDecimal(txtCost.Text) * Convert.ToDecimal(txtUnit.Text);
+                        if (txtDiscount.Text != "")
+                        {
+                            Discount1 = Convert.ToDecimal(txtDiscount.Text);
+                            TotalDiscount1 = TotalCost1 - Convert.ToDecimal(txtDiscount.Text);
+                        }
+                        else
+                        {
+                            TotalDiscount1 = 0;
+                            Discount1 = 0;
+                        }
+
+                        TotalTax1 = TotalDiscount1 * Convert.ToDecimal(ddlTAX.SelectedItem.Text) / 100;
+                        GrandTotal1 = TotalDiscount1 + TotalTax1;
+
+                        int _isInserted123 = 0;
+
+
+                        if (lblISInvoice.Text == "0" || lblISInvoice.Text == "2")
+                        {
+                            _isInserted123 = objinv.InvoiceDetailsTritment(Convert.ToInt32(Tid.Value), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, lblISInvoice.Text);
+
+                            _isInserted = objinv.Add_InvoiceDetails(0, Convert.ToInt32(invoiceNo), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, TotalCost1, TotalDiscount1, TotalTax1, GrandTotal1, "0", "0", SessionUtilities.Empid, txtPayDate.Text, Convert.ToInt32(lblISInvoice.Text), InvCode);
+
+                        }
+                        else
+                        {
+                            _isInserted123 = objinv.InvoiceDetailsTritment(Convert.ToInt32(Tid.Value), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, lblISInvoice.Text);
+
+                            _isInserted = objinv.Add_InvoiceDetails(0, Convert.ToInt32(invoiceNo), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, TotalCost1, TotalDiscount1, TotalTax1, GrandTotal1, "0", "0", SessionUtilities.Empid, txtPayDate.Text, Convert.ToInt32(lblISInvoice.Text), InvCode);
+
+                        }
+
+                        SelectedItems++;
+
                     }
-                    else
-                    {
-                        TotalDiscount1 = 0;
-                        Discount1 = 0;
-                    }
-
-                    TotalTax1 = TotalDiscount1 * Convert.ToDecimal(ddlTAX.SelectedItem.Text) / 100;
-                    GrandTotal1 = TotalDiscount1 + TotalTax1;
-
-                    int _isInserted123 = 0;
-                   
-
-                    if (lblISInvoice.Text == "0" || lblISInvoice.Text == "2")
-                    {
-                        _isInserted123 = objinv.InvoiceDetailsTritment(Convert.ToInt32(Tid.Value), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, lblISInvoice.Text);
-
-                        _isInserted = objinv.Add_InvoiceDetails(0, Convert.ToInt32(invoiceNo), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, TotalCost1, TotalDiscount1, TotalTax1, GrandTotal1, "0", "0", SessionUtilities.Empid, txtPayDate.Text);
-
-                    }
-                    else
-                    {
-                        _isInserted123 = objinv.InvoiceDetailsTritment(Convert.ToInt32(Tid.Value), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, lblISInvoice.Text);
-
-                        _isInserted = objinv.Add_InvoiceDetails(0, Convert.ToInt32(invoiceNo), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, TotalCost1, TotalDiscount1, TotalTax1, GrandTotal1, "0", "0", SessionUtilities.Empid,txtPayDate.Text);
-
-                    }
-
-                    SelectedItems++;
 
                 }
 
             }
+            else
+            {
+                invoiceNo = Convert.ToInt32(ddlInvoiceNo.SelectedValue);
+                InvCode = ddlInvoiceNo.SelectedItem.Text;
+            }
 
-           
 
-          
-            _isInserted1 = objinv.Add_InvoiceDetails(1, Convert.ToInt32(invoiceNo), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), 0, "0", "0", "0", "0", Convert.ToDecimal(lblTotalCost.Text), Convert.ToDecimal(lblTotalDiscount.Text), Convert.ToDecimal(lblTotalTax.Text), Convert.ToDecimal(lblGrandTotal.Text), txtPaidAmount.Text, txtPendingAmount.Text, SessionUtilities.Empid, txtPayDate.Text);
+            _isInserted1 = objinv.Add_InvoiceDetails(1, Convert.ToInt32(invoiceNo), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), 0, "0", "0", "0", "0", Convert.ToDecimal(lblTotalCost.Text), Convert.ToDecimal(lblTotalDiscount.Text), Convert.ToDecimal(lblTotalTax.Text), Convert.ToDecimal(lblGrandTotal.Text), txtPaidAmount.Text, txtPendingAmount.Text, SessionUtilities.Empid, txtPayDate.Text,0, InvCode);
 
             if (DropDownList1.SelectedItem.Text == "Bajaj finance")
             {
-
-
                 decimal InterestAmount1 = Convert.ToDecimal(txtApprovalAmount.Text) * Convert.ToDecimal(txtInterest.Text) / 100;
                 TotalAmount1 = (Convert.ToDecimal(txtApprovalAmount.Text) + InterestAmount1).ToString();
             }
@@ -564,14 +583,14 @@ namespace OrthoSquare.Invoice
         {
             // Response.Redirect("InvoicePrint.aspx?InvoiceCode=" + lblinvCode.Text );
 
-            Response.Redirect("InvoicePrint.aspx?InvoiceCode=" + invoiceNo + "&Fid=" + 1 +"&Back="+ 1);
+            Response.Redirect("InvoicePrint.aspx?InvoiceCode=" + invoiceNo + "&Fid=" + 1 + "&Back=" + 1);
 
         }
 
         protected void txtPaidAmount_TextChanged(object sender, EventArgs e)
         {
             //  txtPendingAmount.Text = "";
-            if(Convert.ToDecimal(txtPaidAmount.Text) == Convert.ToDecimal(txtPendingAmount.Text))
+            if (Convert.ToDecimal(txtPaidAmount.Text) == Convert.ToDecimal(txtPendingAmount.Text))
             {
                 CalData();
                 txtPendingAmount.Text = (Convert.ToDecimal(txtPendingAmount.Text) - Convert.ToDecimal(txtPaidAmount.Text)).ToString();
@@ -595,7 +614,7 @@ namespace OrthoSquare.Invoice
             }
 
 
-            
+
 
         }
 
@@ -713,12 +732,18 @@ namespace OrthoSquare.Invoice
 
         protected void ddlpatient_SelectedIndexChanged(object sender, EventArgs e)
         {
+           bindPatientInvoiceNo(Convert.ToInt32(ddlpatient.SelectedValue));
+           // bindDetilsOfinvoice(Convert.ToInt32(ddlpatient.SelectedValue));
 
-
-            bindDetilsOfinvoice(Convert.ToInt32(ddlpatient.SelectedValue));
-
+          
         }
 
+        protected void ddlInvoiceNo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bindDetilsOfinvoice(Convert.ToInt32(ddlpatient.SelectedValue));
+
+           // bindPatientInvoiceNo(Convert.ToInt32(ddlpatient.SelectedValue));
+        }
 
 
         public void bindDetilsOfinvoice(int Pid)
@@ -1009,7 +1034,7 @@ namespace OrthoSquare.Invoice
 
             }
 
-       
+
 
         }
 
