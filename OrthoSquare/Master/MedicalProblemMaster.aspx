@@ -172,7 +172,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                <div class="form-group">
-                                                <label>Search</label>
+                                             
                                     <asp:TextBox ID="txtSearch" runat="server" class="form-control" placeholder="Name"
                                         ClientIDMode="Static"></asp:TextBox>
                                   
@@ -183,6 +183,9 @@
                                 <div class="form-group form-md-line-input ">
                                    <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
                                             OnClick="btSearch_Click" />
+                                    
+                                 <asp:Button ID="Button1" runat="server" Text="Add New" class="btn blue-madison" ClientIDMode="Static"
+                                            CausesValidation="False" OnClick="btnAddNew_Click" />
                                         
                                 </div>
                             </div>
@@ -190,9 +193,10 @@
                         
 
                             <!-- Usage as a class -->
-                       <div class="text-right mb-20">
-                                 <asp:Button ID="btnAddNew" runat="server" Text="Add New" class="btn blue-madison" ClientIDMode="Static"
-                                            CausesValidation="False" OnClick="btnAddNew_Click" />
+                      <div class="text-right mb-20">
+                                            Total :
+                                            <asp:Label ID="lblTotaCount" runat="server" Text=""></asp:Label>
+                       </div>
                                  </div>
                         <div class="table-scrollable">
                              

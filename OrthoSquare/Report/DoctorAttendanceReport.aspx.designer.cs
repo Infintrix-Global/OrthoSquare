@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OrthoSquare.Report {
-    
-    
-    public partial class DoctorAttendanceReport {
-        
+namespace OrthoSquare.Report
+{
+
+
+    public partial class DoctorAttendanceReport
+    {
+
         /// <summary>
         /// UpdatePanel1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
+
         /// <summary>
         /// Edit control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel Edit;
-        
+
         /// <summary>
         /// Div1 control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
-        
+
         /// <summary>
         /// ddlDoctor control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDoctor;
-        
+
         /// <summary>
         /// txtSFromFollowDate control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSFromFollowDate;
-        
+
         /// <summary>
         /// txtSFromFollowDate_CalendarExtender control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.CalendarExtender txtSFromFollowDate_CalendarExtender;
-        
+
         /// <summary>
         /// txtSToFollowDate control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSToFollowDate;
-        
+
         /// <summary>
         /// txtSToFollowDate_CalendarExtender control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.CalendarExtender txtSToFollowDate_CalendarExtender;
-        
+
         /// <summary>
         /// btnSearch control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace OrthoSquare.Report {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearch;
-        
+
         /// <summary>
         /// GridDocterAttendance control.
         /// </summary>

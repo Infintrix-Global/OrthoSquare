@@ -44,7 +44,7 @@
 
                             <div class="form-body">
 
-                                <label>Status</label>
+                             
                                 <asp:DropDownList ID="ddlStatus" class="form-control" runat="server"></asp:DropDownList>
 
                             </div>
@@ -170,8 +170,8 @@
 
 
                             <div class="form-group">
-                                <label>Issue Type</label>
-                                <asp:DropDownList ID="ddlIssueTypeSearch" class="form-control" runat="server"></asp:DropDownList>
+                               
+                                <asp:DropDownList ID="ddlIssueTypeSearch" class="form-control" placeholder="Issue Type" runat="server"></asp:DropDownList>
 
 
                             </div>
@@ -182,8 +182,8 @@
                         <div class="col-md-4">
 
                             <div class="form-group">
-                                <label>Status</label>
-                                <asp:DropDownList ID="ddlSearchStateus" class="form-control" runat="server"></asp:DropDownList>
+                              
+                                <asp:DropDownList ID="ddlSearchStateus" class="form-control" placeholder="Status" runat="server"></asp:DropDownList>
 
 
 
@@ -231,6 +231,10 @@
                     </div>
                     <div class="portlet-body">
 
+                          <div class="text-right mb-20">
+                                            Total :
+                                            <asp:Label ID="lblTotaCount" runat="server" Text=""></asp:Label>
+                       </div>
 
 
                         <!-- Usage as a class -->
@@ -242,7 +246,7 @@
                                 ShowHeaderWhenEmpty="True">
                                 <Columns>
 
-                                    <asp:TemplateField HeaderText="#">
+                                    <asp:TemplateField HeaderText="Sr. No.">
                                         <ItemTemplate>
                                             <asp:Label ID="Label1" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
 

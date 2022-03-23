@@ -158,6 +158,10 @@ namespace OrthoSquare.Master
             txtEditSearch1.Focus();
 
         }
+        
+        
+     
+
 
         protected void gvShow_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {

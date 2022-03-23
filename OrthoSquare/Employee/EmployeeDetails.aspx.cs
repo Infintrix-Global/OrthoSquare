@@ -686,5 +686,21 @@ namespace OrthoSquare.Employee
             TabContactPerson1.Tabs[2].Enabled = true;
             TabContactPerson1.ActiveTabIndex = 2;
         }
+
+        protected void gvShow_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Image Image1 = (Image)e.Row.FindControl("Image1");
+                Label lblProfilePic = (Label)e.Row.FindControl("lblProfilePic");
+
+                if(lblProfilePic.Text=="")
+                {
+                    Image1.ImageUrl= "../Images/no-photo.jpg";
+                }
+
+
+            }
+        }
     }
 }

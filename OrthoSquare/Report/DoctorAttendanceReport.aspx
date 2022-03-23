@@ -43,11 +43,11 @@
                     <div class="portlet-body">
                         <!-- BEGIN FORM-->
                         <div class="form-body">
-                            .
+                         
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                         <label>Doctor Name</label>
+                                        
 											 
 										<asp:DropDownList ID="ddlDoctor"  class="form-control" runat="server"></asp:DropDownList>
 									   
@@ -56,9 +56,7 @@
                                 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="form_control_1">
-                                            From Date 
-                                        </label>
+                                       
                                       <asp:TextBox ID="txtSFromFollowDate" runat="server" class="form-control" placeholder="From Date "
                                             ClientIDMode="Static"></asp:TextBox>
                                       
@@ -75,9 +73,7 @@
                                 <!-- Usage as a class -->
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="form_control_1">
-                                            To Date 
-                                        </label>
+                                      
                                         <asp:TextBox ID="txtSToFollowDate" runat="server" class="form-control" placeholder="To Date"
                                             ClientIDMode="Static"></asp:TextBox>
                                       

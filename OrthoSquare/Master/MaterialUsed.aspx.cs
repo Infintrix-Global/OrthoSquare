@@ -33,7 +33,7 @@ namespace OrthoSquare.Master
            
 
 
-                ddlDoctor.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
+                ddlDoctor.Items.Insert(0, new ListItem("-- Doctor --", "0", true));
 
 
                 if (SessionUtilities.RoleID == 1)

@@ -75,7 +75,7 @@ namespace OrthoSquare.Master
         public void bindUnit(ref DropDownList ddlunit)
         {
             DataTable dt;
-            dt = objUnit.GetAllUnit("", "Material");
+            dt = objUnit.GetAllUnit();
 
 
             ddlunit.DataSource = dt;

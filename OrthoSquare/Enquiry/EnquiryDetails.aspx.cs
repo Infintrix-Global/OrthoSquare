@@ -152,7 +152,7 @@ namespace OrthoSquare.Enquiry1
 
 
             dt = objclinic.GetAllClinicDetais();
-         
+
 
             ddlClinicUploadExcel.DataSource = dt;
             ddlClinicUploadExcel.DataTextField = "ClinicName";
@@ -195,7 +195,7 @@ namespace OrthoSquare.Enquiry1
 
 
             //dt = objclinic.GetAllClinicDetais();
-          
+
             ddlclinic.DataSource = dt;
             ddlclinic.DataTextField = "ClinicName";
             ddlclinic.DataValueField = "ClinicID";
@@ -1089,7 +1089,7 @@ namespace OrthoSquare.Enquiry1
                     else
                     {
                         Result = true;
-                       
+
 
                         string url = "EnquiryDetails.aspx";
 
@@ -1108,7 +1108,7 @@ namespace OrthoSquare.Enquiry1
 
                         //  ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect", "alert('" + message + "'); window.location='" + url + "';", true);
 
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "Message", "alert('"+ message + "');", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "Message", "alert('" + message + "');", true);
                     }
                 }
                 catch (Exception ex)
@@ -1124,7 +1124,7 @@ namespace OrthoSquare.Enquiry1
             }
         }
 
-      
+
         protected int SaveExcelDataToDataBase(DataTable dtExcel, ref List<FailedQuestionList> objFailQuestion)
         {
             try
@@ -1170,8 +1170,8 @@ namespace OrthoSquare.Enquiry1
                             {
                                 SaveCount++;
                                 int SourceId = 0;
-                                SourceId = objcommon.GetEnquirySourceId(item["EnquirySource"].ToString().Trim()); 
-                                if(SourceId==0)
+                                SourceId = objcommon.GetEnquirySourceId(item["EnquirySource"].ToString().Trim());
+                                if (SourceId == 0)
                                 {
                                     SourceId = 29;
                                 }
@@ -1182,18 +1182,18 @@ namespace OrthoSquare.Enquiry1
                         reccount++;
                     }
 
-                   
+
                 }
 
                 ListtoDataTable lsttodt = new ListtoDataTable();
                 DataTable dt = lsttodt.ToDataTable(objEnq);
-                if(dt!=null && dt.Rows.Count>0)
+                if (dt != null && dt.Rows.Count > 0)
                 {
                     GridViewExcelNotSave.DataSource = dt;
                     GridViewExcelNotSave.DataBind();
                     PanelNotSaveEnquiry.Visible = true;
                 }
-           
+
 
                 return Convert.ToInt32(SaveCount);
 
@@ -1251,8 +1251,8 @@ namespace OrthoSquare.Enquiry1
 
         protected void btndownloadOptional_Click(object sender, EventArgs e)
         {
-            
-           // DownloadFile("Enquiry_Master.xlsx", "Enquiry_Master.xlsx");
+
+            // DownloadFile("Enquiry_Master.xlsx", "Enquiry_Master.xlsx");
             DownloadFile("Enquiry_Master.xls", "Enquiry_Master.xls");
         }
 

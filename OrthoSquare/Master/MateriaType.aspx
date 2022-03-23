@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="MateriaType.aspx.cs" Inherits="OrthoSquare.Master.MateriaType" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="MaterialType.aspx.cs" Inherits="OrthoSquare.Master.MateriaType" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -73,7 +73,7 @@
 
                                 <asp:Button ID="btAdd" runat="server" Text="Submit" class="btn btn-md btn-info" ClientIDMode="Static" OnClick="btAdd_Click" />
 
-                                <asp:Button ID="btBack" runat="server" Text="Cancel" OnClick="btnclear_Click" Class="btn btn-md btn-secondary" ClientIDMode="Static"
+                                <asp:Button ID="btBack" runat="server" Text="Cancel" OnClick="btnclear_Click" Class="btn default" ClientIDMode="Static"
                                     CausesValidation="False" />
 
                             </div>
@@ -138,12 +138,12 @@
 
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <asp:Button ID="btSearch" runat="server" Text="Search" class="btn btn-md btn-success"
+                                            <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki"
                                                 OnClick="btSearch_Click" />
 
-                                            <asp:Button ID="btnClear" runat="server" Text="Clear" class="btn btn-md btn-secondary"
+                                            <asp:Button ID="btnClear" runat="server" Text="Cancel" class="btn default"
                                                 OnClick="btnClear_Click" />
-                                            <asp:Button ID="btnAddNew" runat="server" Text="Add New Material Type" class="btn btn-md btn-info"
+                                            <asp:Button ID="btnAddNew" runat="server" Text="Add New Material Type" class="btn blue-madison"
                                                 CausesValidation="False" OnClick="btnAddNew_Click" />
                                         </div>
 

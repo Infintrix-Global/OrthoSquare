@@ -72,7 +72,7 @@
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="col-sm-4">
-                                        <label>Material Name </label>
+                                        
 
                                         <asp:TextBox ID="txtMaterial" runat="server" OnTextChanged="txtMaterial_TextChanged" placeholder="Material Name" AutoPostBack="true" class="form-control"></asp:TextBox>
 

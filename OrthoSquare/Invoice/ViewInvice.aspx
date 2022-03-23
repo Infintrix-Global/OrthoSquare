@@ -106,7 +106,7 @@
                                     </asp:CalendarExtender>
                                     </div>
                                     <div class="col-sm-3">
-                                        <br />
+                                        
                                         <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
                                             OnClick="btSearch_Click" />
 

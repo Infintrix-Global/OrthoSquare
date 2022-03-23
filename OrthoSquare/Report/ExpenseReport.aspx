@@ -47,9 +47,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="form_control_1">
-                                                        Clinic Name 
-                                                    </label>
+                                                    
                                                     <asp:DropDownList ID="ddlClinic" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlClinic_SelectedIndexChanged" runat="server"></asp:DropDownList>
 
 
@@ -57,9 +55,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="form_control_1">
-                                                        Docter Name
-                                                    </label>
+                                                   
                                                     <asp:DropDownList ID="ddlDocter" class="form-control" AutoPostBack="true" runat="server"></asp:DropDownList>
 
 
@@ -70,9 +66,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="form_control_1">
-                                                        From Date <span class="required"></span>
-                                                    </label>
+                                                   
                                                     <asp:TextBox ID="txtFromDate" runat="server" class="form-control" placeholder="From Date"
                                                         ClientIDMode="Static"></asp:TextBox>
                                                     <asp:CalendarExtender ID="txtFromEnquiryDate_CalendarExtender" runat="server"
@@ -84,9 +78,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="form_control_1">
-                                                        To Date <span class="required"></span>
-                                                    </label>
+                                                   
                                                     <asp:TextBox ID="txtToDate" runat="server" class="form-control" placeholder="To Date"
                                                         ClientIDMode="Static"></asp:TextBox>
                                                     <asp:CalendarExtender ID="txtToEnquiryDate_CalendarExtender" runat="server" Format="dd-MM-yyyy"

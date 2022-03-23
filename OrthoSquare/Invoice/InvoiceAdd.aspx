@@ -195,7 +195,7 @@
 
                                                         <FooterStyle HorizontalAlign="Right" />
                                                         <FooterTemplate>
-                                                            <asp:Button ID="btn_AddEmployee" runat="server" Text="+Add New Row" class="btn blue"
+                                                            <asp:Button ID="btn_AddEmployee" runat="server" Text="+Add New Row" class="btn blue-madison"
                                                                 CausesValidation="true" ValidationGroup="AddExperianceGrp" OnClick="btn_AddEmployee_Click" />
                                                         </FooterTemplate>
                                                     </asp:TemplateField>
@@ -642,7 +642,7 @@
                             <div class="row">
                                 <div class="form-actions text-center">
 
-                                    <asp:Button ID="btAdd" runat="server" Text="Submit" Enabled="false" class="btn blue" ValidationGroup="e" OnClientClick="return Disable();" ClientIDMode="Static" OnClick="btAdd_Click" />
+                                    <asp:Button ID="btAdd" runat="server" Text="Submit" class="btn blue" ValidationGroup="e" OnClientClick="return Disable();" ClientIDMode="Static" OnClick="btAdd_Click" />
                                     <asp:Button ID="btFeedback" ClientIDMode="Static" class="btn blue" runat="server" Visible="false" CausesValidation="false" OnClick="btFeedback_Click"
                                         Text="Feedback" />
                                     <asp:Button ID="btBack" runat="server" Text="Cancel" Class="btn default" ClientIDMode="Static"

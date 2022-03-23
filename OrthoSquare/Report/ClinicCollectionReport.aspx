@@ -43,9 +43,7 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="form_control_1">
-                                                        Clinic Name
-                                                    </label>
+                                                   
                                                     <asp:DropDownList ID="ddlClinic" class="form-control" AutoPostBack="true" runat="server"></asp:DropDownList>
 
 
@@ -53,9 +51,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="form_control_1">
-                                                        From Payment Date 
-                                                    </label>
+                                                  
                                                     <asp:TextBox ID="txtFromPayDate" runat="server" class="form-control" placeholder="From Payment Date"
                                                         ClientIDMode="Static"></asp:TextBox>
                                                     <asp:CalendarExtender ID="txtFromEnquiryDate_CalendarExtender" runat="server"
@@ -66,9 +62,7 @@
 
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                      <label for="form_control_1">
-                                                        To Payment Date
-                                                    </label>
+                                                  
                                                     <asp:TextBox ID="txtToPayDate" runat="server" class="form-control" placeholder="To Payment Date"
                                                         ClientIDMode="Static"></asp:TextBox>
                                                     <asp:CalendarExtender ID="txtToEnquiryDate_CalendarExtender" runat="server" Format="dd-MM-yyyy"

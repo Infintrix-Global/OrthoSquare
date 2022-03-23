@@ -65,7 +65,7 @@
                                         <div class="form-group col-md-6">
                                             <label>Doctor Name</label>
                                             <asp:DropDownList ID="ddlDoctor1" class="form-control" runat="server"></asp:DropDownList>
-                                            <asp:Label ID="lblclinicId" Visible="false" runat="server" Text=""></asp:Label>
+                                            <asp:Label ID="lblclinicId" Visible="false" runat="server" Text="doctor name"></asp:Label>
                                         </div>
 
                                         <div class="form-group col-md-6">
@@ -279,6 +279,8 @@
                                 <div class="form-group form-md-line-input ">
                                     <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
                                         OnClick="btSearch_Click" />
+                                      <asp:Button ID="Button1" runat="server" Text="Add New" class="btn blue-madison" ClientIDMode="Static"
+                                CausesValidation="False" OnClick="btnAddNew_Click" />
 
                                 </div>
                             </div>
@@ -286,10 +288,7 @@
 
 
                         <!-- Usage as a class -->
-                        <div class="text-right mb-20">
-                            <asp:Button ID="btnAddNew" runat="server" Text="Add New" class="btn blue-madison" ClientIDMode="Static"
-                                CausesValidation="False" OnClick="btnAddNew_Click" />
-                        </div>
+                       
                         <div class="table-scrollable">
 
                             <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
@@ -346,7 +345,7 @@
                                     <asp:TemplateField HeaderText="">
                                         <ItemTemplate>
                                             <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("ExpenseID")%>'
-                                                CommandName="EditEnquiry" ImageUrl="../Images/right15x15.png" />
+                                                CommandName="EditEnquiry" ImageUrl="../Images/edit15x15.png" />
                                             <asp:ImageButton ID="lbtDelete" CausesValidation="false" runat="server" CommandName="delete"
                                                 ImageUrl="../Images/delete15x15.png" OnClientClick="return confirm('Are you sure you want to delete this Expense?');" />
                                         </ItemTemplate>

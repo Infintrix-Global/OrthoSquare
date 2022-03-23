@@ -31,47 +31,15 @@
         <div class="row">
             <div class="col-md-12">
                 <div style="margin-bottom: 5px;">
-                    <asp:Label ID="lblMessage" class="panel-title" runat="server" Text="" Font-Size="Medium"></asp:Label>
+                    <asp:Label ID="lblMessage" class="panel-title" runat="server" Text="" Font-Size="small"></asp:Label>
                 </div>
                 <!-- BEGIN SAMPLE FORM PORTLET-->
                 <div class="portlet light ">
-                    <div class="portlet-title">
-                        <div class="caption font-red-sunglo">
-                            <i class="icon-settings font-red-sunglo"></i>
-                            <span class="caption-subject bold uppercase">Clinic</span>
-                        </div>
-                        <%-- <div class="actions">
-                            <div class="btn-group">
-                                <a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown">Actions
-                                                <i class="fa fa-angle-down"></i>
-                                </a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-pencil"></i>Edit </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-trash-o"></i>Delete </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-ban"></i>Ban </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="javascript:;">Make admin </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>--%>
-                    </div>
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                         <ContentTemplate>
                             <div class="row">
 
                                 <div class="col-md-6 ">
-
 
                                     <div class="form-body">
 
@@ -120,8 +88,40 @@
                                             </div>--%>
 
 
-                                        <div class="form-group">
+                                       
+                                            <div class="portlet-title">
+                                                <div class="caption font-red-sunglo">
+                                                    <i class="icon-settings font-red-sunglo"></i><span class="caption-subject bold uppercase">Clinic</span>
+                                                </div>
+
+                                                 <div class="form-group">
                                             <label>Clinic Name <span class="required">*</span></label>
+                                                <%-- <div class="actions">
+                            <div class="btn-group">
+                                <a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown">Actions
+                                                <i class="fa fa-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li>
+                                        <a href="javascript:;">
+                                            <i class="fa fa-pencil"></i>Edit </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <i class="fa fa-trash-o"   ></i>Delete </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <i class="fa fa-ban"></i>Ban </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="javascript:;">Make admin </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>--%>
+                                            </div>
                                             <asp:TextBox ID="txtClinicName" TabIndex="3" class="form-control"
                                                 runat="server"></asp:TextBox>
                                             <span class="help-block">
@@ -398,7 +398,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Search</label>
+
                                     <asp:TextBox ID="txtSearch" runat="server" class="form-control" placeholder="Name"
                                         ClientIDMode="Static"></asp:TextBox>
 
@@ -411,27 +411,30 @@
                                         OnClick="btSearch_Click" />
 
                                  
+                            <asp:Button ID="btnAddNew" runat="server" Text="Add New Clinic" class="btn blue-madison" ClientIDMode="Static"
+                                CausesValidation="False" OnClick="btnAddNew_Click" />
+
+                            <asp:Button ID="Buttonapprove" runat="server" Text="Approve Branch" class="btn btn-outline-success" ClientIDMode="Static"
+                                CausesValidation="False" OnClick="btnApprove_Click" />
 
                                 </div>
                             </div>
                         </div>
 
 
-                        <!-- Usage as a class -->
-                        <div class="text-right mb-20">
-                            <asp:Button ID="btnAddNew" runat="server" Text="Add New Clinic" class="btn blue-madison" ClientIDMode="Static"
-                                CausesValidation="False" OnClick="btnAddNew_Click" />
-                            <asp:Button ID="Buttonapprove" runat="server" Text="Approve Branch" class="btn blue-madison" ClientIDMode="Static"
-                                CausesValidation="False" OnClick="btnApprove_Click" />
-                        </div>
+           <!-- Usage as a class -->
+                         <div class="text-right mb-20">
+                                            Total :
+                                            <asp:Label ID="lblTotaCount" runat="server" Text=""></asp:Label>
+                       </div>
                         <div class="table-scrollable">
 
-                            <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
+                            <asp:GridView ID="gvShow" runat="server" AllowPaging="True" AutoGenerateColumns="False"
                                 class="table table-bordered table-hover" DataKeyNames="ClinicID"
                                 GridLines="None" OnPageIndexChanging="gvShow_PageIndexChanging" OnRowCommand="gvShow11_RowCommand"
-                                OnRowDeleting="gvShow_RowDeleting" OnRowEditing="gvShow_RowEditing" ShowHeaderWhenEmpty="true">
+                                OnRowDeleting="gvShow_RowDeleting" OnRowEditing="gvShow_RowEditing" ShowHeaderWhenEmpty="True" OnSelectedIndexChanged="gvShow_SelectedIndexChanged">
                                 <Columns>
-                                    <asp:TemplateField HeaderText="Sr. No." ItemStyle-Width="10%">
+                                    <asp:TemplateField HeaderText= "Sr. No." ItemStyle-Width="10%">
                                         <ItemTemplate>
                                             <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
                                             <asp:Label ID="lblID" runat="server" Text='<%# Eval("ClinicID")%>' Visible="false"></asp:Label>
@@ -467,23 +470,18 @@
                                             <asp:Label ID="lblCloseTime" runat="server" Text='<%# Eval("CloseTime")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Day Of Week" ItemStyle-Width="10%">
+                                    <asp:TemplateField HeaderText="Working Days " ItemStyle-Width="10%">
                                         <ItemTemplate>
                                             <asp:Label ID="lblDayOfWeek" runat="server" Text='<%# Eval("DayOfWeek")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="" ItemStyle-Width="3%">
                                         <ItemTemplate>
-                                            <%-- <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("ClinicID")%>'
-                                                CommandName="EditEnquiry" ImageUrl="../Images/right15x15.png" />--%>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="" ItemStyle-Width="2%">
-                                        <ItemTemplate>
-
-                                            <asp:ImageButton ID="btnUpdate" ToolTip="Edit" CausesValidation="false" runat="server" CommandArgument='<%# Eval("ClinicID") %>'
-                                                CommandName="EditEnquiry" ImageUrl="../Images/right15x15.png" />
-
+ 
+                                             <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("ClinicID")%>'
+                                                CommandName="EditEnquiry" ImageUrl="../Images/edit15x15.png" />
+                                       
+                                          
 
                                             <asp:ImageButton ID="lbtDelete" CausesValidation="false" runat="server" CommandName="delete"
                                                 ImageUrl="../Images/delete15x15.png" OnClientClick="return confirm('Are you sure you want to delete this Clinic?');" />
@@ -543,6 +541,7 @@
                             </div>
                         </div>--%>
                     </div>
+                      
                     <div class="portlet-body">
 
 
@@ -551,7 +550,7 @@
 
                         <div class="table-scrollable">
 
-                            <asp:GridView ID="Gridapprove" runat="server" AllowPaging="true" AutoGenerateColumns="false"
+                          <asp:GridView ID="Gridapprove" runat="server" AllowPaging="true" AutoGenerateColumns="false"
                                 class="table table-bordered table-hover" DataKeyNames="ClinicID"
                                 GridLines="None" OnPageIndexChanging="Gridapprove_PageIndexChanging" OnRowCommand="Gridapprove_RowCommand"
                                 ShowHeaderWhenEmpty="true">
@@ -577,7 +576,7 @@
                                             <asp:Label ID="lblLocationNameAP" runat="server" Text='<%# Eval("LocationName")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Phone No." ItemStyle-Width="15%">
+                                    <asp:TemplateField HeaderText="Phone No." ItemStyle-Width="15%" >
                                         <ItemTemplate>
                                             <asp:Label ID="lblPhoneNoAP" runat="server" Text='<%# Eval("PhoneNo1") + ",</br> " + Eval("PhoneNo2")%>'></asp:Label>
                                         </ItemTemplate>

@@ -39,120 +39,119 @@
                     <div class="portlet-body">
                         <!-- BEGIN FORM-->
                         <div class="form-body">
-                            .
                             <div class="row">
-                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <asp:TextBox ID="txtNameS" runat="server" class="form-control" placeholder="First Name"
-                                        ClientIDMode="Static"></asp:TextBox>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <asp:TextBox ID="txtNameS" runat="server" class="form-control" placeholder="First Name"
+                                            ClientIDMode="Static"></asp:TextBox>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <asp:TextBox ID="txtLastNameS" runat="server" class="form-control" placeholder="Last Name"
-                                        ClientIDMode="Static"></asp:TextBox>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <asp:TextBox ID="txtLastNameS" runat="server" class="form-control" placeholder="Last Name"
+                                            ClientIDMode="Static"></asp:TextBox>
+                                    </div>
                                 </div>
-                            </div>
                                 <!-- Usage as a class -->
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                         <asp:TextBox ID="txtLabName" runat="server" class="form-control" placeholder="Lab Name"
-                                        ClientIDMode="Static"></asp:TextBox>
+                                        <asp:TextBox ID="txtLabName" runat="server" class="form-control" placeholder="Lab Name"
+                                            ClientIDMode="Static"></asp:TextBox>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                          <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
-                                        OnClick="btSearch_Click" />
+                                        <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
+                                            OnClick="btSearch_Click" />
 
-                                       
-                                        
+
+
                                     </div>
                                 </div>
                             </div>
-                            
 
-                             
+
+
 
                             <div class="table-scrollable">
-							 
-
-                                  <asp:GridView ID="GridinoutLab" runat="server" AllowPaging="true" AutoGenerateColumns="false"     OnPageIndexChanging="gvShow_PageIndexChanging"
-									class="table table-bordered table-hover" OnRowDataBound="gvShow_RowDataBound"  >
-
-                                         <Columns>
-										<asp:TemplateField HeaderText="Sr. No." >
-											<ItemTemplate>
-												<asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
-												
-											</ItemTemplate>
-										</asp:TemplateField>
-										
-										<asp:TemplateField HeaderText="Patient Name" >
-											<ItemTemplate>
-												<asp:Label ID="lblVisitorName1" runat="server" Text='<%# Eval("FristName") +"  "+ Eval("LastName") %>'></asp:Label>
-											</ItemTemplate>
-										</asp:TemplateField>
-										
-                                             <asp:TemplateField HeaderText="Lab Name" >
-											<ItemTemplate>
-												<asp:Label ID="lblLabName" runat="server" Text='<%# Eval("LabName") %>'></asp:Label>
-											</ItemTemplate>
-										</asp:TemplateField>
-
-                                             <asp:TemplateField HeaderText="Tooth No." >
-											<ItemTemplate>
-												<asp:Label ID="lblToothNo" runat="server" Text='<%# Eval("ToothNo")  %>'></asp:Label>
-											</ItemTemplate>
-										</asp:TemplateField>
-										
-										<asp:TemplateField HeaderText="Type of Work">
-											<ItemTemplate>
-												<asp:Label ID="lblpatientidCount" runat="server" Text='<%# Eval("TypeName") %>'></asp:Label>
-											</ItemTemplate>
-
-                                        
-                                           
-									     	</asp:TemplateField>
 
 
-                                           
+                                <asp:GridView ID="GridinoutLab" runat="server" AllowPaging="true" AutoGenerateColumns="false" OnPageIndexChanging="gvShow_PageIndexChanging"
+                                    class="table table-bordered table-hover" OnRowDataBound="gvShow_RowDataBound">
 
-                                               <asp:TemplateField HeaderText="Outward Date" >
-											<ItemTemplate>
-											<asp:Label ID="lblinEnqDate" runat="server" Text='<%# Eval("OutwardDate","{0:dd/MM/yyyy}") %>'></asp:Label>
-											</ItemTemplate>
-									     	</asp:TemplateField>
+                                    <Columns>
+                                        <asp:TemplateField HeaderText="Sr. No.">
+                                            <ItemTemplate>
+                                                <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
 
-                                              <asp:TemplateField HeaderText="Inward Date" >
-											<ItemTemplate>
-											<asp:Label ID="lbloutEnqDate" runat="server" Text='<%# Eval("InwardDate","{0:dd/MM/yyyy}") %>'></asp:Label>
-											</ItemTemplate>
-									     	</asp:TemplateField>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
 
-                                             <asp:TemplateField HeaderText="Work Status" >
-                                        <ItemTemplate>
-                                           <asp:Label ID="lblWorkcompletion" runat="server" Text='<%# Eval("Workcompletion") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Work Completed" >
-                                        <ItemTemplate>
-                                             <asp:Label ID="lblWorkcompletion1" runat="server" Text='<%# Eval("WorkStatus") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                             
-										
+                                        <asp:TemplateField HeaderText="Patient Name">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblVisitorName1" runat="server" Text='<%# Eval("FristName") +"  "+ Eval("LastName") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
 
-                                             </Columns>
-                                      <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
-                                <PagerSettings Mode="NumericFirstLast" />
-                                <EmptyDataTemplate>
-                                    No Record Available
-                                </EmptyDataTemplate>
-                                     </asp:GridView>
-							
-						</div>
+                                        <asp:TemplateField HeaderText="Lab Name">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblLabName" runat="server" Text='<%# Eval("LabName") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Tooth No.">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblToothNo" runat="server" Text='<%# Eval("ToothNo")  %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Type of Work">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblpatientidCount" runat="server" Text='<%# Eval("TypeName") %>'></asp:Label>
+                                            </ItemTemplate>
+
+
+
+                                        </asp:TemplateField>
+
+
+
+
+                                        <asp:TemplateField HeaderText="Outward Date">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblinEnqDate" runat="server" Text='<%# Eval("OutwardDate","{0:dd/MM/yyyy}") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Inward Date">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lbloutEnqDate" runat="server" Text='<%# Eval("InwardDate","{0:dd/MM/yyyy}") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Work Status">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblWorkcompletion" runat="server" Text='<%# Eval("Workcompletion") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Work Completed">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblWorkcompletion1" runat="server" Text='<%# Eval("WorkStatus") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+
+
+                                    </Columns>
+                                    <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
+                                    <PagerSettings Mode="NumericFirstLast" />
+                                    <EmptyDataTemplate>
+                                        No Record Available
+                                    </EmptyDataTemplate>
+                                </asp:GridView>
+
+                            </div>
                         </div>
                     </div>
                     <!-- / .panel -->

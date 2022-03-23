@@ -44,7 +44,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                          <label for="form_control_1">
-                                            Clinic Name 
+                                            
                                         </label>
                                            <asp:DropDownList ID="ddlClinic" class="form-control"   AutoPostBack="true" OnSelectedIndexChanged="ddlClinic_SelectedIndexChanged"  runat="server"></asp:DropDownList>
 
@@ -54,7 +54,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="form_control_1">
-                                            Docter Name
+                                           
                                         </label>
                                        <asp:DropDownList ID="ddlDocter" class="form-control"  AutoPostBack="true" runat="server"></asp:DropDownList>
 

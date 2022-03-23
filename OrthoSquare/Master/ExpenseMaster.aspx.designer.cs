@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OrthoSquare.Master {
-    
-    
-    public partial class ExpenseMaster {
-        
+namespace OrthoSquare.Master
+{
+
+
+    public partial class ExpenseMaster
+    {
+
         /// <summary>
         /// Add control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Add;
-        
+
         /// <summary>
         /// lblMessage control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMessage;
-        
+
         /// <summary>
         /// UpdatePanel1 control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
+
         /// <summary>
         /// ddlClinic control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlClinic;
-        
+
         /// <summary>
         /// RequiredFieldValidator3 control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
-        
+
         /// <summary>
         /// ddlDoctor1 control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDoctor1;
-        
+
         /// <summary>
         /// lblclinicId control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblclinicId;
-        
+
         /// <summary>
         /// txtExpDate control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtExpDate;
-        
+
         /// <summary>
         /// txtBDate_CalendarExtender control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.CalendarExtender txtBDate_CalendarExtender;
-        
+
         /// <summary>
         /// RequiredFieldValidator4 control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
-        
+
         /// <summary>
         /// ddlVendorType control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlVendorType;
-        
+
         /// <summary>
         /// RequiredFieldValidator2 control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
-        
+
         /// <summary>
         /// Panelvendor control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel Panelvendor;
-        
+
         /// <summary>
         /// ddlVendor control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlVendor;
-        
+
         /// <summary>
         /// RequiredFieldValidator1 control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
-        
+
         /// <summary>
         /// PanelPlace control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel PanelPlace;
-        
+
         /// <summary>
         /// txtFormPlace control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFormPlace;
-        
+
         /// <summary>
         /// RegularExpressionValidator27 control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator27;
-        
+
         /// <summary>
         /// txtToplace control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtToplace;
-        
+
         /// <summary>
         /// RegularExpressionValidator1 control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
-        
+
         /// <summary>
         /// txtAmount control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAmount;
-        
+
         /// <summary>
         /// RequiredFieldValidator2a control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2a;
-        
+
         /// <summary>
         /// RegularExpressionValidator1a control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1a;
-        
+
         /// <summary>
         /// txtExpDetails control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtExpDetails;
-        
+
         /// <summary>
         /// FileEXP control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload FileEXP;
-        
+
         /// <summary>
         /// ButtonEXP control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonEXP;
-        
+
         /// <summary>
         /// ImageEXP control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image ImageEXP;
-        
+
         /// <summary>
         /// lblEXP control.
         /// </summary>
@@ -263,7 +265,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblEXP;
-        
+
         /// <summary>
         /// btAdd control.
         /// </summary>
@@ -272,7 +274,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btAdd;
-        
+
         /// <summary>
         /// btUpdate control.
         /// </summary>
@@ -281,7 +283,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btUpdate;
-        
+
         /// <summary>
         /// btBack control.
         /// </summary>
@@ -290,7 +292,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btBack;
-        
+
         /// <summary>
         /// Edit control.
         /// </summary>
@@ -299,7 +301,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Edit;
-        
+
         /// <summary>
         /// ddlClinicSearch control.
         /// </summary>
@@ -308,7 +310,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlClinicSearch;
-        
+
         /// <summary>
         /// ddlDocterSearch control.
         /// </summary>
@@ -317,7 +319,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDocterSearch;
-        
+
         /// <summary>
         /// btSearch control.
         /// </summary>
@@ -326,16 +328,16 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btSearch;
-        
+
         /// <summary>
-        /// btnAddNew control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddNew;
-        
+        protected global::System.Web.UI.WebControls.Button Button1;
+
         /// <summary>
         /// gvShow control.
         /// </summary>
