@@ -24,8 +24,8 @@ namespace OrthoSquare.Help
                 BindIssuetype();
                 Bindstatus();
                 BindGridIssue();
-                if (SessionUtilities.RoleID.ToString() == "1")
-                    btnAddNew.Visible = false;
+                //if (SessionUtilities.RoleID.ToString() == "1")
+                  //  btnAddNew.Visible = false;
             }
         }
 
