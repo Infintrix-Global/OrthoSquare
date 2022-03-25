@@ -241,10 +241,29 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
+        public int CNoMaster()
+        {
+            int Id = 0;
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 26);
+                objGeneral.AddParameterWithValueToSQLCommand("@stateID", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@Countryid", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", 0);
+                Id = objGeneral.GetExecuteScalarByCommand_SP("GET_Common");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Id;
+
+        }
 
 
 
-        public int Add_Medicines(long patientid, string MedicinesName, string txtMtype, string TotalMedicines, string DayMedicines, string MorningMedicines, string AfternoonMedicines, string EveningMedicines, string Remarks)
+        public int Add_Medicines(long patientid, string MedicinesName,int  Mid, string txtMtype, string TotalMedicines, string DayMedicines, string MorningMedicines, string AfternoonMedicines, string EveningMedicines, string Remarks ,string CheckBoxInHouse,int  CNo,int DoctorID,decimal Price,decimal Discount, decimal TotalDiscount, decimal GrandTotal)
         {
             int isInserted = -1;
             try
@@ -252,10 +271,8 @@ namespace OrthoSquare.BAL_Classes
 
                 General objGeneral = new General();
 
-                strQuery = "insert into PatientMedicines (patientid,MedicinesName,txtMtype,TotalMedicines,DayMedicines,MorningMedicines,AfternoonMedicines,EveningMedicines,Remarks,IsActive) ";
-                strQuery += " values(@patientid,@MedicinesName,@txtMtype,@TotalMedicines,@DayMedicines,@MorningMedicines,@AfternoonMedicines,@EveningMedicines,@Remarks,1) ";
-
-
+                strQuery = "insert into PatientMedicines (patientid,MedicinesName,txtMtype,TotalMedicines,DayMedicines,MorningMedicines,AfternoonMedicines,EveningMedicines,Remarks,IsActive,InHouse,CNo,Mid,CreateDate,DoctorId,Price,Discount,TotalDiscount,GrandTotal) ";
+                strQuery += " values(@patientid,@MedicinesName,@txtMtype,@TotalMedicines,@DayMedicines,@MorningMedicines,@AfternoonMedicines,@EveningMedicines,@Remarks,1,@InHouse,@CNo,@Mid,GETDATE(),@DoctorID,@Price,@Discount,@TotalDiscount,@GrandTotal) ";
                 objGeneral.AddParameterWithValueToSQLCommand("@patientid", patientid);
                 objGeneral.AddParameterWithValueToSQLCommand("@MedicinesName", MedicinesName);
                 objGeneral.AddParameterWithValueToSQLCommand("@TotalMedicines", TotalMedicines);
@@ -265,10 +282,16 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@EveningMedicines", EveningMedicines);
                 objGeneral.AddParameterWithValueToSQLCommand("@Remarks", Remarks);
                 objGeneral.AddParameterWithValueToSQLCommand("@txtMtype", txtMtype);
-
+                objGeneral.AddParameterWithValueToSQLCommand("@Mid", Mid);
+                objGeneral.AddParameterWithValueToSQLCommand("@CNo", CNo);
+                objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", DoctorID);
+                objGeneral.AddParameterWithValueToSQLCommand("@InHouse", CheckBoxInHouse);
+                objGeneral.AddParameterWithValueToSQLCommand("@Price", Price);
+                objGeneral.AddParameterWithValueToSQLCommand("@Discount", Discount);
+                objGeneral.AddParameterWithValueToSQLCommand("@TotalDiscount", TotalDiscount);
+                objGeneral.AddParameterWithValueToSQLCommand("@GrandTotal", GrandTotal);
                 objGeneral.GetExecuteNonQueryByCommand(strQuery);
                 isInserted = 1;
-
 
             }
             catch (Exception ex)
@@ -301,6 +324,7 @@ namespace OrthoSquare.BAL_Classes
             return ds.Tables[0];
 
         }
+
 
 
 

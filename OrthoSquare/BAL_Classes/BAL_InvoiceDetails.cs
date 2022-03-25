@@ -250,6 +250,15 @@ namespace OrthoSquare.BAL_Classes
 
         }
 
+
+        public DataTable GetAllMedicinPrint(int CNo)
+        {
+            strQuery = "Select * From PatientMedicines PM Join MedicinesMaster MM on MM.MedicinesId=PM.MId where CNo="+CNo+"";
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+        }
+
+
         public DataTable GetAllInvoicePaymentDetila(int InvCode)
         {
             strQuery = "Select * from PaymentDetilas  where InvoiceNo= '" + InvCode + "'";

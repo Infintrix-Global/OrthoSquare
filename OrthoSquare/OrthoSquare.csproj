@@ -845,6 +845,7 @@
     <Content Include="Doctor\DeactiveDoctors.aspx" />
     <Content Include="Doctor\DocterProfile.aspx" />
     <Content Include="Doctor\jquery.sumoselect.min.js" />
+    <Content Include="Doctor\MedicinesPrint.aspx" />
     <Content Include="Doctor\sumoselect.css" />
     <Content Include="Doctor\ViewConsultation.aspx" />
     <Content Include="Doctor\ViewDoctor.aspx" />
@@ -1931,6 +1932,13 @@
     </Compile>
     <Compile Include="Doctor\DocterProfile.aspx.designer.cs">
       <DependentUpon>DocterProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Doctor\MedicinesPrint.aspx.cs">
+      <DependentUpon>MedicinesPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Doctor\MedicinesPrint.aspx.designer.cs">
+      <DependentUpon>MedicinesPrint.aspx</DependentUpon>
     </Compile>
     <Compile Include="Doctor\ViewConsultation.aspx.cs">
       <DependentUpon>ViewConsultation.aspx</DependentUpon>

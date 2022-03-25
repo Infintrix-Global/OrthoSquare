@@ -1072,5 +1072,9 @@ namespace OrthoSquare.Invoice
 
         }
 
+        protected void btBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("InvoiceAdd.aspx");
+        }
     }
 }

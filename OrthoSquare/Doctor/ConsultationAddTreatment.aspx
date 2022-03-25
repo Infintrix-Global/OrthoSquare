@@ -503,7 +503,7 @@
                                                 <div class="form-group">
                                                     <div class="table-responsive">
 
-                                                        <asp:GridView ID="GridViewViewMedicines" runat="server" ShowFooter="true"
+                                                        <asp:GridView ID="GridViewViewMedicines" runat="server"
                                                             AutoGenerateColumns="false" class="table table-bordered table-hover">
                                                             <Columns>
                                                                 <asp:TemplateField HeaderText="Sr. No.">
@@ -663,48 +663,57 @@
 
                                                         <asp:CheckBox ID="CheckBox1" Text="Prescribe Medicines" runat="server" />
 
-                                                        <asp:GridView ID="GridMedicinesDetails" class="table table-bordered table-hover" runat="server" ShowFooter="true" OnRowDeleting="GridMedicinesDetails_RowDeleting"
+                                                        <asp:GridView ID="GridMedicinesDetails" class="table table-bordered table-hover" ShowFooter="true" runat="server" OnRowDeleting="GridMedicinesDetails_RowDeleting"
                                                             AutoGenerateColumns="false" OnRowDataBound="GridMedicinesDetails_RowDataBound">
                                                             <Columns>
-                                                                <asp:BoundField DataField="RowNumber" HeaderText="NO." />
-                                                                <asp:TemplateField HeaderText="Type" HeaderStyle-Width="120">
+                                                                <asp:BoundField DataField="RowNumber" Visible="false" HeaderText="NO." />
+                                                                <asp:TemplateField HeaderText="Type" ItemStyle-Width="25%">
                                                                     <ItemTemplate>
                                                                         <asp:DropDownList ID="ddlMedicinesType" OnSelectedIndexChanged="ddlMedicinesType_SelectedIndexChanged" AutoPostBack="true" class="form-control" runat="server">
                                                                         </asp:DropDownList>
                                                                         <asp:HiddenField ID="hdnWOEmployeeID" runat="server" Value='<%# Eval("ID")%>'></asp:HiddenField>
-                                                                        <asp:Label ID="lblMedicinesType" Visible="false" Text='<%# Eval("MedicinesType")%>'  runat="server"></asp:Label>
+                                                                        <asp:Label ID="lblMedicinesType" Visible="false" Text='<%# Eval("MedicinesType")%>' runat="server"></asp:Label>
 
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
 
 
-                                                                <asp:TemplateField HeaderText="Medicines">
+                                                                <asp:TemplateField HeaderText="In House" ItemStyle-HorizontalAlign="Center">
                                                                     <ItemTemplate>
-                                                                        <asp:DropDownList ID="ddlMedicinesName"  class="form-control" runat="server">
+
+                                                                        <asp:CheckBox ID="CheckBoxInHouse" OnCheckedChanged="CheckBoxInHouse_CheckedChanged" AutoPostBack="true" runat="server" />
+                                                                        <asp:Label ID="lblInHouse" Visible="false" Text='<%# Eval("InHouse")%>' runat="server"></asp:Label>
+
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+
+                                                                <asp:TemplateField HeaderText="Medicines" ItemStyle-Width="25%">
+                                                                    <ItemTemplate>
+                                                                        <asp:DropDownList ID="ddlMedicinesName" Visible="false" class="form-control" runat="server">
                                                                         </asp:DropDownList>
-                                                                            <asp:TextBox ID="txtMedicinesName" class="form-control" Text="" Visible="false" runat="server"></asp:TextBox>
+                                                                        <asp:TextBox ID="txtMedicinesName" class="form-control" Text="" runat="server"></asp:TextBox>
 
                                                                         <asp:Label ID="lblMedicines_Name" Visible="false" Text='<%# Eval("MedicinesName")%>' runat="server"></asp:Label>
 
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
 
-                                                                <asp:TemplateField HeaderText="Dose" HeaderStyle-Width="6%">
+                                                                <asp:TemplateField HeaderText="Dose" ItemStyle-Width="7%">
                                                                     <ItemTemplate>
-                                                                        <asp:TextBox ID="txtTotalDose" Text='<%# Eval("Dose")%>' class="form-control" MaxLength="10" runat="server"></asp:TextBox>
+                                                                        <asp:TextBox ID="txtTotalDose" Text='<%# Eval("Dose")%>' class="form-control" MaxLength="5" runat="server"></asp:TextBox>
 
                                                                     </ItemTemplate>
 
                                                                 </asp:TemplateField>
 
-                                                                <asp:TemplateField HeaderText="No.of Days" HeaderStyle-Width="10%">
+                                                                <asp:TemplateField HeaderText="No.of Days" ItemStyle-Width="7%">
                                                                     <ItemTemplate>
                                                                         <asp:TextBox ID="txtTotalNoofDays" class="form-control" MaxLength="2" Text='<%# Eval("NoOfDays")%>' runat="server"></asp:TextBox>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
 
 
-                                                                <asp:TemplateField HeaderText="Morning" ItemStyle-HorizontalAlign="Center">
+                                                                <asp:TemplateField HeaderText="Morning" ItemStyle-Width="5%" ItemStyle-HorizontalAlign="Center">
                                                                     <ItemTemplate>
                                                                         <asp:CheckBox ID="CheckBoxMorningN" runat="server" />
                                                                         <asp:Label ID="lblMorning" Visible="false" Text='<%# Eval("Morning")%>' runat="server"></asp:Label>
@@ -713,7 +722,7 @@
                                                                 </asp:TemplateField>
 
 
-                                                                <asp:TemplateField HeaderText="Afternoon" ItemStyle-HorizontalAlign="Center">
+                                                                <asp:TemplateField HeaderText="Afternoon" ItemStyle-Width="5%" ItemStyle-HorizontalAlign="Center">
                                                                     <ItemTemplate>
                                                                         <asp:CheckBox ID="CheckBoxAfternoonN" HeaderStyle-HorizontalAlign="Center" runat="server" />
                                                                         <asp:Label ID="lblAfternoon" Visible="false" Text='<%# Eval("Afternoon")%>' runat="server"></asp:Label>
@@ -721,15 +730,15 @@
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
 
-                                                                <asp:TemplateField HeaderText="Evening" ItemStyle-HorizontalAlign="Center">
+                                                                <asp:TemplateField HeaderText="Evening" ItemStyle-Width="5%" ItemStyle-HorizontalAlign="Center">
                                                                     <ItemTemplate>
-                                                                        <asp:CheckBox ID="CheckBoxEveningM" runat="server" />
+                                                                        <asp:CheckBox ID="CheckBoxEveningN" runat="server" />
                                                                         <asp:Label ID="lblEvening" Visible="false" Text='<%# Eval("Evening")%>' runat="server"></asp:Label>
 
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
 
-                                                                <asp:TemplateField HeaderText="Remarks">
+                                                                <asp:TemplateField HeaderText="Remarks" ItemStyle-Width="21%">
                                                                     <ItemTemplate>
 
                                                                         <asp:TextBox ID="txtRemarksN" class="form-control" Text='<%# Eval("Remarks")%>' runat="server"></asp:TextBox>
@@ -737,6 +746,11 @@
 
                                                                     </ItemTemplate>
 
+                                                                    <FooterStyle HorizontalAlign="Right" />
+                                                                    <FooterTemplate>
+                                                                          <asp:Button ID="ButtonAdd" OnClick="ButtonAdd_Click" runat="server" ValidationGroup="e" CausesValidation="false" Text="Add New" CssClass="btn yellow-gold" />
+
+                                                                    </FooterTemplate>
                                                                 </asp:TemplateField>
 
                                                                 <asp:TemplateField HeaderText="#">
@@ -750,20 +764,60 @@
                                                                     </ItemTemplate>
 
 
-                                                                    <FooterTemplate>
-                                                                        <asp:Button ID="ButtonAdd" OnClick="ButtonAdd_Click" runat="server" ValidationGroup="e" CausesValidation="false" Text="Add New" CssClass="btn yellow-gold" />
-                                                                    </FooterTemplate>
+
                                                                 </asp:TemplateField>
                                                             </Columns>
                                                         </asp:GridView>
 
 
+
+
                                                     </div>
 
                                                 </div>
+
+                                                <div class="row">
+                                            <div class="col-xs-12">
+
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-body">
+                                                            <label>Discount </label>
+                                                            <asp:TextBox ID="txtMDiscount" class="form-control" placeholder="Discount %" runat="server"></asp:TextBox>
+
+                                                        </div>
+
+                                                    </div>
+
+
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-body">
+
+                                                            <div class="form-group">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-body">
+
+                                                            <div class="text-right mb-20">
+                                                              
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                                <br />
                                             </div>
 
                                         </div>
+                                        
+
+
 
                                         <div class="row">
                                             <div class="text-center" style="padding: 10px; margin: 0; background-color: #f5f5f5; border-top: 1px solid #e7ecf1">

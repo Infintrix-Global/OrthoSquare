@@ -1156,7 +1156,7 @@ public class clsCommonMasters
         int TOtal = 0;
         try
         {
-            strQuery = "Select Count(*) Did From [ortho_admin].[SubAdminClinic]  where DoctorId='" + Did + "'";
+            strQuery = "Select Count(*) Did From [SubAdminClinic]  where DoctorId='" + Did + "'";
             TOtal = Convert.ToInt32(objGeneral.GetExecuteScalarByCommand(strQuery));
         }
         catch (Exception ex)
@@ -2624,5 +2624,5 @@ public class MedicinesDetails
     public string Evening { get; set; }
     public string Remarks { get; set; }
 
-
+    public string InHouse { get; set; }
 }

@@ -648,7 +648,7 @@
                                     <asp:Button ID="btAdd" runat="server" Text="Submit" Enabled="false" class="btn blue" ValidationGroup="e" OnClientClick="return Disable();" ClientIDMode="Static" OnClick="btAdd_Click" />
                                     <asp:Button ID="btFeedback" ClientIDMode="Static" class="btn blue" runat="server" Visible="false" CausesValidation="false" OnClick="btFeedback_Click"
                                         Text="Feedback" />
-                                    <asp:Button ID="btBack" runat="server" Text="Cancel" Class="btn default" ClientIDMode="Static"
+                                    <asp:Button ID="btBack" runat="server" Text="Cancel" Class="btn default" ClientIDMode="Static" OnClick="btBack_Click"
                                         CausesValidation="False" />
 
                                     <asp:Button ID="btninvoice" runat="server" Visible="false" class="btn blue" Text="Print Invoice" OnClick="btninvoice_Click" />
