@@ -38,7 +38,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                <div class="form-group">
-                                                <label>Search</label>
+                                                
                                     <asp:TextBox ID="txtSearch" runat="server" class="form-control" placeholder="Name"
                                         ClientIDMode="Static"></asp:TextBox>
                                   

@@ -63,8 +63,10 @@ namespace OrthoSquare.Branch
         {
 
             AllData = objClinic.GetAllClinicDetais();
+            
             gvShow.DataSource = AllData;
             gvShow.DataBind();
+            lblTotaCount.Text = AllData.Rows.Count.ToString();
 
         }
 
@@ -475,8 +477,9 @@ namespace OrthoSquare.Branch
 
         }
 
+        protected void gvShow_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
-     
-
+        }
     }
 }

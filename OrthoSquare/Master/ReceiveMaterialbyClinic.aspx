@@ -73,7 +73,7 @@
 
 
 
-                                        <asp:DropDownList ID="ddlvenderSearch" class="form-control" runat="server"></asp:DropDownList>
+                                        <asp:DropDownList ID="ddlvenderSearch" class="form-control" placeholder="Vendor Name" runat="server"></asp:DropDownList>
                                         <span class="help-block"></span>
                                     </div>
 

@@ -1023,6 +1023,7 @@
                         <!-- Usage as a class -->
                         <div class="text-right mb-20">
 
+
                             <asp:Button ID="Button11" runat="server" Text="Excel Upload" class="btn blue-madison" ClientIDMode="Static"
                                 CausesValidation="False" OnClick="btnAddexcelupload_Click" />
                             <asp:Button ID="btnAddNew" runat="server" Text="Add New" class="btn blue-madison" ClientIDMode="Static"
@@ -1044,7 +1045,7 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Photo">
                                         <ItemTemplate>
-                                            <asp:Image ID="Image1" Width="100px" Height="100px" ImageUrl='<%# "../EmployeeProfile/"+ Eval("ProfileImageUrl") %>' runat="server" />
+                                            <asp:Image ID="Image1" Width="70px" Height="75px" ImageUrl='<%# "../EmployeeProfile/"+ Eval("ProfileImageUrl") %>' runat="server" />
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
@@ -1081,8 +1082,8 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="">
                                         <ItemTemplate>
-                                            <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("DoctorID") %>' ToolTip="Edit"
-                                                CommandName="EditDocterDetails" ImageUrl="../Images/right15x15.png" />
+                     <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" Height="15px" Width="17px" CommandArgument='<%# Eval("DoctorID") %>'
+                                                CommandName="viewPDetails" ImageUrl="../Images/edit15x15.png" />
 
                                             <asp:ImageButton ID="btnview" CausesValidation="false" runat="server" Height="15px" CommandArgument='<%# Eval("DoctorID") %>' ToolTip="View"
                                                 CommandName="viewDocterDetails" ImageUrl="../Images/view2.png" />

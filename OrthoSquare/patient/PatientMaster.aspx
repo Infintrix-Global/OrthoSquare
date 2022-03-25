@@ -124,7 +124,31 @@
                             <i class="icon-settings font-red-sunglo"></i>
                             <span class="caption-subject bold uppercase">Patient</span>
                         </div>
-                        
+                        <%-- <div class="actions">
+							<div class="btn-group">
+								<a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown">Actions
+												<i class="fa fa-angle-down"></i>
+								</a>
+								<ul class="dropdown-menu pull-right">
+									<li>
+										<a href="javascript:;">
+											<i class="fa fa-pencil"></i>Edit </a>
+									</li>
+									<li>
+										<a href="javascript:;">
+											<i class="fa fa-trash-o"></i>Delete </a>
+									</li>
+									<li>
+										<a href="javascript:;">
+											<i class="fa fa-ban"></i>Ban </a>
+									</li>
+									<li class="divider"></li>
+									<li>
+										<a href="javascript:;">Make admin </a>
+									</li>
+								</ul>
+							</div>
+						</div>--%>
                     </div>
                     <div class="tabbable-custom ">
                         <div class="row">
@@ -1216,7 +1240,7 @@
                             <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
                                 class="table table-bordered table-hover" DataKeyNames="patientid" OnRowDataBound="gvShow_RowDataBound"
                                 GridLines="None" OnPageIndexChanging="gvShow_PageIndexChanging" OnRowCommand="gvShow_RowCommand"
-                                OnRowDeleting="gvShow_RowDeleting" OnRowEditing="gvShow_RowEditing" ShowHeaderWhenEmpty="true">
+                                OnRowDeleting="gvShow_RowDeleting" OnRowEditing="gvShow_RowEditing" ShowHeaderWhenEmpty="true" OnSelectedIndexChanged="gvShow_SelectedIndexChanged">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Sr. No.">
                                         <ItemTemplate>
@@ -1254,14 +1278,19 @@
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <%--Dhaval--%>
-                                    <asp:TemplateField Visible="false" HeaderText="Patient Status">
+                                      <asp:TemplateField HeaderText="Patient Status">
                                         <ItemTemplate>
                                             <asp:Label ID="lblPstatus" runat="server" Text='<%# Eval("PCstatus") %>'></asp:Label>
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                    <%--Dhaval--%>
+                                    <asp:TemplateField HeaderText="Last Consultation Date">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblPstatus" runat="server" Text='<%# Eval("PCstatus") %>'></asp:Label>
 
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Clinic Name" Visible="false">
                                         <ItemTemplate>
                                             <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("ClinicName") %>'></asp:Label>
@@ -1270,8 +1299,8 @@
 
                                     <asp:TemplateField HeaderText="#">
                                         <ItemTemplate>
-                                            <asp:ImageButton ID="btnUpdate" ToolTip="Edit" CausesValidation="false" runat="server" CommandArgument='<%# Eval("patientid") %>'
-                                                CommandName="EditEnquiry" ImageUrl="../Images/right15x15.png" />
+                                           <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("patientid") %>'
+                                                CommandName="EditEnquiry" ImageUrl="../Images/edit15x15.png" />
                                             <asp:ImageButton ID="btnview" ToolTip="View" CausesValidation="false" runat="server" Height="10px" Width="20px" CommandArgument='<%# Eval("patientid") %>'
                                                 CommandName="viewPDetails" ImageUrl="../Images/images.png" />
 

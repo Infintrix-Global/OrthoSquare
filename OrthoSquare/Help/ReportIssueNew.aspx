@@ -276,7 +276,10 @@
                         </div>
                         <div class="col-md-4">
                             <asp:Button ID="btSearch" OnClick="btSearch_Click" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static" />
+                         <asp:Button ID="Button1" runat="server" Text="Add New" class="btn blue-madison" ClientIDMode="Static"
+                                CausesValidation="False" OnClick="btnAddNew_Click" />
                         </div>
+
                         <!-- Usage as a class -->
 
                     </div>
@@ -285,10 +288,7 @@
 
 
                         <!-- Usage as a class -->
-                        <div class="text-right mb-20">
-                            <asp:Button ID="btnAddNew" runat="server" Text="Add New" class="btn blue-madison" ClientIDMode="Static"
-                                CausesValidation="False" OnClick="btnAddNew_Click" />
-                        </div>
+                        
                         <div class="table-scrollable">
                             <asp:GridView ID="GridIssue" class="table table-bordered table-hover" runat="server"
                                 OnPageIndexChanging="GridIssue_PageIndexChanging" AllowPaging="True" AutoGenerateColumns="False"

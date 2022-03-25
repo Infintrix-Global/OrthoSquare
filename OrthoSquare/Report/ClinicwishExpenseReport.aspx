@@ -46,9 +46,8 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                         <label for="form_control_1">
-                                            Clinic Name 
-                                        </label>
+                                         
+                                
                                            <asp:DropDownList ID="ddlClinic" class="form-control"  AutoPostBack="true"  runat="server"></asp:DropDownList>
 
                                        
@@ -57,9 +56,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                        
-                                       <label for="form_control_1">
-                                            From Date 
-                                        </label>
+                                     
                                       <asp:TextBox ID="txtSFromFollowDate" runat="server" class="form-control" placeholder="From Date "
                                             ClientIDMode="Static"></asp:TextBox>
                                       
@@ -75,9 +72,7 @@
                                
                                  <div class="col-md-4">
                                     <div class="form-group">
-                                       <label for="form_control_1">
-                                            To Date 
-                                        </label>
+                                      
                                         <asp:TextBox ID="txtSToFollowDate" runat="server" class="form-control" placeholder="To Date"
                                             ClientIDMode="Static"></asp:TextBox>
                                       

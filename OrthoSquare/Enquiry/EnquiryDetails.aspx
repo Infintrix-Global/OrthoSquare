@@ -858,7 +858,7 @@
                             </div>
                             <div class="table-scrollable">
                                 <asp:GridView ID="GridViewExcelNotSave" runat="server" AllowPaging="true" AutoGenerateColumns="false"
-                                    class="table table-bordered table-hover" PageSize="20"
+                                    class="table table-bordered table-hover" PageSize="20" 
                                     GridLines="None" OnPageIndexChanging="GridViewExcelNotSave_PageIndexChanging"
                                     ShowHeaderWhenEmpty="true">
                                     <Columns>

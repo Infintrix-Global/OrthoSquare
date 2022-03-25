@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OrthoSquare.Master {
-    
-    
-    public partial class TreatmentMaster {
-        
+namespace OrthoSquare.Master
+{
+
+
+    public partial class TreatmentMaster
+    {
+
         /// <summary>
         /// UpdatePanel1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
+
         /// <summary>
         /// Add control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Add;
-        
+
         /// <summary>
         /// lblMessage control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMessage;
-        
+
         /// <summary>
         /// txtAdd control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAdd;
-        
+
         /// <summary>
         /// RequiredtxtAdd control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredtxtAdd;
-        
+
         /// <summary>
         /// txtTCost control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTCost;
-        
+
         /// <summary>
         /// btAdd control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btAdd;
-        
+
         /// <summary>
         /// btBack control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btBack;
-        
+
         /// <summary>
         /// Edit control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Edit;
-        
+
         /// <summary>
         /// lblMSG1 control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMSG1;
-        
+
         /// <summary>
         /// txtSearch control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSearch;
-        
+
         /// <summary>
         /// btSearch control.
         /// </summary>
@@ -119,16 +121,25 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btSearch;
-        
+
         /// <summary>
-        /// btnAddNew control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddNew;
-        
+        protected global::System.Web.UI.WebControls.Button Button1;
+
+        /// <summary>
+        /// lblTotaCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotaCount;
+
         /// <summary>
         /// gvShow control.
         /// </summary>

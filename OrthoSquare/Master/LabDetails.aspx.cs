@@ -248,7 +248,6 @@ namespace OrthoSquare.Master
                 {
                     txtLabName.Text = dt.Rows[0]["LabName"].ToString();
                     txtCommission.Text = dt.Rows[0]["Commission"].ToString();
-
                     //    RadioCommissionType .SelectedItem.Text = dt.Rows[0]["CommissionType"].ToString();
 
                     //if (dt.Rows[0]["CommissionType"].ToString() != "")

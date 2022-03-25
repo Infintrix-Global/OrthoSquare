@@ -865,7 +865,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Employee Name</label>
+                                   
                                     <asp:TextBox ID="txtNAme" runat="server" class="form-control" placeholder="Employee Name"
                                         ClientIDMode="Static"></asp:TextBox>
                                     <span class="help-block"></span>
@@ -875,7 +875,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Mobile No.</label>
+                                  
                                     <asp:TextBox ID="txtMobiles" runat="server" class="form-control" placeholder="Mobile No."
                                         ClientIDMode="Static"></asp:TextBox>
                                     <span class="help-block"></span>
@@ -885,7 +885,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Employee Code</label>
+                                  
                                     <asp:TextBox ID="txtE_code" runat="server" class="form-control" placeholder="Employee Code"
                                         ClientIDMode="Static"></asp:TextBox>
                                     <span class="help-block"></span>
@@ -897,6 +897,9 @@
                                 <div class="form-group form-md-line-input ">
                                     <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
                                         OnClick="btSearch_Click" />
+                                    
+                            <asp:Button ID="Button1" runat="server" Text="Add New" class="btn blue-madison" ClientIDMode="Static"
+                                CausesValidation="False" OnClick="btnAddNew_Click" />
 
 
                                 </div>
@@ -905,16 +908,11 @@
 
 
                         <!-- Usage as a class -->
-                        <div class="text-right mb-20">
-
-
-                            <asp:Button ID="btnAddNew" runat="server" Text="Add New" class="btn blue-madison" ClientIDMode="Static"
-                                CausesValidation="False" OnClick="btnAddNew_Click" />
-                        </div>
+                       
                         <div class="table-scrollable">
 
                             <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
-                                class="table table-striped table-bordered table-hover" DataKeyNames="EmployeeID"
+                                class="table table-striped table-bordered table-hover" DataKeyNames="EmployeeID" OnRowDataBound="gvShow_RowDataBound"
                                 GridLines="None" OnPageIndexChanging="gvShow_PageIndexChanging" OnRowCommand="gvShow_RowCommand"
                                 OnRowDeleting="gvShow_RowDeleting" OnRowEditing="gvShow_RowEditing" ShowHeaderWhenEmpty="true">
                                 <Columns>
@@ -922,12 +920,13 @@
                                         <ItemTemplate>
                                             <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
                                             <asp:Label ID="lblID" runat="server" Text='<%# Eval("EmployeeID") %>' Visible="false"></asp:Label>
+
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Photo" ItemStyle-Width="10%">
                                         <ItemTemplate>
-                                            <asp:Image ID="Image1" Width="100px" Height="100px" ImageUrl='<%# "~/EmployeeProfile/"+ Eval("EmployeePhoto") %>' runat="server" />
-
+                                            <asp:Image ID="Image1" Width="70px" Height="75px" ImageUrl='<%# "~/EmployeeProfile/"+ Eval("EmployeePhoto") %>' runat="server" />
+                                            <asp:Label ID="lblProfilePic" runat="server" Visible="false" Text='<%# Eval("EmployeePhoto") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Emp Code" ItemStyle-Width="10%">
@@ -957,8 +956,9 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="" ItemStyle-Width="3%">
                                         <ItemTemplate>
-                                            <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("EmployeeID") %>'
-                                                CommandName="EditEnquiry" ImageUrl="../Images/right15x15.png" />
+                                            
+                                             <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("ClinicID")%>'
+                                                CommandName="EditEnquiry" ImageUrl="../Images/edit15x15.png" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="" ItemStyle-Width="2%">

@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OrthoSquare.Help {
-    
-    
-    public partial class ITsupport {
-        
+namespace OrthoSquare.Help
+{
+
+
+    public partial class ITsupport
+    {
+
         /// <summary>
         /// Add control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace OrthoSquare.Help {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Add;
-        
+
         /// <summary>
         /// lblMessage control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace OrthoSquare.Help {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMessage;
-        
+
         /// <summary>
         /// ddlStatus control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace OrthoSquare.Help {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlStatus;
-        
+
         /// <summary>
         /// txtComment control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace OrthoSquare.Help {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtComment;
-        
+
         /// <summary>
         /// btnissue control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace OrthoSquare.Help {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnissue;
-        
+
         /// <summary>
         /// Edit control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace OrthoSquare.Help {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Edit;
-        
+
         /// <summary>
         /// ddlIssueTypeSearch control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace OrthoSquare.Help {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlIssueTypeSearch;
-        
+
         /// <summary>
         /// ddlSearchStateus control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace OrthoSquare.Help {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSearchStateus;
-        
+
         /// <summary>
         /// txtFromDate control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace OrthoSquare.Help {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFromDate;
-        
+
         /// <summary>
         /// txtFromEnquiryDate_CalendarExtender control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace OrthoSquare.Help {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.CalendarExtender txtFromEnquiryDate_CalendarExtender;
-        
+
         /// <summary>
         /// txtToDate control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace OrthoSquare.Help {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtToDate;
-        
+
         /// <summary>
         /// txtToEnquiryDate_CalendarExtender control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace OrthoSquare.Help {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.CalendarExtender txtToEnquiryDate_CalendarExtender;
-        
+
         /// <summary>
         /// btSearch control.
         /// </summary>
@@ -128,7 +130,16 @@ namespace OrthoSquare.Help {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btSearch;
-        
+
+        /// <summary>
+        /// lblTotaCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotaCount;
+
         /// <summary>
         /// GridIssue control.
         /// </summary>

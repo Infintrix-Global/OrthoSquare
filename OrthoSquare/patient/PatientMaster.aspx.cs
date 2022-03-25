@@ -1600,6 +1600,11 @@ namespace OrthoSquare.patient
             }
         }
 
+        protected void gvShow_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
 
         //protected void SendMail(string Email, string Username, string Password)
         //{

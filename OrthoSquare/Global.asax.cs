@@ -47,6 +47,8 @@ namespace OrthoSquare
 
             Response.Redirect("~/Login.aspx");
 
+
+
         }
 
         protected void Application_End(object sender, EventArgs e)

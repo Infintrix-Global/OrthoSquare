@@ -39,9 +39,7 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="form_control_1">
-                                                        Clinic Name 
-                                                    </label>
+                                                    
                                                     <asp:DropDownList ID="ddlClinic" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlClinic_SelectedIndexChanged" runat="server"></asp:DropDownList>
 
 
@@ -49,9 +47,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="form_control_1">
-                                                        Doctor Name
-                                                    </label>
+                                                   
                                                     <asp:DropDownList ID="ddlDocter" Visible="false" class="form-control" AutoPostBack="true" runat="server"></asp:DropDownList>
 
 
@@ -69,9 +65,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="form_control_1">
-                                                        From Date 
-                                                    </label>
+                                                   
                                                     <asp:TextBox ID="txtSFromFollowDate" runat="server" class="form-control" placeholder="From Date "
                                                         ClientIDMode="Static"></asp:TextBox>
 
@@ -86,10 +80,8 @@
 
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="form_control_1">
-                                                        To Date 
-                                                    </label>
-                                                    <asp:TextBox ID="txtSToFollowDate" runat="server"  class="form-control" placeholder="To Date"
+                                                   
+                                                    <asp:TextBox ID="txtSToFollowDate" runat="server" class="form-control" placeholder="To Date"
                                                         ClientIDMode="Static"></asp:TextBox>
 
                                                     <cc1:CalendarExtender ID="txtSToFollowDate_CalendarExtender" runat="server" Format="dd-MM-yyyy"

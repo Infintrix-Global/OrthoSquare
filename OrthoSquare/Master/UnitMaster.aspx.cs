@@ -14,7 +14,6 @@ namespace OrthoSquare.Master
     {
         Bal_UnitMaster objUnit = new Bal_UnitMaster();
         public static DataTable AllData = new DataTable();
-        General objGeneral = new General();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -22,51 +21,15 @@ namespace OrthoSquare.Master
                 Session["Searched"] = null;
                 getAllUnit();
             }
+
         }
 
-        private long UnitId
+        public void getAllUnit()
         {
-            get
-            {
-                if (ViewState["UnitId"] != null)
-                {
-                    return (long)ViewState["UnitId"];
-                }
-                return 0;
-            }
-            set
-            {
-                ViewState["UnitId"] = value;
-            }
-        }
 
-        public DataTable getAllUnit()
-        {
-            try
-            {
-                string IsMedi = "";
-
-                if (RadioBtnIsMedicalSearch.SelectedValue == "All")
-                {
-                    IsMedi = "";
-                }
-                else
-                {
-                    IsMedi = RadioBtnIsMedicalSearch.SelectedValue;
-                }
-
-                AllData = objUnit.GetAllUnit(txtSearch.Text.Trim(), IsMedi);
-                gvShow.DataSource = AllData;
-                gvShow.DataBind();
-
-                return AllData;
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
+            AllData = objUnit.GetAllUnit();
+            gvShow.DataSource = AllData;
+            gvShow.DataBind();
         }
 
 
@@ -77,69 +40,73 @@ namespace OrthoSquare.Master
                 int _isInserted = -1;
 
 
-                _isInserted = objUnit.AddUnit(UnitId, txtAdd.Text, RadioBtnIsMedical.SelectedValue);
+                _isInserted = objUnit.AddUnit(txtAdd.Text);
 
                 if (_isInserted == -1)
                 {
-                    string CloseWindow;
-                    CloseWindow = "alert('Failed to Add Unit')";
-                    ScriptManager.RegisterStartupScript(UpdatePanel1, UpdatePanel1.GetType(), "CloseWindow", CloseWindow, true);
-
+                    lblMessage.Text = "Failed to Add Pack";
+                    lblMessage.ForeColor = System.Drawing.Color.Red;
                 }
                 else
                 {
 
-                    string CloseWindow;
-                    CloseWindow = "alert('Unit Added Successfully')";
-                    ScriptManager.RegisterStartupScript(UpdatePanel1, UpdatePanel1.GetType(), "CloseWindow", CloseWindow, true);
-
+                    lblMessage.Text = "Unit Added Successfully";
+                    lblMessage.ForeColor = System.Drawing.Color.Green;
                     txtAdd.Text = "";
-                    RadioBtnIsMedical.ClearSelection();
                     getAllUnit();
-
+                    // Response.Redirect("BrandMaster.aspx");
+                    btSearch_Click(sender, e);
                 }
             }
             catch (Exception ex)
             {
-
-                throw ex;
             }
         }
 
-        protected void btnClear_Click(object sender, EventArgs e)
-        {
-            txtSearch.Text = "";
-            RadioBtnIsMedicalSearch.ClearSelection();
-            RadioBtnIsMedicalSearch.Items.FindByText("All").Selected = true;
-            getAllUnit();
-
-        }
-
-        protected void RadioBtnIsMedicalSearch_Select(object sender, EventArgs e)
-        {
-
-            getAllUnit();
-        }
         protected void btSearch_Click(object sender, EventArgs e)
         {
             try
             {
-                getAllUnit();
+                string search = "";
+                if (txtSearch.Text != "")
+                {
+                    search += "UnitName like '%" + txtSearch.Text + "%'";
+                    DataRow[] dtSearch1 = AllData.Select(search);
+                    if (dtSearch1.Count() > 0)
+                    {
+                        DataTable dtSearch = dtSearch1.CopyToDataTable();
+                        gvShow.DataSource = dtSearch;
+                        gvShow.DataBind();
+                    }
+                    else
+                    {
+                        DataTable dt = new DataTable();
+                        gvShow.DataSource = dt;
+                        gvShow.DataBind();
+                    }
+                }
+                else
+                {
+                    gvShow.DataSource = AllData;
+                    gvShow.DataBind();
+                }
             }
             catch (Exception ex)
             {
-
-                throw ex;
             }
         }
 
         protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvShow.PageIndex = e.NewPageIndex;
-            getAllUnit();
+            btSearch_Click(sender, e);
         }
 
-
+        protected void gvShow_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            gvShow.EditIndex = -1;
+            btSearch_Click(sender, e);
+        }
 
         protected void gvShow_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -151,102 +118,72 @@ namespace OrthoSquare.Master
                 int _isDeleted = objUnit.DeleteUnit(ID);
                 if (_isDeleted != -1)
                 {
-                    getAllUnit();
+                    DataTable UserLog = (DataTable)Session["User"];
+
+                    lblMessage.Text = "Unit Deleted.";
+                    lblMessage.ForeColor = System.Drawing.Color.Red;
+                    Response.Redirect("UnitMaster.aspx");
+                    btSearch_Click(sender, e);
                 }
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 
-        public SortDirection direction
+        protected void gvShow_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            get
-            {
-                if (ViewState["directionState"] == null)
-                {
-                    ViewState["directionState"] = SortDirection.Ascending;
-                }
-                return (SortDirection)ViewState["directionState"];
-            }
-            set
-            {
-                ViewState["directionState"] = value;
-            }
+            gvShow.EditIndex = e.NewEditIndex;
+            btSearch_Click(sender, e);
+            GridView gvGrid = sender as GridView;
+            GridViewRow dr = gvGrid.Rows[e.NewEditIndex];
+            TextBox txtEditSearch = (TextBox)dr.FindControl("txtName");
+
+            txtEditSearch.Focus();
         }
 
-        protected void gvShow_Sorting(object sender, GridViewSortEventArgs e)
+        protected void gvShow_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            string sortingDirection = string.Empty;
-            if (direction == SortDirection.Ascending)
-            {
-                direction = SortDirection.Descending;
-                sortingDirection = "Desc";
+            int isUpdated = -1;
+            GridViewRow row = (GridViewRow)gvShow.Rows[e.RowIndex];
+            Label lblID = (Label)row.FindControl("lblID");
+            TextBox txtName = (TextBox)row.FindControl("txtName");
 
+
+            isUpdated = objUnit.UpdateUnit(txtName.Text, Convert.ToInt32(lblID.Text));
+            if (isUpdated == 1)
+            {
+                // DataTable UserLog = (DataTable)Session["User"];
+
+                lblMessage.Text = "Unit Updated Successfully";
+                lblMessage.ForeColor = System.Drawing.Color.Green;
+                //gvShow.EditIndex = -1;
+                //  getAllCategoryGrid();
+                Response.Redirect("UnitMaster.aspx");
+
+                btSearch_Click(sender, e);
             }
             else
             {
-
-                direction = SortDirection.Ascending;
-                sortingDirection = "Asc";
-
-            }
-            DataView sortedView = new DataView(getAllUnit());
-            sortedView.Sort = e.SortExpression + " " + sortingDirection;
-            gvShow.DataSource = sortedView;
-            gvShow.DataBind();
-        }
-
-
-
-        protected void gvShow_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Edit1")
-            {
-                try
-                {
-
-                    Edit.Visible = false;
-                    Add.Visible = true;
-                    int Id = Convert.ToInt32(e.CommandArgument);
-                    UnitId = Id;
-                    DataTable Dt = objUnit.GetSelectUnit(Id);
-                    if (Dt != null && Dt.Rows.Count > 0)
-                    {
-                        txtAdd.Text = Dt.Rows[0]["UnitName"].ToString();
-                        if (Dt.Rows[0]["IsMedical"].ToString() != "")
-                        {
-                            RadioBtnIsMedical.Items.FindByText(Dt.Rows[0]["IsMedical"].ToString()).Selected = true;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                    throw ex;
-                }
+                lblMessage.Text = "Failed to Update Pack";
+                lblMessage.ForeColor = System.Drawing.Color.Red;
             }
         }
-
 
         protected void btnclear_Click(object sender, EventArgs e)
         {
             Edit.Visible = true;
             Add.Visible = false;
-
             getAllUnit();
 
         }
 
         protected void btnAddNew_Click(object sender, EventArgs e)
         {
-            txtAdd.Text = "";
             Edit.Visible = false;
             Add.Visible = true;
         }
-
 
     }
 }

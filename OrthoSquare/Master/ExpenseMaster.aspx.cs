@@ -314,8 +314,26 @@ namespace OrthoSquare.Master
         {
             Edit.Visible = true;
             Add.Visible = false;
-            getAllExpense(Convert.ToInt32(ddlClinicSearch.SelectedValue), Convert.ToInt32(ddlDocterSearch.SelectedValue));
+            // getAllExpense(Convert.ToInt32(ddlClinicSearch.SelectedValue), Convert.ToInt32(ddlDocterSearch.SelectedValue));
 
+            if (SessionUtilities.RoleID == 1)
+            {
+                bindClinic();
+              
+                ddlClinicSearch.SelectedValue = SessionUtilities.Empid.ToString();
+                bindDoctorMasterSearch(SessionUtilities.Empid);
+
+                getAllExpense(Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlDocterSearch.SelectedValue));
+
+            }
+            else if (SessionUtilities.RoleID == 3)
+            {
+
+                bindClinic();
+                bindDoctorMasterSearch(0);
+
+                getAllExpense(0, Convert.ToInt32(SessionUtilities.Empid));
+            }
         }
 
         public void Clear()

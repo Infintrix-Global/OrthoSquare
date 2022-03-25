@@ -48,9 +48,7 @@
                             <div class="form-group">
                                 <div class="col-md-4 ">
                                     <div class="form-body">
-                                        <label>
-                                            Select Doctor:
-                                        </label>
+                                        
                                      <%--   <asp:DropDownList ID="ddl_DocterDetils" AutoPostBack="true" OnSelectedIndexChanged="ddl_DocterDetils_SelectedIndexChanged" class="form-control" runat="server"></asp:DropDownList>
 
                                         <asp:RequiredFieldValidator ID="RequiredFieldddl_DocterDetils" runat="server" ControlToValidate="ddl_DocterDetils" InitialValue="0"
@@ -73,14 +71,13 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-body">
-                                        <label>
-                                            Select Clinic:
-                                        </label>
+                                       
 
 
                                         <asp:UpdatePanel ID="updatepanel2" runat="server">
                                             <ContentTemplate>
-                                                <asp:TextBox ID="TextBox1" class="form-control " runat="server"></asp:TextBox>
+                                               
+ <asp:TextBox ID="TextBox1" class="form-control "  placeholder=" Select Clinic" runat="server"></asp:TextBox>  
                                                 <asp:PopupControlExtender ID="TextBox1_PopupControlExtender" runat="server"
                                                     Enabled="True" ExtenderControlID="" TargetControlID="TextBox1" PopupControlID="Panel1"
                                                     OffsetY="22">

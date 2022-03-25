@@ -45,7 +45,7 @@
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <div class="col-sm-6">
-                                            <label>Clinic<span class="required">*</span></label>
+                             
 
                                             <asp:DropDownList ID="ddl_Clinic" class="form-control" runat="server"></asp:DropDownList>
 
@@ -57,7 +57,7 @@
                                         </div>
 
                                         <div class="col-sm-6">
-                                            <label>Vendor Type<span class="required">*</span></label>
+                                          
 
                                             <asp:DropDownList ID="ddlVendorType" class="form-control" runat="server"></asp:DropDownList>
 
@@ -77,8 +77,7 @@
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <div class="col-sm-6">
-                                            <label>Name<span class="required">*</span></label>
-
+                                           
                                             <asp:TextBox ID="txtAdd" class="form-control" placeholder="Vendor Name"
                                                 runat="server"></asp:TextBox>
 
@@ -93,8 +92,7 @@
                                         </div>
 
                                         <div class="col-sm-6">
-                                            <label>Mobile No.  <span class="required">*</span></label>
-
+                                           
                                             <asp:TextBox ID="txtMobile" class="form-control" placeholder="Enter Mobile" TabIndex="15" runat="server"></asp:TextBox>
 
                                             <span class="help-block">
@@ -167,8 +165,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Search</label>
-                                            <asp:TextBox ID="txtSearch" runat="server" class="form-control" placeholder="Name"
+                                                                                      <asp:TextBox ID="txtSearch" runat="server" class="form-control" placeholder="Name"
                                                 ClientIDMode="Static"></asp:TextBox>
 
                                         </div>
@@ -179,16 +176,20 @@
                                             <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
                                                 OnClick="btSearch_Click" />
 
+                                            <asp:Button ID="Button1" runat="server" Text="Add New" class="btn blue-madison" ClientIDMode="Static"
+                                        CausesValidation="False" OnClick="btnAddNew_Click" />
+
                                         </div>
                                     </div>
                                 </div>
 
 
                                 <!-- Usage as a class -->
-                                <div class="text-right mb-20">
-                                    <asp:Button ID="btnAddNew" runat="server" Text="Add New" class="btn blue-madison" ClientIDMode="Static"
-                                        CausesValidation="False" OnClick="btnAddNew_Click" />
-                                </div>
+                                  <div class="text-right mb-20">
+                                            Total :
+                                            <asp:Label ID="lblTotaCount" runat="server" Text=""></asp:Label>
+                       </div>
+                          
                                 <div class="table-scrollable">
 
                                     <asp:GridView ID="gvShow" runat="server" class="table table-bordered table-hover"
@@ -234,7 +235,12 @@
                                                     <asp:ImageButton ID="ImageButton1" CommandArgument='<%# Eval("VendorID") %>' runat="server" CommandName="Update1" ImageUrl="../Images/edit15x15.png"
                                                         CausesValidation="False" />
 
-                                                    <asp:ImageButton ID="lbtDelete" runat="server" CommandName="delete" ImageUrl="../Images/delete15x15.png"
+                                                   
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                     <asp:ImageButton ID="lbtDelete" runat="server" CommandName="delete" ImageUrl="../Images/delete15x15.png"
                                                         CausesValidation="False" OnClientClick="return confirm('Are you sure you want to delete this Vendor?');" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>

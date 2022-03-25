@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OrthoSquare.Master {
-    
-    
-    public partial class AddMaterialOrder {
-        
+namespace OrthoSquare.Master
+{
+
+
+    public partial class AddMaterialOrder
+    {
+
         /// <summary>
         /// Edit control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Edit;
-        
+
         /// <summary>
         /// ddlMaterialSearch control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlMaterialSearch;
-        
+
         /// <summary>
         /// btSearch control.
         /// </summary>
@@ -38,16 +40,16 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btSearch;
-        
+
         /// <summary>
-        /// btnAddNew control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddNew;
-        
+        protected global::System.Web.UI.WebControls.Button Button1;
+
         /// <summary>
         /// gvShow control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvShow;
-        
+
         /// <summary>
         /// Add control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Add;
-        
+
         /// <summary>
         /// lblMessage control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMessage;
-        
+
         /// <summary>
         /// Gridplaceorder control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView Gridplaceorder;
-        
+
         /// <summary>
         /// ddlClinic control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlClinic;
-        
+
         /// <summary>
         /// ddlDoctor control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace OrthoSquare.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDoctor;
-        
+
         /// <summary>
         /// btAdd control.
         /// </summary>

@@ -42,15 +42,6 @@ namespace OrthoSquare.Master
         protected global::System.Web.UI.WebControls.Label lblMessage;
 
         /// <summary>
-        /// ddlMaterialType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlMaterialType;
-
-        /// <summary>
         /// ddlBrand control.
         /// </summary>
         /// <remarks>
@@ -141,13 +132,22 @@ namespace OrthoSquare.Master
         protected global::System.Web.UI.WebControls.Button btSearch;
 
         /// <summary>
-        /// btnAddNew control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddNew;
+        protected global::System.Web.UI.WebControls.Button Button1;
+
+        /// <summary>
+        /// lblTotaCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotaCount;
 
         /// <summary>
         /// gvShow control.

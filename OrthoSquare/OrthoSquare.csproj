@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OrthoSquare</RootNamespace>
     <AssemblyName>OrthoSquare</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -22,6 +22,7 @@
     <UseGlobalApplicationHostFile />
     <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
     <Use64BitIISExpress />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -631,9 +632,6 @@
     <Content Include="bin\Release\Publish\fullcalendar\demos\BookAppointment.aspx" />
     <Content Include="bin\Release\Publish\fullcalendar\demos\js\theme-chooser.js" />
     <Content Include="bin\Release\Publish\fullcalendar\demos\NewAppointmentClinic.aspx" />
-    <Content Include="bin\Release\Publish\fullcalendar\demos\php\get-events.php" />
-    <Content Include="bin\Release\Publish\fullcalendar\demos\php\get-timezones.php" />
-    <Content Include="bin\Release\Publish\fullcalendar\demos\php\utils.php" />
     <Content Include="bin\Release\Publish\fullcalendar\fullcalendar.css" />
     <Content Include="bin\Release\Publish\fullcalendar\fullcalendar.js" />
     <Content Include="bin\Release\Publish\fullcalendar\fullcalendar.min.css" />
@@ -1028,7 +1026,6 @@
     <Content Include="Master\MaterialUsed.aspx" />
     <Content Include="Master\MateriaType.aspx" />
     <Content Include="Master\MedicalProblemMaster.aspx" />
-    <Content Include="Master\Medicines.aspx" />
     <Content Include="Master\PackMaster.aspx" />
     <Content Include="Master\PushNotification.aspx" />
     <Content Include="Master\ReceiveMaterialbyClinic.aspx" />
@@ -1066,8 +1063,6 @@
     <Content Include="Report\DpctorwishExpenseReport.aspx" />
     <Content Include="Report\ExpenseReport.aspx" />
     <Content Include="Report\LebInoutReport.aspx" />
-    <Content Include="full_calendar\.DS_Store" />
-    <Content Include="full_calendar\jquery\.DS_Store" />
     <Content Include="Report\MaterialInoutReport.aspx" />
     <Content Include="Report\MaterialPurchased.aspx" />
     <Content Include="Report\MaterialStockHistory.aspx" />
@@ -1122,6 +1117,9 @@
     <Content Include="bin\Release\Publish\Data\OrthoSquare.edmx.diagram" />
     <Content Include="bin\Release\Publish\feedback\index.pug" />
     <Content Include="bin\Release\Publish\feedback\scss\style.scss" />
+    <Content Include="bin\Release\Publish\fullcalendar\demos\php\get-events.php" />
+    <Content Include="bin\Release\Publish\fullcalendar\demos\php\get-timezones.php" />
+    <Content Include="bin\Release\Publish\fullcalendar\demos\php\utils.php" />
     <Content Include="bin\Release\Publish\full_calendar\.DS_Store" />
     <Content Include="bin\Release\Publish\full_calendar\jquery\.DS_Store" />
     <Content Include="bin\Release\Publish\Images\TImeEdit_files\analytics.js.download" />
@@ -1161,24 +1159,8 @@
     <Content Include="assets\apps\scripts\timeline.min.html" />
     <Content Include="assets\apps\scripts\todo-2.min.js" />
     <Content Include="assets\apps\scripts\todo.min.js" />
+    <Content Include="assets\global\css\components.min.css" />
     <Content Include="assets\global\css\plugins.min.css" />
-    <Content Include="assets\global\img\accordion-plusminus.png" />
-    <Content Include="assets\global\img\datatable-row-openclose.png" />
-    <Content Include="assets\global\img\loading-spinner-grey.gif" />
-    <Content Include="assets\global\img\loading.gif" />
-    <Content Include="assets\global\img\portlet-collapse-icon-white.png" />
-    <Content Include="assets\global\img\portlet-collapse-icon.png" />
-    <Content Include="assets\global\img\portlet-config-icon-white.png" />
-    <Content Include="assets\global\img\portlet-config-icon.png" />
-    <Content Include="assets\global\img\portlet-expand-icon-white.png" />
-    <Content Include="assets\global\img\portlet-expand-icon.png" />
-    <Content Include="assets\global\img\portlet-reload-icon-white.png" />
-    <Content Include="assets\global\img\portlet-reload-icon.png" />
-    <Content Include="assets\global\img\portlet-remove-icon-white.png" />
-    <Content Include="assets\global\img\portlet-remove-icon.png" />
-    <Content Include="assets\global\img\remove-icon-small.png" />
-    <Content Include="assets\global\img\syncfusion-icons-white.png" />
-    <Content Include="assets\global\img\syncfusion-icons.png" />
     <Content Include="assets\global\plugins\amcharts\amcharts\amcharts.js" />
     <Content Include="assets\global\plugins\amcharts\amcharts\pie.js" />
     <Content Include="assets\global\plugins\amcharts\amcharts\radar.js" />
@@ -1636,7 +1618,6 @@
     <Compile Include="BAL_Classes\BAL_MaterialMaster.cs" />
     <Compile Include="BAL_Classes\Bal_MaterilaType.cs" />
     <Compile Include="BAL_Classes\BAL_MedicalProblem.cs" />
-    <Compile Include="BAL_Classes\BAL_Medicines.cs" />
     <Compile Include="BAL_Classes\BAL_Pack.cs" />
     <Compile Include="BAL_Classes\BAL_Patient.cs" />
     <Compile Include="BAL_Classes\BAL_Treatment.cs" />
@@ -2249,13 +2230,6 @@
     </Compile>
     <Compile Include="Master\MedicalProblemMaster.aspx.designer.cs">
       <DependentUpon>MedicalProblemMaster.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Master\Medicines.aspx.cs">
-      <DependentUpon>Medicines.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Master\Medicines.aspx.designer.cs">
-      <DependentUpon>Medicines.aspx</DependentUpon>
     </Compile>
     <Compile Include="Master\PackMaster.aspx.cs">
       <DependentUpon>PackMaster.aspx</DependentUpon>

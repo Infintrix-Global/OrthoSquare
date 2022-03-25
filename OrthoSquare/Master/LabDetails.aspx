@@ -87,9 +87,9 @@
                             <div class="text-center mt-12 mb-3">
 
 
-                                <asp:Button ID="btAdd" runat="server" Text="Submit" class="btn btn-md btn-info" ClientIDMode="Static" OnClick="btAdd_Click" />
+                                <asp:Button ID="btAdd" runat="server" Text="Submit" class="btn blue" ClientIDMode="Static" OnClick="btAdd_Click" />
 
-                                <asp:Button ID="btBack" runat="server" Text="Cancel" OnClick="btnclear_Click" Class="btn btn-md btn-secondary" ClientIDMode="Static"
+                                <asp:Button ID="btBack" runat="server" Text="Cancel" OnClick="btnclear_Click" Class="btn default" ClientIDMode="Static"
                                     CausesValidation="False" />
 
                             </div>
@@ -152,12 +152,12 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <asp:Button ID="btSearch" runat="server" Text="Search" class="btn btn-md btn-success"
+                                            <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki"
                                                 OnClick="btSearch_Click" />
 
-                                            <asp:Button ID="btnClear" runat="server" Text="Clear" class="btn btn-md btn-secondary"
+                                            <asp:Button ID="btnClear" runat="server" Text="Cancel" class="btn default"
                                                 OnClick="btnClear_Click" />
-                                            <asp:Button ID="btnAddNew" runat="server" Text="Add New Lab" class="btn btn-md btn-info"
+                                            <asp:Button ID="btnAddNew" runat="server" Text="Add New Lab" class="btn blue-madison"
                                                 CausesValidation="False" OnClick="btnAddNew_Click" />
                                         </div>
 

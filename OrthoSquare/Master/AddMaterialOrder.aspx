@@ -63,7 +63,7 @@
 						<div class="col-xs-12">
 								<div class="form-group">
 									<div class="col-sm-4">
-                                        <label>Material Name </label>
+                                       
 
                                                   
                                         
@@ -76,7 +76,10 @@
                                     <div class="col-sm-4">
                                          <label></label>
                                            <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static" OnClick="btSearch_Click"  />
-                                    </div>
+                                     <asp:Button ID="Button1" runat="server" Text="Add Order" class="btn blue-madison" ClientIDMode="Static"
+                                CausesValidation="False" OnClick="btnAddNew_Click" />
+
+                                        </div>
 
                                     <div class="col-sm-4">
                                         
@@ -88,14 +91,7 @@
                             </div>
 
 
-                          <div class="text-right mb-20">
-
-                         
-                            <asp:Button ID="btnAddNew" runat="server" Text="Add Order" class="btn blue-madison" ClientIDMode="Static"
-                                CausesValidation="False" OnClick="btnAddNew_Click" />
-
-                        </div>
-
+                        
 
                         <!-- Usage as a class -->
                     
