@@ -282,6 +282,27 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
+        public DataTable PatientSelectDoctorID(string PatientName)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                General objGeneral = new General();
+
+
+                strQuery = "Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')', patientid from PatientMaster p where  IsActive =1 ";
+                strQuery += " and P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' like '%" + PatientName + "%'";
+
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
+        }
+
+
         public DataTable NewGetPatientlistSearch(string PatientName)
         {
 
@@ -309,6 +330,19 @@ namespace OrthoSquare.BAL_Classes
                 strQuery += " and P.ClinicID in " + ASD + "";
             }
             strQuery += "order by patientid DESC ";
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+
+
+        }
+
+        public DataTable GETPatientSelect(int Paid)
+        {
+
+            strQuery = " Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ( '+P.Mobile +' )'  as Fname from PatientMaster P  where  Patientid=" + Paid + "";
+          
+
+        
             return objGeneral.GetDatasetByCommand(strQuery);
 
 

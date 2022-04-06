@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="InvoiceAdd.aspx.cs" Inherits="OrthoSquare.Invoice.InvoiceAdd" %>
 
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<%@ Register Assembly="DropDownCheckBoxes" Namespace="Saplin.Controls" TagPrefix="cc1" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
@@ -89,13 +90,29 @@
 
                                         </div>
                                         <div class="col-sm-3">
+                                              <label>Patient Name</label>
+                                            <asp:TextBox ID="txtPatientName" runat="server" OnTextChanged="txtPatientName_TextChanged" placeholder="Patient Name" AutoPostBack="true" class="form-control"></asp:TextBox>
 
-                                            <label>Patient Name</label>
-                                            <asp:DropDownList ID="ddlpatient" class="form-control" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlpatient_SelectedIndexChanged"></asp:DropDownList>
-                                            <span class="help-block">
-                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="ddlpatient" InitialValue="0"
-                                                    SetFocusOnError="true" ErrorMessage="Please Enter patient" ForeColor="Red"></asp:RequiredFieldValidator>
-                                            </span>
+                                            <cc1:AutoCompleteExtender ServiceMethod="SearchCustomers"
+                                                MinimumPrefixLength="2"
+                                                CompletionInterval="100" EnableCaching="false" CompletionSetCount="10"
+                                                TargetControlID="txtPatientName"
+                                                ID="AutoCompleteExtender1" runat="server" FirstRowSelected="false">
+                                            </cc1:AutoCompleteExtender>
+
+
+                                            <asp:RequiredFieldValidator ID="RequiredFieldddl_DocterDetils" runat="server" ControlToValidate="txtPatientName"
+                                                SetFocusOnError="true" ErrorMessage="Please Select Patient" ForeColor="Red"></asp:RequiredFieldValidator>
+
+                                        </div>
+                                        
+                                        <div class="col-sm-3">
+
+                                            <label>Payment Date</label>
+                                            <asp:TextBox ID="txtPayDate" class="form-control" autocomplete="Off" placeholder="Payment Date" TabIndex="5" AutoPostBack="true" runat="server"></asp:TextBox>
+                                            <asp:CalendarExtender ID="txtBDate_CalendarExtender" runat="server" Enabled="True" OnClientDateSelectionChanged="checkDate1"
+                                                TargetControlID="txtPayDate" Format="dd-MM-yyyy">
+                                            </asp:CalendarExtender>
                                         </div>
                                         <div style="display: none" class="col-sm-3">
                                             <label>Invoice No</label>
@@ -185,14 +202,6 @@
                                         </div>
 
                                         <div class="col-sm-3">
-
-                                            <label>Payment Date</label>
-                                            <asp:TextBox ID="txtPayDate" class="form-control" autocomplete="Off" placeholder="Payment Date" TabIndex="5" AutoPostBack="true" runat="server"></asp:TextBox>
-                                            <asp:CalendarExtender ID="txtBDate_CalendarExtender" runat="server" Enabled="True" OnClientDateSelectionChanged="checkDate1"
-                                                TargetControlID="txtPayDate" Format="dd-MM-yyyy">
-                                            </asp:CalendarExtender>
-                                        </div>
-                                        <div class="col-sm-3">
                                         </div>
 
                                     </div>
@@ -204,83 +213,83 @@
                                 <div class="col-xs-12">
                                     <%--<div class="form-group">--%>
 
-                                        <div  runat="server" id="gvInformationId" class="table-responsive">
+                                    <div runat="server" id="gvInformationId" class="table-responsive">
 
 
-                                            <asp:GridView ID="gvInformation" runat="server" ShowFooter="True" AutoGenerateColumns="False"
-                                                ForeColor="#333333" Width="100%" OnRowCommand="gvInformation_RowCommand" class="table table-bordered table-hover"
-                                                OnRowDataBound="gvInformation_RowDataBound">
+                                        <asp:GridView ID="gvInformation" runat="server" ShowFooter="True" AutoGenerateColumns="False"
+                                            ForeColor="#333333" Width="100%" OnRowCommand="gvInformation_RowCommand" class="table table-bordered table-hover"
+                                            OnRowDataBound="gvInformation_RowDataBound">
 
-                                                <Columns>
-                                                    <asp:BoundField DataField="RowNumber" HeaderText="Sr.No" />
-                                                    <asp:TemplateField HeaderText="Treatment" ItemStyle-HorizontalAlign="Center">
-                                                        <ItemTemplate>
-                                                            <asp:HiddenField ID="hdnWOEmployeeID" runat="server" Value='<%# Eval("ID")%>'></asp:HiddenField>
+                                            <Columns>
+                                                <asp:BoundField DataField="RowNumber" HeaderText="Sr.No" />
+                                                <asp:TemplateField HeaderText="Treatment" ItemStyle-HorizontalAlign="Center">
+                                                    <ItemTemplate>
+                                                        <asp:HiddenField ID="hdnWOEmployeeID" runat="server" Value='<%# Eval("ID")%>'></asp:HiddenField>
 
-                                                            <asp:Label ID="lblTreatment" Visible="false" runat="server" Text='<%# Eval("TreatmentID")%>'></asp:Label>
-                                                            <asp:DropDownList ID="ddlTreatment1" Width="200px" class="form-control" runat="server"></asp:DropDownList>
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="Unit">
-                                                        <ItemTemplate>
-                                                            <asp:TextBox ID="txtSeatings1" Width="80px" OnTextChanged="txtSeatings1_TextChanged" AutoPostBack="true" class="form-control" Text='<%# Eval("Unit")%>' runat="server"></asp:TextBox>
-                                                            <cc1:FilteredTextBoxExtender ID="FilUnUnit" runat="server"
-                                                                Enabled="True" TargetControlID="txtSeatings1" FilterType="Numbers">
-                                                            </cc1:FilteredTextBoxExtender>
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="Cost">
-                                                        <ItemTemplate>
-                                                            <asp:TextBox ID="txtCost1" Width="200px" OnTextChanged="txtCost1_TextChanged" AutoPostBack="true" CssClass="form-control" Text='<%# Eval("Cost")%>' runat="server"></asp:TextBox>
-                                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtCost1" ErrorMessage="Please Enter Cost Amount" ForeColor="Red" SetFocusOnError="true" ValidationGroup="e"></asp:RequiredFieldValidator>
-                                                            <cc1:FilteredTextBoxExtender ID="FilUnCost" runat="server"
-                                                                Enabled="True" TargetControlID="txtCost1" FilterType="Numbers">
-                                                            </cc1:FilteredTextBoxExtender>
+                                                        <asp:Label ID="lblTreatment" Visible="false" runat="server" Text='<%# Eval("TreatmentID")%>'></asp:Label>
+                                                        <asp:DropDownList ID="ddlTreatment1" Width="200px" class="form-control" runat="server"></asp:DropDownList>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Unit">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtSeatings1" Width="80px" OnTextChanged="txtSeatings1_TextChanged" AutoPostBack="true" class="form-control" Text='<%# Eval("Unit")%>' runat="server"></asp:TextBox>
+                                                        <cc1:FilteredTextBoxExtender ID="FilUnUnit" runat="server"
+                                                            Enabled="True" TargetControlID="txtSeatings1" FilterType="Numbers">
+                                                        </cc1:FilteredTextBoxExtender>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Cost">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtCost1" Width="200px" OnTextChanged="txtCost1_TextChanged" AutoPostBack="true" CssClass="form-control" Text='<%# Eval("Cost")%>' runat="server"></asp:TextBox>
+                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtCost1" ErrorMessage="Please Enter Cost Amount" ForeColor="Red" SetFocusOnError="true" ValidationGroup="e"></asp:RequiredFieldValidator>
+                                                        <cc1:FilteredTextBoxExtender ID="FilUnCost" runat="server"
+                                                            Enabled="True" TargetControlID="txtCost1" FilterType="Numbers">
+                                                        </cc1:FilteredTextBoxExtender>
 
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="Discount">
-                                                        <ItemTemplate>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Discount">
+                                                    <ItemTemplate>
 
-                                                            <asp:TextBox ID="txtDiscount1" Width="200px" OnTextChanged="txtDiscount1_TextChanged" AutoPostBack="true" class="form-control" Text='<%# Eval("Discount")%>' runat="server"></asp:TextBox>
-                                                            <cc1:FilteredTextBoxExtender ID="FilUnDiscount" runat="server"
-                                                                Enabled="True" TargetControlID="txtDiscount1" FilterType="Numbers">
-                                                            </cc1:FilteredTextBoxExtender>
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="Tax">
-                                                        <ItemTemplate>
-                                                            <asp:DropDownList ID="ddlTAX1" runat="server" AutoPostBack="true" class="form-control" OnSelectedIndexChanged="Invoice_SelectedIndexChanged">
-                                                            </asp:DropDownList>
-                                                            <asp:Label ID="lblTax11" Visible="false" runat="server" Text='<%# Eval("Tex")%>'></asp:Label>
-                                                            <asp:Label ID="lblISInvoice" Visible="false" runat="server" Text='<%# Eval("ISInvoice")%>'></asp:Label>
+                                                        <asp:TextBox ID="txtDiscount1" Width="200px" OnTextChanged="txtDiscount1_TextChanged" AutoPostBack="true" class="form-control" Text='<%# Eval("Discount")%>' runat="server"></asp:TextBox>
+                                                        <cc1:FilteredTextBoxExtender ID="FilUnDiscount" runat="server"
+                                                            Enabled="True" TargetControlID="txtDiscount1" FilterType="Numbers">
+                                                        </cc1:FilteredTextBoxExtender>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Tax">
+                                                    <ItemTemplate>
+                                                        <asp:DropDownList ID="ddlTAX1" runat="server" AutoPostBack="true" class="form-control" OnSelectedIndexChanged="Invoice_SelectedIndexChanged">
+                                                        </asp:DropDownList>
+                                                        <asp:Label ID="lblTax11" Visible="false" runat="server" Text='<%# Eval("Tex")%>'></asp:Label>
+                                                        <asp:Label ID="lblISInvoice" Visible="false" runat="server" Text='<%# Eval("ISInvoice")%>'></asp:Label>
 
-                                                        </ItemTemplate>
+                                                    </ItemTemplate>
 
-                                                        <FooterStyle HorizontalAlign="Right" />
-                                                        <FooterTemplate>
-                                                            <asp:Button ID="btn_AddEmployee" runat="server" Text="+Add New Row" class="btn blue-madison" 
-                                                                CausesValidation="true" ValidationGroup="AddExperianceGrp" OnClick="btn_AddEmployee_Click" />
-                                                        </FooterTemplate>
-                                                    </asp:TemplateField>
-
-
-                                                    <asp:TemplateField>
-                                                        <ItemTemplate>
-                                                            <asp:ImageButton ID="ImageButton1" ImageUrl="~/Images/remove-icon-png-26.png" Width="30px" CommandArgument='<%# Eval("ID") %>' runat="server" OnClientClick="return confirm('Do you really want to delete Treatment?');" />
-
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                </Columns>
+                                                    <FooterStyle HorizontalAlign="Right" />
+                                                    <FooterTemplate>
+                                                        <asp:Button ID="btn_AddEmployee" runat="server" Text="+Add New Row" class="btn blue-madison"
+                                                            CausesValidation="true" ValidationGroup="AddExperianceGrp" OnClick="btn_AddEmployee_Click" />
+                                                    </FooterTemplate>
+                                                </asp:TemplateField>
 
 
-                                            </asp:GridView>
+                                                <asp:TemplateField>
+                                                    <ItemTemplate>
+                                                        <asp:ImageButton ID="ImageButton1" ImageUrl="~/Images/remove-icon-png-26.png" Width="30px" CommandArgument='<%# Eval("ID") %>' runat="server" OnClientClick="return confirm('Do you really want to delete Treatment?');" />
+
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
 
 
-                                        </div>
+                                        </asp:GridView>
+
+
                                     </div>
                                 </div>
-                          
+                            </div>
+
 
 
 
@@ -527,13 +536,13 @@
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <div class="col-sm-6">
-                                                     <asp:RadioButtonList ID="RadioButtonListFinance" Width="100%" RepeatDirection="Horizontal" runat="server">
-                                            <asp:ListItem Selected="True" Text="Bajaj finance" Value="1"></asp:ListItem>
-                                            <asp:ListItem Text="Kotak finance" Value="2"></asp:ListItem>
-                                            <asp:ListItem Text="Liqui Loans" Value="3"></asp:ListItem>
-                                            <asp:ListItem Text="IDFC First Bank" Value="4"></asp:ListItem>
-											<asp:ListItem Text="Shopse" Value="5"></asp:ListItem>
-                                        </asp:RadioButtonList>
+                                                    <asp:RadioButtonList ID="RadioButtonListFinance" Width="100%" RepeatDirection="Horizontal" runat="server">
+                                                        <asp:ListItem Selected="True" Text="Bajaj finance" Value="1"></asp:ListItem>
+                                                        <asp:ListItem Text="Kotak finance" Value="2"></asp:ListItem>
+                                                        <asp:ListItem Text="Liqui Loans" Value="3"></asp:ListItem>
+                                                        <asp:ListItem Text="IDFC First Bank" Value="4"></asp:ListItem>
+                                                        <asp:ListItem Text="Shopse" Value="5"></asp:ListItem>
+                                                    </asp:RadioButtonList>
 
                                                 </div>
 

@@ -9,6 +9,9 @@ using OrthoSquare.BAL_Classes;
 
 using OrthoSquare.Utility;
 using System.IO;
+using System.Data.SqlClient;
+using System.Configuration;
+
 namespace OrthoSquare.Invoice
 {
     public partial class InvoiceAdd : System.Web.UI.Page
@@ -51,19 +54,20 @@ namespace OrthoSquare.Invoice
 
                 if (Request.QueryString["pid"] != null)
                 {
-                    PID = int.Parse(Request.QueryString["pid"].ToString());
-                    if (PID > 0)
+                    PatientId = int.Parse(Request.QueryString["pid"].ToString());
+                    if (PatientId > 0)
                     {
-                        BindPatient();
-                        bindPatientInvoiceNo(Convert.ToInt32(ddlpatient.SelectedValue));
+                        bindSelectPatient(Convert.ToInt32(PatientId));
+                        bindPatientInvoiceNo(Convert.ToInt32(PatientId));
 
-                        ddlpatient.SelectedValue = PID.ToString();
-                        bindPatientInvoiceNo(Convert.ToInt32(ddlpatient.SelectedValue));
+                      
+                        bindPatientInvoiceNo(Convert.ToInt32(PatientId));
                         //   ddlpatient.Enabled = false;
-                        ddlpatient.Attributes.Add("disabled", "disabled");
+
+                        txtPatientName.ReadOnly = true;
                         ddlInvoiceNo.Attributes.Add("disabled", "disabled");
-                        BindTOClinicandDOctor(PID);
-                        bindDetilsOfinvoice(PID, 0);
+                        BindTOClinicandDOctor(Convert.ToInt32(PatientId));
+                        bindDetilsOfinvoice(Convert.ToInt32(PatientId), 0);
                         gvInformationId.Visible = true;
                     }
                 }
@@ -74,6 +78,33 @@ namespace OrthoSquare.Invoice
 
             }
         }
+
+        public void bindSelectPatient(int pid)
+        {
+           
+                DataTable dt = objp.GETPatientSelect(pid);
+                txtPatientName.Text = dt.Rows[0]["Fname"].ToString();
+            
+
+        }
+
+        private long PatientId
+        {
+            get
+            {
+                if (ViewState["PatientId"] != null)
+                {
+                    return (long)ViewState["PatientId"];
+                }
+                return 0;
+            }
+            set
+            {
+                ViewState["PatientId"] = value;
+            }
+        }
+
+
 
 
         private long invoiceNo
@@ -161,7 +192,7 @@ namespace OrthoSquare.Invoice
 
 
 
-            txtPAID1.Text = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(InvoiceNo))).ToString();
+            txtPAID1.Text = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(PatientId), Convert.ToInt32(InvoiceNo))).ToString();
 
             List<invoiceDetils> objinvoice = objCT.GetInvoiceDetailsyId(Pid, Convert.ToInt32(InvoiceNo));
 
@@ -220,13 +251,13 @@ namespace OrthoSquare.Invoice
             ddlClinic.DataTextField = "ClinicName";
             ddlClinic.DataBind();
             ddlClinic.Items.Insert(0, new ListItem("-- Select Clinic --", "0", true));
-
+            
         }
 
         protected void ddlClinic_SelectedIndexChanged1(object sender, EventArgs e)
         {
             BindDocter(Convert.ToInt32(ddlClinic.SelectedValue));
-            BindPatient();
+            Session["Cid"] = ddlClinic.SelectedValue;
         }
 
 
@@ -251,21 +282,7 @@ namespace OrthoSquare.Invoice
             ddlDoctor.Items.Insert(0, new ListItem("--- Select ---", "0"));
         }
 
-        
-
-
-        public void BindPatient()
-        {
-            ddlpatient.DataSource = objp.NewGetPatientlist(Convert.ToInt32(ddlClinic.SelectedValue));
-            ddlpatient.DataTextField = "Fname";
-            ddlpatient.DataValueField = "patientid";
-            ddlpatient.DataBind();
-
-            ddlpatient.Items.Insert(0, new ListItem("--- Select ---", "0"));
-        }
-
         private void AddEmployeeRow(ref List<invoiceDetils> objinvoice, int ID, int TreatmentID, string Unit, string Cost, string Discount, string Tex, int ISInvoice)
-
         {
             invoiceDetils objInv = new invoiceDetils();
             objInv.ID = ID;
@@ -354,7 +371,7 @@ namespace OrthoSquare.Invoice
 
             lblGrandTotal.Text = ((Convert.ToDecimal(lblTotalCost.Text) + (TextTotal)) - Convert.ToDecimal(lblTotalDiscount.Text)).ToString();
 
-            PaidAmount = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(invoiceNo)));
+            PaidAmount = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(PatientId), Convert.ToInt32(invoiceNo)));
 
             txtPAID1.Text = PaidAmount.ToString();
 
@@ -463,16 +480,16 @@ namespace OrthoSquare.Invoice
 
                         if (lblISInvoice.Text == "0" || lblISInvoice.Text == "2")
                         {
-                            _isInserted123 = objinv.InvoiceDetailsTritment(Convert.ToInt32(Tid.Value), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, lblISInvoice.Text);
+                            _isInserted123 = objinv.InvoiceDetailsTritment(Convert.ToInt32(Tid.Value), Convert.ToInt32(PatientId), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, lblISInvoice.Text);
 
-                            _isInserted = objinv.Add_InvoiceDetails(0, Convert.ToInt32(invoiceNo), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, TotalCost1, TotalDiscount1, TotalTax1, GrandTotal1, "0", "0", SessionUtilities.Empid, txtPayDate.Text, Convert.ToInt32(lblISInvoice.Text), InvCode);
+                            _isInserted = objinv.Add_InvoiceDetails(0, Convert.ToInt32(invoiceNo), Convert.ToInt32(PatientId), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, TotalCost1, TotalDiscount1, TotalTax1, GrandTotal1, "0", "0", SessionUtilities.Empid, txtPayDate.Text, Convert.ToInt32(lblISInvoice.Text), InvCode);
 
                         }
                         else
                         {
-                            _isInserted123 = objinv.InvoiceDetailsTritment(Convert.ToInt32(Tid.Value), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, lblISInvoice.Text);
+                            _isInserted123 = objinv.InvoiceDetailsTritment(Convert.ToInt32(Tid.Value), Convert.ToInt32(PatientId), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, lblISInvoice.Text);
 
-                            _isInserted = objinv.Add_InvoiceDetails(0, Convert.ToInt32(invoiceNo), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, TotalCost1, TotalDiscount1, TotalTax1, GrandTotal1, "0", "0", SessionUtilities.Empid, txtPayDate.Text, Convert.ToInt32(lblISInvoice.Text), InvCode);
+                            _isInserted = objinv.Add_InvoiceDetails(0, Convert.ToInt32(invoiceNo), Convert.ToInt32(PatientId), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlTreatment.SelectedValue), txtUnit.Text, txtCost.Text, Discount1.ToString(), ddlTAX.SelectedItem.Text, TotalCost1, TotalDiscount1, TotalTax1, GrandTotal1, "0", "0", SessionUtilities.Empid, txtPayDate.Text, Convert.ToInt32(lblISInvoice.Text), InvCode);
 
                         }
 
@@ -486,7 +503,7 @@ namespace OrthoSquare.Invoice
 
 
 
-            _isInserted1 = objinv.Add_InvoiceDetails(1, Convert.ToInt32(invoiceNo), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), 0, "0", "0", "0", "0", Convert.ToDecimal(lblTotalCost.Text), Convert.ToDecimal(lblTotalDiscount.Text), Convert.ToDecimal(lblTotalTax.Text), Convert.ToDecimal(lblGrandTotal.Text), txtPaidAmount.Text, txtPendingAmount.Text, SessionUtilities.Empid, txtPayDate.Text, 0, invoiceCode);
+            _isInserted1 = objinv.Add_InvoiceDetails(1, Convert.ToInt32(invoiceNo), Convert.ToInt32(PatientId), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), 0, "0", "0", "0", "0", Convert.ToDecimal(lblTotalCost.Text), Convert.ToDecimal(lblTotalDiscount.Text), Convert.ToDecimal(lblTotalTax.Text), Convert.ToDecimal(lblGrandTotal.Text), txtPaidAmount.Text, txtPendingAmount.Text, SessionUtilities.Empid, txtPayDate.Text, 0, invoiceCode);
 
             if (DropDownList1.SelectedItem.Text == "Bajaj finance")
             {
@@ -539,7 +556,7 @@ namespace OrthoSquare.Invoice
                         TextBox txtDateofEMI = (row.Cells[0].FindControl("txtDateofEMI") as TextBox);
 
 
-                        int p = objinv.SaveBajaEMI(Convert.ToInt32(invoiceNo), Convert.ToInt32(ddlpatient.SelectedValue), txtEMIsAmount.Text, txtDateofEMI.Text);
+                        int p = objinv.SaveBajaEMI(Convert.ToInt32(invoiceNo), Convert.ToInt32(PatientId), txtEMIsAmount.Text, txtDateofEMI.Text);
                     }
                 }
             }
@@ -570,20 +587,20 @@ namespace OrthoSquare.Invoice
                 txtPAID1.Text = "0";
                 txtPaidAmount.Text = "0";
 
-                GetPatientInvoiceDetsils(Convert.ToInt32(ddlpatient.SelectedValue));
+                GetPatientInvoiceDetsils(Convert.ToInt32(PatientId));
 
                 btAdd.Attributes.Add("class", "btn blue disabled");
 
-                DataTable DTP = objp.GetPatient(Convert.ToInt32(ddlpatient.SelectedValue));
+                DataTable DTP = objp.GetPatient(Convert.ToInt32(PatientId));
 
                 // msg = "Your Appoinment Date :" + txtRegDate.Text + " " + "Time : " + txtRegDate.Text + " has been Booked Appoinment";
                 msg = "Your Consultation has been completed. ";
                 msgP = "Your Payment :" + txtPaidAmount.Text + " has been received on Date: " + System.DateTime.Now.ToString("dd-MM-yyyy") + " and Pending Amount " + txtPendingAmount.Text;
                 if (DTP.Rows[0]["registrationToken"].ToString() != "")
                 {
-                    objN.SendMessage(ddlpatient.SelectedValue.ToString(), DTP.Rows[0]["registrationToken"].ToString(), msg, "Feedback", "5");
+                    objN.SendMessage(PatientId.ToString(), DTP.Rows[0]["registrationToken"].ToString(), msg, "Feedback", "5");
 
-                    objN.SendMessage(ddlpatient.SelectedValue.ToString(), DTP.Rows[0]["registrationToken"].ToString(), msgP, "Payment", "6");
+                    objN.SendMessage(PatientId.ToString(), DTP.Rows[0]["registrationToken"].ToString(), msgP, "Payment", "6");
                 }
 
                 // Response.Redirect("InvoiceAdd.aspx");
@@ -713,13 +730,13 @@ namespace OrthoSquare.Invoice
 
                             //int AddImageiD = imgID + 1;
 
-                            string Imgname = ddlpatient.SelectedItem.Text + ddlpatient.SelectedItem;
+                            string Imgname = txtPatientName.Text + PatientId;
 
                             string path = Server.MapPath(@"~\BajajFinanceDoc\");
                             System.IO.Directory.CreateDirectory(path);
-                            FuImage1.SaveAs(path + @"\" + ddlpatient.SelectedItem.Text + ddlpatient.SelectedItem + ext);
+                            FuImage1.SaveAs(path + @"\" + txtPatientName.Text + PatientId + ext);
 
-                            ImagePhoto1.ImageUrl = @"~\BajajFinanceDoc\" + ddlpatient.SelectedItem.Text + ddlpatient.SelectedItem + ext;
+                            ImagePhoto1.ImageUrl = @"~\BajajFinanceDoc\" + txtPatientName.Text + PatientId + ext;
                             ImagePhoto1.Visible = true;
 
                             lbl_filepath1.Text = Imgname + ext;
@@ -742,18 +759,11 @@ namespace OrthoSquare.Invoice
 
         }
 
-        protected void ddlpatient_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            bindPatientInvoiceNo(Convert.ToInt32(ddlpatient.SelectedValue));
-            // bindDetilsOfinvoice(Convert.ToInt32(ddlpatient.SelectedValue));
-            GetPatientInvoiceDetsils(Convert.ToInt32(ddlpatient.SelectedValue));
-
-
-        }
+     
 
         protected void ddlInvoiceNo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bindDetilsOfinvoice(Convert.ToInt32(ddlpatient.SelectedValue), 0);
+            bindDetilsOfinvoice(Convert.ToInt32(PatientId), 0);
 
             // bindPatientInvoiceNo(Convert.ToInt32(ddlpatient.SelectedValue));
         }
@@ -762,60 +772,6 @@ namespace OrthoSquare.Invoice
         public void bindDetilsOfinvoice(int Pid, int InvoiceCode)
         {
             getAlltodayConsultation(Pid, InvoiceCode);
-
-            int PID1 = 0;
-            //AllData = objinv.GetAllInvoicTreatment(Pid);
-            //decimal paidAmount;
-            //if (AllData != null && AllData.Rows.Count > 0)
-            //{
-
-            //    DataTable dt = objinv.GetAllInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue));
-
-            //    txtPendingAmount.Text = dt.Rows[0]["PendingAmount"].ToString();
-            //    lblTotalCost.Text = dt.Rows[0]["TotalCost"].ToString();
-            //    lblTotalDiscount.Text = dt.Rows[0]["TotalDiscount"].ToString();
-            //    lblTotalTax.Text = dt.Rows[0]["TotalTax"].ToString();
-
-            //    lblGrandTotal.Text = dt.Rows[0]["GrandTotal"].ToString();
-
-            //    ddlDoctor.SelectedValue = dt.Rows[0]["DoctorID"].ToString();
-            //    invoiceNo = Convert.ToInt32(dt.Rows[0]["InvoiceNo"]);
-
-            //    //GridinvoiceDetails.DataSource = AllData;
-            //    //GridinvoiceDetails.DataBind();
-
-            //    getAlltodayConsultation(PID);
-
-            //    if (txtPendingAmount.Text=="0.00")
-            //    {
-            //        txtPaidAmount.Enabled = true;
-            //        btAdd.Enabled = true;
-            //   }
-            //}
-            //else
-            //{
-            //    gvInformation.DataSource = null;
-            //    gvInformation.DataBind();
-            //    //GridinvoiceDetails.DataSource = null;
-            //    //GridinvoiceDetails.DataBind();
-
-            //    if (PID ==0)
-            //    {
-            //        PID = Convert .ToInt32 (ddlpatient .SelectedValue );
-            //    }
-
-
-
-            //    txtPendingAmount.Text = "";
-            //    lblTotalCost.Text = "";
-            //    lblTotalDiscount.Text = "";
-            //    lblTotalTax.Text = "";
-
-            //    lblGrandTotal.Text = "";
-
-            //   // ddlDoctor.SelectedValue = "0";
-
-            //}
 
         }
 
@@ -828,12 +784,8 @@ namespace OrthoSquare.Invoice
 
         protected void btn_AddEmployee_Click(object sender, EventArgs e)
         {
-
-
-
             AddEmployeeRow(true);
-            // if (gvInformation.Rows.Count <= 0)
-            //WorkoderCoordinator();
+         
         }
 
 
@@ -958,14 +910,14 @@ namespace OrthoSquare.Invoice
 
             if (i == 0)
             {
-                getAlltodayConsultation(Convert.ToInt32(ddlpatient.SelectedValue), 0);
+                getAlltodayConsultation(Convert.ToInt32(PatientId), 0);
             }
             else
             {
 
                 int ID = objCT.Delete_TreatmentbyPatient(i);
 
-                getAlltodayConsultation(Convert.ToInt32(ddlpatient.SelectedValue), 0);
+                getAlltodayConsultation(Convert.ToInt32(PatientId), 0);
             }
         }
 
@@ -1072,7 +1024,7 @@ namespace OrthoSquare.Invoice
         {
             lblMessage.Text = "";
 
-            int A = objinv.SaveFeedBack(Convert.ToInt32(ddlpatient.SelectedValue), "", txtFreedbackDetails.Text, System.DateTime.Now.ToString("dd-MM-yyyy"));
+            int A = objinv.SaveFeedBack(Convert.ToInt32(PatientId), "", txtFreedbackDetails.Text, System.DateTime.Now.ToString("dd-MM-yyyy"));
 
             Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Login", "alert('Thanks for your feedback')", true);
             btninvoice.Visible = true;
@@ -1122,7 +1074,7 @@ namespace OrthoSquare.Invoice
 
 
                 int invcode1 = Convert.ToInt32(e.CommandArgument);
-                bindDetilsOfinvoice(Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(invoiceNo));
+                bindDetilsOfinvoice(Convert.ToInt32(PatientId), Convert.ToInt32(invoiceNo));
 
 
 
@@ -1159,5 +1111,70 @@ namespace OrthoSquare.Invoice
                 }
             }
         }
+
+        protected void txtPatientName_TextChanged(object sender, EventArgs e)
+        {
+            DataTable dt = objp.PatientSelectDoctorID(txtPatientName.Text);
+            PatientId = Convert.ToInt32(dt.Rows[0]["PatientId"]);
+
+            bindPatientInvoiceNo(Convert.ToInt32(PatientId));
+            // bindDetilsOfinvoice(Convert.ToInt32(ddlpatient.SelectedValue));
+            GetPatientInvoiceDetsils(Convert.ToInt32(PatientId));
+
+        }
+
+        [System.Web.Script.Services.ScriptMethod()]
+        [System.Web.Services.WebMethod]
+        public static List<string> SearchCustomers(string prefixText, int count)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = ConfigurationManager.ConnectionStrings["OrthoSquareDBConnectionString"].ConnectionString;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    int DoctorID = 0, ClinicId = 0;
+                    int RoleId = Convert.ToInt32(HttpContext.Current.Session["RoleID"]);
+                    DoctorID = Convert.ToInt32(HttpContext.Current.Session["Empid"]);
+                    ClinicId = Convert.ToInt32(HttpContext.Current.Session["Empid"]);
+                    int Cid = Convert.ToInt32(HttpContext.Current.Session["Cid"]);
+                    if (RoleId == 1)
+                    {
+                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1 ";
+                        cmd.CommandText += " and  P.FristName +' ('+P.Mobile +')' like '%" + prefixText + "%' and P.ClinicID ='" + ClinicId + "'";
+                        cmd.CommandText += "order by patientid DESC ";
+                    }
+                    else if (RoleId == 3)
+                    {
+
+                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1 and P.ClinicID ='" + Cid + "' and  P.FristName +' ('+P.Mobile +')'  like '%" + prefixText + "%'";
+                        
+
+                    }
+                    else
+                    {
+                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1 and P.ClinicID ='" + Cid + "' and  P.FristName +' ('+P.Mobile +')' like '%" + prefixText + "%'";
+
+
+                    }
+
+
+                    cmd.Parameters.AddWithValue("@SearchText", prefixText);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    List<string> customers = new List<string>();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            customers.Add(sdr["Fname"].ToString());
+                        }
+                    }
+                    conn.Close();
+
+                    return customers;
+                }
+            }
+        }
+
     }
 }

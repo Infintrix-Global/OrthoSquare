@@ -87,22 +87,49 @@ namespace OrthoSquare.Invoice
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
 
         /// <summary>
-        /// ddlpatient control.
+        /// txtPatientName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlpatient;
+        protected global::System.Web.UI.WebControls.TextBox txtPatientName;
 
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// AutoCompleteExtender1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::AjaxControlToolkit.AutoCompleteExtender AutoCompleteExtender1;
+
+        /// <summary>
+        /// RequiredFieldddl_DocterDetils control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldddl_DocterDetils;
+
+        /// <summary>
+        /// txtPayDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPayDate;
+
+        /// <summary>
+        /// txtBDate_CalendarExtender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.CalendarExtender txtBDate_CalendarExtender;
 
         /// <summary>
         /// ddlInvoiceNo control.
@@ -130,24 +157,6 @@ namespace OrthoSquare.Invoice
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPAID1;
-
-        /// <summary>
-        /// txtPayDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPayDate;
-
-        /// <summary>
-        /// txtBDate_CalendarExtender control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender txtBDate_CalendarExtender;
 
         /// <summary>
         /// gvInformationId control.
