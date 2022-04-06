@@ -123,15 +123,6 @@ namespace OrthoSquare.Doctor
         protected global::System.Web.UI.WebControls.Label lblInvoiceDate;
 
         /// <summary>
-        /// lblInvoiceNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInvoiceNo;
-
-        /// <summary>
         /// lblTexIn control.
         /// </summary>
         /// <remarks>
@@ -249,13 +240,13 @@ namespace OrthoSquare.Doctor
         protected global::System.Web.UI.WebControls.Label lblAddress;
 
         /// <summary>
-        /// grdInvoice control.
+        /// grdMedicinesInvoice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdInvoice;
+        protected global::System.Web.UI.WebControls.GridView grdMedicinesInvoice;
 
         /// <summary>
         /// lblTotalCost control.
@@ -276,22 +267,13 @@ namespace OrthoSquare.Doctor
         protected global::System.Web.UI.WebControls.Label lbldiscount;
 
         /// <summary>
-        /// lbltotaltext control.
+        /// lbldsc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbltotaltext;
-
-        /// <summary>
-        /// lblTax control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTax;
+        protected global::System.Web.UI.WebControls.Label lbldsc;
 
         /// <summary>
         /// lblNet control.
@@ -301,33 +283,6 @@ namespace OrthoSquare.Doctor
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblNet;
-
-        /// <summary>
-        /// lblRAmount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRAmount;
-
-        /// <summary>
-        /// lblTAmont control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTAmont;
-
-        /// <summary>
-        /// lblWords control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWords;
 
         /// <summary>
         /// lblTotalCoust1 control.
@@ -348,24 +303,6 @@ namespace OrthoSquare.Doctor
         protected global::System.Web.UI.WebControls.Label lbldiscount1;
 
         /// <summary>
-        /// lblTotalFooter control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalFooter;
-
-        /// <summary>
-        /// lblTaxAmount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTaxAmount;
-
-        /// <summary>
         /// lblNetAmount control.
         /// </summary>
         /// <remarks>
@@ -375,22 +312,13 @@ namespace OrthoSquare.Doctor
         protected global::System.Web.UI.WebControls.Label lblNetAmount;
 
         /// <summary>
-        /// lblpaidAmount control.
+        /// lblWords control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblpaidAmount;
-
-        /// <summary>
-        /// lblpendingAmount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblpendingAmount;
+        protected global::System.Web.UI.WebControls.Label lblWords;
 
         /// <summary>
         /// lblWordsAmount control.

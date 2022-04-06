@@ -63,8 +63,13 @@ namespace OrthoSquare.Invoice
                         ddlpatient.Attributes.Add("disabled", "disabled");
                         ddlInvoiceNo.Attributes.Add("disabled", "disabled");
                         BindTOClinicandDOctor(PID);
-                        bindDetilsOfinvoice(PID);
+                        bindDetilsOfinvoice(PID, 0);
+                        gvInformationId.Visible = true;
                     }
+                }
+                else
+                {
+                    gvInformationId.Visible = false;
                 }
 
             }
@@ -88,6 +93,37 @@ namespace OrthoSquare.Invoice
         }
 
 
+        private string invoiceCode
+        {
+            get
+            {
+                if (ViewState["invoiceCode"] != null)
+                {
+                    return (string)ViewState["invoiceCode"];
+                }
+                return "";
+            }
+            set
+            {
+                ViewState["invoiceCode"] = value;
+            }
+        }
+
+        //private string invoiceCode
+        //{
+        //    get
+        //    {
+        //        if (ViewState["invoiceCode"] != null)
+        //        {
+        //            return (long)ViewState["invoiceCode"];
+        //        }
+        //        return 0;
+        //    }
+        //    set
+        //    {
+        //        ViewState["invoiceCode"] = value;
+        //    }
+        //}
 
         public void BindTOClinicandDOctor(int Pid)
         {
@@ -120,14 +156,14 @@ namespace OrthoSquare.Invoice
 
 
 
-        public void getAlltodayConsultation(long Pid)
+        public void getAlltodayConsultation(long Pid, int InvoiceNo)
         {
 
 
 
-            txtPAID1.Text = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlInvoiceNo.SelectedValue))).ToString();
+            txtPAID1.Text = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(InvoiceNo))).ToString();
 
-            List<invoiceDetils> objinvoice = objCT.GetInvoiceDetailsyId(Pid, Convert.ToInt32(ddlInvoiceNo.SelectedValue));
+            List<invoiceDetils> objinvoice = objCT.GetInvoiceDetailsyId(Pid, Convert.ToInt32(InvoiceNo));
 
 
             if (objinvoice != null && objinvoice.Count > 0)
@@ -145,7 +181,7 @@ namespace OrthoSquare.Invoice
             }
         }
 
-        public void bindPatientInvoiceNo(int  Pid)
+        public void bindPatientInvoiceNo(int Pid)
         {
 
             DataTable dt;
@@ -215,33 +251,7 @@ namespace OrthoSquare.Invoice
             ddlDoctor.Items.Insert(0, new ListItem("--- Select ---", "0"));
         }
 
-        //public void BindDocter()
-        //{
-        //    int Did=0;
-        //    if(SessionUtilities .RoleID ==3 )
-        //    {
-
-        //        Did = SessionUtilities.Empid;
-
-        //    }
-        //    else if(SessionUtilities.RoleID == 1)
-        //    {
-
-        //        Did = SessionUtilities.Empid;
-        //    }
-        //    else
-        //    {
-
-        //        Did = 0;
-        //    }
-
-        //    ddlDoctor.DataSource = objcomm.DoctersMasterNew(Did, Convert .ToInt32 (SessionUtilities.RoleID));
-        //    ddlDoctor.DataTextField = "FirstName";
-        //    ddlDoctor.DataValueField = "DoctorID";
-        //    ddlDoctor.DataBind();
-
-        //    ddlDoctor.Items.Insert(0, new ListItem("--- Select ---", "0"));
-        //}
+        
 
 
         public void BindPatient()
@@ -344,7 +354,7 @@ namespace OrthoSquare.Invoice
 
             lblGrandTotal.Text = ((Convert.ToDecimal(lblTotalCost.Text) + (TextTotal)) - Convert.ToDecimal(lblTotalDiscount.Text)).ToString();
 
-            PaidAmount = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlInvoiceNo.SelectedValue)));
+            PaidAmount = Convert.ToDecimal(objinv.GetPaidInvoicMaster(Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(invoiceNo)));
 
             txtPAID1.Text = PaidAmount.ToString();
 
@@ -407,19 +417,20 @@ namespace OrthoSquare.Invoice
             // if (AllData.Rows.Count == 0)
             //  {
 
-            invoiceNo = 0;
-         
+            //  invoiceNo = 0;
+
 
             //int INVDELETE = objinv.InvoiceDetilsDelete(Convert.ToInt32(ddlpatient.SelectedValue));
 
-            if (ddlInvoiceNo.SelectedValue == "0")
+            if (invoiceNo == 0)
             {
+
                 invoiceNo = objcomm.GetinvoiceNo();
                 lblinvCode.Text = invoiceNo.ToString();
 
                 InvoiceCode = objcomm.GetPaymentinvoiceNo();
 
-                InvCode = "INV" + InvoiceCode;
+                invoiceCode = "INV" + InvoiceCode;
 
                 foreach (GridViewRow row in gvInformation.Rows)
                 {
@@ -472,14 +483,10 @@ namespace OrthoSquare.Invoice
                 }
 
             }
-            else
-            {
-                invoiceNo = Convert.ToInt32(ddlInvoiceNo.SelectedValue);
-                InvCode = ddlInvoiceNo.SelectedItem.Text;
-            }
 
 
-            _isInserted1 = objinv.Add_InvoiceDetails(1, Convert.ToInt32(invoiceNo), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), 0, "0", "0", "0", "0", Convert.ToDecimal(lblTotalCost.Text), Convert.ToDecimal(lblTotalDiscount.Text), Convert.ToDecimal(lblTotalTax.Text), Convert.ToDecimal(lblGrandTotal.Text), txtPaidAmount.Text, txtPendingAmount.Text, SessionUtilities.Empid, txtPayDate.Text,0, InvCode);
+
+            _isInserted1 = objinv.Add_InvoiceDetails(1, Convert.ToInt32(invoiceNo), Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue), Convert.ToInt32(ddlClinic.SelectedValue), 0, "0", "0", "0", "0", Convert.ToDecimal(lblTotalCost.Text), Convert.ToDecimal(lblTotalDiscount.Text), Convert.ToDecimal(lblTotalTax.Text), Convert.ToDecimal(lblGrandTotal.Text), txtPaidAmount.Text, txtPendingAmount.Text, SessionUtilities.Empid, txtPayDate.Text, 0, invoiceCode);
 
             if (DropDownList1.SelectedItem.Text == "Bajaj finance")
             {
@@ -543,6 +550,10 @@ namespace OrthoSquare.Invoice
             {
                 lblMessage.Text = "Failed to Add Invoice (Please make sure you have filled all fields, where not required there should be 0)";
                 lblMessage.ForeColor = System.Drawing.Color.Red;
+
+                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please make sure you have filled all fields, where not required there should be 0')", true);
+
+                txtPaidAmount.Text = "";
             }
             else
             {
@@ -553,12 +564,13 @@ namespace OrthoSquare.Invoice
                 lblMessage.ForeColor = System.Drawing.Color.Green;
                 btFeedback.Visible = true;
 
-                //  btAdd.Attributes["disabled"] == "disabled"; // Attributes["disabled"] = "disabled";
-                // btAdd.Attributes.Add["disabled"];
 
-                // btAdd.Style["disabled"] = "disabled";
+                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Invoice Added Successfully')", true);
+                txtPaidAmount.Text = "0";
+                txtPAID1.Text = "0";
+                txtPaidAmount.Text = "0";
 
-
+                GetPatientInvoiceDetsils(Convert.ToInt32(ddlpatient.SelectedValue));
 
                 btAdd.Attributes.Add("class", "btn blue disabled");
 
@@ -732,23 +744,24 @@ namespace OrthoSquare.Invoice
 
         protected void ddlpatient_SelectedIndexChanged(object sender, EventArgs e)
         {
-           bindPatientInvoiceNo(Convert.ToInt32(ddlpatient.SelectedValue));
-           // bindDetilsOfinvoice(Convert.ToInt32(ddlpatient.SelectedValue));
+            bindPatientInvoiceNo(Convert.ToInt32(ddlpatient.SelectedValue));
+            // bindDetilsOfinvoice(Convert.ToInt32(ddlpatient.SelectedValue));
+            GetPatientInvoiceDetsils(Convert.ToInt32(ddlpatient.SelectedValue));
 
-          
+
         }
 
         protected void ddlInvoiceNo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bindDetilsOfinvoice(Convert.ToInt32(ddlpatient.SelectedValue));
+            bindDetilsOfinvoice(Convert.ToInt32(ddlpatient.SelectedValue), 0);
 
-           // bindPatientInvoiceNo(Convert.ToInt32(ddlpatient.SelectedValue));
+            // bindPatientInvoiceNo(Convert.ToInt32(ddlpatient.SelectedValue));
         }
 
 
-        public void bindDetilsOfinvoice(int Pid)
+        public void bindDetilsOfinvoice(int Pid, int InvoiceCode)
         {
-            getAlltodayConsultation(Pid);
+            getAlltodayConsultation(Pid, InvoiceCode);
 
             int PID1 = 0;
             //AllData = objinv.GetAllInvoicTreatment(Pid);
@@ -890,13 +903,15 @@ namespace OrthoSquare.Invoice
                 BindTREATMENTS1(ref ddlTreatment1);
                 BindTEX(ref ddlTAX1);
                 ddlTreatment1.SelectedValue = lblTreatment.Text;
-                ddlTAX1.SelectedValue = lblTax11.Text;
+                ddlTAX1.SelectedItem.Text = lblTax11.Text;
 
                 if (lblISInvoice.Text == "1")
                 {
                     txtSeatings1.ReadOnly = true;
                     txtCost1.ReadOnly = true;
                     txtDiscount1.ReadOnly = true;
+                    ddlTAX1.Attributes.Add("disabled", "disabled");
+                    ddlTreatment1.Attributes.Add("disabled", "disabled");
                 }
                 else
                 {
@@ -904,6 +919,7 @@ namespace OrthoSquare.Invoice
                     txtSeatings1.ReadOnly = false;
                     txtCost1.ReadOnly = false;
                     txtDiscount1.ReadOnly = false;
+                   
                 }
 
 
@@ -942,14 +958,14 @@ namespace OrthoSquare.Invoice
 
             if (i == 0)
             {
-                getAlltodayConsultation(Convert.ToInt32(ddlpatient.SelectedValue));
+                getAlltodayConsultation(Convert.ToInt32(ddlpatient.SelectedValue), 0);
             }
             else
             {
 
                 int ID = objCT.Delete_TreatmentbyPatient(i);
 
-                getAlltodayConsultation(Convert.ToInt32(ddlpatient.SelectedValue));
+                getAlltodayConsultation(Convert.ToInt32(ddlpatient.SelectedValue), 0);
             }
         }
 
@@ -1075,6 +1091,73 @@ namespace OrthoSquare.Invoice
         protected void btBack_Click(object sender, EventArgs e)
         {
             Response.Redirect("InvoiceAdd.aspx");
+        }
+
+
+        public void GetPatientInvoiceDetsils(int Pid)
+        {
+
+            DataTable dt;
+
+            dt = objp.GetPatientInvoiceDetsils(Pid);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                GridViewInvoiceDetails.DataSource = dt;
+                GridViewInvoiceDetails.DataBind();
+            }
+
+        }
+
+        protected void GridViewInvoiceDetails_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "SelectView")
+            {
+                gvInformationId.Visible = true;
+                lblMessage.Visible = false;
+                btAdd.Attributes.Add("class", "btn blue");
+
+                int rowIndex = Convert.ToInt32(e.CommandArgument);
+                invoiceNo = Convert.ToInt32(GridViewInvoiceDetails.DataKeys[rowIndex].Values[0]);
+                invoiceCode = GridViewInvoiceDetails.DataKeys[rowIndex].Values[1].ToString();
+
+
+                int invcode1 = Convert.ToInt32(e.CommandArgument);
+                bindDetilsOfinvoice(Convert.ToInt32(ddlpatient.SelectedValue), Convert.ToInt32(invoiceNo));
+
+
+
+            }
+
+
+            if (e.CommandName == "PrintView")
+            {
+                int rowIndex = Convert.ToInt32(e.CommandArgument);
+                invoiceNo = Convert.ToInt32(GridViewInvoiceDetails.DataKeys[rowIndex].Values[0]);
+                invoiceCode = GridViewInvoiceDetails.DataKeys[rowIndex].Values[1].ToString();
+
+                // Response.Redirect("InvoicePrint.aspx?InvoiceCode=" + invoiceNo + "&Fid=" + 1 + "&Back=" + 1);
+                Response.Redirect("InvoicePrint.aspx?InvoiceCode=" + invoiceNo + "&Fid=" + invoiceCode + "&Back=" + 1);
+
+            }
+        }
+
+        protected void GridViewInvoiceDetails_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Label lblGrandTotal = (Label)e.Row.FindControl("lblGrandTotal");
+                Label lblPaidAmount = (Label)e.Row.FindControl("lblPaidAmount");
+                Button ButtonSelect = (Button)e.Row.FindControl("ButtonSelect");
+
+                if(Convert.ToDecimal(lblGrandTotal.Text) == Convert.ToDecimal(lblPaidAmount.Text))
+                {
+                    ButtonSelect.Visible = false;
+                }
+                else
+                {
+                    ButtonSelect.Visible = true;
+                }
+            }
         }
     }
 }

@@ -137,7 +137,7 @@
                                     </tr>
                                 </table>
                             </td>
-                           
+
                             <td width="28%" align="right">
                                 <table style="width: 100%;">
 
@@ -152,15 +152,7 @@
 
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td align="left">Invoice No:
 
-                                        </td>
-                                        <td align="right">
-                                            <asp:Label ID="lblInvoiceNo" runat="server" Text="" CssClass="right"></asp:Label>
-
-                                        </td>
-                                    </tr>
                                 </table>
                             </td>
                         </tr>
@@ -171,13 +163,13 @@
 
                         </tr>
                         <tr>
-                          
+
                             <td align="center" colspan="4">
                                 <asp:Label ID="lblTexIn" runat="server" Text="INVOICE" CssClass="invoiceheader"></asp:Label>
                             </td>
-                            
+
                         </tr>
-                      
+
                         <tr>
                             <td colspan="2" valign="top">
 
@@ -220,7 +212,7 @@
                         </tr>
                         <tr>
                             <td colspan="4" style="-webkit-print-color-adjust: exact;">
-                                <asp:GridView ID="grdInvoice" runat="server" AutoGenerateColumns="false" Width="100%" Style="font-size: 12px;"
+                                <asp:GridView ID="grdMedicinesInvoice" runat="server" AutoGenerateColumns="false" Width="100%" Style="font-size: 12px;"
                                     GridLines="None">
                                     <HeaderStyle CssClass="yellow" />
                                     <RowStyle CssClass="white" />
@@ -233,40 +225,62 @@
                                             </ItemTemplate>
 
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Treatments & Products " ItemStyle-Width="20%" HeaderStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="Type" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("TreatmentName") %>'></asp:Label>
+                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("txtMtype") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText=" Unit " ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="Medicines Name" ItemStyle-Width="20%" HeaderStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="lblHSN" runat="server" Text='<%# Eval("Unit") %>'></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText=" Cost (INR)" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblQty" runat="server" Text='<%# Convert.ToDecimal(Eval("Cost")).ToString("N", System.Globalization.CultureInfo.GetCultureInfo("en-IN")) %>'></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Discount" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblUnit" runat="server" Text='<%# Convert.ToDecimal(Eval("Discount")).ToString("N", System.Globalization.CultureInfo.GetCultureInfo("en-IN")) %>'></asp:Label>
-
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Tax (INR)" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Left">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblTax" runat="server" Text='<%#  Convert.ToDecimal(Eval("TotalTax")).ToString("N", System.Globalization.CultureInfo.GetCultureInfo("en-IN"))  %>'></asp:Label>
-                                                <br />
-                                                <asp:Label ID="Label1" runat="server" Visible="false" Text='<%#  Eval("Tax") %>'></asp:Label>
+                                                <asp:Label ID="lblHSN" runat="server" Text='<%# Eval("MedicinesName") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText="Total Cost (INR)" ItemStyle-Width="8%" HeaderStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="Doses" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="lblRate" runat="server" Text='<%#  Convert.ToDecimal(Eval("GrandTotal")).ToString("#,##0.00") %>'></asp:Label>
+                                                <asp:Label ID="lblTotalMedicines" runat="server" Text='<%# Eval("TotalMedicines") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Days" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblDayMedicines" runat="server" Text='<%# Eval("DayMedicines") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Morning" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblMorningMedicines" runat="server" Text='<%# Eval("MorningMedicines") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="After noon" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblAfternoonMedicines" runat="server" Text='<%# Eval("AfternoonMedicines") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+
+
+                                        <asp:TemplateField HeaderText="Evening" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblEveningMedicines" runat="server" Text='<%# Eval("EveningMedicines") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+
+                                        <asp:TemplateField HeaderText=" Price (INR)" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblPrice" runat="server" Text='<%# Convert.ToDecimal(Eval("Price")).ToString("N", System.Globalization.CultureInfo.GetCultureInfo("en-IN")) %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+
+                                        <asp:TemplateField HeaderText="Remarks" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblRemarks" runat="server" Text='<%# Eval("Remarks") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
 
                                     </Columns>
                                 </asp:GridView>
@@ -278,7 +292,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td></td>
+                            <td colspan="2"></td>
                             <td align="right">
 
 
@@ -286,26 +300,19 @@
 
                                 <br />
                                 <asp:Label ID="lbldiscount" runat="server" Text="Less discount" Font-Bold="True"></asp:Label>
+                                <asp:Label ID="lbldsc" runat="server" Text="" Font-Bold="True"></asp:Label>
 
                                 <br />
-                                <asp:Label ID="lbltotaltext" runat="server" Text="Taxable Total" Font-Bold="True"></asp:Label>
-                               
-                                <br />
 
-
-                                <asp:Label ID="lblTax" runat="server" Text="Total Tax (0 %)" Font-Bold="True"></asp:Label>
-                                <br />
                                 <asp:Label ID="lblNet" runat="server" Text="Total Amount" Font-Bold="True"></asp:Label>
                                 <br />
-                                <asp:Label ID="lblRAmount" runat="server" Text="Received Amount" Font-Bold="True"></asp:Label>
-                                <br />
-                                <asp:Label ID="lblTAmont" runat="server" Text="Balance Amount" Font-Bold="True"></asp:Label>
-                                <br />
+
+
                                 <br />
 
-                                <asp:Label ID="lblWords" runat="server" Text="Received Amount(in Words)" Font-Bold="True"></asp:Label>
+                              
                             </td>
-                            <td align="right" colspan="2">
+                            <td align="Center" >
 
                                 <asp:Label ID="lblTotalCoust1" runat="server" Text=""></asp:Label>
 
@@ -313,23 +320,27 @@
                                 <asp:Label ID="lbldiscount1" runat="server" Text=""></asp:Label>
 
                                 <br />
-                                <asp:Label ID="lblTotalFooter" runat="server" Text=""></asp:Label>
-                                <br />
-
-                                <asp:Label ID="lblTaxAmount" runat="server" Text=""></asp:Label>
-                                <br />
                                 <asp:Label ID="lblNetAmount" runat="server" Text=""></asp:Label>
                                 <br />
 
-                                <asp:Label ID="lblpaidAmount" runat="server" Text=""></asp:Label>
+
+
                                 <br />
-                                <asp:Label ID="lblpendingAmount" runat="server" Text=""></asp:Label>
-                                <br />
-                                <br />
-                                <asp:Label ID="lblWordsAmount" runat="server" Font-Size="Small" Text=""></asp:Label>
+                               
                             </td>
                         </tr>
+                        <tr>
+                             <td ></td>
+                              <td >
+                                    <asp:Label ID="lblWords"  runat="server" Text="Received Amount(in Words)" Font-Bold="True"></asp:Label>
+                              </td>
+                              <td colspan="2" >
+                                   <asp:Label ID="lblWordsAmount"  runat="server" Font-Size="Small" Text=""></asp:Label>
+                              </td>
+                            
 
+                             
+                        </tr>
 
 
                         <tr>

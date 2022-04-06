@@ -229,7 +229,7 @@ namespace OrthoSquare.BAL_Classes
         {
             try
             {
-
+                General objGeneral = new General();
                 objGeneral.AddParameterWithValueToSQLCommand("@InvCode ", InvCode);
                 objGeneral.AddParameterWithValueToSQLCommand("@patientid ", 0);
                 objGeneral.AddParameterWithValueToSQLCommand("@InvNo ",0);
@@ -242,6 +242,72 @@ namespace OrthoSquare.BAL_Classes
             return ds.Tables[0];
         }
 
+
+        public DataTable GetMedicinesInvoiceDetails(int Cno)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@Cno", Cno);
+                objGeneral.AddParameterWithValueToSQLCommand("@patientid ", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
+                ds = objGeneral.GetDatasetByCommand_SP("GET_InvoicePatientMedicines");
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+        }
+
+
+        public DataTable GetViewMedicinesInvoice(int PID)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@Cno", "0");
+                objGeneral.AddParameterWithValueToSQLCommand("@patientid ", PID);
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 4);
+                ds = objGeneral.GetDatasetByCommand_SP("GET_InvoicePatientMedicines");
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+        }
+
+
+        public DataTable GetMedicinesClinicDetails(int Pid)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@Cno", "0");
+                objGeneral.AddParameterWithValueToSQLCommand("@patientid ", Pid);
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 3);
+                ds = objGeneral.GetDatasetByCommand_SP("GET_InvoicePatientMedicines");
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+        }
+
+        public DataTable GetMedicinesDetailsList(int Cno)
+        {
+            try
+            {
+
+                objGeneral.AddParameterWithValueToSQLCommand("@Cno", Cno);
+                objGeneral.AddParameterWithValueToSQLCommand("@patientid ", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 2);
+                ds = objGeneral.GetDatasetByCommand_SP("GET_InvoicePatientMedicines");
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+        }
 
         public DataTable GetAllInvoiceAmount(int InvCode)
         {
@@ -278,6 +344,19 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
+        public DataTable GetInvoiceDetailsPayMent(int InvCode, string InvoiceCode)
+        {
+
+            string strQuery = string.Empty;
+            //strQuery = "  Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,DD.LastName as DLastName from InvoiceMaster IM join PatientMaster PM on PM.patientid= IM.patientid ";
+            strQuery += "  Select InvoiceNo,InvoiceCode,SUM(PaidAmount) PaidAmount,GrandTotal- SUM(PaidAmount) as PendingPayment, GrandTotal,TotalDiscount,TotalTax,IM.TotalCost,IM.TotalCostAmount  FROM InvoiceMaster IM   where InvoiceNo =" + InvCode + " and InvoiceCode='"+ InvoiceCode + "' ";
+            strQuery += " Group by InvoiceNo,InvoiceCode,GrandTotal,TotalDiscount,TotalTax,IM.TotalCost,IM.TotalCostAmount";
+
+            return objGeneral.GetDatasetByCommand(strQuery);
+
+        }
+
+
         public DataTable GetAllInvoicDispaly(int ClinicID, int DoctorID, string Name,string Mno, string FromEnquiryDate, string ToEnquiryDate)
         {
             try
@@ -286,7 +365,7 @@ namespace OrthoSquare.BAL_Classes
 
                 // strQuery = "Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,PM.Mobile,DD.LastName as DLastName from InvoiceMaster IM join PatientMaster PM on PM.patientid = IM.patientid ";
                 // strQuery += " JOin tbl_DoctorDetails DD on DD.DoctorID = IM.DoctorID where  PM.IsActive =1";
-                strQuery = " Select  IM.GrandTotal as GrandTotal,SUM(IM.PaidAmount) as PaidAmount ,IM.GrandTotal - SUM(IM.PaidAmount) as PendingAmount,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,PM.Mobile,DD.LastName as DLastName,IM.InvoiceCode,IM.InvoiceNo,convert(date,PayDate,105) as PayDate,IM.InvoiceTid ";
+                strQuery = " Select  IM.GrandTotal as GrandTotal,SUM(IM.PaidAmount) as PaidAmount ,IM.GrandTotal - SUM(IM.PaidAmount) as PendingAmount,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,PM.Mobile,DD.LastName as DLastName,IM.InvoiceCode,IM.InvoiceNo,convert(date,PayDate,105) as PayDate ";
                 strQuery += " from InvoiceMaster IM join PatientMaster PM on PM.patientid = IM.patientid JOin tbl_DoctorDetails DD on DD.DoctorID = IM.DoctorID where  PM.IsActive =1";
 
 
@@ -301,7 +380,7 @@ namespace OrthoSquare.BAL_Classes
                     strQuery += " and PM.Mobile='" + Mno + "'";
                 if (FromEnquiryDate != "" && ToEnquiryDate != "")
                     strQuery += " and convert(date,IM.PayDate,105) between convert(date,@FromEnquiryDate,105) and convert(date,@ToEnquiryDate,105)";
-                strQuery += " Group By PM.FristName,PM.LastName,DD.FirstName,PM.Mobile,DD.LastName,IM.InvoiceCode,IM.InvoiceNo,IM.GrandTotal,IM.InvoiceTid,convert(date,PayDate,105) Order by IM.InvoiceTid DESC";
+                strQuery += " Group By PM.FristName,PM.LastName,DD.FirstName,PM.Mobile,DD.LastName,IM.InvoiceCode,IM.InvoiceNo,IM.GrandTotal,convert(date,PayDate,105) order by PayDate DESC";
 
                 objGeneral.AddParameterWithValueToSQLCommand("@FromEnquiryDate", FromEnquiryDate);
                 objGeneral.AddParameterWithValueToSQLCommand("@ToEnquiryDate", ToEnquiryDate);

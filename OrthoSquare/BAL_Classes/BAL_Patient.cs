@@ -529,6 +529,26 @@ namespace OrthoSquare.BAL_Classes
                 General objGeneral = new General();
 
                 objGeneral.AddParameterWithValueToSQLCommand("@PatientId", PatientId);
+                objGeneral.AddParameterWithValueToSQLCommand("@Mode", 1);
+
+                ds = objGeneral.GetDatasetByCommand_SP("Get_PatientInvoiceNo");
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+        }
+
+        public DataTable GetPatientInvoiceDetsils(int PatientId)
+        {
+            try
+            {
+                General objGeneral = new General();
+
+                objGeneral.AddParameterWithValueToSQLCommand("@PatientId", PatientId);
+                objGeneral.AddParameterWithValueToSQLCommand("@Mode", 2);
+
                 ds = objGeneral.GetDatasetByCommand_SP("Get_PatientInvoiceNo");
 
             }

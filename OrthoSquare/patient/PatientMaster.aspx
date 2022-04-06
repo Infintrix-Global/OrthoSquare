@@ -1280,14 +1280,14 @@
                                     </asp:TemplateField>
                                       <asp:TemplateField HeaderText="Patient Status">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblPstatus" runat="server" Text='<%# Eval("PCstatus") %>'></asp:Label>
+                                            <asp:Label ID="lblPstatus1" runat="server" Text='<%# Eval("PCstatus") %>'></asp:Label>
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <%--Dhaval--%>
                                     <asp:TemplateField HeaderText="Last Consultation Date">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblPstatus" runat="server" Text='<%# Eval("PCstatus") %>'></asp:Label>
+                                            <asp:Label ID="lblConsultationDate" runat="server" Text=''></asp:Label>
 
                                         </ItemTemplate>
                                     </asp:TemplateField>

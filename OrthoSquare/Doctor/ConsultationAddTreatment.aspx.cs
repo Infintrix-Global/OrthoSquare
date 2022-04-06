@@ -30,6 +30,7 @@ namespace OrthoSquare.Doctor
         BAL_Patient objp = new BAL_Patient();
         clsCommonMasters objcommon = new clsCommonMasters();
         BAL_LabsDetails objL = new BAL_LabsDetails();
+        BAL_InvoiceDetails objinv = new BAL_InvoiceDetails();
         string lID = "";
         string ToothNo1 = "";
         string TreatmentID = "";
@@ -58,7 +59,7 @@ namespace OrthoSquare.Doctor
 
                 AddMedicinesRow(true);
                 bindDentalTreatmentWorkDone();
-                invoiceTreatmen();
+
                 bindDentalTreatment();
                 BindGettooth();
 
@@ -1056,26 +1057,7 @@ namespace OrthoSquare.Doctor
         {
             InsertMultipleImage();
 
-            //int _isInserted = -1;
-
-            //_isInserted = objCT.Add_PTGallreryDetails(0, patientid, Convert.ToInt32(ddlTreatmentDetails.SelectedValue), txtRemarks.Text, lbl_filepath1.Text);
-
-
-
-            //if (_isInserted == -1)
-            //{
-            //    lblMessage.Text = "Failed to Add Treatment Image";
-            //    lblMessage.ForeColor = System.Drawing.Color.Red;
-            //}
-            //else
-            //{
-
-            //    lblMessage.Text = "Treatment Image Added Successfully";
-            //    lblMessage.ForeColor = System.Drawing.Color.Green;
-            //    Clear();
-
-
-            //}
+          
 
         }
 
@@ -1083,147 +1065,14 @@ namespace OrthoSquare.Doctor
         {
 
         }
-        private void invoiceTreatmen()
-        {
-            DataTable dt = new DataTable();
-            DataRow dr = null;
-            dt.Columns.Add(new DataColumn("RowNumber", typeof(string)));
-            dt.Columns.Add(new DataColumn("Column1", typeof(string)));
-            dt.Columns.Add(new DataColumn("Column2", typeof(string)));
-            dt.Columns.Add(new DataColumn("Column3", typeof(string)));
-            dt.Columns.Add(new DataColumn("Column4", typeof(string)));
-            dt.Columns.Add(new DataColumn("Column5", typeof(string)));
-            dt.Columns.Add(new DataColumn("Column6", typeof(string)));
-            dt.Columns.Add(new DataColumn("Column7", typeof(string)));
-            dt.Columns.Add(new DataColumn("Column8", typeof(string)));
-
-            dr = dt.NewRow();
-            dr["RowNumber"] = 1;
-            dr["Column1"] = string.Empty;
-            dr["Column2"] = string.Empty;
-            dr["Column3"] = string.Empty;
-            dr["Column4"] = string.Empty;
-            dr["Column5"] = string.Empty;
-            dr["Column6"] = string.Empty;
-            dr["Column7"] = string.Empty;
-            dr["Column8"] = string.Empty;
 
 
-            dt.Rows.Add(dr);
-            //dr = dt.NewRow();
-            //Store the DataTable in ViewState
-            ViewState["CurrentTableGridDrowers"] = dt;
-
-            Gridinvoice.DataSource = dt;
-            Gridinvoice.DataBind();
-        }
-
-        private void AddNewRowToGridSetInitialInvoice()
-        {
-            int rowIndex = 0;
-
-            if (ViewState["CurrentTableGridDrowers"] != null)
-            {
-                DataTable dtCurrentTable = (DataTable)ViewState["CurrentTableGridDrowers"];
-
-
-                DataRow drCurrentRow = null;
-                if (dtCurrentTable.Rows.Count > 0)
-                {
-                    for (int i = 1; i <= dtCurrentTable.Rows.Count; i++)
-                    {
-                        //extract the TextBox values
-                        TextBox box1 = (TextBox)Gridinvoice.Rows[rowIndex].Cells[1].FindControl("txtMedicinesName");
-                        TextBox box2 = (TextBox)Gridinvoice.Rows[rowIndex].Cells[2].FindControl("txtMtype");
-                        TextBox box3 = (TextBox)Gridinvoice.Rows[rowIndex].Cells[3].FindControl("txtTotal");
-                        TextBox box4 = (TextBox)Gridinvoice.Rows[rowIndex].Cells[4].FindControl("txtTotalDay");
-                        CheckBox box5 = (CheckBox)Gridinvoice.Rows[rowIndex].Cells[5].FindControl("CheckBoxMorning");
-                        CheckBox box6 = (CheckBox)Gridinvoice.Rows[rowIndex].Cells[6].FindControl("CheckBoxAfternoon");
-                        CheckBox box7 = (CheckBox)Gridinvoice.Rows[rowIndex].Cells[7].FindControl("CheckBoxEvening");
-                        TextBox box8 = (TextBox)Gridinvoice.Rows[rowIndex].Cells[8].FindControl("txtRemarks");
-
-
-
-                        drCurrentRow = dtCurrentTable.NewRow();
-                        drCurrentRow["RowNumber"] = i + 1;
-
-                        dtCurrentTable.Rows[i - 1]["Column1"] = box1.Text;
-                        dtCurrentTable.Rows[i - 1]["Column2"] = box2.Text;
-                        dtCurrentTable.Rows[i - 1]["Column3"] = box3.Text;
-                        dtCurrentTable.Rows[i - 1]["Column4"] = box4.Text;
-                        dtCurrentTable.Rows[i - 1]["Column5"] = box5.Text;
-                        dtCurrentTable.Rows[i - 1]["Column6"] = box6.Text;
-                        dtCurrentTable.Rows[i - 1]["Column7"] = box7.Text;
-                        dtCurrentTable.Rows[i - 1]["Column8"] = box8.Text;
-                        rowIndex++;
-                    }
-                    dtCurrentTable.Rows.Add(drCurrentRow);
-                    ViewState["CurrentTableGridDrowers"] = dtCurrentTable;
-
-                    Gridinvoice.DataSource = dtCurrentTable;
-                    Gridinvoice.DataBind();
-                }
-            }
-            else
-            {
-                Response.Write("ViewState is null");
-            }
-
-            //Set Previous Data on Postbacks
-            SetPreviousDataSetInitialinvoide();
-        }
-
-        private void SetPreviousDataSetInitialinvoide()
-        {
-            int rowIndex = 0;
-            if (ViewState["CurrentTableGridDrowers"] != null)
-            {
-                DataTable dt = (DataTable)ViewState["CurrentTableGridDrowers"];
-                if (dt.Rows.Count > 0)
-                {
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        TextBox box1 = (TextBox)Gridinvoice.Rows[rowIndex].Cells[1].FindControl("txtMedicinesName");
-                        TextBox box2 = (TextBox)Gridinvoice.Rows[rowIndex].Cells[2].FindControl("txtMtype");
-                        TextBox box3 = (TextBox)Gridinvoice.Rows[rowIndex].Cells[3].FindControl("txtTotal");
-                        TextBox box4 = (TextBox)Gridinvoice.Rows[rowIndex].Cells[4].FindControl("txtTotalDay");
-                        CheckBox box5 = (CheckBox)Gridinvoice.Rows[rowIndex].Cells[5].FindControl("CheckBoxMorning");
-                        CheckBox box6 = (CheckBox)Gridinvoice.Rows[rowIndex].Cells[6].FindControl("CheckBoxAfternoon");
-                        CheckBox box7 = (CheckBox)Gridinvoice.Rows[rowIndex].Cells[7].FindControl("CheckBoxEvening");
-                        TextBox box8 = (TextBox)Gridinvoice.Rows[rowIndex].Cells[8].FindControl("txtRemarks");
-
-
-                        box1.Text = dt.Rows[i]["Column1"].ToString();
-                        box2.Text = dt.Rows[i]["Column2"].ToString();
-                        box3.Text = dt.Rows[i]["Column3"].ToString();
-                        box4.Text = dt.Rows[i]["Column4"].ToString();
-                        box5.Text = dt.Rows[i]["Column5"].ToString();
-
-                        box6.Text = dt.Rows[i]["Column6"].ToString();
-                        box7.Text = dt.Rows[i]["Column7"].ToString();
-                        box8.Text = dt.Rows[i]["Column8"].ToString();
-
-
-
-                        rowIndex++;
-                    }
-                }
-            }
-        }
-        protected void ButtonAddGridInvoice_Click(object sender, EventArgs e)
-        {
-            AddNewRowToGridSetInitialInvoice();
-        }
 
         protected void Gridinvoice_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 DropDownList ddlTreatment = (DropDownList)e.Row.FindControl("ddlTreatment");
-
-                //  BindTREATMENTS(ref ddlTreatment);
-
-
 
             }
         }
@@ -1280,158 +1129,6 @@ namespace OrthoSquare.Doctor
 
 
 
-        protected void btnMedicines_Click(object sender, EventArgs e)
-        {
-            int SelectedItems = 0;
-            int _isInserted = -1;
-
-            int CNo = 0;
-            CNo = objCT.CNoMaster();
-
-            foreach (GridViewRow row in GridMedicinesDetails.Rows)
-            {
-                string Morning1 = "";
-                string Afternoon1 = "";
-                string Evening1 = "";
-                string InHouse = "";
-                string MedicinesName = "";
-                int Medicines = 0;
-                int MedicinesPrice = 0;
-                int TotalPrice = 0, TotalG = 0, PreAmount = 0 ;
-
-
-                if (row.RowType == DataControlRowType.DataRow)
-                {
-                    TextBox txtMedicinesName = (row.Cells[0].FindControl("txtMedicinesName") as TextBox);
-                    //TextBox txtMtype = (row.Cells[0].FindControl("txtMtype") as TextBox);
-                    TextBox txtTotal = (row.Cells[0].FindControl("txtTotalDose") as TextBox);
-                    TextBox txtTotalDay = (row.Cells[0].FindControl("txtTotalNoofDays") as TextBox);
-                    CheckBox CheckBoxMorning = (row.Cells[0].FindControl("CheckBoxMorningN") as CheckBox);
-                    CheckBox CheckBoxAfternoon = (row.Cells[0].FindControl("CheckBoxAfternoonN") as CheckBox);
-                    CheckBox CheckBoxEvening = (row.Cells[0].FindControl("CheckBoxEveningN") as CheckBox);
-                    TextBox txtRemarks = (row.Cells[0].FindControl("txtRemarksN") as TextBox);
-
-                    CheckBox CheckBoxInHouse = (row.Cells[0].FindControl("CheckBoxInHouse") as CheckBox);
-
-                    DropDownList ddlMedicinesName = (row.Cells[0].FindControl("ddlMedicinesName") as DropDownList);
-                    DropDownList ddlMedicinesType = (row.Cells[0].FindControl("ddlMedicinesType") as DropDownList);
-
-                    if (CheckBoxInHouse.Checked == true)
-                    {
-                        InHouse = "Yes";
-                        MedicinesName = ddlMedicinesName.SelectedItem.Text;
-                        Medicines = Convert.ToInt32(ddlMedicinesName.SelectedValue);
-                    }
-                    else
-                    {
-                        MedicinesName = txtMedicinesName.Text;
-                        InHouse = "No";
-                        Medicines = 0;
-                    }
-
-
-
-
-
-                    if (CheckBoxMorning.Checked == true)
-                    {
-                        Morning1 = "Yes";
-
-                    }
-                    else
-                    {
-
-                        Morning1 = "No";
-                    }
-
-
-
-                    if (CheckBoxAfternoon.Checked == true)
-                    {
-                        Afternoon1 = "Yes";
-
-                    }
-                    else
-                    {
-
-                        Afternoon1 = "No";
-                    }
-
-                    if (CheckBoxEvening.Checked == true)
-                    {
-                        Evening1 = "Yes";
-
-                    }
-                    else
-                    {
-
-                        Evening1 = "No";
-                    }
-                    int Price = 0;
-                    DataTable Dt = objMedicines.GetSelectMedicines(Medicines);
-                    if (Dt != null && Dt.Rows.Count > 0)
-                    {
-                        Price = Convert.ToInt32(Dt.Rows[0]["Price"]);
-                        MedicinesPrice = Convert.ToInt32(Dt.Rows[0]["Price"]);
-                        PreAmount = (Convert.ToInt32(Dt.Rows[0]["Price"]) * Convert.ToInt32(txtMDiscount.Text)) / 100;
-                        TotalG = Convert.ToInt32(Dt.Rows[0]["Price"]) - PreAmount;
-                    }
-                   
-                    _isInserted = objCT.Add_Medicines(patientid, MedicinesName, Medicines, ddlMedicinesType.SelectedItem.Text, txtTotal.Text, txtTotalDay.Text, Morning1, Afternoon1, Evening1, txtRemarks.Text, InHouse, CNo, Convert.ToInt32(DoctorID), Price, Convert.ToDecimal(txtMDiscount.Text),Convert.ToDecimal(PreAmount), Convert.ToDecimal(TotalG));
-                    SelectedItems++;
-
-
-                }
-
-                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Medicines Added Successfully')", true);
-
-                lblMessage.Text = "Medicines Added Successfully";
-                lblMessage.ForeColor = System.Drawing.Color.Green;
-                getAlaGridViewViewMedicines(patientid);
-                invoiceTreatmen();
-
-
-
-            }
-
-
-
-
-
-            if (_isInserted == -1)
-            {
-                lblMessage.Text = "Failed to Add Medicines";
-                lblMessage.ForeColor = System.Drawing.Color.Red;
-            }
-            else
-            {
-                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Medicines Added Successfully')", true);
-
-
-                lblMessage.Text = "Medicines Added Successfully";
-                lblMessage.ForeColor = System.Drawing.Color.Green;
-                Clear();
-
-
-                getAlaGridViewViewMedicines(patientid);
-
-            }
-
-        }
-
-        public void getAlaGridViewViewMedicines(long Pid)
-        {
-
-            DataTable AllData14 = objCT.GetAdd_Medicines(Pid);
-
-            if (AllData14 != null && AllData14.Rows.Count > 0)
-            {
-                GridViewViewMedicines.DataSource = AllData14;
-                GridViewViewMedicines.DataBind();
-
-
-            }
-        }
 
 
         protected void ButtonInvoice_Click(object sender, EventArgs e)
@@ -1710,14 +1407,21 @@ namespace OrthoSquare.Doctor
                 foreach (GridViewRow item in GridMedicinesDetails.Rows)
                 {
                     string inHouseValues = "";
-
+                    string Morning = "";
+                    string Afternoon = "";
+                    string Evening = "";
                     hdnWOEmployeeIDVal = ((HiddenField)item.FindControl("hdnWOEmployeeID")).Value;
                     MedicinesType = ((DropDownList)item.FindControl("ddlMedicinesType")).SelectedValue;
                     MedicinesName = ((DropDownList)item.FindControl("ddlMedicinesName")).SelectedValue;
                     TextBox txtTotalDose = (TextBox)item.FindControl("txtTotalDose");
                     TextBox txtTotalNoofDays = (TextBox)item.FindControl("txtTotalNoofDays");
+                    TextBox txtStrip = (TextBox)item.FindControl("txtStrip");
                     TextBox txtRemarksN = (TextBox)item.FindControl("txtRemarksN");
                     CheckBox inHouse = (CheckBox)item.FindControl("CheckBoxInHouse");
+
+                    CheckBox CheckBoxMorningN = (CheckBox)item.FindControl("CheckBoxMorningN");
+                    CheckBox CheckBoxAfternoonN = (CheckBox)item.FindControl("CheckBoxAfternoonN");
+                    CheckBox CheckBoxEveningN = (CheckBox)item.FindControl("CheckBoxEveningN");
 
                     if (inHouse.Checked)
                     {
@@ -1728,10 +1432,41 @@ namespace OrthoSquare.Doctor
                         inHouseValues = "No";
                     }
 
-                    AddMedicines(ref objMedi, Convert.ToInt32(hdnWOEmployeeIDVal), MedicinesType, MedicinesName, txtTotalDose.Text, txtTotalNoofDays.Text, "", "", "", txtRemarksN.Text, inHouseValues);
+                    if (CheckBoxMorningN.Checked)
+                    {
+                        Morning = "Yes";
+                    }
+                    else
+                    {
+                        Morning = "No";
+                    }
+
+                    if (CheckBoxAfternoonN.Checked)
+                    {
+                        Afternoon = "Yes";
+                    }
+                    else
+                    {
+                        Afternoon = "No";
+                    }
+
+
+                    if (CheckBoxEveningN.Checked)
+                    {
+                        Evening = "Yes";
+                    }
+                    else
+                    {
+                        Evening = "No";
+                    }
+
+
+
+
+                    AddMedicines(ref objMedi, Convert.ToInt32(hdnWOEmployeeIDVal), MedicinesType, MedicinesName, txtTotalDose.Text, txtTotalNoofDays.Text, Morning, Afternoon, Evening, txtRemarksN.Text, inHouseValues, txtStrip.Text);
                 }
                 if (AddBlankRow)
-                    AddMedicines(ref objMedi, 1, "", "0", "0", "0", "", "", "", "", "");
+                    AddMedicines(ref objMedi, 1, "", "0", "0", "0", "", "", "", "", "", "0");
                 //GrowerPutData = objinvoice;
                 GridMedicinesDetails.DataSource = objMedi;
                 GridMedicinesDetails.DataBind();
@@ -1751,7 +1486,7 @@ namespace OrthoSquare.Doctor
             GridMedicinesDetails.DataBind();
         }
 
-        private void AddMedicines(ref List<MedicinesDetails> objGP, int ID, string MedicinesType, string MedicinesName, string Dose, string NoOfDays, string Morning, string Afternoon, string Evening, string Remarks, string InHouse)
+        private void AddMedicines(ref List<MedicinesDetails> objGP, int ID, string MedicinesType, string MedicinesName, string Dose, string NoOfDays, string Morning, string Afternoon, string Evening, string Remarks, string InHouse, string Strip)
         {
             MedicinesDetails objM = new MedicinesDetails();
             objM.ID = ID;
@@ -1765,6 +1500,7 @@ namespace OrthoSquare.Doctor
             objM.Evening = Evening;
             objM.Remarks = Remarks;
             objM.InHouse = InHouse;
+            objM.Strip = Strip;
             objGP.Add(objM);
             ViewState["ojbpro"] = objGP;
         }
@@ -1781,7 +1517,48 @@ namespace OrthoSquare.Doctor
                 Label lblInHouse = (Label)e.Row.FindControl("lblInHouse");
                 CheckBox CheckBoxInHouse = (CheckBox)e.Row.FindControl("CheckBoxInHouse");
                 TextBox txtMedicinesName = (TextBox)e.Row.FindControl("txtMedicinesName");
-                if (lblInHouse.Text=="Yes")
+
+                Label lblMorning = (Label)e.Row.FindControl("lblMorning");
+                CheckBox CheckBoxMorningN = (CheckBox)e.Row.FindControl("CheckBoxMorningN");
+
+                Label lblAfternoon = (Label)e.Row.FindControl("lblAfternoon");
+                CheckBox CheckBoxAfternoonN = (CheckBox)e.Row.FindControl("CheckBoxAfternoonN");
+
+                Label lblEvening = (Label)e.Row.FindControl("lblEvening");
+                CheckBox CheckBoxEveningN = (CheckBox)e.Row.FindControl("CheckBoxEveningN");
+
+                if (lblMorning.Text == "Yes")
+                {
+                    CheckBoxMorningN.Checked = true;
+                }
+                else
+                {
+                    CheckBoxMorningN.Checked = false;
+                }
+
+                if (lblAfternoon.Text == "Yes")
+                {
+                    CheckBoxAfternoonN.Checked = true;
+                }
+                else
+                {
+                    CheckBoxAfternoonN.Checked = false;
+                }
+
+                if (lblEvening.Text == "Yes")
+                {
+                    CheckBoxEveningN.Checked = true;
+                }
+                else
+                {
+                    CheckBoxEveningN.Checked = false;
+                }
+
+
+
+
+
+                if (lblInHouse.Text == "Yes")
                 {
                     CheckBoxInHouse.Checked = true;
                     txtMedicinesName.Visible = false;
@@ -1802,7 +1579,7 @@ namespace OrthoSquare.Doctor
                 //ddlMedicinesType.Items.Insert(ddlMedicinesType.Items.Count, new ListItem("Other", "Other"));
                 ddlMedicinesType.SelectedValue = lblMedicinesType.Text;
                 BindMedicines(ref ddlMedicinesName, lblMedicinesType.Text);
-
+                ddlMedicinesName.SelectedValue = lblMedicines_Name.Text;
 
 
             }
@@ -1850,7 +1627,7 @@ namespace OrthoSquare.Doctor
                 DropDownList ddlMedicinesName = (DropDownList)row.FindControl("ddlMedicinesName");
                 TextBox txtMedicinesName = (TextBox)row.FindControl("txtMedicinesName");
                 string MedicinesType = "0";
-               
+
                 //txtMedicinesName.Visible = false;
                 //ddlMedicinesName.Visible = true;
 
@@ -1875,10 +1652,10 @@ namespace OrthoSquare.Doctor
             {
                 DropDownList ddlMedicinesName = (DropDownList)row.FindControl("ddlMedicinesName");
                 TextBox txtMedicinesName = (TextBox)row.FindControl("txtMedicinesName");
-               
+
                 if (InHouse.Checked)
                 {
-                   
+
                     txtMedicinesName.Visible = false;
                     ddlMedicinesName.Visible = true;
 
@@ -1893,6 +1670,174 @@ namespace OrthoSquare.Doctor
                 }
 
             }
+        }
+
+        protected void btnMedicines_Click(object sender, EventArgs e)
+        {
+            int SelectedItems = 0;
+            int _isInserted = -1;
+
+            int CNo = 0;
+            CNo = objCT.CNoMaster();
+
+            foreach (GridViewRow row in GridMedicinesDetails.Rows)
+            {
+                string Morning1 = "";
+                string Afternoon1 = "";
+                string Evening1 = "";
+                string InHouse = "";
+                string MedicinesName = "";
+                int Medicines = 0;
+                int MedicinesPrice = 0;
+                int TotalPrice = 0, TotalG = 0, PreAmount = 0, DiscountAmount = 0;
+
+
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+                    TextBox txtMedicinesName = (row.Cells[0].FindControl("txtMedicinesName") as TextBox);
+                    //TextBox txtMtype = (row.Cells[0].FindControl("txtMtype") as TextBox);
+                    TextBox txtTotal = (row.Cells[0].FindControl("txtTotalDose") as TextBox);
+                    TextBox txtTotalDay = (row.Cells[0].FindControl("txtTotalNoofDays") as TextBox);
+                    CheckBox CheckBoxMorning = (row.Cells[0].FindControl("CheckBoxMorningN") as CheckBox);
+                    CheckBox CheckBoxAfternoon = (row.Cells[0].FindControl("CheckBoxAfternoonN") as CheckBox);
+                    CheckBox CheckBoxEvening = (row.Cells[0].FindControl("CheckBoxEveningN") as CheckBox);
+                    TextBox txtRemarks = (row.Cells[0].FindControl("txtRemarksN") as TextBox);
+                    TextBox txtStrip = (row.Cells[0].FindControl("txtStrip") as TextBox);
+
+                    CheckBox CheckBoxInHouse = (row.Cells[0].FindControl("CheckBoxInHouse") as CheckBox);
+
+                    DropDownList ddlMedicinesName = (row.Cells[0].FindControl("ddlMedicinesName") as DropDownList);
+                    DropDownList ddlMedicinesType = (row.Cells[0].FindControl("ddlMedicinesType") as DropDownList);
+
+                    if (CheckBoxInHouse.Checked == true)
+                    {
+                        InHouse = "Yes";
+                        MedicinesName = ddlMedicinesName.SelectedItem.Text;
+                        Medicines = Convert.ToInt32(ddlMedicinesName.SelectedValue);
+                    }
+                    else
+                    {
+                        MedicinesName = txtMedicinesName.Text;
+                        InHouse = "No";
+                        Medicines = 0;
+                    }
+
+                    if (CheckBoxMorning.Checked == true)
+                    {
+                        Morning1 = "Yes";
+
+                    }
+                    else
+                    {
+
+                        Morning1 = "No";
+                    }
+
+
+
+                    if (CheckBoxAfternoon.Checked == true)
+                    {
+                        Afternoon1 = "Yes";
+
+                    }
+                    else
+                    {
+
+                        Afternoon1 = "No";
+                    }
+
+                    if (CheckBoxEvening.Checked == true)
+                    {
+                        Evening1 = "Yes";
+
+                    }
+                    else
+                    {
+
+                        Evening1 = "No";
+                    }
+                    int Price = 0;
+                    DataTable Dt = objMedicines.GetSelectMedicines(Medicines);
+                    if (Dt != null && Dt.Rows.Count > 0)
+                    {
+                        DiscountAmount = Convert.ToInt32(txtMDiscount.Text);
+                        Price = Convert.ToInt32(Dt.Rows[0]["Price"]);
+                        MedicinesPrice = Convert.ToInt32(Dt.Rows[0]["Price"]) * Convert.ToInt32(txtStrip.Text);
+                        PreAmount = (MedicinesPrice * Convert.ToInt32(DiscountAmount)) / 100;
+                        TotalG = MedicinesPrice - PreAmount;
+                    }
+
+                    _isInserted = objCT.Add_Medicines(patientid, MedicinesName, Medicines, ddlMedicinesType.SelectedItem.Text, txtTotal.Text, txtTotalDay.Text, Morning1, Afternoon1, Evening1, txtRemarks.Text, InHouse, CNo, Convert.ToInt32(DoctorID), MedicinesPrice, Convert.ToDecimal(DiscountAmount), Convert.ToDecimal(PreAmount), Convert.ToDecimal(TotalG), txtStrip.Text);
+                    SelectedItems++;
+
+
+                }
+
+
+
+
+            }
+
+
+            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Medicines Added Successfully')", true);
+
+
+            lblMessage.ForeColor = System.Drawing.Color.Green;
+            getAlaGridViewViewMedicines(patientid);
+            GridMedicinesDetails.DataSource = null;
+            GridMedicinesDetails.DataBind();
+
+            AddMedicinesRow(true);
+
+            txtMDiscount.Text = "";
+
+            if (_isInserted == -1)
+            {
+                lblMessage.Text = "Failed to Add Medicines";
+                lblMessage.ForeColor = System.Drawing.Color.Red;
+            }
+            else
+            {
+                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Medicines Added Successfully')", true);
+
+                lblMessage.Text = "Medicines Added Successfully";
+                lblMessage.ForeColor = System.Drawing.Color.Green;
+                Clear();
+
+                getAlaGridViewViewMedicines(patientid);
+
+
+            }
+
+        }
+
+
+
+        public void getAlaGridViewViewMedicines(long Pid)
+        {
+
+            DataTable AllData14 = objinv.GetViewMedicinesInvoice(Convert.ToInt32(Pid));
+
+            if (AllData14 != null && AllData14.Rows.Count > 0)
+            {
+                GridViewViewMedicines.DataSource = AllData14;
+                GridViewViewMedicines.DataBind();
+
+
+            }
+        }
+        protected void BtlMedicinesPrint_Click(object sender, EventArgs e)
+        {
+            //  Response.Redirect("MedicinesPrint.aspx?Cno=" + Cno + "&Fid=" + 1 + "&Back=" + 1);
+
+        }
+
+        protected void GridViewViewMedicines_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            int CNo = Convert.ToInt32(GridViewViewMedicines.DataKeys[rowIndex].Values[0]);
+            int patientid = Convert.ToInt32(GridViewViewMedicines.DataKeys[rowIndex].Values[1]);
+            Response.Redirect("MedicinesPrint.aspx?CNo=" + CNo + "&patientid=" + patientid);
         }
     }
 }

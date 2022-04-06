@@ -2625,4 +2625,6 @@ public class MedicinesDetails
     public string Remarks { get; set; }
 
     public string InHouse { get; set; }
+
+    public string Strip { get; set; }
 }

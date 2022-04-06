@@ -61,7 +61,7 @@ namespace OrthoSquare.BAL_Classes
 
                     foreach (DataRow item in dtExpInfo.Rows)
                     {
-                        string TCost = "0", TUNit = "0", TDiscount = "0";
+                        string TCost = "0", TUNit = "0", TDiscount = "0", Tex="0";
 
                         if (item["TreatmentsCost"].ToString() == "")
                         {
@@ -92,6 +92,14 @@ namespace OrthoSquare.BAL_Classes
                             TDiscount = item["Discount"].ToString();
                         }
 
+                        if (item["Tex"].ToString() == "")
+                        {
+                            Tex = "0";
+                        }
+                        else
+                        {
+                            Tex = item["Tex"].ToString();
+                        }
 
                         invoiceDetils objNewRow = new invoiceDetils();
                         objNewRow.ID = Convert.ToInt32(item["ID"]);
@@ -99,7 +107,7 @@ namespace OrthoSquare.BAL_Classes
                         objNewRow.Cost = TCost;
                         objNewRow.Unit = TUNit;
                         objNewRow.Discount = TDiscount;
-                        objNewRow.Tex = "0";
+                        objNewRow.Tex = Tex;
                         objNewRow.ISInvoice = Convert.ToInt32(item["ISInvoice"]);
                         objNewRow.RowNumber = RowCNT;
 
@@ -263,7 +271,7 @@ namespace OrthoSquare.BAL_Classes
 
 
 
-        public int Add_Medicines(long patientid, string MedicinesName,int  Mid, string txtMtype, string TotalMedicines, string DayMedicines, string MorningMedicines, string AfternoonMedicines, string EveningMedicines, string Remarks ,string CheckBoxInHouse,int  CNo,int DoctorID,decimal Price,decimal Discount, decimal TotalDiscount, decimal GrandTotal)
+        public int Add_Medicines(long patientid, string MedicinesName,int  Mid, string txtMtype, string TotalMedicines, string DayMedicines, string MorningMedicines, string AfternoonMedicines, string EveningMedicines, string Remarks ,string CheckBoxInHouse,int  CNo,int DoctorID,decimal Price,decimal Discount, decimal TotalDiscount, decimal GrandTotal,string Strip)
         {
             int isInserted = -1;
             try
@@ -271,8 +279,8 @@ namespace OrthoSquare.BAL_Classes
 
                 General objGeneral = new General();
 
-                strQuery = "insert into PatientMedicines (patientid,MedicinesName,txtMtype,TotalMedicines,DayMedicines,MorningMedicines,AfternoonMedicines,EveningMedicines,Remarks,IsActive,InHouse,CNo,Mid,CreateDate,DoctorId,Price,Discount,TotalDiscount,GrandTotal) ";
-                strQuery += " values(@patientid,@MedicinesName,@txtMtype,@TotalMedicines,@DayMedicines,@MorningMedicines,@AfternoonMedicines,@EveningMedicines,@Remarks,1,@InHouse,@CNo,@Mid,GETDATE(),@DoctorID,@Price,@Discount,@TotalDiscount,@GrandTotal) ";
+                strQuery = "insert into PatientMedicines (patientid,MedicinesName,txtMtype,TotalMedicines,DayMedicines,MorningMedicines,AfternoonMedicines,EveningMedicines,Remarks,IsActive,InHouse,CNo,Mid,CreateDate,DoctorId,Price,Discount,TotalDiscount,GrandTotal,Strip) ";
+                strQuery += " values(@patientid,@MedicinesName,@txtMtype,@TotalMedicines,@DayMedicines,@MorningMedicines,@AfternoonMedicines,@EveningMedicines,@Remarks,1,@InHouse,@CNo,@Mid,GETDATE(),@DoctorID,@Price,@Discount,@TotalDiscount,@GrandTotal,@Strip) ";
                 objGeneral.AddParameterWithValueToSQLCommand("@patientid", patientid);
                 objGeneral.AddParameterWithValueToSQLCommand("@MedicinesName", MedicinesName);
                 objGeneral.AddParameterWithValueToSQLCommand("@TotalMedicines", TotalMedicines);
@@ -290,6 +298,8 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@Discount", Discount);
                 objGeneral.AddParameterWithValueToSQLCommand("@TotalDiscount", TotalDiscount);
                 objGeneral.AddParameterWithValueToSQLCommand("@GrandTotal", GrandTotal);
+                objGeneral.AddParameterWithValueToSQLCommand("@Strip", Strip);
+                
                 objGeneral.GetExecuteNonQueryByCommand(strQuery);
                 isInserted = 1;
 

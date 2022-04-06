@@ -267,15 +267,6 @@ namespace OrthoSquare.Doctor
         protected global::System.Web.UI.WebControls.GridView GridViewViewMedicines;
 
         /// <summary>
-        /// Gridinvoice control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView Gridinvoice;
-
-        /// <summary>
         /// CheckBox1 control.
         /// </summary>
         /// <remarks>
@@ -310,6 +301,15 @@ namespace OrthoSquare.Doctor
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnMedicines;
+
+        /// <summary>
+        /// BtlMedicinesPrint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtlMedicinesPrint;
 
         /// <summary>
         /// GridPreviousConsultation control.

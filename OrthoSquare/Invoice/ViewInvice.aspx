@@ -201,8 +201,8 @@
 
                                     <asp:TemplateField HeaderText="Delete" Visible="false" ItemStyle-Width="2%">
                                         <ItemTemplate>
-                                            <asp:ImageButton ID="lbtDelete" CausesValidation="false" runat="server" CommandName="delete1" CommandArgument='<%# Eval("InvoiceTid") %>'
-                                                ImageUrl="../Images/delete15x15.png" OnClientClick="return confirm('Are you sure you want to delete this Invloce?');" />
+                                    <%--        <asp:ImageButton ID="lbtDelete" CausesValidation="false" runat="server" CommandName="delete1" CommandArgument='<%# Eval("InvoiceTid") %>'
+                                                ImageUrl="../Images/delete15x15.png" OnClientClick="return confirm('Are you sure you want to delete this Invloce?');" />--%>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 

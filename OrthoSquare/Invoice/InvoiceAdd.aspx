@@ -97,9 +97,10 @@
                                                     SetFocusOnError="true" ErrorMessage="Please Enter patient" ForeColor="Red"></asp:RequiredFieldValidator>
                                             </span>
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div style="display: none" class="col-sm-3">
                                             <label>Invoice No</label>
                                             <asp:DropDownList ID="ddlInvoiceNo" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlInvoiceNo_SelectedIndexChanged" runat="server"></asp:DropDownList>
+
                                         </div>
 
                                     </div>
@@ -108,7 +109,67 @@
 
                             <%-- </ContentTemplate>
         </asp:UpdatePanel>--%>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
 
+                                        <div class="table-responsive">
+
+
+                                            <asp:GridView ID="GridViewInvoiceDetails" runat="server" ShowFooter="True" DataKeyNames="InvoiceNo,InvoiceCode" AutoGenerateColumns="False" OnRowCommand="GridViewInvoiceDetails_RowCommand"
+                                                ForeColor="#333333" OnRowDataBound="GridViewInvoiceDetails_RowDataBound" Width="100%" class="table table-bordered table-hover">
+
+
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText=" Sr.No">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblRowNumber" runat="server" Text="<%# Container.DataItemIndex + 1 %>" />
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Invoice No">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblInvoiceCode" runat="server" Text='<%# Eval("InvoiceCode")%>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Grand Total">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblGrandTotal" runat="server" Text='<%# Eval("GrandTotal")%>'></asp:Label>
+
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Paid Amount">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblPaidAmount" runat="server" Text='<%# Eval("PaidAmount")%>'></asp:Label>
+
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Pending Amount">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblPendingAmount" runat="server" Text='<%# Eval("PendingAmount")%>'></asp:Label>
+                                                        </ItemTemplate>
+
+
+                                                    </asp:TemplateField>
+
+
+                                                    <asp:TemplateField>
+                                                        <ItemTemplate>
+                                                            <asp:Button ID="ButtonSelect" CommandName="SelectView" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' runat="server" CausesValidation="false"
+                                                                Text="SELECT" class="btn yellow-gold" />
+                                                            <asp:Button ID="Button1" CommandName="PrintView" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' runat="server" CausesValidation="false"
+                                                                Text="PRINT" class="btn yellow-gold" />
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                </Columns>
+
+
+                                            </asp:GridView>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
@@ -141,9 +202,9 @@
 
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <div class="form-group">
+                                    <%--<div class="form-group">--%>
 
-                                        <div class="table-responsive">
+                                        <div  runat="server" id="gvInformationId" class="table-responsive">
 
 
                                             <asp:GridView ID="gvInformation" runat="server" ShowFooter="True" AutoGenerateColumns="False"
@@ -198,7 +259,7 @@
 
                                                         <FooterStyle HorizontalAlign="Right" />
                                                         <FooterTemplate>
-                                                            <asp:Button ID="btn_AddEmployee" runat="server" Text="+Add New Row" class="btn blue-madison"
+                                                            <asp:Button ID="btn_AddEmployee" runat="server" Text="+Add New Row" class="btn blue-madison" 
                                                                 CausesValidation="true" ValidationGroup="AddExperianceGrp" OnClick="btn_AddEmployee_Click" />
                                                         </FooterTemplate>
                                                     </asp:TemplateField>
@@ -219,7 +280,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                          
 
 
 
@@ -327,6 +388,8 @@
                                             <label>PAY AMOUNT(₹)</label><br />
                                             <asp:TextBox ID="txtPaidAmount" class="form-control" runat="server" Text="0" AutoPostBack="True" OnTextChanged="txtPaidAmount_TextChanged"></asp:TextBox>
 
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtPaidAmount" ValidationGroup="e"
+                                                SetFocusOnError="true" ErrorMessage="Please Enter PAY AMOUNT(₹)" ForeColor="Red"></asp:RequiredFieldValidator>
                                         </div>
                                         <div class="col-sm-3">
 
@@ -464,12 +527,13 @@
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <div class="col-sm-6">
-                                                    <asp:RadioButtonList ID="RadioButtonListFinance" Width="300px" RepeatDirection="Horizontal" runat="server">
-                                                        <asp:ListItem Selected="True" Text="Bajaj finance" Value="1"></asp:ListItem>
-                                                        <asp:ListItem Text="Kotak finance" Value="2"></asp:ListItem>
-                                                        <asp:ListItem Text="Liqui Loans" Value="3"></asp:ListItem>
-                                                        <asp:ListItem Text="IDFC First Bank" Value="4"></asp:ListItem>
-                                                    </asp:RadioButtonList>
+                                                     <asp:RadioButtonList ID="RadioButtonListFinance" Width="100%" RepeatDirection="Horizontal" runat="server">
+                                            <asp:ListItem Selected="True" Text="Bajaj finance" Value="1"></asp:ListItem>
+                                            <asp:ListItem Text="Kotak finance" Value="2"></asp:ListItem>
+                                            <asp:ListItem Text="Liqui Loans" Value="3"></asp:ListItem>
+                                            <asp:ListItem Text="IDFC First Bank" Value="4"></asp:ListItem>
+											<asp:ListItem Text="Shopse" Value="5"></asp:ListItem>
+                                        </asp:RadioButtonList>
 
                                                 </div>
 

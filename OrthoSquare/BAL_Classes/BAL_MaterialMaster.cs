@@ -14,14 +14,14 @@ namespace OrthoSquare.BAL_Classes
 
 
         private string strQuery = string.Empty;
-        public int AddMaterial(long Mid, string MaterialName, int BrandId, int PackId, string Price)
+        public int AddMaterial(long Mid, int MaterialTypeId, string MaterialName, int BrandId, int PackId, string Price)
         {
             int isInserted = -1;
             try
             {
                 General objGeneral = new General();
                 objGeneral.AddParameterWithValueToSQLCommand("@MaterialName", MaterialName);
-
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialTypeId", MaterialTypeId);
                 objGeneral.AddParameterWithValueToSQLCommand("@BrandId", BrandId);
                 objGeneral.AddParameterWithValueToSQLCommand("@PackId", PackId);
                 objGeneral.AddParameterWithValueToSQLCommand("@Price", Price);
@@ -41,10 +41,11 @@ namespace OrthoSquare.BAL_Classes
             }
             catch (Exception ex)
             {
+
+                throw ex;
             }
             return isInserted;
         }
-
 
         public DataTable MaterialSelectID(string MaterialName)
         {
@@ -68,9 +69,11 @@ namespace OrthoSquare.BAL_Classes
 
         public DataTable GetAllMaterial(int Mid)
         {
-           
-                strQuery = " Select * from MaterialMaster MM left join ManageMaterialStock S on S.MaterialId=MM.MaterialId join BrandMaster BM on MM.BrandId=BM.BrandId Join PackMaster PM on MM.PackId=PM.PackId    where MM.IsActive =1 ";
-                if(Mid > 0)
+
+            strQuery = " Select *,MT.MaterialName as MaterialType from MaterialMaster MM left join ManageMaterialStock S on S.MaterialId=MM.MaterialId  ";
+            strQuery += "join MaterialType MT on MT.MaterialTypeId=MM.MaterialTypeId join BrandMaster BM on MM.BrandId=BM.BrandId Join PackMaster PM on MM.PackId=PM.PackId    where MM.IsActive =1 ";
+
+            if (Mid > 0)
                     strQuery += " and MM.MaterialId ='" + Mid + "'";
             strQuery += "  ORDER BY MM.MaterialId DESC";
                 return objGeneral.GetDatasetByCommand(strQuery);
@@ -96,7 +99,7 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@BrandId", "");
                 objGeneral.AddParameterWithValueToSQLCommand("@PackId", "");
                 objGeneral.AddParameterWithValueToSQLCommand("@Price", "");
-
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialTypeId", "0");
                 objGeneral.AddParameterWithValueToSQLCommand("@MaterialId ", Mid);
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 5);
                 ds = objGeneral.GetDatasetByCommand_SP("SP_MaterialMaster");
@@ -129,6 +132,7 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@Price", "");
                 objGeneral.AddParameterWithValueToSQLCommand("@MaterialId ", MID);
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 2);
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialTypeId", "0");
                 _isDeleted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_MaterialMaster");
             }
             catch (Exception ex)
@@ -149,6 +153,7 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@PackId", PackId);
                 objGeneral.AddParameterWithValueToSQLCommand("@Price", Price);
                 objGeneral.AddParameterWithValueToSQLCommand("@MaterialId ", MID);
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialTypeId", "0");
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 3);
                 isUpdated = objGeneral.GetExecuteScalarByCommand_SP("SP_MaterialMaster");
             }

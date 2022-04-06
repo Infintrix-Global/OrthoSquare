@@ -15,26 +15,29 @@ namespace OrthoSquare.Doctor
         public static DataTable AllData = new DataTable();
         public static DataTable dtFid = new DataTable();
         int Cno = 0;
+        int Pid = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["InvoiceCode"] != null)
+            if (Request.QueryString["Cno"] != null)
             {
+                Pid = Convert.ToInt32(Request.QueryString["patientid"]);
                 Cno = Convert.ToInt32(Request.QueryString["Cno"]);
-
+                ImageButton1.Visible = true;
+                btnBack.Visible = true;
 
                 BindInvoice(Cno);
             }
 
-            if (Request.QueryString["Back"] != null)
-            {
-                if (Convert.ToInt32(Request.QueryString["Back"]) == 1)
-                {
-                    ImageButton1.Visible = true;
-                    btnBack.Visible = true;
-                }
-            }
+            //if (Request.QueryString["Back"] != null)
+            //{
+            //    if (Convert.ToInt32(Request.QueryString["Back"]) == 1)
+            //    {
+            //        ImageButton1.Visible = true;
+            //        btnBack.Visible = true;
+            //    }
+            //}
 
-            // BindInvoice(16);
+           //BindInvoice(140);
         }
 
 
@@ -48,14 +51,14 @@ namespace OrthoSquare.Doctor
 
                  
 
-                        dtFid = objinv.GetAllInvoiceDetails(Cno);
+                        dtFid = objinv.GetMedicinesInvoiceDetails(Cno);
                    
-                    if (dtFid != null)
+                    if (dtFid != null && dtFid.Rows.Count>0)
                     {
-                        lblpatient.Text = dtFid.Rows[0]["PFristName"].ToString() + " " + dtFid.Rows[0]["PLastName"].ToString();
-                     //   lblDoctername.Text = dtFid.Rows[0]["DFirstName"].ToString() + " " + dtFid.Rows[0]["DLastName"].ToString();
+                        lblpatient.Text = dtFid.Rows[0]["PatientName"].ToString();
+                       lblDoctername.Text = dtFid.Rows[0]["DoctorsName"].ToString();
 
-                      //  lblDoctorSig.Text = dtFid.Rows[0]["DFirstName"].ToString() + " " + dtFid.Rows[0]["DLastName"].ToString();
+                       lblDoctorSig.Text = dtFid.Rows[0]["DoctorsName"].ToString();
                       
                         lblMNo.Text = dtFid.Rows[0]["Mobile"].ToString();
                         lblEmail.Text = dtFid.Rows[0]["Email"].ToString();
@@ -63,33 +66,33 @@ namespace OrthoSquare.Doctor
                         lblAge.Text = dtFid.Rows[0]["Age"].ToString();
                         lblBloodGroup.Text = dtFid.Rows[0]["BloodGroup"].ToString();
 
-                        lblAddress.Text = dtFid.Rows[0]["Address"].ToString() + " ," + dtFid.Rows[0]["Area"].ToString();
+                        lblAddress.Text = dtFid.Rows[0]["PatientAddress"].ToString();
                         //  lblTotal.Text = Convert.ToDecimal(dt.Rows[0]["GrandTotal"]).ToString("#,##0.00");
-                        lblInvoiceDate.Text = Convert.ToDateTime(dtFid.Rows[0]["PayDate"]).ToString("dd-MM-yyyy");
-                        lblInvoiceNo.Text = dtFid.Rows[0]["InvoiceCode"].ToString();
 
+                        lblInvoiceDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
+                        //lblInvoiceNo.Text = dtFid.Rows[0]["InvoiceCode"].ToString();
+                        lbldsc.Text = "( "+ dtFid.Rows[0]["Discount"].ToString()+ " %)";
 
-                        lblTotalFooter.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalCostAmount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
-                        lblTaxAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalTax"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+                        lblTotalCoust1.Text = Convert.ToDecimal(dtFid.Rows[0]["Price"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+
                         lblNetAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["GrandTotal"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
 
-
-                        lblpaidAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["PaidAmount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
-                        lblpendingAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["Pending_Amount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
-
-
-                        lblTotalCoust1.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalCost"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
                         lbldiscount1.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalDiscount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
 
 
-                        lblWordsAmount.Text = "Rupees " + NumberToWords_Large(Convert.ToInt32(dtFid.Rows[0]["PaidAmount"])) + " only";
+                        lblWordsAmount.Text = "Rupees " + NumberToWords_Large(Convert.ToInt32(dtFid.Rows[0]["GrandTotal"])) + " only";
 
 
-                        lblClinic.Text = dtFid.Rows[0]["ClinicName"].ToString();
-                        lblMobailNo.Text = dtFid.Rows[0]["PhoneNo2"].ToString();
-                        lblAddress1.Text = dtFid.Rows[0]["AddressLine1"].ToString();
-                        lblEmail1.Text = dtFid.Rows[0]["EmailID"].ToString();
-                        patientID.Text = dtFid.Rows[0]["PatientCode"].ToString();
+                        DataTable dt1 = objinv.GetMedicinesClinicDetails(Convert.ToInt32(dtFid.Rows[0]["patientid"]));
+                        if (dt1 != null && dt1.Rows.Count > 0)
+                        {
+                            lblClinic.Text = dt1.Rows[0]["ClinicName"].ToString();
+                            lblMobailNo.Text = dt1.Rows[0]["PhoneNo2"].ToString();
+                            lblAddress1.Text = dt1.Rows[0]["AddressLine1"].ToString();
+                            lblEmail1.Text = dt1.Rows[0]["EmailID"].ToString();
+                            patientID.Text = dt1.Rows[0]["PatientCode"].ToString();
+                        }
+
                         BindInvoiceAmount(Cno);
 
 
@@ -110,9 +113,9 @@ namespace OrthoSquare.Doctor
         {
             //DataTable dt =
 
-            AllData = objinv.GetAllMedicinPrint(Cno);
-            grdInvoice.DataSource = AllData;
-            grdInvoice.DataBind();
+            AllData = objinv.GetMedicinesDetailsList(Cno);
+            grdMedicinesInvoice.DataSource = AllData;
+            grdMedicinesInvoice.DataBind();
 
         }
 
@@ -120,7 +123,8 @@ namespace OrthoSquare.Doctor
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ViewInvice.aspx");
+        
+            Response.Redirect("ConsultationAddTreatment.aspx?pid=" + Pid);
         }
 
         public string NumberToWords_Large(Int64 number)

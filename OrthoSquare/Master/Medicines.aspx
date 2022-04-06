@@ -197,7 +197,7 @@
 
                                         <asp:GridView ID="gvShow" runat="server" class="table table-bordered table-hover"
                                             GridLines="None" DataKeyNames="MedicinesId" AutoGenerateColumns="false" OnRowCommand="gvShow_RowCommand"
-                                            OnRowDeleting="gvShow_RowDeleting" OnSorting="gvShow_Sorting" AllowSorting="true"
+                                            OnRowDeleting="gvShow_RowDeleting"  
                                             ShowHeaderWhenEmpty="true" AllowPaging="true"
                                             OnPageIndexChanging="gvShow_PageIndexChanging">
                                             <Columns>

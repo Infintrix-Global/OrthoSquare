@@ -114,6 +114,15 @@ namespace OrthoSquare.Invoice
         protected global::System.Web.UI.WebControls.DropDownList ddlInvoiceNo;
 
         /// <summary>
+        /// GridViewInvoiceDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewInvoiceDetails;
+
+        /// <summary>
         /// txtPAID1 control.
         /// </summary>
         /// <remarks>
@@ -139,6 +148,15 @@ namespace OrthoSquare.Invoice
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.CalendarExtender txtBDate_CalendarExtender;
+
+        /// <summary>
+        /// gvInformationId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl gvInformationId;
 
         /// <summary>
         /// gvInformation control.
@@ -202,6 +220,15 @@ namespace OrthoSquare.Invoice
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPaidAmount;
+
+        /// <summary>
+        /// RequiredFieldValidator4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
 
         /// <summary>
         /// txtPendingAmount control.
