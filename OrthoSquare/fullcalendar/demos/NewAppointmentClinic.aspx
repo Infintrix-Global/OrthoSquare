@@ -12,7 +12,8 @@
     <script>
 
         $(document).ready(function () {
-
+            $(".site__loader").fadeOut();
+            $("body").removeClass("site-loading");
             $.ajax({
                 type: "POST",
                 url: "NewAppointmentClinic.aspx/TestOnWebService",
@@ -50,7 +51,7 @@
 
                             $('#<%= TextBox1.ClientID %>').val(s1);
 
-                            window.location = "BookAppointment.aspx?DateTime='" + $("[id*=TextBox1]").val() + "'&ddlDocter=" + $("[id*=ddlDocter]").val() + "";
+                            window.location = "../BookAppointment.aspx?DateTime='" + $("[id*=TextBox1]").val() + "'&ddlDocter=" + $("[id*=ddlDocter]").val() + "";
                             var eventData;
 
                             if (title) {

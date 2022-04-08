@@ -3,6 +3,8 @@
 <%@ Register Assembly="DropDownCheckBoxes" Namespace="Saplin.Controls" TagPrefix="cc1" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
@@ -22,10 +24,32 @@
         }
     </script>
 </asp:Content>
+
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+   
+
     <script type="text/javascript">
         Sys.WebForms.PageRequestManager.getInstance().add_endRequest(InIEvent);
+
+        document.getElementById("txtTime").value = "13:24:00";
     </script>
+
+
+
+    <div class="screen__loader" style="text-align: center;">
+        <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="upFilter" DynamicLayout="true">
+            <ProgressTemplate>
+                <div class="loader__container">
+                    <div class="lds-dual-ring"></div>
+                </div>
+            </ProgressTemplate>
+        </asp:UpdateProgress>
+
+    </div>
+
+
     <asp:UpdatePanel runat="server" ID="upFilter">
         <ContentTemplate>
             <div class="page-content" id="Add" runat="server">
@@ -828,11 +852,7 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
-
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-
-
-
     <script src="../feedback/js/index.js"></script>
 
 </asp:Content>

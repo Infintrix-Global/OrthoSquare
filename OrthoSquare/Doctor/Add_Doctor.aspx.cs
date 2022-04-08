@@ -1825,6 +1825,16 @@ namespace OrthoSquare.Doctor
                     btnUpdate.Visible = true;
 
                 }
+
+
+                Image Image1 = (Image)e.Row.FindControl("Image1");
+                Label lblProfilePic = (Label)e.Row.FindControl("lblProfilePic");
+
+                if (lblProfilePic.Text == "")
+                {
+                    Image1.ImageUrl = "../Images/no-photo.jpg";
+                }
+
             }
 
 

@@ -190,10 +190,15 @@ namespace OrthoSquare.Doctor
                 lblPname.Text = dt.Rows[0]["FristName"].ToString() + " " + dt.Rows[0]["LastName"].ToString();
                lblPmobialNo.Text = dt.Rows[0]["Mobile"].ToString();
 
-                Image1.ImageUrl =
-                Image1.ImageUrl = "~/EmployeeProfile/" + dt.Rows[0]["ProfileImage"].ToString();
-
-                
+                 
+                if (dt.Rows[0]["ProfileImage"].ToString() == "")
+                {
+                    Image1.ImageUrl = "../Images/no-photo.jpg";
+                }
+                else
+                {
+                    Image1.ImageUrl = "~/EmployeeProfile/" + dt.Rows[0]["ProfileImage"].ToString();
+                }
             }
 
 

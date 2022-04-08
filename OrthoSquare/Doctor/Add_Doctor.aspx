@@ -1046,7 +1046,7 @@
                                     <asp:TemplateField HeaderText="Photo">
                                         <ItemTemplate>
                                             <asp:Image ID="Image1" Width="70px" Height="75px" ImageUrl='<%# "../EmployeeProfile/"+ Eval("ProfileImageUrl") %>' runat="server" />
-
+                                               <asp:Label ID="lblProfilePic" runat="server" Visible="false" Text='<%# Eval("ProfileImageUrl") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 

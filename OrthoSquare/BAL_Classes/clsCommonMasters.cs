@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
 using OrthoSquare.BAL_Classes;
 
 
@@ -2113,6 +2114,13 @@ public class clsCommonMasters
         }
         return ds.Tables[0];
 
+    }
+
+
+
+    public void ShowMessage(Page page, string message)
+    {
+        ScriptManager.RegisterClientScriptBlock(page, page.GetType(), "alertMessage", "alert('" + message + "');", true);
     }
 }
 

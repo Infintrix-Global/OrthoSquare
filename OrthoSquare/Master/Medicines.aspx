@@ -77,6 +77,13 @@
 
                                         <asp:TextBox ID="txtPrice" class="form-control" placeholder="Price"
                                             runat="server"></asp:TextBox>
+                                        
+                                        <span class="help-block">
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtPrice"
+                                                SetFocusOnError="true" ErrorMessage="Please Enter Price" ForeColor="Red"></asp:RequiredFieldValidator>
+
+                                         
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +105,7 @@
                             </div>
 
 
-
+                            <br />
                             <div class="text-center mt-12 mb-3">
                                 <asp:Button ID="btAdd" runat="server" Text="Submit" class="btn btn-md btn-info" ClientIDMode="Static" OnClick="btAdd_Click" />
 

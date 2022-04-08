@@ -864,7 +864,7 @@
     <Content Include="feedback\README.txt" />
     <Content Include="fullcalendar\CHANGELOG.txt" />
     <Content Include="fullcalendar\CONTRIBUTING.txt" />
-    <Content Include="fullcalendar\demos\BookAppointment.aspx" />
+    <Content Include="fullcalendar\BookAppointment.aspx" />
     <Content Include="fullcalendar\demos\js\theme-chooser.js" />
     <Content Include="fullcalendar\demos\NewAppointmentClinic.aspx" />
     <Content Include="fullcalendar\demos\php\get-events.php" />
@@ -2011,11 +2011,11 @@
     <Compile Include="feedback\feedbackDetails.aspx.designer.cs">
       <DependentUpon>feedbackDetails.aspx</DependentUpon>
     </Compile>
-    <Compile Include="fullcalendar\demos\BookAppointment.aspx.cs">
+    <Compile Include="fullcalendar\BookAppointment.aspx.cs">
       <DependentUpon>BookAppointment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="fullcalendar\demos\BookAppointment.aspx.designer.cs">
+    <Compile Include="fullcalendar\BookAppointment.aspx.designer.cs">
       <DependentUpon>BookAppointment.aspx</DependentUpon>
     </Compile>
     <Compile Include="fullcalendar\demos\NewAppointmentClinic.aspx.cs">

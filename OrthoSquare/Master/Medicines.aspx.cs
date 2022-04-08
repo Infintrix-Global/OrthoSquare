@@ -103,7 +103,7 @@ namespace OrthoSquare.Master
                 }
                 else
                 {
-                    MaterialType = ddlMaterialType.SelectedValue;
+                    MaterialType = ddlMaterialTypeSearch.SelectedValue;
                 }
 
                 AllData = objMedicines.GetAllMedicines(txtMedicinesSearch.Text.Trim(), MaterialType);
@@ -239,7 +239,7 @@ namespace OrthoSquare.Master
 
         protected void gvShow_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Edit1")
+            if (e.CommandName == "UpdateDetials")
             {
                 try
                 {
@@ -248,7 +248,7 @@ namespace OrthoSquare.Master
                     Add.Visible = true;
                     int Id = Convert.ToInt32(e.CommandArgument);
                     MedicinesId = Id;
-                    DataTable Dt = objMT.GetSelectMaterialTYpe(Id);
+                    DataTable Dt = objMedicines.GetSelectMedicines(Id);
                     if (Dt != null && Dt.Rows.Count > 0)
                     {
                         txtMedicines.Text = Dt.Rows[0]["MedicinesName"].ToString();
@@ -263,6 +263,7 @@ namespace OrthoSquare.Master
                         {
                             ddlUnit.SelectedValue = Dt.Rows[0]["UnitId"].ToString();
                         }
+                        txtPrice.Text = Dt.Rows[0]["Price"].ToString();
                     }
                 }
                 catch (Exception ex)

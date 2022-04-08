@@ -192,10 +192,17 @@
                                                 <asp:TemplateField>
                                                     <ItemTemplate>
 
-                                                        <asp:LinkButton ID="LinkBtnEdit" ToolTip="Edit" CommandName="Edit1" CausesValidation="False" CommandArgument='<%# Eval("MaterialTypeId") %>' runat="server"> <i class="fas fa-user-edit"></i></asp:LinkButton>
+                                                       <%-- <asp:LinkButton ID="LinkBtnEdit" ToolTip="Edit" CommandName="Edit1" CausesValidation="False" CommandArgument='<%# Eval("MaterialTypeId") %>' runat="server"> <i class="fas fa-user-edit"></i></asp:LinkButton>
 
-                                                        <asp:LinkButton ID="LinkBtnDelete" ToolTip="Delete" CommandName="delete" CausesValidation="False" OnClientClick="return confirm('Are you sure you want to delete this Material Type?');" runat="server"> <i class="far fa-trash-alt"></i></asp:LinkButton>
+                                                        <asp:LinkButton ID="LinkBtnDelete" ToolTip="Delete" CommandName="delete" CausesValidation="False" OnClientClick="return confirm('Are you sure you want to delete this Material Type?');" runat="server"> <i class="far fa-trash-alt"></i></asp:LinkButton>--%>
 
+
+                                                        
+                                                        <asp:ImageButton ID="ImageButton1" runat="server" CommandName="Edit1" ImageUrl="../Images/edit15x15.png"
+                                                            CausesValidation="False" CommandArgument='<%# Eval("MaterialTypeId") %>' ItemStyle-Width="5%" />
+
+                                                        <asp:ImageButton ID="lbtDelete" runat="server" CommandName="Delete" ImageUrl="../Images/delete15x15.png"
+                                                            CausesValidation="False" OnClientClick="return confirm('Are you sure you want to delete this Medicines Type?');" />
 
                                                     </ItemTemplate>
                                                 </asp:TemplateField>

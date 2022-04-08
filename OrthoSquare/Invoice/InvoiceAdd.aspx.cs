@@ -25,6 +25,7 @@ namespace OrthoSquare.Invoice
         BAL_Clinic objc = new BAL_Clinic();
         Notificationnew objN = new Notificationnew();
         BAL_Patient objp = new BAL_Patient();
+
         decimal TotalCost;
         decimal TotalDiscount;
         int PID = 0;
@@ -568,7 +569,8 @@ namespace OrthoSquare.Invoice
                 lblMessage.Text = "Failed to Add Invoice (Please make sure you have filled all fields, where not required there should be 0)";
                 lblMessage.ForeColor = System.Drawing.Color.Red;
 
-                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please make sure you have filled all fields, where not required there should be 0')", true);
+               // this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please make sure you have filled all fields, where not required there should be 0')", true);
+                objcomm.ShowMessage(this, "Please make sure you have filled all fields, where not required there should be 0");
 
                 txtPaidAmount.Text = "";
             }
@@ -582,7 +584,10 @@ namespace OrthoSquare.Invoice
                 btFeedback.Visible = true;
 
 
-                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Invoice Added Successfully')", true);
+             //   this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Invoice Added Successfully')", true);
+
+                objcomm.ShowMessage(this, "Invoice Added Successfully");
+
                 txtPaidAmount.Text = "0";
                 txtPAID1.Text = "0";
                 txtPaidAmount.Text = "0";
@@ -590,7 +595,7 @@ namespace OrthoSquare.Invoice
                 GetPatientInvoiceDetsils(Convert.ToInt32(PatientId));
 
                 btAdd.Attributes.Add("class", "btn blue disabled");
-
+                btAdd.Attributes.Add("disabled", "disabled");
                 DataTable DTP = objp.GetPatient(Convert.ToInt32(PatientId));
 
                 // msg = "Your Appoinment Date :" + txtRegDate.Text + " " + "Time : " + txtRegDate.Text + " has been Booked Appoinment";
@@ -966,6 +971,44 @@ namespace OrthoSquare.Invoice
 
         protected void GridViewInstallment_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            //if (e.Row.RowType == DataControlRowType.DataRow)
+            //{
+
+
+            //    DateTime EMIDate1;
+
+            //    TextBox txtEMIsAmount = (TextBox)e.Row.FindControl("txtEMIsAmount");
+            //    TextBox txtDateofEMI = (TextBox)e.Row.FindControl("txtDateofEMI");
+
+
+            //    decimal InterestAmount = Convert.ToDecimal(txtApprovalAmount.Text) * Convert.ToDecimal(txtInterest.Text) / 100;
+            //    decimal TotalAmount = Convert.ToDecimal(txtApprovalAmount.Text) + InterestAmount;
+            //    decimal EMIAMT = TotalAmount / Convert.ToDecimal(txtTotalEmi.Text);
+
+            //    if (txtDateofEMI.Text == "")
+            //    {
+            //        string EMIDate;
+            //        if (txtEMIStartDate.Text != "")
+            //        {
+
+            //            EMIDate = (Convert.ToDateTime(txtEMIStartDate.Text)).ToString("dd-MM-yyyy");
+            //            txtDateofEMI.Text = EMIDate;
+            //            lblSdate.Text = EMIDate;
+            //            txtEMIStartDate.Text = "";
+            //        }
+            //        else
+            //        {
+            //            EMIDate1 = (Convert.ToDateTime(lblSdate.Text)).AddDays(1).AddMonths(1).AddDays(-1);
+            //            txtDateofEMI.Text = EMIDate1.ToString("dd-MM-yyyy");
+            //            lblSdate.Text = EMIDate1.ToString("dd-MM-yyyy");
+            //        }
+            //    }
+
+
+
+
+            //}
+
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
 
@@ -993,6 +1036,7 @@ namespace OrthoSquare.Invoice
                     }
                     else
                     {
+
                         EMIDate1 = (Convert.ToDateTime(lblSdate.Text)).AddDays(1).AddMonths(1).AddDays(-1);
                         txtDateofEMI.Text = EMIDate1.ToString("dd-MM-yyyy");
                         lblSdate.Text = EMIDate1.ToString("dd-MM-yyyy");
@@ -1000,9 +1044,23 @@ namespace OrthoSquare.Invoice
                 }
 
 
+
+
+
+                txtEMIsAmount.Text = EMIAMT.ToString("#,##0.00");
+
+                sumFooterValue += Convert.ToDecimal(txtEMIsAmount.Text);
+
+
             }
 
+            if (e.Row.RowType == DataControlRowType.Footer)
+            {
+                Label lblTotal = (Label)e.Row.FindControl("lblTotal");
+                lblTotal.Text = sumFooterValue.ToString();
 
+
+            }
 
         }
 
