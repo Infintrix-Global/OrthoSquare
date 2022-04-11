@@ -352,7 +352,7 @@ namespace OrthoSquare.Invoice
                     //   Total = TotalCost1 - TotalDiscount1;
 
 
-                    TexTotal = Total * Convert.ToInt32(ddlTAX.SelectedItem.Text) / 100;
+                    TexTotal = Total * Convert.ToDecimal(ddlTAX.SelectedItem.Text) / 100;
 
                     if (TexTotal != 0)
                     {

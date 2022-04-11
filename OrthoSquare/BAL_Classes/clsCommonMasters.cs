@@ -2636,3 +2636,5 @@ public class MedicinesDetails
 
     public string Strip { get; set; }
 }
+
+

@@ -299,7 +299,6 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@TotalDiscount", TotalDiscount);
                 objGeneral.AddParameterWithValueToSQLCommand("@GrandTotal", GrandTotal);
                 objGeneral.AddParameterWithValueToSQLCommand("@Strip", Strip);
-                
                 objGeneral.GetExecuteNonQueryByCommand(strQuery);
                 isInserted = 1;
 

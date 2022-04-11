@@ -260,21 +260,21 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
-        public DataTable GetViewMedicinesInvoice(int PID)
-        {
-            try
-            {
-                General objGeneral = new General();
-                objGeneral.AddParameterWithValueToSQLCommand("@Cno", "0");
-                objGeneral.AddParameterWithValueToSQLCommand("@patientid ", PID);
-                objGeneral.AddParameterWithValueToSQLCommand("@mode", 4);
-                ds = objGeneral.GetDatasetByCommand_SP("GET_InvoicePatientMedicines");
-            }
-            catch (Exception ex)
-            {
-            }
-            return ds.Tables[0];
-        }
+        //public DataTable GetViewMedicinesInvoice(int PID)
+        //{
+        //    try
+        //    {
+        //        General objGeneral = new General();
+        //        objGeneral.AddParameterWithValueToSQLCommand("@Cno", "0");
+        //        objGeneral.AddParameterWithValueToSQLCommand("@patientid ", PID);
+        //        objGeneral.AddParameterWithValueToSQLCommand("@mode", 4);
+        //        ds = objGeneral.GetDatasetByCommand_SP("GET_InvoicePatientMedicines");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+        //    return ds.Tables[0];
+        //}
 
 
         public DataTable GetMedicinesClinicDetails(int Pid)
@@ -589,6 +589,23 @@ namespace OrthoSquare.BAL_Classes
 
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 2);
                 ds = objGeneral.GetDatasetByCommand_SP("GET_InvoiceReport");
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+        }
+
+
+        public DataTable GetViewMedicinesInvoice(int PID)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@Cno", "0");
+                objGeneral.AddParameterWithValueToSQLCommand("@patientid ", PID);
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 4);
+                ds = objGeneral.GetDatasetByCommand_SP("GET_InvoicePatientMedicines");
             }
             catch (Exception ex)
             {

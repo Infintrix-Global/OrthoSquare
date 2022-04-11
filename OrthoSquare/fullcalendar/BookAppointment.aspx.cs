@@ -494,7 +494,7 @@ namespace OrthoSquare.Master
 
 
                     // Clear();
-                    Response.Redirect("NewAppointmentClinic.aspx");
+                    Response.Redirect("demos/NewAppointmentClinic.aspx");
 
                 }
             }

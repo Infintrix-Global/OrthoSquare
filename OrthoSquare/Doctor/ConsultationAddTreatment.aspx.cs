@@ -31,6 +31,7 @@ namespace OrthoSquare.Doctor
         clsCommonMasters objcommon = new clsCommonMasters();
         BAL_LabsDetails objL = new BAL_LabsDetails();
         BAL_InvoiceDetails objinv = new BAL_InvoiceDetails();
+
         string lID = "";
         string ToothNo1 = "";
         string TreatmentID = "";
