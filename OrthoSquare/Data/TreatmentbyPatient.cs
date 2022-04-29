@@ -23,5 +23,11 @@ namespace OrthoSquare.Data
         public string TreatmentsCost { get; set; }
         public Nullable<System.DateTime> CtrateDate { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> IsClosed { get; set; }
+        public string TNotes { get; set; }
+        public Nullable<int> Unit { get; set; }
+        public string Discount { get; set; }
+        public string Tex { get; set; }
+        public Nullable<int> ISInvoice { get; set; }
     }
 }

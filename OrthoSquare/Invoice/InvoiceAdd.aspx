@@ -561,11 +561,11 @@
                                             <div class="form-group">
                                                 <div class="col-sm-6">
                                                     <asp:RadioButtonList ID="RadioButtonListFinance" Width="100%" RepeatDirection="Horizontal" runat="server">
-                                                        <asp:ListItem Selected="True" Text="Bajaj finance" Value="1"></asp:ListItem>
+                                                    <%--    <asp:ListItem Selected="True" Text="Bajaj finance" Value="1"></asp:ListItem>
                                                         <asp:ListItem Text="Kotak finance" Value="2"></asp:ListItem>
                                                         <asp:ListItem Text="Liqui Loans" Value="3"></asp:ListItem>
-                                                        <asp:ListItem Text="IDFC First Bank" Value="4"></asp:ListItem>
-                                                        <asp:ListItem Text="Shopse" Value="5"></asp:ListItem>
+                                                        <asp:ListItem Text="IDFC First Bank" Value="4"></asp:ListItem>--%>
+                                                      <%--  <asp:ListItem Text="Shopse" Value="5"></asp:ListItem>--%>
                                                     </asp:RadioButtonList>
 
                                                 </div>

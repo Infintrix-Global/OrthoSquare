@@ -119,23 +119,6 @@ namespace OrthoSquare.Dashboard
         }
 
 
-        //public void bindpatient()
-        //{
-
-        //    DataTable dt = objp.GetPatientlist();
-
-
-
-        //    if (dt != null && dt.Rows.Count > 0)
-        //    {
-        //        ddlpatient.DataSource = dt;
-        //        ddlpatient.DataTextField = "FristName";
-        //        ddlpatient.DataValueField = "patientid";
-        //        ddlpatient.DataBind();
-        //    }
-        //    ddlpatient.Items.Insert(0, new ListItem("--- Select ---", "0"));
-
-        //}
 
 
         public void BindPatient()
@@ -184,8 +167,8 @@ namespace OrthoSquare.Dashboard
 
             }
 
-            AllData = objENQ.GetAllEnquiryByAssignToDoctor(Did, ddlYEARENQ.SelectedItem.Text);
-
+            //AllData = objENQ.GetAllEnquiryByAssignToDoctor(Did, ddlYEARENQ.SelectedItem.Text);
+            AllData = objcommon.GetDoctorTodayFollowup(Convert.ToInt32(SessionUtilities.Empid));
 
             if (AllData != null && AllData.Rows.Count > 0)
             {
@@ -216,8 +199,8 @@ namespace OrthoSquare.Dashboard
         {
 
             int Sid = objcommon.GetSubAdminLink(SessionUtilities.Empid);
-            
-            if(Sid >0)
+
+            if (Sid > 0)
             {
                 btnSubAdmin.Visible = true;
             }
@@ -230,7 +213,7 @@ namespace OrthoSquare.Dashboard
 
 
 
-        
+
         public void PatientNo()
         {
             string Cid = "";
@@ -238,7 +221,7 @@ namespace OrthoSquare.Dashboard
             int PCount = 0;
             DataTable dt23 = objPatient.DoctorByClinicLIST(SessionUtilities.Empid);
 
-       
+
             for (int i = 0; i < dt23.Rows.Count; i++)
             {
                 A += dt23.Rows[i]["ClinicID"].ToString() + ",";
@@ -252,7 +235,7 @@ namespace OrthoSquare.Dashboard
 
             Cid = A;
 
-            AllData = objPatient.NewGetPatientlist1(Cid);
+            AllData = objPatient.NewGetPatientlistMonth(Cid);
             if (AllData != null && AllData.Rows.Count > 0)
             {
 
@@ -260,14 +243,21 @@ namespace OrthoSquare.Dashboard
 
             }
 
-                //int Eno = objcommon.GetPatientCountDocterCount(SessionUtilities.Empid);
+            //int Eno = objcommon.GetPatientCountDocterCount(SessionUtilities.Empid);
             lblPatient.Text = PCount.ToString();
         }
 
         public void FollowupNo()
         {
+            DataTable dt = objcommon.GetDoctorTodayFollowup(Convert.ToInt32(SessionUtilities.Empid));
+       //     int Eno = objcommon.GetFollowupCountNoNew(Convert.ToInt32(SessionUtilities.Empid), Convert.ToInt32(SessionUtilities.RoleID));
 
-            int Eno = objcommon.GetFollowupCountNoNew(Convert.ToInt32(SessionUtilities.Empid), Convert.ToInt32(SessionUtilities.RoleID));
+            int Eno = 0;
+            if (dt != null && dt.Rows.Count > 0)
+            {
+
+                Eno = dt.Rows.Count;
+            }
             lblFollwupCOunt.Text = Eno.ToString();
         }
 

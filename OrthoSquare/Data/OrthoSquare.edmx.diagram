@@ -4,77 +4,91 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b7bc07c51e0d4adc8463905903f4d206" Name="Diagram1" ZoomLevel="38">
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.AllergicMaster" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.AppointmentMaster" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.City" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.Country" Width="1.5" PointX="9.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.DentalCategory" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.DoctorByClinic" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.EMIBajajFinance" Width="1.5" PointX="2.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.Enquiry" Width="1.5" PointX="11.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.EnquirySourceMaster" Width="1.5" PointX="4.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.Enquirystatu" Width="1.5" PointX="6.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.ExpenseMaster" Width="1.5" PointX="8.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.Followup" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.FollowupMode" Width="1.5" PointX="13.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.GSTRateMaster" Width="1.5" PointX="13.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.InOutMaterialMaster" Width="1.5" PointX="10.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.InvoiceDetail" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.InvoiceMaster" Width="1.5" PointX="14.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.LabDetail" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.LabMaster" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.Login" Width="1.5" PointX="2.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.MedicalProblem" Width="1.5" PointX="15.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.Menu" Width="1.5" PointX="6.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.MenuRight" Width="1.5" PointX="15.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.MonthsMaster" Width="1.5" PointX="16.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.PatienByToothNo" Width="1.5" PointX="16.75" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.PatientbyDentalinfo" Width="1.5" PointX="17.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.PatientbyMedicalProblem" Width="1.5" PointX="17.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.PatientfeesPayment" Width="1.5" PointX="17.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.PatientMaster" Width="1.5" PointX="8.75" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.PatientMedicalHistory" Width="1.5" PointX="17.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.PatientMedicine" Width="1.5" PointX="10.75" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.PatientTreatmentImage" Width="1.5" PointX="18.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.PaymentDetila" Width="1.5" PointX="18.75" PointY="17.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.ReceivedMaterial" Width="1.5" PointX="19.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.Role" Width="1.5" PointX="2.75" PointY="19.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.State" Width="1.5" PointX="19.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.tbl_ClinicDetails" Width="1.5" PointX="4.75" PointY="19.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.tbl_Doctor_Degree" Width="1.5" PointX="19.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.tbl_DoctorByDegree" Width="1.5" PointX="12.75" PointY="19.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.tbl_DoctorBySpeciality" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.tbl_DoctorDetails" Width="1.5" PointX="11.625" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.tbl_DoctorType" Width="1.5" PointX="14.75" PointY="19.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.tbl_DrSpeciality" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.tbl_HospitalDoctorDetails" Width="1.5" PointX="20.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.tbl_Location" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.tblEmployeeBankDetail" Width="1.5" PointX="20.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.tblEmployeeContactDetail" Width="1.5" PointX="20.75" PointY="19.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.tblEmployeeOtherDetail" Width="1.5" PointX="21.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.tblEmployeePersonal" Width="1.5" PointX="21.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.timetable" Width="1.5" PointX="0.75" PointY="22.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.ToothNoMaster" Width="1.5" PointX="22.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.TreatmentbyPatient" Width="1.5" PointX="22.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.TreatmentCostPlan" Width="1.5" PointX="22.75" PointY="17.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.TreatmentMASTER" Width="1.5" PointX="22.75" PointY="21.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.TreatmentPlan" Width="1.5" PointX="23.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.TypeofWorkLab" Width="1.5" PointX="23.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.VendorMaster" Width="1.5" PointX="23.75" PointY="6.75" IsExpanded="true" />
-        <AssociationConnector Association="NewOrthoSquare2210Model.FK_tbl_DoctorByFaculty_tbl_DrSpeciality" ManuallyRouted="false" />
-        <AssociationConnector Association="NewOrthoSquare2210Model.FK_tbl_DoctorDetails_tbl_Location" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.DoctorAttendance" Width="1.5" PointX="11.625" PointY="23.625" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.FeedbackMaster" Width="2.5" PointX="14.75" PointY="23.75" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.ManageMaterialStock" Width="1.5" PointX="17.75" PointY="23.75" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.PackMaster" Width="1.5" PointX="0.75" PointY="25.75" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.UsedMaterial" Width="1.5" PointX="2.75" PointY="25.75" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.VendorTypeMaster" Width="1.5" PointX="4.75" PointY="25.75" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.YearMaster" Width="1.5" PointX="6.75" PointY="25.75" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.BrandMaster" Width="1.5" PointX="9.375" PointY="25.75" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.EditorDetail" Width="1.5" PointX="25.375" PointY="10.75" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.AdvertismentMaster" Width="1.5" PointX="25.375" PointY="13.75" />
-        <EntityTypeShape EntityType="NewOrthoSquare2210Model.App_VersionMaster" Width="1.5" PointX="25.375" PointY="17.75" />
+      <Diagram DiagramId="aad168ba00734abcaf5d322f816289e1" Name="Diagram1" ZoomLevel="61">
+        <EntityTypeShape EntityType="OrthosquareModel.AdvertismentMaster" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.AllergicMaster" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.App_VersionMaster" Width="1.5" PointX="5.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.AppointmentMaster" Width="1.5" PointX="7.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.BrandMaster" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.City" Width="1.5" PointX="9.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.Country" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.DentalCategory" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.DoctorAttendance" Width="1.5" PointX="2.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.DoctorByClinic" Width="1.5" PointX="11.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.EditorDetail" Width="1.5" PointX="4.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.EMIBajajFinance" Width="1.5" PointX="11.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.Enquiry" Width="1.5" PointX="11.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.EnquirySourceMaster" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.Enquirystatu" Width="1.5" PointX="13.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.ExpenseMaster" Width="1.5" PointX="13.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.FeedbackMaster" Width="1.5" PointX="13.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.Followup" Width="1.5" PointX="4.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.FollowupMode" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.GSTRateMaster" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.InOutMaterialMaster" Width="1.5" PointX="15.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.InvoiceDetail" Width="1.5" PointX="6.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.InvoiceMaster" Width="1.5" PointX="8.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.IssuetypeMaster" Width="1.5" PointX="15.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.LabDetail" Width="1.5" PointX="15.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.LabMaster" Width="1.5" PointX="17.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.LabMasterNew" Width="1.5" PointX="17.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.Login" Width="1.5" PointX="17.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.ManageMaterialStock" Width="1.5" PointX="17.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.MaterialMaster" Width="1.5" PointX="13.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.MaterialType" Width="1.5" PointX="15.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.MedicalProblem" Width="1.5" PointX="17.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.MedicinesMaster" Width="1.5" PointX="0.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.Menu" Width="1.5" PointX="19.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.MenuRight" Width="1.5" PointX="19.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.MonthsMaster" Width="1.5" PointX="19.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.PackMaster" Width="1.5" PointX="19.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.PatienByToothNo" Width="1.5" PointX="19.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.PatientbyDentalinfo" Width="1.5" PointX="19.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.PatientbyMedicalProblem" Width="1.5" PointX="2.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.PatientfeesPayment" Width="1.5" PointX="4.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.PatientMaster" Width="1.5" PointX="10.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.PatientMedicalHistory" Width="1.5" PointX="21.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.PatientMedicine" Width="1.5" PointX="21.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.PatientTreatmentImage" Width="1.5" PointX="6.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.PaymentDetila" Width="1.5" PointX="21.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.ReceivedMaterial" Width="1.5" PointX="12.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.ReportIssue" Width="1.5" PointX="14.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.Role" Width="1.5" PointX="21.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.SoftwareExpiredMaster" Width="1.5" PointX="16.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.State" Width="1.5" PointX="21.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tbl_ClinicDetails" Width="1.5" PointX="18.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tbl_Doctor_Degree" Width="1.5" PointX="23.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tbl_DoctorByDegree" Width="1.5" PointX="0.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tbl_DoctorByDegreeNew" Width="1.5" PointX="2.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tbl_DoctorBySpeciality" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tbl_DoctorDetails" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tbl_DoctorType" Width="1.5" PointX="23.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tbl_DrSpeciality" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tbl_HospitalDoctorDetails" Width="1.5" PointX="23.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tbl_Location" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tblEmployeeBankDetail" Width="1.5" PointX="23.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tblEmployeeContactDetail" Width="1.5" PointX="23.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tblEmployeeOtherDetail" Width="1.5" PointX="20.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.tblEmployeePersonal" Width="1.5" PointX="23.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.timetable" Width="1.5" PointX="25.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.ToothNoMaster" Width="1.5" PointX="25.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.TreatmentbyPatient" Width="1.5" PointX="4.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.TreatmentCostPlan" Width="1.5" PointX="25.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.TreatmentMASTER" Width="1.5" PointX="6.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.TreatmentPlan" Width="1.5" PointX="25.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.TreatmentStartedNote" Width="1.5" PointX="25.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.TypeofWorkLab" Width="1.5" PointX="25.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.UnitMaster" Width="1.5" PointX="25.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.UsedMaterial" Width="1.5" PointX="25.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.UserLoginHistory" Width="1.5" PointX="20.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.VendorMaster" Width="1.5" PointX="27.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.VendorTypeMaster" Width="1.5" PointX="0.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.VideoMaster" Width="1.5" PointX="27.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.YearMaster" Width="1.5" PointX="27.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.DayMaster" Width="1.5" PointX="8.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrthosquareModel.SubAdminClinic" Width="1.5" PointX="27.75" PointY="10.75" IsExpanded="true" />
+        <AssociationConnector Association="OrthosquareModel.FK_tbl_DoctorByFaculty_tbl_DrSpeciality" ManuallyRouted="false" />
+        <AssociationConnector Association="OrthosquareModel.FK_tbl_DoctorDetails_tbl_Location" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -14,6 +14,7 @@ namespace OrthoSquare.Data
     
     public partial class tbl_DrSpeciality
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tbl_DrSpeciality()
         {
             this.tbl_DoctorBySpeciality = new HashSet<tbl_DoctorBySpeciality>();
@@ -24,6 +25,7 @@ namespace OrthoSquare.Data
         public string ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_DoctorBySpeciality> tbl_DoctorBySpeciality { get; set; }
     }
 }

@@ -49,5 +49,7 @@ namespace OrthoSquare.Data
         public Nullable<bool> IsActive { get; set; }
         public Nullable<int> TreatmentID { get; set; }
         public string Pstatus { get; set; }
+        public Nullable<int> RoleID { get; set; }
+        public Nullable<int> TelecallerToEmpId { get; set; }
     }
 }

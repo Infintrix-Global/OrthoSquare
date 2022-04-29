@@ -28,7 +28,8 @@ namespace OrthoSquare.Dashboard
         BAL_Treatment objT = new BAL_Treatment();
         BAL_Patient objp = new BAL_Patient();
         Notificationnew objN = new Notificationnew();
-        NewOrthoSquare2210Entities db;
+       // NewOrthoSquare2210Entities db;
+        OrthosquareEntities db;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -475,104 +476,104 @@ namespace OrthoSquare.Dashboard
         }
 
 
-        public void PushNotification(int patientid, string Title, string Message)
-        {
+        //public void PushNotification(int patientid, string Title, string Message)
+        //{
 
-            try
-            {
-                string strTitle = Title;
-                string strBody = Message;
+        //    try
+        //    {
+        //        string strTitle = Title;
+        //        string strBody = Message;
 
-                string applicationID = ConfigurationManager.AppSettings["applicationId1"];
-                string senderId = ConfigurationManager.AppSettings["senderId1"];
+        //        string applicationID = ConfigurationManager.AppSettings["applicationId1"];
+        //        string senderId = ConfigurationManager.AppSettings["senderId1"];
 
-                //string deviceId = "ba92be2da78e7285";
+        //        //string deviceId = "ba92be2da78e7285";
 
-                db = new NewOrthoSquare2210Entities();
-                var res = (from P in db.PatientMasters
-                           where P.patientid == patientid
-                           select P).ToList();
-                if (res != null)
-                {
-                    foreach (var item in res)
-                    {
-                        string regToken = item.registrationToken;
-                        string useridname = item.patientid .ToString() + " " + item.FristName;
-                        string logs = "";
+        //        db = new OrthosquareEntities();
+        //        var res = (from P in db.PatientMasters
+        //                   where P.patientid == patientid
+        //                   select P).ToList();
+        //        if (res != null)
+        //        {
+        //            foreach (var item in res)
+        //            {
+        //                string regToken = item.registrationToken;
+        //                string useridname = item.patientid .ToString() + " " + item.FristName;
+        //                string logs = "";
 
-                        if (!string.IsNullOrEmpty(regToken))
-                        {
-                            WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
-                            tRequest.Method = "post";
-                            tRequest.ContentType = "application/json";
-                            var data = new
-                            {
-                                //to = deviceId,
-                                to = regToken,
-                                notification = new
-                                {
-                                    title = strTitle,
-                                    body = strBody,
-                                    sound = "Enabled"
-                                }
-                            };
+        //                if (!string.IsNullOrEmpty(regToken))
+        //                {
+        //                    WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
+        //                    tRequest.Method = "post";
+        //                    tRequest.ContentType = "application/json";
+        //                    var data = new
+        //                    {
+        //                        //to = deviceId,
+        //                        to = regToken,
+        //                        notification = new
+        //                        {
+        //                            title = strTitle,
+        //                            body = strBody,
+        //                            sound = "Enabled"
+        //                        }
+        //                    };
 
-                            var serializer = new JavaScriptSerializer();
-                            var json = serializer.Serialize(data);
-                            Byte[] byteArray = Encoding.UTF8.GetBytes(json);
+        //                    var serializer = new JavaScriptSerializer();
+        //                    var json = serializer.Serialize(data);
+        //                    Byte[] byteArray = Encoding.UTF8.GetBytes(json);
 
-                            //tRequest.Headers.Add(string.Format("Authorization: key={0}", applicationID));
-                            tRequest.Headers.Add("Authorization: key=" + applicationID);
-                            //tRequest.Headers.Add(string.Format("Sender: id={0}", senderId));
-                            tRequest.Headers.Add("Sender: id=" + senderId);
+        //                    //tRequest.Headers.Add(string.Format("Authorization: key={0}", applicationID));
+        //                    tRequest.Headers.Add("Authorization: key=" + applicationID);
+        //                    //tRequest.Headers.Add(string.Format("Sender: id={0}", senderId));
+        //                    tRequest.Headers.Add("Sender: id=" + senderId);
 
-                            tRequest.ContentLength = byteArray.Length;
-                            using (Stream dataStream = tRequest.GetRequestStream())
-                            {
-                                dataStream.Write(byteArray, 0, byteArray.Length);
-                                using (WebResponse tResponse = tRequest.GetResponse())
-                                {
-                                    using (Stream dataStreamResponse = tResponse.GetResponseStream())
-                                    {
-                                        using (StreamReader tReader = new StreamReader(dataStreamResponse))
-                                        {
-                                            String sResponseFromServer = tReader.ReadToEnd();
-                                            string str = sResponseFromServer;
+        //                    tRequest.ContentLength = byteArray.Length;
+        //                    using (Stream dataStream = tRequest.GetRequestStream())
+        //                    {
+        //                        dataStream.Write(byteArray, 0, byteArray.Length);
+        //                        using (WebResponse tResponse = tRequest.GetResponse())
+        //                        {
+        //                            using (Stream dataStreamResponse = tResponse.GetResponseStream())
+        //                            {
+        //                                using (StreamReader tReader = new StreamReader(dataStreamResponse))
+        //                                {
+        //                                    String sResponseFromServer = tReader.ReadToEnd();
+        //                                    string str = sResponseFromServer;
 
-                                            logs = string.Format("Time: {0}", DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt")); ;
-                                            logs += Environment.NewLine;
-                                            logs += useridname;
-                                            logs += Environment.NewLine;
-                                            logs += str;
-                                            logs += Environment.NewLine;
-                                            logs += "-----------------------------------------------------------";
-                                            logs += Environment.NewLine;
+        //                                    logs = string.Format("Time: {0}", DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt")); ;
+        //                                    logs += Environment.NewLine;
+        //                                    logs += useridname;
+        //                                    logs += Environment.NewLine;
+        //                                    logs += str;
+        //                                    logs += Environment.NewLine;
+        //                                    logs += "-----------------------------------------------------------";
+        //                                    logs += Environment.NewLine;
 
-                                            string path = Server.MapPath("~/PushNotificationLogs/notificationlogs.txt");
+        //                                    string path = Server.MapPath("~/PushNotificationLogs/notificationlogs.txt");
 
-                                            using (StreamWriter writer = new StreamWriter(path, true))
-                                            {
-                                                writer.WriteLine(logs);
-                                                writer.Close();
-                                            }
+        //                                    using (StreamWriter writer = new StreamWriter(path, true))
+        //                                    {
+        //                                        writer.WriteLine(logs);
+        //                                        writer.Close();
+        //                                    }
 
-                                        }
-                                    }
-                                }
-                            }
-                        }
+        //                                }
+        //                            }
+        //                        }
+        //                    }
+        //                }
 
-                    } //end of foreach loop
-                  //  lblmsg.Text = "Message has been sent successfully";
-                }
+        //            } //end of foreach loop
+        //          //  lblmsg.Text = "Message has been sent successfully";
+        //        }
 
-            }
-            catch (Exception ex)
-            {
-                string str = ex.Message;
-              //  lblmsg.Text = str;
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        string str = ex.Message;
+        //      //  lblmsg.Text = str;
+        //    }
+        //}
 
 
 

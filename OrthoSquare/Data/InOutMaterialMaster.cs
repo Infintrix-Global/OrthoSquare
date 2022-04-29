@@ -17,7 +17,10 @@ namespace OrthoSquare.Data
         public int InoutID { get; set; }
         public Nullable<int> MaterialId { get; set; }
         public Nullable<int> VendorID { get; set; }
+        public Nullable<int> ClinicID { get; set; }
+        public Nullable<int> DoctorID { get; set; }
         public Nullable<int> OrderQty { get; set; }
+        public Nullable<int> OrderPrice { get; set; }
         public Nullable<int> ReceiveQty { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
         public Nullable<System.DateTime> Receiveddate { get; set; }
@@ -26,8 +29,6 @@ namespace OrthoSquare.Data
         public Nullable<int> UpdateId { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public Nullable<bool> IsActive { get; set; }
-        public Nullable<int> ClinicID { get; set; }
-        public Nullable<int> DoctorID { get; set; }
-        public Nullable<int> OrderPrice { get; set; }
+        public string UnitName { get; set; }
     }
 }

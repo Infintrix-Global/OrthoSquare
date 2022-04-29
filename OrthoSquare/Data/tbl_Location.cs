@@ -14,6 +14,7 @@ namespace OrthoSquare.Data
     
     public partial class tbl_Location
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tbl_Location()
         {
             this.tbl_DoctorDetails = new HashSet<tbl_DoctorDetails>();
@@ -26,6 +27,7 @@ namespace OrthoSquare.Data
         public Nullable<int> CityID { get; set; }
         public Nullable<int> RoleID { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_DoctorDetails> tbl_DoctorDetails { get; set; }
     }
 }

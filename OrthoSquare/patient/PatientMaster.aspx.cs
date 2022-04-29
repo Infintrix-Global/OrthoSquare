@@ -498,7 +498,16 @@ namespace OrthoSquare.patient
 
                 if (patientid == 0)
                 {
-                    Isv = objPatient.GetPatientssIsvelid(txtMobile.Text.Trim(), txtFname.Text.Trim());
+                    DataTable dt = new DataTable();
+                    dt = objPatient.GetPatientssIsvelidNew(txtMobile.Text.Trim(), txtFname.Text.Trim());
+                    if(dt!=null && dt.Rows.Count>0)
+                    {
+                       
+                        lblClinic_Name.Text = dt.Rows[0]["ClinicName"].ToString();
+                        lblPatientName.Text = dt.Rows[0]["PatienntName"].ToString();
+                        Isv = dt.Rows.Count;
+                    }
+                   
                 }
 
                 if (Isv > 0)
@@ -509,10 +518,12 @@ namespace OrthoSquare.patient
                     string confirmValue = Request.Form["confirm_value"];
                     if (confirmValue == "Yes")
                     {
+                       
                         _isInserted = objPatient.Add_Patient(objPatientDetails);
                     }
                     else
                     {
+                       
                         // do nothing  
                     }
 
@@ -539,13 +550,14 @@ namespace OrthoSquare.patient
                 {
                     if (Isv > 0)
                     {
-                        lblMessage.Text = "Mobile number already in use";
-                        lblMessage.ForeColor = System.Drawing.Color.Red;
+                        //lblMessage.Text = "Mobile number already in use";
+                        //lblMessage.ForeColor = System.Drawing.Color.Red;
                     }
                     else
                     {
-                        lblMessage.Text = "Failed to Add Patient";
-                        lblMessage.ForeColor = System.Drawing.Color.Red;
+                        //lblMessage.Text = "Failed to Add Patient";
+                        //lblMessage.ForeColor = System.Drawing.Color.Red;
+                        objcommon.ShowMessage(this, "Failed to Add Patient");
                     }
                 }
                 else
@@ -555,9 +567,12 @@ namespace OrthoSquare.patient
                         int Eid1 = objPatient.EnquiryToPatient(Eid);
                     }
                     //patientid = 0;
-                    Response.Write("<script>alert('Patient Added Successfully')</script>");
-                    lblMessage.Text = "Patient Added Successfully";
-                    lblMessage.ForeColor = System.Drawing.Color.Green;
+                  //  Response.Write("<script>alert('Patient Added Successfully')</script>");
+                    //lblMessage.Text = "Patient Added Successfully";
+                    //lblMessage.ForeColor = System.Drawing.Color.Green;
+
+                    objcommon.ShowMessage(this, "Patient Added Successfully");
+
                     btnConsultation.Visible = true;
                     Clear();
 

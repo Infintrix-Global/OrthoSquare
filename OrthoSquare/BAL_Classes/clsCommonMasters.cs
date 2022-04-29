@@ -897,6 +897,7 @@ public class clsCommonMasters
     }
 
 
+
     public int GetTotalCONVERTEDEnq()
     {
         int TOtal = 0;
@@ -1108,7 +1109,7 @@ public class clsCommonMasters
         int TOtal = 0;
         try
         {
-            strQuery = " SELECT Count(*) FROM Enquiry WHERE NOT EXISTS  (SELECT * FROM Followup  WHERE Followup.EnquiryID = Enquiry.EnquiryID) and Enquiry.AssignToEmpId = '" + Cid + "' and Enquiry.IsActive =1 and Enquiry.IsPatient=0";
+            strQuery = " SELECT Count(*) FROM Enquiry WHERE NOT EXISTS  (SELECT * FROM Followup  WHERE Followup.EnquiryID = Enquiry.EnquiryID ) and Enquiry.AssignToEmpId = '" + Cid + "' and Enquiry.IsActive =1 and Enquiry.IsPatient=0  and   month(EnquiryDate) = month(GETDATE())  and   Year(EnquiryDate) = Year(GETDATE())";
             TOtal = Convert.ToInt32(objGeneral.GetExecuteScalarByCommand(strQuery));
         }
         catch (Exception ex)
@@ -1260,7 +1261,7 @@ public class clsCommonMasters
             strQuery = "Select COUNT(E.EnquiryID) from Enquiry E left Join  EnquirySourceMaster ES on ES.Sourceid =E.Sourceid left Join  tbl_ClinicDetails CD on CD.ClinicID =E.ClinicID  where E.IsActive =1 and E.IsPatient=0 ";
 
             if (Cid > 0)
-                strQuery += " and E.ClinicID ='" + Cid + "'";
+                strQuery += " and E.ClinicID ='" + Cid + "' and  month(EnquiryDate) = month(GETDATE())  and   Year(EnquiryDate) = Year(GETDATE()) ";
 
 
             TOtal = Convert.ToInt32(objGeneral.GetExecuteScalarByCommand(strQuery));
@@ -1400,6 +1401,24 @@ public class clsCommonMasters
     }
 
 
+    public DataTable GetDoctorTodayFollowup(int UserId)
+    {
+        try
+        {
+
+            General objGeneral = new General();
+     
+            objGeneral.AddParameterWithValueToSQLCommand("@DoctorId", UserId);
+            
+            ds = objGeneral.GetDatasetByCommand_SP("GET_DoctorTodayFollowup");
+        }
+        catch (Exception ex)
+        {
+        }
+        return ds.Tables[0];
+
+    }
+
 
 
     public int GetFollowupCountNoTelecaller(int UserId, int RoleID)
@@ -1503,7 +1522,7 @@ public class clsCommonMasters
         int TOtal = 0;
         try
         {
-            strQuery = "select count(patientid) from PatientMaster where IsActive=1 and ClinicID='" + Cid + "'";
+            strQuery = "select count(patientid) from PatientMaster where IsActive=1 and ClinicID='" + Cid + "' and  month(RegistrationDate) = month(GETDATE())  and   Year(RegistrationDate) = Year(GETDATE()) ";
             TOtal = Convert.ToInt32(objGeneral.GetExecuteScalarByCommand(strQuery));
         }
         catch (Exception ex)
@@ -2116,12 +2135,17 @@ public class clsCommonMasters
 
     }
 
-
+    public void ShowMessageAndRedirect(Page page, string message, string url)
+    {
+        ScriptManager.RegisterStartupScript(page, page.GetType(), "redirect", "alert('" + message + "'); window.location='" + url + "';", true);
+    }
 
     public void ShowMessage(Page page, string message)
     {
         ScriptManager.RegisterClientScriptBlock(page, page.GetType(), "alertMessage", "alert('" + message + "');", true);
     }
+
+
 }
 
 

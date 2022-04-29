@@ -16,7 +16,7 @@ namespace OrthoSquare.Master
 {
     public partial class PushNotification : System.Web.UI.Page
     {
-        NewOrthoSquare2210Entities db;
+        OrthosquareEntities db;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -33,7 +33,7 @@ namespace OrthoSquare.Master
                
                 //string deviceId = "ba92be2da78e7285";
 
-                db = new NewOrthoSquare2210Entities();
+                db = new OrthosquareEntities();
                 var res = (from k in db.PatientMasters
                            select k).ToList();
                 if (res != null)

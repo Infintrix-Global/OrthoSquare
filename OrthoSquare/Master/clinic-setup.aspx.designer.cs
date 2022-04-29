@@ -15,6 +15,15 @@ namespace OrthoSquare.Branch
     {
 
         /// <summary>
+        /// upFilter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upFilter;
+
+        /// <summary>
         /// Add control.
         /// </summary>
         /// <remarks>
@@ -348,13 +357,40 @@ namespace OrthoSquare.Branch
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Edit;
 
         /// <summary>
-        /// txtSearch control.
+        /// txtClinicNameSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearch;
+        protected global::System.Web.UI.WebControls.TextBox txtClinicNameSearch;
+
+        /// <summary>
+        /// AutoCompleteExtender1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.AutoCompleteExtender AutoCompleteExtender1;
+
+        /// <summary>
+        /// txtLocationNameSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtLocationNameSearch;
+
+        /// <summary>
+        /// AutoCompleteExtender2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.AutoCompleteExtender AutoCompleteExtender2;
 
         /// <summary>
         /// btSearch control.

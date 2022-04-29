@@ -509,10 +509,10 @@
                                                                 <asp:TemplateField HeaderText="Invoice No">
                                                                     <ItemTemplate>
                                                                         <asp:Label ID="SrNo" runat="server" Text='<%#Container.DataItemIndex + 1%>'></asp:Label>
-                                                                       
+
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField HeaderText="Date" HeaderStyle-HorizontalAlign="Center" >
+                                                                <asp:TemplateField HeaderText="Date" HeaderStyle-HorizontalAlign="Center">
                                                                     <ItemTemplate>
                                                                         <asp:Label ID="lblInvoiceDate" runat="server" Text='<%# Eval("InvoiceDate") %>'></asp:Label>
 
@@ -520,14 +520,14 @@
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField HeaderText="#">
                                                                     <ItemTemplate>
-                                                                         <%--<asp:HyperLink runat="server" CssClass="btn yellow-gold" NavigateUrl='<%# Eval("CNo","MedicinesPrint.aspx?CNo={0}")%>' Text="Print"  />
-                                                                    --%>
+                                                                        <%--<asp:HyperLink runat="server" CssClass="btn yellow-gold" NavigateUrl='<%# Eval("CNo","MedicinesPrint.aspx?CNo={0}")%>' Text="Print"  />
+                                                                        --%>
                                                                         <asp:Button ID="Button1" CommandName="PrintView" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' runat="server" CausesValidation="false"
-                                                                Text="PRINT" class="btn yellow-gold" />
+                                                                            Text="PRINT" class="btn yellow-gold" />
 
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                               
+
 
                                                             </Columns>
 
@@ -535,7 +535,7 @@
                                                         </asp:GridView>
 
                                                         <br />
-                                                        
+
 
                                                         <asp:CheckBox ID="CheckBox1" Visible="false" Text="Prescribe Medicines" runat="server" />
 
@@ -614,7 +614,7 @@
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
 
-                                                                  <asp:TemplateField HeaderText="Strip" ItemStyle-Width="6%">
+                                                                <asp:TemplateField HeaderText="Strip" ItemStyle-Width="6%">
                                                                     <ItemTemplate>
                                                                         <asp:TextBox ID="txtStrip" class="form-control" MaxLength="2" Text='<%# Eval("Strip")%>' runat="server"></asp:TextBox>
                                                                     </ItemTemplate>
@@ -630,7 +630,7 @@
 
                                                                     <FooterStyle HorizontalAlign="Right" />
                                                                     <FooterTemplate>
-                                                                          <asp:Button ID="ButtonAdd" OnClick="ButtonAdd_Click" runat="server" ValidationGroup="e" CausesValidation="false" Text="Add New" CssClass="btn yellow-gold" />
+                                                                        <asp:Button ID="ButtonAdd" OnClick="ButtonAdd_Click" runat="server" ValidationGroup="e" CausesValidation="false" Text="Add New" CssClass="btn yellow-gold" />
 
                                                                     </FooterTemplate>
                                                                 </asp:TemplateField>
@@ -661,45 +661,44 @@
                                                 </div>
 
                                                 <div class="row">
-                                            <div class="col-xs-12">
+                                                    <div class="col-xs-12">
 
 
-                                                <div class="form-group">
-                                                    <div class="col-sm-3">
-                                                        <div class="form-body">
-                                                            <label>Discount %</label>
-                                                            <asp:TextBox ID="txtMDiscount" class="form-control" placeholder="Discount %" Text="0" runat="server"></asp:TextBox>
+                                                        <div class="form-group">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-body">
+                                                                    <label>Discount %</label>
+                                                                    <asp:TextBox ID="txtMDiscount" class="form-control" placeholder="Discount %" Text="0" runat="server"></asp:TextBox>
 
-                                                        </div>
+                                                                </div>
 
-                                                    </div>
+                                                            </div>
 
 
 
-                                                    <div class="col-sm-6">
-                                                        <div class="form-body">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-body">
 
-                                                            <div class="form-group">
+                                                                    <div class="form-group">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-body">
+
+                                                                    <div class="text-right mb-20">
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-body">
 
-                                                            <div class="text-right mb-20">
-                                                              
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
-
-                                            </div>
-                                        </div>
                                                 <br />
                                             </div>
 
                                         </div>
-                                        
+
 
 
 
@@ -708,7 +707,7 @@
 
                                                 <asp:Button ID="btnMedicines" runat="server" ValidationGroup="aa" Text="Submit" class="btn blue" ClientIDMode="Static" OnClick="btnMedicines_Click" />
 
-                                                    <asp:Button ID="BtlMedicinesPrint" runat="server" ValidationGroup="aa" Visible="false" Text="Submit" class="btn blue" ClientIDMode="Static" OnClick="BtlMedicinesPrint_Click" />
+                                                <asp:Button ID="BtlMedicinesPrint" runat="server" ValidationGroup="aa" Visible="false" Text="Submit" class="btn blue" ClientIDMode="Static" OnClick="BtlMedicinesPrint_Click" />
 
                                             </div>
 
@@ -952,6 +951,7 @@
                                                                                     <ItemTemplate>
                                                                                         <asp:ListBox ID="ddltoothM" SelectionMode="Multiple" runat="server" CssClass="multiSelect custom__dropdown robotomd"></asp:ListBox>
                                                                                         <asp:Label ID="lblTooth1" runat="server" Visible="false" Text='<%# Eval("toothNo") %>'></asp:Label>
+                                                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidatorTooth" ControlToValidate="ddltoothM" InitialValue="" runat="server" ErrorMessage="Please select Tooth No" ForeColor="Red"></asp:RequiredFieldValidator>
                                                                                     </ItemTemplate>
                                                                                 </asp:TemplateField>
 
@@ -1001,32 +1001,6 @@
                                                                 <div class="form-group">
                                                                     <asp:ListBox ID="ddlTreatment" SelectionMode="Multiple" runat="server" CssClass="multiSelect custom__dropdown robotomd"></asp:ListBox>
 
-                                                                    <%--                                                                    <asp:UpdatePanel ID="updatepanel1" runat="server">
-                                                                        <ContentTemplate>
-                                                                            <asp:TextBox ID="txtTreatment" class="form-control " placeholder="Select Treatment" runat="server"></asp:TextBox>
-                                                                            <asp:PopupControlExtender ID="PopupControlExtender1" runat="server"
-                                                                                Enabled="True" ExtenderControlID="" TargetControlID="txtTreatment" PopupControlID="Panel8"
-                                                                                OffsetY="22">
-                                                                            </asp:PopupControlExtender>
-
-                                                                            <asp:Panel ID="Panel8" Height="300px" Width="256px"
-                                                                                BorderWidth="2px" Direction="LeftToRight" ScrollBars="Auto" runat="server">
-                                                                                <asp:CheckBoxList ID="ddlTreatment" runat="server" BackColor="White" Height="300px" Width="256px"
-                                                                                    DataTextField="holiday_name" DataValueField="holiday_name" AutoPostBack="True"
-                                                                                    OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChangedTreatment">
-                                                                                </asp:CheckBoxList>
-
-                                                                            </asp:Panel>
-
-
-                                                                            <asp:Panel ID="Panel6" runat="server" Height="300px" Width="256px"
-                                                                                BorderWidth="2px" Direction="LeftToRight" ScrollBars="Auto"
-                                                                                Style="display: none;">
-                                                                            </asp:Panel>
-                                                                        </ContentTemplate>
-                                                                    </asp:UpdatePanel>--%>
-
-                                                                    <%--   <asp:ListBox ID="ddlTreatment" runat="server" SelectionMode="Multiple"></asp:ListBox>--%>
 
                                                                     <br />
                                                                     <br />

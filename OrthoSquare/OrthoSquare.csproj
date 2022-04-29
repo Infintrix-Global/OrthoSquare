@@ -838,6 +838,16 @@
     <Content Include="Dashboard\DocterDashboard.aspx" />
     <Content Include="Dashboard\SuperAdminDashboard.aspx" />
     <Content Include="Dashboard\TelecallerDashoard.aspx" />
+    <Content Include="Data\OrthoSquare.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OrthoSquare.edmx</DependentUpon>
+      <LastGenOutput>OrthoSquare.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\OrthoSquare.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OrthoSquare.edmx</DependentUpon>
+      <LastGenOutput>OrthoSquare.cs</LastGenOutput>
+    </Content>
     <Content Include="Doctor\ConsultationAddTreatment.aspx" />
     <Content Include="Doctor\DeactiveDoctors.aspx" />
     <Content Include="Doctor\DocterProfile.aspx" />
@@ -1016,6 +1026,7 @@
     <Content Include="Master\clinic-setup.aspx" />
     <Content Include="Master\DentalCategory.aspx" />
     <Content Include="Master\ExpenseMaster.aspx" />
+    <Content Include="Master\FinanceMaster.aspx" />
     <Content Include="Master\LabDetails.aspx" />
     <Content Include="Master\LabMaster.aspx" />
     <Content Include="Master\LeadDetailsNew.aspx" />
@@ -1062,13 +1073,16 @@
     <Content Include="Report\DoctorAttendanceReport.aspx" />
     <Content Include="Report\DpctorwishExpenseReport.aspx" />
     <Content Include="Report\ExpenseReport.aspx" />
+    <Content Include="Report\FinanceReport.aspx" />
     <Content Include="Report\LebInoutReport.aspx" />
     <Content Include="Report\MaterialInoutReport.aspx" />
     <Content Include="Report\MaterialPurchased.aspx" />
     <Content Include="Report\MaterialStockHistory.aspx" />
+    <Content Include="Report\MedicinesCollectionReport.aspx" />
     <Content Include="Report\PatientCollectionReport.aspx" />
     <Content Include="Report\PaymentModeReport.aspx" />
     <Content Include="Report\TreatmentbyPatientReport.aspx" />
+    <Content Include="Report\TreatmentReport.aspx" />
     <Content Include="Report\ViewClinicwishExpenseReport.aspx" />
     <Content Include="Service1.svc" />
     <Content Include="UnderMaintenance.aspx" />
@@ -1084,23 +1098,6 @@
     <Content Include="Images\TImeEdit_files\hats-integration-release.js.download" />
     <Content Include="Images\TImeEdit_files\js" />
     <Content Include="packages.config" />
-    <EntityDeploy Include="Data\OrthoSquare.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>OrthoSquare.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Data\OrthoSquare.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OrthoSquare.edmx</DependentUpon>
-      <LastGenOutput>OrthoSquare.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Data\OrthoSquare.edmx.diagram">
-      <DependentUpon>OrthoSquare.edmx</DependentUpon>
-    </Content>
-    <Content Include="Data\OrthoSquare.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OrthoSquare.edmx</DependentUpon>
-      <LastGenOutput>OrthoSquare.cs</LastGenOutput>
-    </Content>
     <Content Include="feedback\scss\style.scss" />
     <Content Include="feedback\index.pug" />
     <Content Include="OrthoSquare.rar" />
@@ -1136,6 +1133,13 @@
     <Content Include="bin\Release\Publish\Predefine_Documents\Enquiry_Master.xlsx" />
     <Content Include="bin\Release\Publish\Predefine_Documents\patient_Master.xlsx" />
     <Content Include="bin\Release\Publish\Web.config" />
+    <EntityDeploy Include="Data\OrthoSquare.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OrthoSquare.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Data\OrthoSquare.edmx.diagram">
+      <DependentUpon>OrthoSquare.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Gaurav.pubxml" />
     <None Include="Web.Debug.config">
@@ -1610,6 +1614,7 @@
     <Compile Include="BAL_Classes\BAL_EnquirySource.cs" />
     <Compile Include="BAL_Classes\BAL_Enquirystatus.cs" />
     <Compile Include="BAL_Classes\BAL_Expense.cs" />
+    <Compile Include="BAL_Classes\BAL_Finance.cs" />
     <Compile Include="BAL_Classes\BAL_FollowupMode.cs" />
     <Compile Include="BAL_Classes\BAL_InvoiceDetails.cs" />
     <Compile Include="BAL_Classes\BAL_LabMasterNew.cs" />
@@ -1654,6 +1659,7 @@
     <Compile Include="Dashboard\DocterDashboard.aspx.designer.cs">
       <DependentUpon>DocterDashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Dashboard\NewOrthoSquare2210Entities.cs" />
     <Compile Include="Dashboard\SuperAdminDashboard.aspx.cs">
       <DependentUpon>SuperAdminDashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1687,6 +1693,9 @@
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Country.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\DayMaster.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\DentalCategory.cs">
@@ -1737,10 +1746,16 @@
     <Compile Include="Data\InvoiceMaster.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\IssuetypeMaster.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\LabDetail.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\LabMaster.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\LabMasterNew.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Login.cs">
@@ -1749,7 +1764,16 @@
     <Compile Include="Data\ManageMaterialStock.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\MaterialMaster.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\MaterialType.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\MedicalProblem.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\MedicinesMaster.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Menu.cs">
@@ -1809,10 +1833,19 @@
     <Compile Include="Data\ReceivedMaterial.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\ReportIssue.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Role.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\SoftwareExpiredMaster.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\State.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\SubAdminClinic.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\tblEmployeeBankDetail.cs">
@@ -1831,6 +1864,9 @@
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\tbl_DoctorByDegree.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\tbl_DoctorByDegreeNew.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\tbl_DoctorBySpeciality.cs">
@@ -1872,16 +1908,28 @@
     <Compile Include="Data\TreatmentPlan.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\TreatmentStartedNote.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\TypeofWorkLab.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\UnitMaster.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\UsedMaterial.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UserLoginHistory.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\VendorMaster.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\VendorTypeMaster.cs">
+      <DependentUpon>OrthoSquare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\VideoMaster.cs">
       <DependentUpon>OrthoSquare.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\YearMaster.cs">
@@ -2169,6 +2217,13 @@
     <Compile Include="Master\ExpenseMaster.aspx.designer.cs">
       <DependentUpon>ExpenseMaster.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Master\FinanceMaster.aspx.cs">
+      <DependentUpon>FinanceMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Master\FinanceMaster.aspx.designer.cs">
+      <DependentUpon>FinanceMaster.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Master\LabDetails.aspx.cs">
       <DependentUpon>LabDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2436,6 +2491,13 @@
     <Compile Include="Report\ExpenseReport.aspx.designer.cs">
       <DependentUpon>ExpenseReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Report\FinanceReport.aspx.cs">
+      <DependentUpon>FinanceReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\FinanceReport.aspx.designer.cs">
+      <DependentUpon>FinanceReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Report\LebInoutReport.aspx.cs">
       <DependentUpon>LebInoutReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2464,6 +2526,13 @@
     <Compile Include="Report\MaterialStockHistory.aspx.designer.cs">
       <DependentUpon>MaterialStockHistory.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Report\MedicinesCollectionReport.aspx.cs">
+      <DependentUpon>MedicinesCollectionReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\MedicinesCollectionReport.aspx.designer.cs">
+      <DependentUpon>MedicinesCollectionReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Report\PatientCollectionReport.aspx.cs">
       <DependentUpon>PatientCollectionReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2484,6 +2553,13 @@
     </Compile>
     <Compile Include="Report\TreatmentbyPatientReport.aspx.designer.cs">
       <DependentUpon>TreatmentbyPatientReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\TreatmentReport.aspx.cs">
+      <DependentUpon>TreatmentReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\TreatmentReport.aspx.designer.cs">
+      <DependentUpon>TreatmentReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Report\ViewClinicwishExpenseReport.aspx.cs">
       <DependentUpon>ViewClinicwishExpenseReport.aspx</DependentUpon>

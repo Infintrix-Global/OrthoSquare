@@ -20,5 +20,6 @@ namespace OrthoSquare.Data
         public Nullable<int> UpdateID { get; set; }
         public Nullable<System.DateTime> Updatetime { get; set; }
         public Nullable<bool> IsActivr { get; set; }
+        public Nullable<bool> IsDeactive { get; set; }
     }
 }

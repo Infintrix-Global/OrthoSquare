@@ -365,6 +365,7 @@ namespace OrthoSquare.BAL_Classes
 
                 // strQuery = "Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,PM.Mobile,DD.LastName as DLastName from InvoiceMaster IM join PatientMaster PM on PM.patientid = IM.patientid ";
                 // strQuery += " JOin tbl_DoctorDetails DD on DD.DoctorID = IM.DoctorID where  PM.IsActive =1";
+
                 strQuery = " Select  IM.GrandTotal as GrandTotal,SUM(IM.PaidAmount) as PaidAmount ,IM.GrandTotal - SUM(IM.PaidAmount) as PendingAmount,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,PM.Mobile,DD.LastName as DLastName,IM.InvoiceCode,IM.InvoiceNo,convert(date,PayDate,105) as PayDate ";
                 strQuery += " from InvoiceMaster IM join PatientMaster PM on PM.patientid = IM.patientid JOin tbl_DoctorDetails DD on DD.DoctorID = IM.DoctorID where  PM.IsActive =1";
 

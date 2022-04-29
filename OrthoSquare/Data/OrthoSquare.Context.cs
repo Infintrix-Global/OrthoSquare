@@ -7,88 +7,105 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-
-public partial class NewOrthoSquare2210Entities : DbContext
+namespace OrthoSquare.Data
 {
-    public NewOrthoSquare2210Entities()
-        : base("name=NewOrthoSquare2210Entities")
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    
+    public partial class OrthosquareEntities : DbContext
     {
+        public OrthosquareEntities()
+            : base("name=OrthosquareEntities")
+        {
+        }
+    
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+    
+        public virtual DbSet<AdvertismentMaster> AdvertismentMasters { get; set; }
+        public virtual DbSet<AllergicMaster> AllergicMasters { get; set; }
+        public virtual DbSet<App_VersionMaster> App_VersionMaster { get; set; }
+        public virtual DbSet<AppointmentMaster> AppointmentMasters { get; set; }
+        public virtual DbSet<BrandMaster> BrandMasters { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<DentalCategory> DentalCategories { get; set; }
+        public virtual DbSet<DoctorAttendance> DoctorAttendances { get; set; }
+        public virtual DbSet<DoctorByClinic> DoctorByClinics { get; set; }
+        public virtual DbSet<EditorDetail> EditorDetails { get; set; }
+        public virtual DbSet<EMIBajajFinance> EMIBajajFinances { get; set; }
+        public virtual DbSet<Enquiry> Enquiries { get; set; }
+        public virtual DbSet<EnquirySourceMaster> EnquirySourceMasters { get; set; }
+        public virtual DbSet<Enquirystatu> Enquirystatus { get; set; }
+        public virtual DbSet<ExpenseMaster> ExpenseMasters { get; set; }
+        public virtual DbSet<FeedbackMaster> FeedbackMasters { get; set; }
+        public virtual DbSet<Followup> Followups { get; set; }
+        public virtual DbSet<FollowupMode> FollowupModes { get; set; }
+        public virtual DbSet<GSTRateMaster> GSTRateMasters { get; set; }
+        public virtual DbSet<InOutMaterialMaster> InOutMaterialMasters { get; set; }
+        public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+        public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
+        public virtual DbSet<IssuetypeMaster> IssuetypeMasters { get; set; }
+        public virtual DbSet<LabDetail> LabDetails { get; set; }
+        public virtual DbSet<LabMaster> LabMasters { get; set; }
+        public virtual DbSet<LabMasterNew> LabMasterNews { get; set; }
+        public virtual DbSet<Login> Logins { get; set; }
+        public virtual DbSet<ManageMaterialStock> ManageMaterialStocks { get; set; }
+        public virtual DbSet<MaterialMaster> MaterialMasters { get; set; }
+        public virtual DbSet<MaterialType> MaterialTypes { get; set; }
+        public virtual DbSet<MedicalProblem> MedicalProblems { get; set; }
+        public virtual DbSet<MedicinesMaster> MedicinesMasters { get; set; }
+        public virtual DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<MenuRight> MenuRights { get; set; }
+        public virtual DbSet<MonthsMaster> MonthsMasters { get; set; }
+        public virtual DbSet<PackMaster> PackMasters { get; set; }
+        public virtual DbSet<PatienByToothNo> PatienByToothNoes { get; set; }
+        public virtual DbSet<PatientbyDentalinfo> PatientbyDentalinfoes { get; set; }
+        public virtual DbSet<PatientbyMedicalProblem> PatientbyMedicalProblems { get; set; }
+        public virtual DbSet<PatientfeesPayment> PatientfeesPayments { get; set; }
+        public virtual DbSet<PatientMaster> PatientMasters { get; set; }
+        public virtual DbSet<PatientMedicalHistory> PatientMedicalHistories { get; set; }
+        public virtual DbSet<PatientMedicine> PatientMedicines { get; set; }
+        public virtual DbSet<PatientTreatmentImage> PatientTreatmentImages { get; set; }
+        public virtual DbSet<PaymentDetila> PaymentDetilas { get; set; }
+        public virtual DbSet<ReceivedMaterial> ReceivedMaterials { get; set; }
+        public virtual DbSet<ReportIssue> ReportIssues { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<SoftwareExpiredMaster> SoftwareExpiredMasters { get; set; }
+        public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<tbl_ClinicDetails> tbl_ClinicDetails { get; set; }
+        public virtual DbSet<tbl_Doctor_Degree> tbl_Doctor_Degree { get; set; }
+        public virtual DbSet<tbl_DoctorByDegree> tbl_DoctorByDegree { get; set; }
+        public virtual DbSet<tbl_DoctorByDegreeNew> tbl_DoctorByDegreeNew { get; set; }
+        public virtual DbSet<tbl_DoctorBySpeciality> tbl_DoctorBySpeciality { get; set; }
+        public virtual DbSet<tbl_DoctorDetails> tbl_DoctorDetails { get; set; }
+        public virtual DbSet<tbl_DoctorType> tbl_DoctorType { get; set; }
+        public virtual DbSet<tbl_DrSpeciality> tbl_DrSpeciality { get; set; }
+        public virtual DbSet<tbl_HospitalDoctorDetails> tbl_HospitalDoctorDetails { get; set; }
+        public virtual DbSet<tbl_Location> tbl_Location { get; set; }
+        public virtual DbSet<tblEmployeeBankDetail> tblEmployeeBankDetails { get; set; }
+        public virtual DbSet<tblEmployeeContactDetail> tblEmployeeContactDetails { get; set; }
+        public virtual DbSet<tblEmployeeOtherDetail> tblEmployeeOtherDetails { get; set; }
+        public virtual DbSet<tblEmployeePersonal> tblEmployeePersonals { get; set; }
+        public virtual DbSet<timetable> timetables { get; set; }
+        public virtual DbSet<ToothNoMaster> ToothNoMasters { get; set; }
+        public virtual DbSet<TreatmentbyPatient> TreatmentbyPatients { get; set; }
+        public virtual DbSet<TreatmentCostPlan> TreatmentCostPlans { get; set; }
+        public virtual DbSet<TreatmentMASTER> TreatmentMASTERs { get; set; }
+        public virtual DbSet<TreatmentPlan> TreatmentPlans { get; set; }
+        public virtual DbSet<TreatmentStartedNote> TreatmentStartedNotes { get; set; }
+        public virtual DbSet<TypeofWorkLab> TypeofWorkLabs { get; set; }
+        public virtual DbSet<UnitMaster> UnitMasters { get; set; }
+        public virtual DbSet<UsedMaterial> UsedMaterials { get; set; }
+        public virtual DbSet<UserLoginHistory> UserLoginHistories { get; set; }
+        public virtual DbSet<VendorMaster> VendorMasters { get; set; }
+        public virtual DbSet<VendorTypeMaster> VendorTypeMasters { get; set; }
+        public virtual DbSet<VideoMaster> VideoMasters { get; set; }
+        public virtual DbSet<YearMaster> YearMasters { get; set; }
+        public virtual DbSet<DayMaster> DayMasters { get; set; }
+        public virtual DbSet<SubAdminClinic> SubAdminClinics { get; set; }
     }
-
-    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-    {
-        throw new UnintentionalCodeFirstException();
-    }
-
-    public virtual DbSet<AllergicMaster> AllergicMasters { get; set; }
-    public virtual DbSet<AppointmentMaster> AppointmentMasters { get; set; }
-    public virtual DbSet<City> Cities { get; set; }
-    public virtual DbSet<Country> Countries { get; set; }
-    public virtual DbSet<DentalCategory> DentalCategories { get; set; }
-    public virtual DbSet<DoctorByClinic> DoctorByClinics { get; set; }
-    public virtual DbSet<EMIBajajFinance> EMIBajajFinances { get; set; }
-    public virtual DbSet<Enquiry> Enquiries { get; set; }
-    public virtual DbSet<EnquirySourceMaster> EnquirySourceMasters { get; set; }
-    public virtual DbSet<Enquirystatu> Enquirystatus { get; set; }
-    public virtual DbSet<ExpenseMaster> ExpenseMasters { get; set; }
-    public virtual DbSet<Followup> Followups { get; set; }
-    public virtual DbSet<FollowupMode> FollowupModes { get; set; }
-    public virtual DbSet<GSTRateMaster> GSTRateMasters { get; set; }
-    public virtual DbSet<InOutMaterialMaster> InOutMaterialMasters { get; set; }
-    public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
-    public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
-    public virtual DbSet<LabDetail> LabDetails { get; set; }
-    public virtual DbSet<LabMaster> LabMasters { get; set; }
-    public virtual DbSet<Login> Logins { get; set; }
-    public virtual DbSet<MedicalProblem> MedicalProblems { get; set; }
-    public virtual DbSet<Menu> Menus { get; set; }
-    public virtual DbSet<MenuRight> MenuRights { get; set; }
-    public virtual DbSet<MonthsMaster> MonthsMasters { get; set; }
-    public virtual DbSet<PatienByToothNo> PatienByToothNoes { get; set; }
-    public virtual DbSet<PatientbyDentalinfo> PatientbyDentalinfoes { get; set; }
-    public virtual DbSet<PatientbyMedicalProblem> PatientbyMedicalProblems { get; set; }
-    public virtual DbSet<PatientfeesPayment> PatientfeesPayments { get; set; }
-    public virtual DbSet<PatientMaster> PatientMasters { get; set; }
-    public virtual DbSet<PatientMedicalHistory> PatientMedicalHistories { get; set; }
-    public virtual DbSet<PatientMedicine> PatientMedicines { get; set; }
-    public virtual DbSet<PatientTreatmentImage> PatientTreatmentImages { get; set; }
-    public virtual DbSet<PaymentDetila> PaymentDetilas { get; set; }
-    public virtual DbSet<ReceivedMaterial> ReceivedMaterials { get; set; }
-    public virtual DbSet<Role> Roles { get; set; }
-    public virtual DbSet<State> States { get; set; }
-    public virtual DbSet<tbl_ClinicDetails> tbl_ClinicDetails { get; set; }
-    public virtual DbSet<tbl_Doctor_Degree> tbl_Doctor_Degree { get; set; }
-    public virtual DbSet<tbl_DoctorByDegree> tbl_DoctorByDegree { get; set; }
-    public virtual DbSet<tbl_DoctorBySpeciality> tbl_DoctorBySpeciality { get; set; }
-    public virtual DbSet<tbl_DoctorDetails> tbl_DoctorDetails { get; set; }
-    public virtual DbSet<tbl_DoctorType> tbl_DoctorType { get; set; }
-    public virtual DbSet<tbl_DrSpeciality> tbl_DrSpeciality { get; set; }
-    public virtual DbSet<tbl_HospitalDoctorDetails> tbl_HospitalDoctorDetails { get; set; }
-    public virtual DbSet<tbl_Location> tbl_Location { get; set; }
-    public virtual DbSet<tblEmployeeBankDetail> tblEmployeeBankDetails { get; set; }
-    public virtual DbSet<tblEmployeeContactDetail> tblEmployeeContactDetails { get; set; }
-    public virtual DbSet<tblEmployeeOtherDetail> tblEmployeeOtherDetails { get; set; }
-    public virtual DbSet<tblEmployeePersonal> tblEmployeePersonals { get; set; }
-    public virtual DbSet<timetable> timetables { get; set; }
-    public virtual DbSet<ToothNoMaster> ToothNoMasters { get; set; }
-    public virtual DbSet<TreatmentbyPatient> TreatmentbyPatients { get; set; }
-    public virtual DbSet<TreatmentCostPlan> TreatmentCostPlans { get; set; }
-    public virtual DbSet<TreatmentMASTER> TreatmentMASTERs { get; set; }
-    public virtual DbSet<TreatmentPlan> TreatmentPlans { get; set; }
-    public virtual DbSet<TypeofWorkLab> TypeofWorkLabs { get; set; }
-    public virtual DbSet<VendorMaster> VendorMasters { get; set; }
-    public virtual DbSet<DoctorAttendance> DoctorAttendances { get; set; }
-    public virtual DbSet<FeedbackMaster> FeedbackMasters { get; set; }
-    public virtual DbSet<ManageMaterialStock> ManageMaterialStocks { get; set; }
-    public virtual DbSet<PackMaster> PackMasters { get; set; }
-    public virtual DbSet<UsedMaterial> UsedMaterials { get; set; }
-    public virtual DbSet<VendorTypeMaster> VendorTypeMasters { get; set; }
-    public virtual DbSet<YearMaster> YearMasters { get; set; }
-    public virtual DbSet<BrandMaster> BrandMasters { get; set; }
-    public virtual DbSet<EditorDetail> EditorDetails { get; set; }
-    public virtual DbSet<AdvertismentMaster> AdvertismentMasters { get; set; }
-    public virtual DbSet<App_VersionMaster> App_VersionMaster { get; set; }
 }

@@ -85,8 +85,8 @@
         function DateSelectionChanged() {
             var today = new Date();
             var dob = new Date(document.getElementById('<%=txtBDate.ClientID%>').value);
-             var months = (today.getMonth() - dob.getMonth() + (12 * (today.getFullYear() - dob.getFullYear())));
-             document.getElementById('<%=txtAge.ClientID%>').value = Math.round(months / 12);
+            var months = (today.getMonth() - dob.getMonth() + (12 * (today.getFullYear() - dob.getFullYear())));
+            document.getElementById('<%=txtAge.ClientID%>').value = Math.round(months / 12);
         }
     </script>
 </asp:Content>
@@ -160,6 +160,8 @@
                                             Clinic Name  <span class="required">*</span></label>
                                         <asp:DropDownList ID="ddlClinic" class="form-control" runat="server" SelectionMode="Multiple">
                                         </asp:DropDownList>
+
+
 
 
                                         <span class="help-block">
@@ -809,11 +811,11 @@
 
                                                     <div class="form-group">
                                                         <div class="col-sm-12">
-                                                          
-                                                                <div class="mt-checkbox-inline">
-                                                                    <asp:CheckBoxList ID="checkallergic" Width="100%" RepeatDirection="Horizontal" RepeatColumns="6" runat="server">
-                                                                    </asp:CheckBoxList>
-                                                            
+
+                                                            <div class="mt-checkbox-inline">
+                                                                <asp:CheckBoxList ID="checkallergic" Width="100%" RepeatDirection="Horizontal" RepeatColumns="6" runat="server">
+                                                                </asp:CheckBoxList>
+
                                                             </div>
 
                                                         </div>
@@ -1083,40 +1085,10 @@
 
                         </asp:TabContainer>
 
-
-                        <%--<ul class="nav nav-tabs ">
-                            <li class="active">
-                                <a href="#tab_5_1" data-toggle="tab">Personal Information </a>
-                            </li>
-                            <li>
-                                <a href="#tab_5_2" data-toggle="tab">Medical History </a>
-                            </li>
-                            <li>
-                                <a href="#tab_5_3" data-toggle="tab">Dental Information</a>
-                            </li>
-                            
-
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tab_5_1">
-                              
-                                
-                                
-                                  
-                            </div>
+                        <asp:Label ID="lblClinic_Name" runat="server" Text=""></asp:Label>
+                        <asp:Label ID="lblPatientName" runat="server" Text=""></asp:Label>
 
 
-
-                            <div class="tab-pane" id="tab_5_2">
-                              
-                            </div>
-                            <div class="tab-pane" id="tab_5_3">
-                               
-                            </div>
-
-
-                            
-                        </div>--%>
                     </div>
 
 
@@ -1278,7 +1250,7 @@
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                      <asp:TemplateField HeaderText="Patient Status">
+                                    <asp:TemplateField HeaderText="Patient Status">
                                         <ItemTemplate>
                                             <asp:Label ID="lblPstatus1" runat="server" Text='<%# Eval("PCstatus") %>'></asp:Label>
 
@@ -1299,7 +1271,7 @@
 
                                     <asp:TemplateField HeaderText="#">
                                         <ItemTemplate>
-                                           <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("patientid") %>'
+                                            <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("patientid") %>'
                                                 CommandName="EditEnquiry" ImageUrl="../Images/edit15x15.png" />
                                             <asp:ImageButton ID="btnview" ToolTip="View" CausesValidation="false" runat="server" Height="10px" Width="20px" CommandArgument='<%# Eval("patientid") %>'
                                                 CommandName="viewPDetails" ImageUrl="../Images/images.png" />
@@ -1452,7 +1424,6 @@
                                 OnClick="btbtnExlCancel_Click" CausesValidation="False" />
 
 
-
                         </div>
 
                     </div>
@@ -1476,14 +1447,17 @@
 
 
 
-     </script>
+    </script>
 
     <script type="text/javascript">
         function Confirm() {
             var confirm_value = document.createElement("INPUT");
             confirm_value.type = "hidden";
             confirm_value.name = "confirm_value";
-            if (confirm("Mobile number already in used.If you wish to add new patient with existing mobile number then click on OK and then SUBMIT.")) {
+            let lblClinic_Name = document.getElementById('ContentPlaceHolder1_lblClinic_Name').innerHTML;
+            let lblPatientName = document.getElementById('ContentPlaceHolder1_lblPatientName').innerHTML;
+
+            if (confirm("Mobile number already  Used in Clinic Name:  " + lblClinic_Name + " Patient Name : " + lblPatientName + ".If you wish to add new patient with existing mobile number then click on OK and then SUBMIT.")) {
                 confirm_value.value = "Yes";
             } else {
                 confirm_value.value = "No";

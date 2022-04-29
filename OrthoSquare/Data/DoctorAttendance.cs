@@ -17,8 +17,8 @@ namespace OrthoSquare.Data
         public int AttendanceId { get; set; }
         public Nullable<int> ClinicID { get; set; }
         public Nullable<int> DoctorID { get; set; }
-        public Nullable<System.TimeSpan> TimeIn { get; set; }
-        public Nullable<System.TimeSpan> TimeOut { get; set; }
+        public string TimeIn { get; set; }
+        public string TimeOut { get; set; }
         public Nullable<System.DateTime> AttendanceDate { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<int> Fid { get; set; }

@@ -25,7 +25,7 @@ namespace OrthoSquare.Invoice
         BAL_Clinic objc = new BAL_Clinic();
         Notificationnew objN = new Notificationnew();
         BAL_Patient objp = new BAL_Patient();
-
+        BAL_Finance objF = new BAL_Finance();
         decimal TotalCost;
         decimal TotalDiscount;
         int PID = 0;
@@ -80,6 +80,19 @@ namespace OrthoSquare.Invoice
             }
         }
 
+
+        public void bindFinance()
+        {
+
+            DataTable dt;
+
+            dt = objF.GetAllFinance();
+            RadioButtonListFinance.DataSource = dt;
+            RadioButtonListFinance.DataValueField = "Financeid";
+            RadioButtonListFinance.DataTextField = "FinanceName";
+            RadioButtonListFinance.DataBind();
+           
+        }
         public void bindSelectPatient(int pid)
         {
            
@@ -680,7 +693,7 @@ namespace OrthoSquare.Invoice
                 Panel1.Visible = false;
                 Panel2.Visible = false;
                 Panel3.Visible = true;
-
+                bindFinance();
             }
         }
 
@@ -903,7 +916,7 @@ namespace OrthoSquare.Invoice
             ddlTAX1.DataTextField = "GSTRate";
             ddlTAX1.DataValueField = "GSTid";
             ddlTAX1.DataBind();
-            ddlTAX1.SelectedValue = "5";
+            ddlTAX1.SelectedItem.Text = "0";
             //   ddlTAX1.Items.Insert(0, new ListItem("--- Select ---", "0"));
         }
 
