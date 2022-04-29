@@ -30,7 +30,7 @@ namespace OrthoSquare.Report
 
 
                 bindClinic();
-               
+
 
                 getAllCollection();
 
@@ -98,16 +98,29 @@ namespace OrthoSquare.Report
 
         public void getAllCollection()
         {
-
+            Total = 0;
             AllData = objExp.GetAllTreatmentReport(txtSFromFollowDate.Text, txtSToFollowDate.Text, Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(RadioButtonListFinance.SelectedValue));
 
-            gvShow.DataSource = AllData;
-            gvShow.DataBind();
+            if (AllData != null && AllData.Rows.Count > 0)
+            {
+                for (int i = 0; i < AllData.Rows.Count; i++)
+                {
+                    Total += Convert.ToDecimal(AllData.Rows[i]["Paidamount"]);
+
+                  
+                }
+                lblTotaCount.Text = Total.ToString();
+                gvShow.DataSource = AllData;
+                gvShow.DataBind();
+            }
+
+
 
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
+
             getAllCollection();
 
         }
@@ -124,7 +137,19 @@ namespace OrthoSquare.Report
 
         protected void RadioButtonListFinance_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Total = 0;
             getAllCollection();
+        }
+
+        protected void gvShow_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Label lblGrandTotal = (Label)e.Row.FindControl("lblPaidamount");
+
+               
+            }
         }
     }
 

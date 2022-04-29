@@ -109,12 +109,16 @@
 
                                         <div class="row">
 
+                                             <div class="text-right mb-20">
+                                                Total :
+                                            <asp:Label ID="lblTotaCount" runat="server" Text=""></asp:Label>
+                                            </div>
 
 
                                             <div class="table-scrollable">
 
                                                 <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false" ShowFooter="true"
-                                                    class="table table-bordered table-hover"
+                                                    class="table table-bordered table-hover" OnRowDataBound="gvShow_RowDataBound"
                                                     OnPageIndexChanging="gvShow_PageIndexChanging">
 
                                                     <Columns>
@@ -150,7 +154,7 @@
 
                                                         <asp:TemplateField HeaderText="Tooth No">
                                                             <ItemTemplate>
-                                                                <asp:Label ID="lblQty" runat="server" Text='<%# Eval("toothNo") %>'></asp:Label>
+                                                                <asp:Label ID="lbltoothNo" runat="server" Text='<%# Eval("toothNo") %>'></asp:Label>
                                                             </ItemTemplate>
 
                                                         </asp:TemplateField>
@@ -166,7 +170,7 @@
 
                                                         <asp:TemplateField HeaderText="Total Collection">
                                                             <ItemTemplate>
-                                                                <asp:Label ID="lblGrandTotal" runat="server" Text='<%# Eval("Paidamount") %>'></asp:Label>
+                                                                <asp:Label ID="lblPaidamount" runat="server" Text='<%# Eval("Paidamount") %>'></asp:Label>
                                                             </ItemTemplate>
 
 
