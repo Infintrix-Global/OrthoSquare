@@ -155,6 +155,7 @@ namespace OrthoSquare.Report
 
         protected void ddlClinic_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Total = 0;
             bindDoctorMaster(Convert.ToInt32(ddlClinic.SelectedValue));
         }
 
@@ -165,17 +166,19 @@ namespace OrthoSquare.Report
 
             gvShow.DataSource = AllData;
             gvShow.DataBind();
-            lblTotaCount.Text = AllData.Rows.Count.ToString();
+          //  lblTotaCount.Text = AllData.Rows.Count.ToString();
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
+            Total = 0;
             getAllCollection();
 
         }
 
         protected void txtDocter_TextChanged(object sender, EventArgs e)
         {
+            Total = 0;
             DataTable dt = objcommon.DoctersSelectDoctorID(txtDocter.Text);
             DoctorId = Convert.ToInt32(dt.Rows[0]["DoctorID"]);
 
@@ -254,7 +257,7 @@ namespace OrthoSquare.Report
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     int DoctorID = 0;
-                   
+
 
                     cmd.CommandText = "Select * From MedicinesMaster where  IsActive=1  AND MedicinesName like '%" + prefixText + "%' ";
 
@@ -281,7 +284,20 @@ namespace OrthoSquare.Report
 
         protected void txtMedicines_TextChanged(object sender, EventArgs e)
         {
+            Total = 0;
             getAllCollection();
+        }
+
+        protected void gvShow_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Label lblGrandTotal = (Label)e.Row.FindControl("lblGrandTotal");
+
+                Total += Convert.ToDecimal(lblGrandTotal.Text);
+
+                lblTotaCount.Text = Total.ToString();
+            }
         }
     }
 

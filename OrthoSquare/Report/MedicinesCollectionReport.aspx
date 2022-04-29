@@ -127,7 +127,7 @@
                                             <div class="table-scrollable">
 
                                                 <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false" ShowFooter="true"
-                                                    class="table table-bordered table-hover"
+                                                    class="table table-bordered table-hover" OnRowDataBound="gvShow_RowDataBound"
                                                     OnPageIndexChanging="gvShow_PageIndexChanging">
 
                                                     <Columns>
@@ -163,7 +163,7 @@
 
                                                         <asp:TemplateField HeaderText="Total Discount">
                                                             <ItemTemplate>
-                                                                <asp:Label ID="lblQty" runat="server" Text='<%# Eval("TotalDiscount") %>'></asp:Label>
+                                                                <asp:Label ID="lblTotalDiscount" runat="server" Text='<%# Eval("TotalDiscount") %>'></asp:Label>
                                                             </ItemTemplate>
 
                                                         </asp:TemplateField>
