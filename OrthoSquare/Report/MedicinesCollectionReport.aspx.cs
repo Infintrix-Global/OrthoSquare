@@ -176,8 +176,8 @@ namespace OrthoSquare.Report
 
                 }
                 lblTotaCount.Text = Total.ToString();
-                gvShow.DataSource = AllData;
-                gvShow.DataBind();
+            gvShow.DataSource = AllData;
+            gvShow.DataBind();
             }
             else
             {

@@ -32,6 +32,7 @@ namespace OrthoSquare.Report
                 bindClinic();
                 bindTreatmentGroup();
 
+
                 getAllCollection();
 
 
@@ -123,7 +124,7 @@ namespace OrthoSquare.Report
                 {
                     Total += Convert.ToDecimal(AllData.Rows[i]["GrandTotal"]);
 
-
+                  
                 }
                 lblGrandTotal.Text = Total.ToString();
                 lblTotalCount.Text = AllData.Rows.Count.ToString();
@@ -180,7 +181,7 @@ namespace OrthoSquare.Report
             {
                 Label lblGrandTotal = (Label)e.Row.FindControl("lblPaidamount");
 
-
+               
             }
         }
 

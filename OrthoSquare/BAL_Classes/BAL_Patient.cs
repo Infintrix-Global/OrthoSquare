@@ -333,19 +333,12 @@ namespace OrthoSquare.BAL_Classes
 
         }
 
-        public DataTable NewGetPatientlistMonth(string Cid)
-        {
 
             strQuery = " Select *,P.FristName +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId ";
             strQuery += "  left join tbl_ClinicDetails CD on CD.ClinicId = P.ClinicId  where P.IsActive =1  and  month(RegistrationDate) = month(GETDATE())  and   Year(RegistrationDate) = Year(GETDATE())";
 
-            if (Cid != "")
-            {
-                string ASD = "(" + Cid + ")";
-                strQuery += " and P.ClinicID in " + ASD + "";
-            }
-            strQuery += "order by patientid DESC ";
-            return objGeneral.GetDatasetByCommand(strQuery);
+        public DataTable NewGetPatientlist1(string  Cid)
+        {
 
 
 
@@ -543,7 +536,10 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
-        public int SaveExcelUploadedPatient(string Pcode, string FirstName, string LastName, string Email, string Mobile, string BirthDate, int ClinicID)
+        //public int GetPatientssIsvelidNew(string Mno, string Fname)
+        //{
+
+        public int SaveExcelUploadedPatient(string Pcode, string FirstName, string LastName, string Email, string Mobile, string BirthDate,int ClinicID)
         {
 
             int NewID = 0;
