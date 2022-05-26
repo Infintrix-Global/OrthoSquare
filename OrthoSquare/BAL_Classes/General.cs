@@ -230,6 +230,7 @@ namespace OrthoSquare.BAL_Classes
                 mobj_SqlCommand.CommandTimeout = mint_CommandTimeout;
                 mobj_SqlCommand.CommandType = CommandType.Text;
 
+                
                 mobj_SqlConnection.Open();
 
                 mobj_SqlCommand.Connection = mobj_SqlConnection;

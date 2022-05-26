@@ -177,6 +177,24 @@ namespace OrthoSquare.Report
         protected global::System.Web.UI.WebControls.Label lblCollectionCount;
 
         /// <summary>
+        /// lblMedicinesAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMedicinesAmount;
+
+        /// <summary>
+        /// lblCMtotal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCMtotal;
+
+        /// <summary>
         /// GridViewInvoiceMaster control.
         /// </summary>
         /// <remarks>

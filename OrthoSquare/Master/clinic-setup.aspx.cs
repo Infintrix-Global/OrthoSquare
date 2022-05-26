@@ -10,6 +10,7 @@ using OrthoSquare.Utility;
 using System.Net;
 using System.Configuration;
 using System.Net.Mail;
+using System.Data.SqlClient;
 
 namespace OrthoSquare.Branch
 {
@@ -59,10 +60,27 @@ namespace OrthoSquare.Branch
             }
         }
 
+
+        private long LocationID
+        {
+            get
+            {
+                if (ViewState["LocationID"] != null)
+                {
+                    return (long)ViewState["LocationID"];
+                }
+                return 0;
+            }
+            set
+            {
+                ViewState["LocationID"] = value;
+            }
+        }
+
         public void getAllClinic()
         {
 
-            AllData = objClinic.GetAllClinicDetais();
+            AllData = objClinic.GetAllClinicDetaisNew(Convert.ToInt32(LocationID),txtClinicNameSearch.Text);
             
             gvShow.DataSource = AllData;
             gvShow.DataBind();
@@ -123,7 +141,6 @@ namespace OrthoSquare.Branch
         protected void ddlCountry_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindState();
-
         }
 
         protected void ddlState_SelectedIndexChanged(object sender, EventArgs e)
@@ -147,12 +164,10 @@ namespace OrthoSquare.Branch
                 if (ddl_Location.SelectedItem.Text == "Other Location")
                 {
                     Lid = 0;
-
                 }
                 else
                 {
                     Lid = Convert.ToInt32(ddl_Location.SelectedValue);
-
                 }
 
                 int Cid = objClinic.GetClinicID() + 1;
@@ -206,8 +221,15 @@ namespace OrthoSquare.Branch
                     lblMessage.ForeColor = System.Drawing.Color.Green;
                     SendMail(txtEmail.Text .Trim (), UserName, Password);
                     Clear();
-                  
-                   
+
+                    objcommon.ShowMessage(this, "Clinic Added Successfully");
+                    //string url = "";
+
+                    //url = "clinic-setup.aspx";
+
+                    //string message = "Assignment Successful";
+
+                    //objcommon.ShowMessageAndRedirect(this.Page, message, url);
                 }
             }
             catch (Exception ex)
@@ -274,7 +296,10 @@ namespace OrthoSquare.Branch
                     BindCity();
                     ddlCity.SelectedValue = dt.Rows[0]["CityID"].ToString();
                     BindLocation();
-                    ddl_Location.SelectedValue = dt.Rows[0]["LocationID"].ToString();
+                    if (dt.Rows[0]["LocationID"].ToString() != "0")
+                    {
+                        ddl_Location.SelectedValue = dt.Rows[0]["LocationID"].ToString();
+                    }
                     ddl_DayOfWeek.SelectedItem.Text = dt.Rows[0]["DayOfWeek"].ToString();
                     txtOpenTime.Text = dt.Rows[0]["OpenTime"].ToString();
                     txtCloseTime.Text = dt.Rows[0]["CloseTime"].ToString();
@@ -388,31 +413,8 @@ namespace OrthoSquare.Branch
         {
             try
             {
-                string search = "";
-                
-                if (txtSearch.Text != "")
-                {
-                    search += "ClinicName like '%" + txtSearch.Text + "%'";
-                }
-                else
-                {
-                    // search += "Mobile = " + txtm.Text + "";
-                }
 
-                DataRow[] dtSearch1 = AllData.Select(search);
-                if (dtSearch1.Count() > 0)
-                {
-                    DataTable dtSearch = dtSearch1.CopyToDataTable();
-                    gvShow.DataSource = dtSearch;
-                    gvShow.DataBind();
-                }
-                else
-                {
-                    DataTable dt = new DataTable();
-                    gvShow.DataSource = dt;
-                    gvShow.DataBind();
-                }
-                
+                getAllClinic();
             }
             catch (Exception ex)
             {
@@ -445,12 +447,24 @@ namespace OrthoSquare.Branch
         public void Clear()
         {
             CleartextBoxes(this);
-            BindCountry();
+          
             BindLocation();
             getAllClinic();
-            ddlState.Items.Insert(0, new ListItem("--- Select ---", "0"));
-            ddlCity.Items.Insert(0, new ListItem("--- Select ---", "0"));
-            lblMessage.Text = "";
+
+        
+            //  BindCountry();
+
+
+            BindCountry();
+            ddlCountry.SelectedValue = "1";
+            BindState();
+            ddlState.SelectedValue = "2";
+            BindCity();
+            ddlCity.SelectedValue = "34";
+           
+
+            clinicID = 0;
+            txtDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
         }
         public void CleartextBoxes(Control parent)
         {
@@ -480,6 +494,90 @@ namespace OrthoSquare.Branch
         protected void gvShow_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+
+        [System.Web.Script.Services.ScriptMethod()]
+        [System.Web.Services.WebMethod]
+        public static List<string> SearchCustomers(string prefixText, int count)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = ConfigurationManager.ConnectionStrings["OrthoSquareDBConnectionString"].ConnectionString;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    int DoctorID = 0;
+                    int RoleId = Convert.ToInt32(HttpContext.Current.Session["RoleID"]);
+                  
+                    cmd.CommandText = "Select ClinicName,CLinicId from tbl_ClinicDetails where  IsActive =1  AND ClinicName like '%" + prefixText + "%' ";
+
+
+                    cmd.CommandText += "  order by ClinicName ASC";
+
+                    cmd.Parameters.AddWithValue("@SearchText", prefixText);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    List<string> customers = new List<string>();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            customers.Add(sdr["ClinicName"].ToString());
+                        }
+                    }
+                    conn.Close();
+
+                    return customers;
+                }
+            }
+        }
+
+
+        [System.Web.Script.Services.ScriptMethod()]
+        [System.Web.Services.WebMethod]
+        public static List<string> SearchLocation(string prefixText, int count)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = ConfigurationManager.ConnectionStrings["OrthoSquareDBConnectionString"].ConnectionString;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                   
+                    int RoleId = Convert.ToInt32(HttpContext.Current.Session["RoleID"]);
+
+                    cmd.CommandText = "Select LocationName,LocationID From tbl_Location where LocationName like '%" + prefixText + "%' ";
+
+
+                    cmd.CommandText += "  order by LocationName ASC";
+
+                    cmd.Parameters.AddWithValue("@SearchText", prefixText);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    List<string> customers = new List<string>();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            customers.Add(sdr["LocationName"].ToString());
+                        }
+                    }
+                    conn.Close();
+
+                    return customers;
+                }
+            }
+        }
+
+        protected void txtLocationNameSearch_TextChanged(object sender, EventArgs e)
+        {
+            DataTable dt = objClinic.LocationSelectLocationId(txtLocationNameSearch.Text);
+            LocationID = Convert.ToInt32(dt.Rows[0]["LocationID"]);
+            getAllClinic();
+        }
+
+        protected void txtClinicNameSearch_TextChanged(object sender, EventArgs e)
+        {
+            getAllClinic();
         }
     }
 }

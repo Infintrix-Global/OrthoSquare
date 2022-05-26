@@ -1,8 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="SuperAdminDashboard.aspx.cs" Inherits="OrthoSquare.Dashboard.SuperAdminDashboard" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    
+
     <script type="text/javascript">
         google.load("visualization", "1", { packages: ["corechart"] });
         google.setOnLoadCallback(drawChartline);
@@ -73,11 +74,11 @@
                 }
             });
         }
-</script>
+    </script>
 
 
-     <script type="text/javascript">
-         google.load('visualization', '1', { packages: ['corechart'] });
+    <script type="text/javascript">
+        google.load('visualization', '1', { packages: ['corechart'] });
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -113,232 +114,308 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="page-content">
-                    <!-- BEGIN PAGE HEADER-->
-                 
-                  
-                    <div class="page-bar">
-                        <ul class="page-breadcrumb">
-                            <li>
-                                <i class="icon-home"></i>
-                                <a href="#">Home</a>
-                                <i class="fa fa-angle-right"></i>
-                            </li>
-                            <li>
-                                <span>Dashboard</span>
-                            </li>
-                        </ul>
-                      <div>
-                          <asp:Button ID="btnTimeOut"  class="btn  green btn-outline btn-sm" runat="server" Text="Clinic Activity" PostBackUrl="~/Report/AllClinicDetails.aspx" ValidationGroup="P" />
-                        
-                      </div>
-                    </div>
+        <!-- BEGIN PAGE HEADER-->
+
+
         <div class="page-bar">
-                          
-                    </div>
-                    <!-- END PAGE HEADER-->
-                    <div class="row">
-                           <div class="col-md-2 col-sm-2 col-xs-6">
-                            <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                                <h4 class="widget-thumb-heading">Clinics</h4>
-                                <div class="widget-thumb-wrap">
-                                
-                                <i class="fa fa-hospital-o widget-thumb-icon bg-green"></i>
-                                   
-                                    <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">TOTAL</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="150">
-                                            <asp:LinkButton ID="LinkButtonClinic" PostBackUrl="~/Master/clinic-setup.aspx" runat="server"><asp:Label ID="lblClinics" runat="server" Text=""></asp:Label></asp:LinkButton>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END WIDGET THUMB -->
-                        </div>
-                       <div class="col-md-2 col-sm-2 col-xs-6">
-                            <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                                <h4 class="widget-thumb-heading">Enquiries</h4>
-                                <div class="widget-thumb-wrap">
-                                
-                                <i class="fa fa-copy widget-thumb-icon bg-red"></i>
-                                    <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">TOTAL</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293"><asp:LinkButton ID="LinkButtonEnQ" PostBackUrl="~/Enquiry/EnquiryDetails.aspx" runat="server"><asp:Label ID="lblEnq" runat="server" Text=""></asp:Label></asp:LinkButton></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END WIDGET THUMB -->
-                        </div>
-                  <div class="col-md-2 col-sm-2 col-xs-6">
-                            <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                                <h4 class="widget-thumb-heading">Follow Ups</h4>
-                                <div class="widget-thumb-wrap">
-                                <i class="fa fa-arrow-up widget-thumb-icon bg-purple"></i>
-                                    <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">TOTAL</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="815"> <asp:LinkButton ID="LinkButtonFollup" PostBackUrl="~/Enquiry/ViewFolloupDetials.aspx" runat="server"><asp:Label ID="lblFollwupCOunt" runat="server" Text=""></asp:Label></asp:LinkButton></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END WIDGET THUMB -->
-                        </div>
-                    <div class="col-md-2 col-sm-2 col-xs-6">
-                            <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                                <h4 class="widget-thumb-heading">Converted&nbsp;Enquiries</h4>
-                                <div class="widget-thumb-wrap">
-                                <i class="fa fa-copy widget-thumb-icon bg-blue"></i>
-                                   <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">TOTAL</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="90">
+            <ul class="page-breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="#">Home</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <span>Dashboard</span>
+                </li>
+            </ul>
+            <div>
+                <asp:Button ID="btnTimeOut" class="btn  green btn-outline btn-sm" runat="server" Text="Clinic Activity" PostBackUrl="~/Report/AllClinicDetails.aspx" ValidationGroup="P" />
 
-                                            <asp:Label ID="lblConvertedEnd" runat="server" Text=""></asp:Label>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END WIDGET THUMB -->
-                        </div>
-                        
-                           <div class="col-md-2 col-sm-2 col-xs-6">
-                            <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                                <h4 class="widget-thumb-heading">Employee</h4>
-                                <div class="widget-thumb-wrap">
-                                <i class="fa fa-user widget-thumb-icon bg-yellow-gold"></i>
-                                <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">Total</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="">
+            </div>
+        </div>
+        <div class="page-bar">
+        </div>
+        <!-- END PAGE HEADER-->
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">Clinics</h4>
+                    <div class="widget-thumb-wrap">
 
-                                            <asp:LinkButton ID="LinkButtonEMP" PostBackUrl="~/Employee/EmployeeDetails.aspx" runat="server"> <asp:Label ID="lblEmpTotal" runat="server" Text=""></asp:Label></asp:LinkButton>    
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END WIDGET THUMB -->
-                        </div>
-                        
-                                  <div class="col-md-2 col-sm-2 col-xs-6">
-                            <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                                <h4 class="widget-thumb-heading">Collection</h4>
-                                <div class="widget-thumb-wrap">
-                                <i class="fa fa-money widget-thumb-icon bg-greens"></i>
-                                 <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">Rs.</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="5,071"> 
+                        <i class="fa fa-hospital-o widget-thumb-icon bg-green"></i>
 
-                                              <asp:LinkButton ID="LinkButtoninvoice" PostBackUrl="~/Invoice/ViewInvice.aspx" runat="server">  <asp:Label ID="totalinvoice" runat="server" Text=""></asp:Label> </asp:LinkButton>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END WIDGET THUMB -->
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">TOTAL</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="150">
+                                <asp:LinkButton ID="LinkButtonClinic" PostBackUrl="~/Master/clinic-setup.aspx" runat="server">
+                                    <asp:Label ID="lblClinics" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton>
+                            </span>
                         </div>
                     </div>
-                    
-                    <div class="row">
-                           <div class="col-md-2 col-md-offset-1 col-sm-2 col-xs-6">
-                            <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                                <h4 class="widget-thumb-heading">Expenses</h4>
-                                <div class="widget-thumb-wrap">
-                                
-                                <i class="fa fa-money widget-thumb-icon bg-green"></i>
-                                   
-                                    <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">TOTAL</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="2150">
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">Enquiries</h4>
+                    <div class="widget-thumb-wrap">
 
-                                           <asp:LinkButton ID="LinkButtonEXP" PostBackUrl="~/Report/ClinicwishExpenseReport.aspx" runat="server">    <asp:Label ID="lblExp" runat="server" Text=""></asp:Label> </asp:LinkButton>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END WIDGET THUMB -->
-                        </div>
-                       <div class="col-md-2 col-sm-2 col-xs-6">
-                            <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                                <h4 class="widget-thumb-heading">Doctors</h4>
-                                <div class="widget-thumb-wrap">
-                                
-                                <i class="fa fa-user-md widget-thumb-icon bg-red"></i>
-                                    <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">TOTAL</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293">  <asp:LinkButton ID="LinkButtonDr" PostBackUrl="~/Doctor/Add_Doctor.aspx" runat="server">   <asp:Label ID="lblDoctors" runat="server" Text=""></asp:Label> </asp:LinkButton></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END WIDGET THUMB -->
-                        </div>
-                  <div class="col-md-2 col-sm-2 col-xs-6">
-                            <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                                <h4 class="widget-thumb-heading">DAILY&nbsp;APPOINTMENTS</h4>
-                                <div class="widget-thumb-wrap">
-                                <i class="fa fa-calendar-check-o widget-thumb-icon bg-purple"></i>
-                                    <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">TOTAL</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="815">
+                       <%-- <i class="fa fa-copy widget-thumb-icon bg-red"></i>--%>
+                        <div class="widget-thumb-body">
+                           <%-- <span class="widget-thumb-subtitle">YEAR / MONTH</span>--%>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293">
+                                <asp:LinkButton ID="LinkButtonEnQ" PostBackUrl="~/Enquiry/EnquiryDetails.aspx" runat="server">
+                                 YEAR:   <asp:Label ID="lblEnqYear" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton>
 
-                                            <asp:Label ID="lblDailyAppontment" runat="server" Text="Label"></asp:Label>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END WIDGET THUMB -->
-                        </div>
-                    <div class="col-md-2 col-sm-2 col-xs-6">
-                            <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                                <h4 class="widget-thumb-heading">Patients</h4>
-                                <div class="widget-thumb-wrap">
-                                <i class="fa fa-bed widget-thumb-icon bg-blue"></i>
-                                   <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">TOTAL</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="90">  <asp:LinkButton ID="LinkButtonPatient" PostBackUrl="~/patient/PatientMaster.aspx" runat="server">   <asp:Label ID="lblPatient" runat="server" Text=""></asp:Label></asp:LinkButton></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END WIDGET THUMB -->
-                        </div>
-                        
-                           <div class="col-md-2 col-sm-2 col-xs-6">
-                            <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                                <h4 class="widget-thumb-heading">Treatment&nbsp;Statistics</h4>
-                                <div class="widget-thumb-wrap">
-                                <i class="fa fa-user widget-thumb-icon bg-yellow-gold"></i>
-                                <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">TOTAL</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="">
+                            </span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293">
+                                <asp:LinkButton ID="LinkButton3" PostBackUrl="~/Enquiry/EnquiryDetails.aspx" runat="server">
+                                 MONTH:   <asp:Label ID="lblEnqMonth" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton>
 
-                                         <asp:LinkButton ID="LinkButtonTreatment" PostBackUrl="~/Master/TREATMENT_STATISTICS.aspx" runat="server">   <asp:Label ID="lblTreatmentTotal" runat="server" Text=""></asp:Label></asp:LinkButton>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END WIDGET THUMB -->
+                            </span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293">
+                                <asp:LinkButton ID="LinkButton4" PostBackUrl="~/Enquiry/EnquiryDetails.aspx" runat="server">
+                                 DAY:   <asp:Label ID="lbllblEnqDay" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton>
+
+                            </span>
                         </div>
-                        
-               
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-xs-12 col-sm-12">
-                            <div class="portlet light ">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <span class="caption-subject bold uppercase font-dark">Appointments</span>
-                                        <span class="badge badge-info badge-roundless">
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">Follow Ups</h4>
+                    <div class="widget-thumb-wrap">
+                        <i class="fa fa-arrow-up widget-thumb-icon bg-purple"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">TOTAL</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="815">
+                                <asp:LinkButton ID="LinkButtonFollup" PostBackUrl="~/Enquiry/ViewFolloupDetials.aspx" runat="server">
+                                    <asp:Label ID="lblFollwupCOunt" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">Converted&nbsp;Enquiries</h4>
+                    <div class="widget-thumb-wrap">
+                        <i class="fa fa-copy widget-thumb-icon bg-blue"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">TOTAL</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="90">
 
-                                            <asp:Label ID="lblTodayAppoinment" runat="server" Text="Label"></asp:Label>
-                                        </span>
-                                        </div>
-                                        <div class="actions">
-                                     <%--   <div class="btn-group ">
+                                <asp:Label ID="lblConvertedEnd" runat="server" Text=""></asp:Label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+
+            <div class="col-md-2 col-sm-2 col-xs-6" runat="server" visible="false">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">Employee</h4>
+                    <div class="widget-thumb-wrap">
+                        <i class="fa fa-user widget-thumb-icon bg-yellow-gold"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">Total</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="">
+
+                                <asp:LinkButton ID="LinkButtonEMP" PostBackUrl="~/Employee/EmployeeDetails.aspx" runat="server">
+                                    <asp:Label ID="lblEmpTotal" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">Collection</h4>
+                    <div class="widget-thumb-wrap">
+                        <i class="fa fa-money widget-thumb-icon bg-greens"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">Rs. (month)</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="5,071">
+
+                                <asp:LinkButton ID="LinkButtoninvoice" PostBackUrl="~/Invoice/ViewInvice.aspx" runat="server">
+                                    <asp:Label ID="totalinvoice" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">Expenses</h4>
+                    <div class="widget-thumb-wrap">
+
+                        <i class="fa fa-money widget-thumb-icon bg-green"></i>
+
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">Rs. (month)</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="2150">
+
+                                <asp:LinkButton ID="LinkButtonEXP" PostBackUrl="~/Report/ClinicwishExpenseReport.aspx" runat="server">
+                                    <asp:Label ID="lblExp" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">Doctors</h4>
+                    <div class="widget-thumb-wrap">
+
+                        <i class="fa fa-user-md widget-thumb-icon bg-red"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">TOTAL</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293">
+                                <asp:LinkButton ID="LinkButtonDr" PostBackUrl="~/Doctor/Add_Doctor.aspx" runat="server">
+                                    <asp:Label ID="lblDoctors" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">DAILY&nbsp;APPOINTMENTS</h4>
+                    <div class="widget-thumb-wrap">
+                        <i class="fa fa-calendar-check-o widget-thumb-icon bg-purple"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">TOTAL</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="815">
+
+                                <asp:Label ID="lblDailyAppontment" runat="server" Text="Label"></asp:Label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">DAILY New Patinet</h4>
+                    <div class="widget-thumb-wrap">
+                        <i class="fa fa-bed widget-thumb-icon bg-blue"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">TOTAL</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="815">
+                                <asp:LinkButton ID="LinkButton1" PostBackUrl="~/patient/NewRegistrationPatient.aspx" runat="server">
+                                    <asp:Label ID="lblNewPatient" runat="server" Text="Label"></asp:Label>
+                                </asp:LinkButton>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">DAILY&nbsp;Patinet Visits</h4>
+                    <div class="widget-thumb-wrap">
+                        <i class="fa fa-calendar-check-o widget-thumb-icon bg-purple"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">TOTAL</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="815">
+                                <asp:LinkButton ID="LinkButton2" PostBackUrl="~/patient/PatientVisits.aspx" runat="server">
+                                    <asp:Label ID="lblPatinetVisits" runat="server" Text="Label"></asp:Label>
+                                </asp:LinkButton>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">Patients</h4>
+                    <div class="widget-thumb-wrap">
+                        <i class="fa fa-bed widget-thumb-icon bg-blue"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">TOTAL</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="90">
+                                <asp:LinkButton ID="LinkButtonPatient" PostBackUrl="~/patient/PatientMaster.aspx" runat="server">
+                                    <asp:Label ID="lblPatient" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">Treatment&nbsp;Statistics</h4>
+                    <div class="widget-thumb-wrap">
+                        <i class="fa fa-user widget-thumb-icon bg-yellow-gold"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">TOTAL</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="">
+
+                                <asp:LinkButton ID="LinkButtonTreatment" PostBackUrl="~/Master/TREATMENT_STATISTICS.aspx" runat="server">
+                                    <asp:Label ID="lblTreatmentTotal" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-xs-12 col-sm-12">
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span class="caption-subject bold uppercase font-dark">Appointments</span>
+                            <span class="badge badge-info badge-roundless">
+
+                                <asp:Label ID="lblTodayAppoinment" runat="server" Text="Label"></asp:Label>
+                            </span>
+                        </div>
+                        <div class="actions">
+                            <%--   <div class="btn-group ">
                                             <a class="btn dark btn-outline btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true"> Year
                                                 <i class="fa fa-angle-down"></i>
                                             </a>
@@ -396,13 +473,13 @@
                                                 </li>
                                             </ul>
                                         </div>--%>
-                                    </div>
-                                                                    
-                                    </div>
-                               
-                                <div class="portlet-body">
-                                 <div class="table-scrollable table-scrollable-borderless">
-                                       <asp:GridView ID="GridAppoinment" runat="server" AllowPaging="true" AutoGenerateColumns="false"
+                        </div>
+
+                    </div>
+
+                    <div class="portlet-body">
+                        <div class="table-scrollable table-scrollable-borderless">
+                            <asp:GridView ID="GridAppoinment" runat="server" AllowPaging="true" AutoGenerateColumns="false"
                                 class="table table-hover table-light" DataKeyNames="Appointmentid" OnRowCommand="GridAppoinment_RowCommand"
                                 GridLines="None" OnRowDataBound="GridAppoinment_RowDataBound"
                                 ShowHeaderWhenEmpty="true">
@@ -462,11 +539,11 @@
                                     No Record Available
                                 </EmptyDataTemplate>
                             </asp:GridView>
-                                     
-                                    </div>
-                                
 
-                                    <div class="actions text-center">
+                        </div>
+
+
+                        <div class="actions text-center">
                             <div class="btn-group btn-group-devided">
 
                                 <asp:Button ID="Button1" runat="server" class="btn green btn-outline btn-sm active" Text="Book An Appointment" OnClick="Button1_Click" />
@@ -476,97 +553,95 @@
                             </div>
 
                         </div>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xs-12 col-sm-12">
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption ">
+                            <span class="caption-subject font-dark bold uppercase">Branches/Clinics</span>
+
                         </div>
-                        <div class="col-lg-6 col-xs-12 col-sm-12">
-                            <div class="portlet light ">
-                                <div class="portlet-title">
-                                    <div class="caption ">
-                                        <span class="caption-subject font-dark bold uppercase">Branches/Clinics</span>
-                                        
-                                    </div>
-                                    <div class="actions">
-                                       <div class="btn-group">
-                                         
-                                            <asp:DropDownList ID="ddlstate" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="State_SelectedIndexChanged">
-                              
-                                              </asp:DropDownList>
-                                      
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                 
-                                    <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
-                                class="table table-bordered table-hover" DataKeyNames="ClinicID" 
-                                GridLines="None" OnPageIndexChanging="gvShow_PageIndexChanging"
-                                 ShowHeaderWhenEmpty="true" PageSize="7">
-                                <Columns>
-                                    <asp:TemplateField HeaderText="Sr. No." >
-                                        <ItemTemplate>
-                                            <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
-                                          
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                   <asp:TemplateField HeaderText="Clinic Name">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("ClinicName")%>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Phone No." >
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblPhoneNo" runat="server" Text='<%# Eval("PhoneNo1") + ",</br> " + Eval("PhoneNo2")%>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                   
-                                </Columns>
-                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
-                                <PagerSettings Mode="NumericFirstLast" />
-                                <EmptyDataTemplate>
-                                    No Record Available
-                                </EmptyDataTemplate>
-                            </asp:GridView>
+                        <div class="actions">
+                            <div class="btn-group">
 
+                                <asp:DropDownList ID="ddlstate" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="State_SelectedIndexChanged">
+                                </asp:DropDownList>
 
-                                </div>
                             </div>
                         </div>
                     </div>
-                                      
-                    <div class="row">
-                        <div class="col-lg-12 col-xs-12 col-sm-12">
-                            <div class="portlet light ">
-                                <div class="portlet-title">
-                                    <div class="caption caption-md">
-                                        <i class="icon-bar-chart font-dark hide"></i>
-                                        <span class="caption-subject font-dark bold uppercase">Enquiries</span>
-                                       
-                                    </div>
-                                    <div class="actions">
-                                        <div class="btn-group">
-                                            <asp:DropDownList ID="ddlyear1" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlYear_SelectedIndexChanged">
-                              
-                                              </asp:DropDownList>
-                                        </div>
-                                    </div>
+                    <div class="portlet-body">
+
+                        <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
+                            class="table table-bordered table-hover" DataKeyNames="ClinicID"
+                            GridLines="None" OnPageIndexChanging="gvShow_PageIndexChanging"
+                            ShowHeaderWhenEmpty="true" PageSize="7">
+                            <Columns>
+                                <asp:TemplateField HeaderText="Sr. No.">
+                                    <ItemTemplate>
+                                        <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
+
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Clinic Name">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("ClinicName")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Phone No.">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblPhoneNo" runat="server" Text='<%# Eval("PhoneNo1") + ",</br> " + Eval("PhoneNo2")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                            </Columns>
+                            <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
+                            <PagerSettings Mode="NumericFirstLast" />
+                            <EmptyDataTemplate>
+                                No Record Available
+                            </EmptyDataTemplate>
+                        </asp:GridView>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-xs-12 col-sm-12">
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption caption-md">
+                            <i class="icon-bar-chart font-dark hide"></i>
+                            <span class="caption-subject font-dark bold uppercase">Enquiries</span>
+
+                        </div>
+                        <div class="actions">
+                            <div class="btn-group">
+                                <asp:DropDownList ID="ddlyear1" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlYear_SelectedIndexChanged">
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div id="morris_chart_2" style="height: 500px;">
+
+
+                            <div class="row">
+
+
+                                <div id="chartline">
                                 </div>
-                                <div class="portlet-body">
-                                   <div id="morris_chart_2" style="height:500px;">
-                                    
 
-                                      <div class="row">
-
-
-                                            <div id="chartline">
-                                            </div>
-
-                                        </div>
+                            </div>
 
 
 
 
-                                    <%--<asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
+                            <%--<asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
                                 class="table table-bordered table-hover" DataKeyNames="EnquiryID"
                                 GridLines="None" OnPageIndexChanging="gvShow_PageIndexChanging"
                                 OnRowDeleting="gvShow_RowDeleting" OnRowEditing="gvShow_RowEditing" ShowHeaderWhenEmpty="true">
@@ -632,96 +707,90 @@
                                     No Record Available
                                 </EmptyDataTemplate>
                             </asp:GridView>--%>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      
-                    </div>
-                   
-                    <div class="row">
-                        <div class="col-lg-6 col-xs-12 col-sm-12">
-                            <!-- BEGIN REGIONAL STATS PORTLET-->
-                            <div class="portlet light ">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="icon-share font-dark hide"></i>
-                                        <span class="caption-subject font-dark bold uppercase">Source Of Enquiries</span>
-                                    </div>
-                                    <div class="actions">
-                                         <asp:DropDownList ID="ddlClinic" class="btn dark btn-outline btn-circle btn-sm "  Visible="false" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlClinic_SelectedIndexChanged">
-                              
-                                              </asp:DropDownList>
-                                   
-                                 <div class="btn-group">
-                                             
-                                        </div>
-                                        <div class="btn-group">
-                                            <asp:DropDownList ID="ddlYearSOE" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlYearSOE_SelectedIndexChanged">
-                              
-                                              </asp:DropDownList>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                  <div id="morris_chart_4" style="height:500px;">
-
-                                      <div id="visualization" style="width: 460px; height: 350px;">
-                                      </div>
-
-
-                                  </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="col-lg-6 col-xs-12 col-sm-12">
-                            <!-- BEGIN PORTLET-->
-                            <div class="portlet light ">
-                                <div class="portlet-title tabbable-line">
-                                    <div class="caption">
-                                        <i class="icon-globe font-dark hide"></i>
-                                        <span class="caption-subject font-dark bold uppercase">Collection & Expenses</span>
-                                    </div>
-                                  <div class="actions">
-                                        <div class="btn-group">
-                                          <asp:DropDownList ID="ddlClinicCollection" class="btn dark btn-outline btn-circle btn-sm " Visible="false" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlClinicCollection_SelectedIndexChanged">
-                              
-                                              </asp:DropDownList>
-                                        </div>
-                                        
-                                        <div class="btn-group">
-                                              
-
-
-                                              <asp:DropDownList ID="ddlYearCollection" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlYearCollection_SelectedIndexChanged">
-                              
-                                              </asp:DropDownList>
-                                        </div>
-                                        </div>
-                                </div>
-                                <div class="portlet-body">
-                                
-                                    <div id="morris_chart_3" style="height:500px;">
-
-                                        <div>
-
-        <asp:Literal ID="lt" runat="server"></asp:Literal>   
-
-       <div id="chart_div"></div>
-
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <!-- END PORTLET-->
                         </div>
                     </div>
-                 
                 </div>
+            </div>
+
         </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-xs-12 col-sm-12">
+                <!-- BEGIN REGIONAL STATS PORTLET-->
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-share font-dark hide"></i>
+                            <span class="caption-subject font-dark bold uppercase">Source Of Enquiries</span>
+                        </div>
+                        <div class="actions">
+                            <asp:DropDownList ID="ddlClinic" class="btn dark btn-outline btn-circle btn-sm " Visible="false" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlClinic_SelectedIndexChanged">
+                            </asp:DropDownList>
+
+                            <div class="btn-group">
+                            </div>
+                            <div class="btn-group">
+                                <asp:DropDownList ID="ddlYearSOE" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlYearSOE_SelectedIndexChanged">
+                                </asp:DropDownList>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div id="morris_chart_4" style="height: 500px;">
+
+                            <div id="visualization" style="width: 460px; height: 350px;">
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-6 col-xs-12 col-sm-12">
+                <!-- BEGIN PORTLET-->
+                <div class="portlet light ">
+                    <div class="portlet-title tabbable-line">
+                        <div class="caption">
+                            <i class="icon-globe font-dark hide"></i>
+                            <span class="caption-subject font-dark bold uppercase">Collection & Expenses</span>
+                        </div>
+                        <div class="actions">
+                            <div class="btn-group">
+                                <asp:DropDownList ID="ddlClinicCollection" class="btn dark btn-outline btn-circle btn-sm " Visible="false" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlClinicCollection_SelectedIndexChanged">
+                                </asp:DropDownList>
+                            </div>
+
+                            <div class="btn-group">
+
+
+
+                                <asp:DropDownList ID="ddlYearCollection" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlYearCollection_SelectedIndexChanged">
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+
+                        <div id="morris_chart_3" style="height: 500px;">
+
+                            <div>
+
+                                <asp:Literal ID="lt" runat="server"></asp:Literal>
+
+                                <div id="chart_div"></div>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- END PORTLET-->
+                </div>
+            </div>
+
+        </div>
+    </div>
 </asp:Content>

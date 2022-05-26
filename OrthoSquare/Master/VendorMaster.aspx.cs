@@ -115,7 +115,7 @@ namespace OrthoSquare.Master
                     bindClinic();
                     bindVendorType();
                     getAllTreatment();
-                 //   Response.Redirect("TreatmentMaster.aspx");
+                 // Response.Redirect("TreatmentMaster.aspx");
                     btSearch_Click(sender, e);
                 }
             }

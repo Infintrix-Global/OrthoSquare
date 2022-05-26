@@ -19,10 +19,18 @@ namespace OrthoSquare.Report
         BAL_Expense objExp = new BAL_Expense();
         decimal sumFooterValue = 0;
         decimal sumFooterPendingValue = 0;
+        decimal Total = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+
+
             if (!IsPostBack)
             {
+                txtFromPayDate.Text = Convert.ToDateTime(System.DateTime.Now).AddDays(-15).ToString("dd-MM-yyyy");
+                txtToPayDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
+
+
                 bindClinic();
                 if (SessionUtilities.RoleID == 1)
                 {
@@ -63,10 +71,29 @@ namespace OrthoSquare.Report
         public void getAllCollection()
         {
 
-            AllData = objExp.GetAllClinicCollectionReportNew(Convert.ToInt32(ddlClinic.SelectedValue),txtFromPayDate.Text,txtToPayDate.Text);
-            gvShow.DataSource = AllData;
-            gvShow.DataBind();
+            AllData = objExp.GetAllClinicCollection_Report(txtFromPayDate.Text,txtToPayDate.Text, Convert.ToInt32(ddlClinic.SelectedValue));
 
+            //gvShow.DataSource = AllData;
+            //gvShow.DataBind();
+
+            if (AllData != null && AllData.Rows.Count > 0)
+            {
+                for (int i = 0; i < AllData.Rows.Count; i++)
+                {
+                    Total += Convert.ToDecimal(AllData.Rows[i]["PaidAmount"]);
+
+
+                }
+                lblTotalTop.Text = Total.ToString();
+                gvShow.DataSource = AllData;
+                gvShow.DataBind();
+            }
+            else
+            {
+                lblTotalTop.Text = "0";
+                gvShow.DataSource = null;
+                gvShow.DataBind();
+            }
 
         }
 
@@ -116,6 +143,11 @@ namespace OrthoSquare.Report
                 lblPendingAmountTotal.Text = sumFooterPendingValue.ToString();
 
             }
+        }
+
+        protected void ddlClinic_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            getAllCollection();
         }
     }
 }

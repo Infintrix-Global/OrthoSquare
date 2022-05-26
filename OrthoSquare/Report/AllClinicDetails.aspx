@@ -60,21 +60,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-
-
-                            <div class="col-md-3">
+                              <div class="col-md-2">
                                 <div class="form-group">
 
 
@@ -87,7 +73,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
 
                                     <asp:TextBox ID="txtToEnquiryDate" runat="server" class="form-control" placeholder="To Enquiry Date"
@@ -100,7 +86,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
 
                                     <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
@@ -108,11 +94,10 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                </div>
-                            </div>
                         </div>
+
+
+                        
                     </div>
                 </div>
             </div>
@@ -497,6 +482,12 @@
                             <span class="caption-subject font-dark bold uppercase">Collection</span>
                              <span class="badge badge-info badge-roundless">
                                 <asp:Label ID="lblCollectionCount" runat="server" Text="0"></asp:Label>
+                            </span>
+                            <span class="badge badge-info badge-roundless">
+                                <asp:Label ID="lblMedicinesAmount" runat="server" Text="0"></asp:Label>
+                            </span>
+                             <span class="badge badge-info badge-roundless">
+                                <asp:Label ID="lblCMtotal" runat="server" Text="0"></asp:Label>
                             </span>
                         </div>
                         <div class="actions">

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="NewOrthoSquare2210Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="OrthosquareModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdvertismentMaster">
           <Key>
             <PropertyRef Name="Aid" />
@@ -68,6 +68,7 @@
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="EnquiryID" Type="int" />
         </EntityType>
         <EntityType Name="BrandMaster">
           <Key>
@@ -123,8 +124,8 @@
           <Property Name="AttendanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClinicID" Type="int" />
           <Property Name="DoctorID" Type="int" />
-          <Property Name="TimeIn" Type="time" Precision="7" />
-          <Property Name="TimeOut" Type="time" Precision="7" />
+          <Property Name="TimeIn" Type="nvarchar" MaxLength="50" />
+          <Property Name="TimeOut" Type="nvarchar" MaxLength="50" />
           <Property Name="AttendanceDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="Fid" Type="int" />
@@ -139,9 +140,8 @@
           <Property Name="UpdateID" Type="int" />
           <Property Name="Updatetime" Type="datetime" />
           <Property Name="IsActivr" Type="bit" />
+          <Property Name="IsDeactive" Type="bit" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="EditorDetail">
           <Key>
             <PropertyRef Name="ID" />
@@ -149,8 +149,6 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" />
           <Property Name="Detail" Type="nvarchar(max)" />
-          <Property Name="IsActive" Type="nvarchar" MaxLength="50" />
-          <Property Name="Date" Type="datetime" />
         </EntityType>
         <EntityType Name="EMIBajajFinance">
           <Key>
@@ -174,7 +172,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="Sourceid" Type="int" />
           <Property Name="PurposeId" Type="int" />
           <Property Name="ClinicID" Type="int" />
-          <Property Name="Enquiryno" Type="nvarchar" MaxLength="5" />
+          <Property Name="Enquiryno" Type="nvarchar" MaxLength="100" />
           <Property Name="EnquiryDate" Type="datetime" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="150" />
           <Property Name="LastName" Type="nvarchar" MaxLength="150" />
@@ -204,6 +202,8 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="IsActive" Type="bit" />
           <Property Name="TreatmentID" Type="int" />
           <Property Name="Pstatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="TelecallerToEmpId" Type="int" />
         </EntityType>
         <EntityType Name="EnquirySourceMaster">
           <Key>
@@ -244,6 +244,9 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="CreateID" Type="int" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="VendorType" Type="varchar" MaxLength="500" />
+          <Property Name="FromPlace" Type="varchar" MaxLength="255" />
+          <Property Name="ToPlace" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="FeedbackMaster">
           <Key>
@@ -319,6 +322,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="UpdateId" Type="int" />
           <Property Name="UpdateDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="UnitName" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="InvoiceDetails">
           <Key>
@@ -363,6 +367,14 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="CreateID" Type="int" />
           <Property Name="PendingF" Type="bit" />
         </EntityType>
+        <EntityType Name="IssuetypeMaster">
+          <Key>
+            <PropertyRef Name="Issuetypeid" />
+          </Key>
+          <Property Name="Issuetypeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IssuetypeName" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
         <EntityType Name="LabDetails">
           <Key>
             <PropertyRef Name="TLabid" />
@@ -402,6 +414,19 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="UpdateDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
+        <EntityType Name="LabMasterNew">
+          <Key>
+            <PropertyRef Name="LabId" />
+          </Key>
+          <Property Name="LabId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LabName" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreateBy" Type="int" />
+          <Property Name="CreateDatetime" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CommissionType" Type="varchar" MaxLength="100" />
+          <Property Name="Commission" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Login">
           <Key>
             <PropertyRef Name="UserID" />
@@ -423,6 +448,36 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="VendorID" Type="int" />
           <Property Name="TotalMaterial" Type="int" />
         </EntityType>
+        <EntityType Name="MaterialMaster">
+          <Key>
+            <PropertyRef Name="MaterialId" />
+          </Key>
+          <Property Name="MaterialId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaterialTypeId" Type="int" />
+          <Property Name="MaterialName" Type="nvarchar" MaxLength="500" />
+          <Property Name="BrandId" Type="int" />
+          <Property Name="PackId" Type="int" />
+          <Property Name="Price" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateId" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Updateid" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="MaterialType">
+          <Key>
+            <PropertyRef Name="MaterialTypeId" />
+          </Key>
+          <Property Name="MaterialTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaterialName" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsMedical" Type="nvarchar" MaxLength="100" />
+          <Property Name="Unitid" Type="int" />
+          <Property Name="CreateBy" Type="int" />
+          <Property Name="CreateDatetime" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDatetime" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
         <EntityType Name="MedicalProblem">
           <Key>
             <PropertyRef Name="MedicalProid" />
@@ -433,6 +488,22 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="MedicinesMaster">
+          <Key>
+            <PropertyRef Name="MedicinesId" />
+          </Key>
+          <Property Name="MedicinesId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaterialTypeId" Type="int" />
+          <Property Name="MedicinesName" Type="nvarchar" MaxLength="300" />
+          <Property Name="MedicinesCompany" Type="nvarchar" MaxLength="300" />
+          <Property Name="UnitId" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CreateBy" Type="int" />
+          <Property Name="CreateDatetime" Type="datetime" />
+          <Property Name="UpdateBy" Type="int" />
+          <Property Name="UpdateDatetime" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Menu">
@@ -465,6 +536,8 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           </Key>
           <Property Name="MonthID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MonthsName" Type="int" />
+          <Property Name="MonthsCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="MonthsNo" Type="nvarchar" MaxLength="50" />
           <Property Name="Yearid" Type="int" />
         </EntityType>
         <EntityType Name="PackMaster">
@@ -487,16 +560,28 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="patientid" Type="int" />
           <Property Name="toothNo" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Orthosquare.dbo.PatientbyAllergic' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="PatientbyAllergic">
+          <Property Name="ID" Type="int" />
+          <Property Name="patientid" Type="int" />
+          <Property Name="allergicId" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifedBy" Type="int" />
+        </EntityType>-->
         <EntityType Name="PatientbyDentalinfo">
           <Key>
             <PropertyRef Name="DentalinfoID" />
           </Key>
           <Property Name="DentalinfoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="patientid" Type="int" />
+          <Property Name="DoctorID" Type="int" />
           <Property Name="Complaint" Type="nvarchar(max)" />
           <Property Name="DentalTreatment" Type="nvarchar(max)" />
           <Property Name="ConsentStatement" Type="nvarchar" MaxLength="50" />
           <Property Name="ToothNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ConsentParth" Type="varchar(max)" />
+          <Property Name="CreateOn" Type="datetime" />
         </EntityType>
         <EntityType Name="PatientbyMedicalProblem">
           <Key>
@@ -571,15 +656,24 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             <PropertyRef Name="Medicinesid" />
           </Key>
           <Property Name="Medicinesid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="DoctorId" Type="int" />
           <Property Name="patientid" Type="int" />
           <Property Name="MedicinesName" Type="nvarchar" MaxLength="500" />
+          <Property Name="MId" Type="int" />
           <Property Name="txtMtype" Type="nvarchar" MaxLength="50" />
           <Property Name="TotalMedicines" Type="nvarchar" MaxLength="10" />
           <Property Name="DayMedicines" Type="nvarchar" MaxLength="10" />
           <Property Name="MorningMedicines" Type="nvarchar" MaxLength="10" />
           <Property Name="AfternoonMedicines" Type="nvarchar" MaxLength="10" />
           <Property Name="EveningMedicines" Type="nvarchar" MaxLength="10" />
+          <Property Name="InHouse" Type="nvarchar" MaxLength="50" />
           <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Strip" Type="nvarchar" MaxLength="50" />
+          <Property Name="Discount" Type="int" />
+          <Property Name="TotalDiscount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="GrandTotal" Type="decimal" Precision="10" Scale="2" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="CreateId" Type="int" />
@@ -635,6 +729,28 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="Updateby" Type="int" />
           <Property Name="UpdateDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="ReportIssue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="IssueType" Type="nvarchar" MaxLength="300" />
+          <Property Name="Title" Type="nvarchar" MaxLength="300" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Attachment" Type="nvarchar(max)" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Status" Type="nvarchar" MaxLength="300" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="CommentDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="ClinicId" Type="int" />
+          <Property Name="DoctorId" Type="int" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -643,6 +759,15 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="RoleName" Type="varchar" MaxLength="50" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="DashBoardName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="SoftwareExpiredMaster">
+          <Key>
+            <PropertyRef Name="ExpiredID" />
+          </Key>
+          <Property Name="ExpiredID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="nvarchar" MaxLength="50" />
+          <Property Name="ExpiredDate" Type="date" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -681,6 +806,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="IsActive" Type="bit" />
           <Property Name="FirstName" Type="varchar" MaxLength="300" />
           <Property Name="LastName" Type="varchar" MaxLength="300" />
+          <Property Name="IsApprove" Type="bit" />
         </EntityType>
         <EntityType Name="tbl_Doctor_Degree">
           <Key>
@@ -703,6 +829,17 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="DegreeUpload2" Type="nvarchar(max)" />
           <Property Name="ModifiedDate" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_DoctorByDegreeNew">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DoctorID" Type="int" />
+          <Property Name="DegreeName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Boardname" Type="nvarchar" MaxLength="500" />
+          <Property Name="CertificationImage" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="tbl_DoctorBySpeciality">
           <Key>
@@ -731,8 +868,8 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="Mobile1" Type="nvarchar" MaxLength="50" />
           <Property Name="Mobile2" Type="nvarchar" MaxLength="50" />
           <Property Name="Residential_Address" Type="nvarchar" MaxLength="500" />
-          <Property Name="Line1" Type="nvarchar" MaxLength="100" />
-          <Property Name="Line2" Type="nvarchar" MaxLength="100" />
+          <Property Name="Line1" Type="nvarchar(max)" />
+          <Property Name="Line2" Type="nvarchar(max)" />
           <Property Name="CountryID" Type="int" />
           <Property Name="StateID" Type="int" />
           <Property Name="CityID" Type="int" />
@@ -911,6 +1048,12 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="TreatmentsCost" Type="nvarchar" MaxLength="50" />
           <Property Name="CtrateDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="IsClosed" Type="bit" />
+          <Property Name="TNotes" Type="nvarchar(max)" />
+          <Property Name="Unit" Type="int" />
+          <Property Name="Discount" Type="nvarchar" MaxLength="15" />
+          <Property Name="Tex" Type="nvarchar" MaxLength="15" />
+          <Property Name="ISInvoice" Type="int" />
         </EntityType>
         <EntityType Name="TreatmentCostPlans">
           <Key>
@@ -947,6 +1090,18 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="DoctorID" Type="int" />
           <Property Name="PlanDetails" Type="nvarchar(max)" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="CreateOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TreatmentStartedNotes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TreatmentbyPatientID" Type="int" />
+          <Property Name="patientid" Type="int" />
+          <Property Name="TootNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="TypeofWorkLab">
           <Key>
@@ -954,6 +1109,19 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           </Key>
           <Property Name="TypeOfworkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TypeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="UnitMaster">
+          <Key>
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="UnitId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsMedical" Type="nvarchar" MaxLength="150" />
+          <Property Name="UnitName" Type="nvarchar" MaxLength="150" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="UsedMaterial">
@@ -968,6 +1136,16 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="ReceiveQty" Type="int" />
           <Property Name="CreateId" Type="int" />
           <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserLoginHistory">
+          <Key>
+            <PropertyRef Name="LoginID" />
+          </Key>
+          <Property Name="LoginID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="LoginDateTime" Type="datetime" />
+          <Property Name="Vid" Type="int" />
         </EntityType>
         <EntityType Name="VendorMaster">
           <Key>
@@ -996,12 +1174,38 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
+        <EntityType Name="VideoMaster">
+          <Key>
+            <PropertyRef Name="VID" />
+          </Key>
+          <Property Name="VID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="LinkPath" Type="nvarchar(max)" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
         <EntityType Name="YearMaster">
           <Key>
             <PropertyRef Name="Yearid" />
           </Key>
           <Property Name="Yearid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="YearName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DayMaster">
+          <Key>
+            <PropertyRef Name="DayId" />
+          </Key>
+          <Property Name="DayId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DayName" Type="int" />
+        </EntityType>
+        <EntityType Name="SubAdminClinic">
+          <Key>
+            <PropertyRef Name="SubAdminId" />
+          </Key>
+          <Property Name="SubAdminId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DoctorId" Type="int" />
+          <Property Name="ClinicId" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <Association Name="FK_tbl_DoctorByFaculty_tbl_DrSpeciality">
           <End Role="tbl_DrSpeciality" Type="Self.tbl_DrSpeciality" Multiplicity="0..1" />
@@ -1027,7 +1231,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="NewOrthoSquare2210ModelStoreContainer">
+        <EntityContainer Name="OrthosquareModelStoreContainer">
           <EntitySet Name="AdvertismentMaster" EntityType="Self.AdvertismentMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AllergicMaster" EntityType="Self.AllergicMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="App_VersionMaster" EntityType="Self.App_VersionMaster" Schema="dbo" store:Type="Tables" />
@@ -1038,6 +1242,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <EntitySet Name="DentalCategory" EntityType="Self.DentalCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DoctorAttendance" EntityType="Self.DoctorAttendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DoctorByClinic" EntityType="Self.DoctorByClinic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EditorDetail" EntityType="Self.EditorDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMIBajajFinance" EntityType="Self.EMIBajajFinance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enquiry" EntityType="Self.Enquiry" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EnquirySourceMaster" EntityType="Self.EnquirySourceMaster" Schema="dbo" store:Type="Tables" />
@@ -1050,11 +1255,16 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <EntitySet Name="InOutMaterialMaster" EntityType="Self.InOutMaterialMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceMaster" EntityType="Self.InvoiceMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IssuetypeMaster" EntityType="Self.IssuetypeMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LabDetails" EntityType="Self.LabDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LabMaster" EntityType="Self.LabMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LabMasterNew" EntityType="Self.LabMasterNew" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ManageMaterialStock" EntityType="Self.ManageMaterialStock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialMaster" EntityType="Self.MaterialMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialType" EntityType="Self.MaterialType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MedicalProblem" EntityType="Self.MedicalProblem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicinesMaster" EntityType="Self.MedicinesMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuRight" EntityType="Self.MenuRight" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MonthsMaster" EntityType="Self.MonthsMaster" Schema="dbo" store:Type="Tables" />
@@ -1069,11 +1279,14 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <EntitySet Name="PatientTreatmentImage" EntityType="Self.PatientTreatmentImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentDetilas" EntityType="Self.PaymentDetilas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReceivedMaterial" EntityType="Self.ReceivedMaterial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReportIssue" EntityType="Self.ReportIssue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SoftwareExpiredMaster" EntityType="Self.SoftwareExpiredMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ClinicDetails" EntityType="Self.tbl_ClinicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Doctor_Degree" EntityType="Self.tbl_Doctor_Degree" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_DoctorByDegree" EntityType="Self.tbl_DoctorByDegree" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_DoctorByDegreeNew" EntityType="Self.tbl_DoctorByDegreeNew" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_DoctorBySpeciality" EntityType="Self.tbl_DoctorBySpeciality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_DoctorDetails" EntityType="Self.tbl_DoctorDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_DoctorType" EntityType="Self.tbl_DoctorType" Schema="dbo" store:Type="Tables" />
@@ -1090,20 +1303,17 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <EntitySet Name="TreatmentCostPlans" EntityType="Self.TreatmentCostPlans" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TreatmentMASTER" EntityType="Self.TreatmentMASTER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TreatmentPlan" EntityType="Self.TreatmentPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TreatmentStartedNotes" EntityType="Self.TreatmentStartedNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeofWorkLab" EntityType="Self.TypeofWorkLab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnitMaster" EntityType="Self.UnitMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsedMaterial" EntityType="Self.UsedMaterial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLoginHistory" EntityType="Self.UserLoginHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorMaster" EntityType="Self.VendorMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorTypeMaster" EntityType="Self.VendorTypeMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VideoMaster" EntityType="Self.VideoMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="YearMaster" EntityType="Self.YearMaster" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EditorDetail" EntityType="Self.EditorDetail" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [EditorDetail].[ID] AS [ID], 
-    [EditorDetail].[Type] AS [Type], 
-    [EditorDetail].[Detail] AS [Detail], 
-    [EditorDetail].[IsActive] AS [IsActive], 
-    [EditorDetail].[Date] AS [Date]
-    FROM [dbo].[EditorDetail] AS [EditorDetail]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="DayMaster" EntityType="Self.DayMaster" Schema="ortho_admin" store:Type="Tables" />
+          <EntitySet Name="SubAdminClinic" EntityType="Self.SubAdminClinic" Schema="ortho_admin" store:Type="Tables" />
           <AssociationSet Name="FK_tbl_DoctorByFaculty_tbl_DrSpeciality" Association="Self.FK_tbl_DoctorByFaculty_tbl_DrSpeciality">
             <End Role="tbl_DrSpeciality" EntitySet="tbl_DrSpeciality" />
             <End Role="tbl_DoctorBySpeciality" EntitySet="tbl_DoctorBySpeciality" />
@@ -1113,10 +1323,24 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             <End Role="tbl_DoctorDetails" EntitySet="tbl_DoctorDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="NewOrthoSquare2210Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="OrthosquareModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdvertismentMaster">
+          <Key>
+            <PropertyRef Name="Aid" />
+          </Key>
+          <Property Name="Aid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AdImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
         <EntityType Name="AllergicMaster">
           <Key>
             <PropertyRef Name="allergicId" />
@@ -1128,6 +1352,15 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Int32" />
+        </EntityType>
+        <EntityType Name="App_VersionMaster">
+          <Key>
+            <PropertyRef Name="App_VersionID" />
+          </Key>
+          <Property Name="App_VersionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="App_Version" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="App_VCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ForceUpdate" Type="Boolean" />
         </EntityType>
         <EntityType Name="AppointmentMaster">
           <Key>
@@ -1153,6 +1386,19 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="Status" Type="Int32" />
           <Property Name="OnlineData" Type="Boolean" />
           <Property Name="OffLineData" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="EnquiryID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="BrandMaster">
+          <Key>
+            <PropertyRef Name="BrandId" />
+          </Key>
+          <Property Name="BrandId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
@@ -1194,6 +1440,19 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
+        <EntityType Name="DoctorAttendance">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+          </Key>
+          <Property Name="AttendanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClinicID" Type="Int32" />
+          <Property Name="DoctorID" Type="Int32" />
+          <Property Name="TimeIn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TimeOut" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AttendanceDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="Fid" Type="Int32" />
+        </EntityType>
         <EntityType Name="DoctorByClinic">
           <Key>
             <PropertyRef Name="DCID" />
@@ -1204,6 +1463,15 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="UpdateID" Type="Int32" />
           <Property Name="Updatetime" Type="DateTime" Precision="3" />
           <Property Name="IsActivr" Type="Boolean" />
+          <Property Name="IsDeactive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="EditorDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="EMIBajajFinance">
           <Key>
@@ -1227,7 +1495,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="Sourceid" Type="Int32" />
           <Property Name="PurposeId" Type="Int32" />
           <Property Name="ClinicID" Type="Int32" />
-          <Property Name="Enquiryno" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Enquiryno" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="EnquiryDate" Type="DateTime" Precision="3" />
           <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
@@ -1257,6 +1525,8 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="TreatmentID" Type="Int32" />
           <Property Name="Pstatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="TelecallerToEmpId" Type="Int32" />
         </EntityType>
         <EntityType Name="EnquirySourceMaster">
           <Key>
@@ -1296,6 +1566,20 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="ExpBillphoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreateID" Type="Int32" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="VendorType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FromPlace" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ToPlace" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="FeedbackMaster">
+          <Key>
+            <PropertyRef Name="Feedbackid" />
+          </Key>
+          <Property Name="Feedbackid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="patientid" Type="Int32" />
+          <Property Name="FeedbackType" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="FeedbackDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FeedbackDate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="Followup">
@@ -1349,7 +1633,10 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="InoutID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaterialId" Type="Int32" />
           <Property Name="VendorID" Type="Int32" />
+          <Property Name="ClinicID" Type="Int32" />
+          <Property Name="DoctorID" Type="Int32" />
           <Property Name="OrderQty" Type="Int32" />
+          <Property Name="OrderPrice" Type="Int32" />
           <Property Name="ReceiveQty" Type="Int32" />
           <Property Name="OrderDate" Type="DateTime" Precision="3" />
           <Property Name="Receiveddate" Type="DateTime" Precision="3" />
@@ -1358,9 +1645,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="UpdateId" Type="Int32" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
-          <Property Name="ClinicID" Type="Int32" />
-          <Property Name="DoctorID" Type="Int32" />
-          <Property Name="OrderPrice" Type="Int32" />
+          <Property Name="UnitName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="InvoiceDetail">
           <Key>
@@ -1405,6 +1690,14 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="CreateID" Type="Int32" />
           <Property Name="PendingF" Type="Boolean" />
         </EntityType>
+        <EntityType Name="IssuetypeMaster">
+          <Key>
+            <PropertyRef Name="Issuetypeid" />
+          </Key>
+          <Property Name="Issuetypeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IssuetypeName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
         <EntityType Name="LabDetail">
           <Key>
             <PropertyRef Name="TLabid" />
@@ -1444,6 +1737,19 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
+        <EntityType Name="LabMasterNew">
+          <Key>
+            <PropertyRef Name="LabId" />
+          </Key>
+          <Property Name="LabId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LabName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreateBy" Type="Int32" />
+          <Property Name="CreateDatetime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CommissionType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Commission" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Login">
           <Key>
             <PropertyRef Name="UserID" />
@@ -1456,6 +1762,45 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="ClinicID" Type="Int32" />
           <Property Name="IMEI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="ManageMaterialStock">
+          <Key>
+            <PropertyRef Name="materialstockID" />
+          </Key>
+          <Property Name="materialstockID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaterialId" Type="Int32" />
+          <Property Name="VendorID" Type="Int32" />
+          <Property Name="TotalMaterial" Type="Int32" />
+        </EntityType>
+        <EntityType Name="MaterialMaster">
+          <Key>
+            <PropertyRef Name="MaterialId" />
+          </Key>
+          <Property Name="MaterialId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaterialTypeId" Type="Int32" />
+          <Property Name="MaterialName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="BrandId" Type="Int32" />
+          <Property Name="PackId" Type="Int32" />
+          <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateId" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Updateid" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="MaterialType">
+          <Key>
+            <PropertyRef Name="MaterialTypeId" />
+          </Key>
+          <Property Name="MaterialTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaterialName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsMedical" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Unitid" Type="Int32" />
+          <Property Name="CreateBy" Type="Int32" />
+          <Property Name="CreateDatetime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDatetime" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
         <EntityType Name="MedicalProblem">
           <Key>
             <PropertyRef Name="MedicalProid" />
@@ -1466,6 +1811,22 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="MedicinesMaster">
+          <Key>
+            <PropertyRef Name="MedicinesId" />
+          </Key>
+          <Property Name="MedicinesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaterialTypeId" Type="Int32" />
+          <Property Name="MedicinesName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="MedicinesCompany" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="UnitId" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CreateBy" Type="Int32" />
+          <Property Name="CreateDatetime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="UpdateDatetime" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="Menu">
@@ -1498,7 +1859,21 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           </Key>
           <Property Name="MonthID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MonthsName" Type="Int32" />
+          <Property Name="MonthsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MonthsNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Yearid" Type="Int32" />
+        </EntityType>
+        <EntityType Name="PackMaster">
+          <Key>
+            <PropertyRef Name="PackId" />
+          </Key>
+          <Property Name="PackId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PackName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="PatienByToothNo">
           <Key>
@@ -1514,10 +1889,13 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           </Key>
           <Property Name="DentalinfoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="patientid" Type="Int32" />
+          <Property Name="DoctorID" Type="Int32" />
           <Property Name="Complaint" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DentalTreatment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ConsentStatement" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ToothNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ConsentParth" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreateOn" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="PatientbyMedicalProblem">
           <Key>
@@ -1592,15 +1970,24 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             <PropertyRef Name="Medicinesid" />
           </Key>
           <Property Name="Medicinesid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorId" Type="Int32" />
           <Property Name="patientid" Type="Int32" />
           <Property Name="MedicinesName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MId" Type="Int32" />
           <Property Name="txtMtype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TotalMedicines" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="DayMedicines" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="MorningMedicines" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="AfternoonMedicines" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="EveningMedicines" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="InHouse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Strip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Discount" Type="Int32" />
+          <Property Name="TotalDiscount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="GrandTotal" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="CreateId" Type="Int32" />
@@ -1656,6 +2043,28 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="Updateby" Type="Int32" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="ReportIssue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="IssueType" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Attachment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CommentDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="ClinicId" Type="Int32" />
+          <Property Name="DoctorId" Type="Int32" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -1664,6 +2073,15 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="DashBoardName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SoftwareExpiredMaster">
+          <Key>
+            <PropertyRef Name="ExpiredID" />
+          </Key>
+          <Property Name="ExpiredID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ExpiredDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -1702,6 +2120,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="FirstName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="LastName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="IsApprove" Type="Boolean" />
         </EntityType>
         <EntityType Name="tbl_Doctor_Degree">
           <Key>
@@ -1724,6 +2143,17 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="DegreeUpload2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_DoctorByDegreeNew">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DoctorID" Type="Int32" />
+          <Property Name="DegreeName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Boardname" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CertificationImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="tbl_DoctorBySpeciality">
           <Key>
@@ -1753,8 +2183,8 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="Mobile1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Mobile2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Residential_Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Line1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Line2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Line1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Line2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CountryID" Type="Int32" />
           <Property Name="StateID" Type="Int32" />
           <Property Name="CityID" Type="Int32" />
@@ -1936,6 +2366,12 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="TreatmentsCost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CtrateDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsClosed" Type="Boolean" />
+          <Property Name="TNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="Int32" />
+          <Property Name="Discount" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Tex" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="ISInvoice" Type="Int32" />
         </EntityType>
         <EntityType Name="TreatmentCostPlan">
           <Key>
@@ -1972,6 +2408,18 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="DoctorID" Type="Int32" />
           <Property Name="PlanDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreateOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TreatmentStartedNote">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TreatmentbyPatientID" Type="Int32" />
+          <Property Name="patientid" Type="Int32" />
+          <Property Name="TootNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="TypeofWorkLab">
           <Key>
@@ -1981,11 +2429,49 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
+        <EntityType Name="UnitMaster">
+          <Key>
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="UnitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsMedical" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UnitName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="UsedMaterial">
+          <Key>
+            <PropertyRef Name="UsedMid" />
+          </Key>
+          <Property Name="UsedMid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaterialId" Type="Int32" />
+          <Property Name="ClinicID" Type="Int32" />
+          <Property Name="DoctorID" Type="Int32" />
+          <Property Name="patientid" Type="Int32" />
+          <Property Name="ReceiveQty" Type="Int32" />
+          <Property Name="CreateId" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserLoginHistory">
+          <Key>
+            <PropertyRef Name="LoginID" />
+          </Key>
+          <Property Name="LoginID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="LoginDateTime" Type="DateTime" Precision="3" />
+          <Property Name="Vid" Type="Int32" />
+        </EntityType>
         <EntityType Name="VendorMaster">
           <Key>
             <PropertyRef Name="VendorID" />
           </Key>
           <Property Name="VendorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClinicID" Type="Int32" />
+          <Property Name="VendorTypeId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="VendorName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="Int32" />
@@ -1993,8 +2479,51 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
-          <Property Name="ClinicID" Type="Int32" />
-          <Property Name="VendorTypeId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VendorTypeMaster">
+          <Key>
+            <PropertyRef Name="VendorTypeId" />
+          </Key>
+          <Property Name="VendorTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VendorType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="VideoMaster">
+          <Key>
+            <PropertyRef Name="VID" />
+          </Key>
+          <Property Name="VID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LinkPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="YearMaster">
+          <Key>
+            <PropertyRef Name="Yearid" />
+          </Key>
+          <Property Name="Yearid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YearName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DayMaster">
+          <Key>
+            <PropertyRef Name="DayId" />
+          </Key>
+          <Property Name="DayId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DayName" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SubAdminClinic">
+          <Key>
+            <PropertyRef Name="SubAdminId" />
+          </Key>
+          <Property Name="SubAdminId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DoctorId" Type="Int32" />
+          <Property Name="ClinicId" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <Association Name="FK_tbl_DoctorByFaculty_tbl_DrSpeciality">
           <End Role="tbl_DrSpeciality" Type="Self.tbl_DrSpeciality" Multiplicity="0..1" />
@@ -2020,31 +2549,44 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="NewOrthoSquare2210Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="OrthosquareEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdvertismentMasters" EntityType="Self.AdvertismentMaster" />
           <EntitySet Name="AllergicMasters" EntityType="Self.AllergicMaster" />
+          <EntitySet Name="App_VersionMaster" EntityType="Self.App_VersionMaster" />
           <EntitySet Name="AppointmentMasters" EntityType="Self.AppointmentMaster" />
+          <EntitySet Name="BrandMasters" EntityType="Self.BrandMaster" />
           <EntitySet Name="Cities" EntityType="Self.City" />
           <EntitySet Name="Countries" EntityType="Self.Country" />
           <EntitySet Name="DentalCategories" EntityType="Self.DentalCategory" />
+          <EntitySet Name="DoctorAttendances" EntityType="Self.DoctorAttendance" />
           <EntitySet Name="DoctorByClinics" EntityType="Self.DoctorByClinic" />
+          <EntitySet Name="EditorDetails" EntityType="Self.EditorDetail" />
           <EntitySet Name="EMIBajajFinances" EntityType="Self.EMIBajajFinance" />
           <EntitySet Name="Enquiries" EntityType="Self.Enquiry" />
           <EntitySet Name="EnquirySourceMasters" EntityType="Self.EnquirySourceMaster" />
           <EntitySet Name="Enquirystatus" EntityType="Self.Enquirystatu" />
           <EntitySet Name="ExpenseMasters" EntityType="Self.ExpenseMaster" />
+          <EntitySet Name="FeedbackMasters" EntityType="Self.FeedbackMaster" />
           <EntitySet Name="Followups" EntityType="Self.Followup" />
           <EntitySet Name="FollowupModes" EntityType="Self.FollowupMode" />
           <EntitySet Name="GSTRateMasters" EntityType="Self.GSTRateMaster" />
           <EntitySet Name="InOutMaterialMasters" EntityType="Self.InOutMaterialMaster" />
           <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetail" />
           <EntitySet Name="InvoiceMasters" EntityType="Self.InvoiceMaster" />
+          <EntitySet Name="IssuetypeMasters" EntityType="Self.IssuetypeMaster" />
           <EntitySet Name="LabDetails" EntityType="Self.LabDetail" />
           <EntitySet Name="LabMasters" EntityType="Self.LabMaster" />
+          <EntitySet Name="LabMasterNews" EntityType="Self.LabMasterNew" />
           <EntitySet Name="Logins" EntityType="Self.Login" />
+          <EntitySet Name="ManageMaterialStocks" EntityType="Self.ManageMaterialStock" />
+          <EntitySet Name="MaterialMasters" EntityType="Self.MaterialMaster" />
+          <EntitySet Name="MaterialTypes" EntityType="Self.MaterialType" />
           <EntitySet Name="MedicalProblems" EntityType="Self.MedicalProblem" />
+          <EntitySet Name="MedicinesMasters" EntityType="Self.MedicinesMaster" />
           <EntitySet Name="Menus" EntityType="Self.Menu" />
           <EntitySet Name="MenuRights" EntityType="Self.MenuRight" />
           <EntitySet Name="MonthsMasters" EntityType="Self.MonthsMaster" />
+          <EntitySet Name="PackMasters" EntityType="Self.PackMaster" />
           <EntitySet Name="PatienByToothNoes" EntityType="Self.PatienByToothNo" />
           <EntitySet Name="PatientbyDentalinfoes" EntityType="Self.PatientbyDentalinfo" />
           <EntitySet Name="PatientbyMedicalProblems" EntityType="Self.PatientbyMedicalProblem" />
@@ -2055,11 +2597,14 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <EntitySet Name="PatientTreatmentImages" EntityType="Self.PatientTreatmentImage" />
           <EntitySet Name="PaymentDetilas" EntityType="Self.PaymentDetila" />
           <EntitySet Name="ReceivedMaterials" EntityType="Self.ReceivedMaterial" />
+          <EntitySet Name="ReportIssues" EntityType="Self.ReportIssue" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="SoftwareExpiredMasters" EntityType="Self.SoftwareExpiredMaster" />
           <EntitySet Name="States" EntityType="Self.State" />
           <EntitySet Name="tbl_ClinicDetails" EntityType="Self.tbl_ClinicDetails" />
           <EntitySet Name="tbl_Doctor_Degree" EntityType="Self.tbl_Doctor_Degree" />
           <EntitySet Name="tbl_DoctorByDegree" EntityType="Self.tbl_DoctorByDegree" />
+          <EntitySet Name="tbl_DoctorByDegreeNew" EntityType="Self.tbl_DoctorByDegreeNew" />
           <EntitySet Name="tbl_DoctorBySpeciality" EntityType="Self.tbl_DoctorBySpeciality" />
           <EntitySet Name="tbl_DoctorDetails" EntityType="Self.tbl_DoctorDetails" />
           <EntitySet Name="tbl_DoctorType" EntityType="Self.tbl_DoctorType" />
@@ -2076,8 +2621,17 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
           <EntitySet Name="TreatmentCostPlans" EntityType="Self.TreatmentCostPlan" />
           <EntitySet Name="TreatmentMASTERs" EntityType="Self.TreatmentMASTER" />
           <EntitySet Name="TreatmentPlans" EntityType="Self.TreatmentPlan" />
+          <EntitySet Name="TreatmentStartedNotes" EntityType="Self.TreatmentStartedNote" />
           <EntitySet Name="TypeofWorkLabs" EntityType="Self.TypeofWorkLab" />
+          <EntitySet Name="UnitMasters" EntityType="Self.UnitMaster" />
+          <EntitySet Name="UsedMaterials" EntityType="Self.UsedMaterial" />
+          <EntitySet Name="UserLoginHistories" EntityType="Self.UserLoginHistory" />
           <EntitySet Name="VendorMasters" EntityType="Self.VendorMaster" />
+          <EntitySet Name="VendorTypeMasters" EntityType="Self.VendorTypeMaster" />
+          <EntitySet Name="VideoMasters" EntityType="Self.VideoMaster" />
+          <EntitySet Name="YearMasters" EntityType="Self.YearMaster" />
+          <EntitySet Name="DayMasters" EntityType="Self.DayMaster" />
+          <EntitySet Name="SubAdminClinics" EntityType="Self.SubAdminClinic" />
           <AssociationSet Name="FK_tbl_DoctorByFaculty_tbl_DrSpeciality" Association="Self.FK_tbl_DoctorByFaculty_tbl_DrSpeciality">
             <End Role="tbl_DrSpeciality" EntitySet="tbl_DrSpeciality" />
             <End Role="tbl_DoctorBySpeciality" EntitySet="tbl_DoctorBySpeciality" />
@@ -2086,147 +2640,29 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             <End Role="tbl_Location" EntitySet="tbl_Location" />
             <End Role="tbl_DoctorDetails" EntitySet="tbl_DoctorDetails" />
           </AssociationSet>
-          <EntitySet Name="DoctorAttendances" EntityType="NewOrthoSquare2210Model.DoctorAttendance" />
-          <EntitySet Name="FeedbackMasters" EntityType="NewOrthoSquare2210Model.FeedbackMaster" />
-          <EntitySet Name="ManageMaterialStocks" EntityType="NewOrthoSquare2210Model.ManageMaterialStock" />
-          <EntitySet Name="PackMasters" EntityType="NewOrthoSquare2210Model.PackMaster" />
-          <EntitySet Name="UsedMaterials" EntityType="NewOrthoSquare2210Model.UsedMaterial" />
-          <EntitySet Name="VendorTypeMasters" EntityType="NewOrthoSquare2210Model.VendorTypeMaster" />
-          <EntitySet Name="YearMasters" EntityType="NewOrthoSquare2210Model.YearMaster" />
-          <EntitySet Name="BrandMasters" EntityType="NewOrthoSquare2210Model.BrandMaster" />
-          <EntitySet Name="EditorDetails" EntityType="NewOrthoSquare2210Model.EditorDetail" />
-          <EntitySet Name="AdvertismentMasters" EntityType="NewOrthoSquare2210Model.AdvertismentMaster" />
-          <EntitySet Name="App_VersionMaster" EntityType="NewOrthoSquare2210Model.App_VersionMaster" />
         </EntityContainer>
-        <EntityType Name="DoctorAttendance">
-          <Key>
-            <PropertyRef Name="AttendanceId" />
-          </Key>
-          <Property Name="AttendanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClinicID" Type="Int32" />
-          <Property Name="DoctorID" Type="Int32" />
-          <Property Name="TimeIn" Type="Time" Precision="7" />
-          <Property Name="TimeOut" Type="Time" Precision="7" />
-          <Property Name="AttendanceDate" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="Fid" Type="Int32" />
-        </EntityType>
-        <EntityType Name="FeedbackMaster">
-          <Key>
-            <PropertyRef Name="Feedbackid" />
-          </Key>
-          <Property Name="Feedbackid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="patientid" Type="Int32" />
-          <Property Name="FeedbackType" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="FeedbackDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FeedbackDate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="ManageMaterialStock">
-          <Key>
-            <PropertyRef Name="materialstockID" />
-          </Key>
-          <Property Name="materialstockID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MaterialId" Type="Int32" />
-          <Property Name="VendorID" Type="Int32" />
-          <Property Name="TotalMaterial" Type="Int32" />
-        </EntityType>
-        <EntityType Name="PackMaster">
-          <Key>
-            <PropertyRef Name="PackId" />
-          </Key>
-          <Property Name="PackId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PackName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="UsedMaterial">
-          <Key>
-            <PropertyRef Name="UsedMid" />
-          </Key>
-          <Property Name="UsedMid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MaterialId" Type="Int32" />
-          <Property Name="ClinicID" Type="Int32" />
-          <Property Name="DoctorID" Type="Int32" />
-          <Property Name="patientid" Type="Int32" />
-          <Property Name="ReceiveQty" Type="Int32" />
-          <Property Name="CreateId" Type="Int32" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="VendorTypeMaster">
-          <Key>
-            <PropertyRef Name="VendorTypeId" />
-          </Key>
-          <Property Name="VendorTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="VendorType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="YearMaster">
-          <Key>
-            <PropertyRef Name="Yearid" />
-          </Key>
-          <Property Name="Yearid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="YearName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="BrandMaster">
-          <Key>
-            <PropertyRef Name="BrandId" />
-          </Key>
-          <Property Name="BrandId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BrandName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="EditorDetail">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="AdvertismentMaster">
-          <Key>
-            <PropertyRef Name="Aid" />
-          </Key>
-          <Property Name="Aid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="AdImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="App_VersionMaster">
-          <Key>
-            <PropertyRef Name="App_VersionID" />
-          </Key>
-          <Property Name="App_VersionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="App_Version" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="App_VCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ForceUpdate" Type="Boolean" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="NewOrthoSquare2210ModelStoreContainer" CdmEntityContainer="NewOrthoSquare2210Entities">
+        <EntityContainerMapping StorageEntityContainer="OrthosquareModelStoreContainer" CdmEntityContainer="OrthosquareEntities">
+          <EntitySetMapping Name="AdvertismentMasters">
+            <EntityTypeMapping TypeName="OrthosquareModel.AdvertismentMaster">
+              <MappingFragment StoreEntitySet="AdvertismentMaster">
+                <ScalarProperty Name="Aid" ColumnName="Aid" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="AdImage" ColumnName="AdImage" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AllergicMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.AllergicMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.AllergicMaster">
               <MappingFragment StoreEntitySet="AllergicMaster">
                 <ScalarProperty Name="allergicId" ColumnName="allergicId" />
                 <ScalarProperty Name="allergicName" ColumnName="allergicName" />
@@ -2238,8 +2674,18 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="App_VersionMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.App_VersionMaster">
+              <MappingFragment StoreEntitySet="App_VersionMaster">
+                <ScalarProperty Name="App_VersionID" ColumnName="App_VersionID" />
+                <ScalarProperty Name="App_Version" ColumnName="App_Version" />
+                <ScalarProperty Name="App_VCode" ColumnName="App_VCode" />
+                <ScalarProperty Name="ForceUpdate" ColumnName="ForceUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AppointmentMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.AppointmentMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.AppointmentMaster">
               <MappingFragment StoreEntitySet="AppointmentMaster">
                 <ScalarProperty Name="Appointmentid" ColumnName="Appointmentid" />
                 <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
@@ -2266,11 +2712,25 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="EnquiryID" ColumnName="EnquiryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BrandMasters">
+            <EntityTypeMapping TypeName="OrthosquareModel.BrandMaster">
+              <MappingFragment StoreEntitySet="BrandMaster">
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Cities">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.City">
+            <EntityTypeMapping TypeName="OrthosquareModel.City">
               <MappingFragment StoreEntitySet="City">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CityID" ColumnName="CityID" />
@@ -2283,7 +2743,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Countries">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.Country">
+            <EntityTypeMapping TypeName="OrthosquareModel.Country">
               <MappingFragment StoreEntitySet="Country">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CountryID" ColumnName="CountryID" />
@@ -2295,7 +2755,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DentalCategories">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.DentalCategory">
+            <EntityTypeMapping TypeName="OrthosquareModel.DentalCategory">
               <MappingFragment StoreEntitySet="DentalCategory">
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
@@ -2307,8 +2767,22 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DoctorAttendances">
+            <EntityTypeMapping TypeName="OrthosquareModel.DoctorAttendance">
+              <MappingFragment StoreEntitySet="DoctorAttendance">
+                <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
+                <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="TimeIn" ColumnName="TimeIn" />
+                <ScalarProperty Name="TimeOut" ColumnName="TimeOut" />
+                <ScalarProperty Name="AttendanceDate" ColumnName="AttendanceDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Fid" ColumnName="Fid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="DoctorByClinics">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.DoctorByClinic">
+            <EntityTypeMapping TypeName="OrthosquareModel.DoctorByClinic">
               <MappingFragment StoreEntitySet="DoctorByClinic">
                 <ScalarProperty Name="DCID" ColumnName="DCID" />
                 <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
@@ -2316,11 +2790,21 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
                 <ScalarProperty Name="UpdateID" ColumnName="UpdateID" />
                 <ScalarProperty Name="Updatetime" ColumnName="Updatetime" />
                 <ScalarProperty Name="IsActivr" ColumnName="IsActivr" />
+                <ScalarProperty Name="IsDeactive" ColumnName="IsDeactive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EditorDetails">
+            <EntityTypeMapping TypeName="OrthosquareModel.EditorDetail">
+              <MappingFragment StoreEntitySet="EditorDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EMIBajajFinances">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.EMIBajajFinance">
+            <EntityTypeMapping TypeName="OrthosquareModel.EMIBajajFinance">
               <MappingFragment StoreEntitySet="EMIBajajFinance">
                 <ScalarProperty Name="EMIID" ColumnName="EMIID" />
                 <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
@@ -2334,7 +2818,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Enquiries">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.Enquiry">
+            <EntityTypeMapping TypeName="OrthosquareModel.Enquiry">
               <MappingFragment StoreEntitySet="Enquiry">
                 <ScalarProperty Name="EnquiryID" ColumnName="EnquiryID" />
                 <ScalarProperty Name="CatId" ColumnName="CatId" />
@@ -2371,11 +2855,13 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="TreatmentID" ColumnName="TreatmentID" />
                 <ScalarProperty Name="Pstatus" ColumnName="Pstatus" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="TelecallerToEmpId" ColumnName="TelecallerToEmpId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EnquirySourceMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.EnquirySourceMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.EnquirySourceMaster">
               <MappingFragment StoreEntitySet="EnquirySourceMaster">
                 <ScalarProperty Name="Sourceid" ColumnName="Sourceid" />
                 <ScalarProperty Name="Sourcename" ColumnName="Sourcename" />
@@ -2388,7 +2874,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Enquirystatus">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.Enquirystatu">
+            <EntityTypeMapping TypeName="OrthosquareModel.Enquirystatu">
               <MappingFragment StoreEntitySet="Enquirystatus">
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="statusName" ColumnName="statusName" />
@@ -2401,7 +2887,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ExpenseMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.ExpenseMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.ExpenseMaster">
               <MappingFragment StoreEntitySet="ExpenseMaster">
                 <ScalarProperty Name="ExpenseID" ColumnName="ExpenseID" />
                 <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
@@ -2414,11 +2900,26 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
                 <ScalarProperty Name="CreateID" ColumnName="CreateID" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
+                <ScalarProperty Name="FromPlace" ColumnName="FromPlace" />
+                <ScalarProperty Name="ToPlace" ColumnName="ToPlace" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeedbackMasters">
+            <EntityTypeMapping TypeName="OrthosquareModel.FeedbackMaster">
+              <MappingFragment StoreEntitySet="FeedbackMaster">
+                <ScalarProperty Name="Feedbackid" ColumnName="Feedbackid" />
+                <ScalarProperty Name="patientid" ColumnName="patientid" />
+                <ScalarProperty Name="FeedbackType" ColumnName="FeedbackType" />
+                <ScalarProperty Name="FeedbackDetails" ColumnName="FeedbackDetails" />
+                <ScalarProperty Name="FeedbackDate" ColumnName="FeedbackDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Followups">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.Followup">
+            <EntityTypeMapping TypeName="OrthosquareModel.Followup">
               <MappingFragment StoreEntitySet="Followup">
                 <ScalarProperty Name="Followupid" ColumnName="Followupid" />
                 <ScalarProperty Name="FollowupCode" ColumnName="FollowupCode" />
@@ -2443,7 +2944,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FollowupModes">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.FollowupMode">
+            <EntityTypeMapping TypeName="OrthosquareModel.FollowupMode">
               <MappingFragment StoreEntitySet="FollowupMode">
                 <ScalarProperty Name="ModeId" ColumnName="ModeId" />
                 <ScalarProperty Name="ModeName" ColumnName="ModeName" />
@@ -2456,7 +2957,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="GSTRateMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.GSTRateMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.GSTRateMaster">
               <MappingFragment StoreEntitySet="GSTRateMaster">
                 <ScalarProperty Name="GSTid" ColumnName="GSTid" />
                 <ScalarProperty Name="GSTRate" ColumnName="GSTRate" />
@@ -2465,15 +2966,15 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InOutMaterialMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.InOutMaterialMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.InOutMaterialMaster">
               <MappingFragment StoreEntitySet="InOutMaterialMaster">
-                <ScalarProperty Name="OrderPrice" ColumnName="OrderPrice" />
-                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
-                <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
                 <ScalarProperty Name="InoutID" ColumnName="InoutID" />
                 <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
                 <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+                <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
                 <ScalarProperty Name="OrderQty" ColumnName="OrderQty" />
+                <ScalarProperty Name="OrderPrice" ColumnName="OrderPrice" />
                 <ScalarProperty Name="ReceiveQty" ColumnName="ReceiveQty" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="Receiveddate" ColumnName="Receiveddate" />
@@ -2482,11 +2983,12 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
                 <ScalarProperty Name="UpdateId" ColumnName="UpdateId" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InvoiceDetails">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.InvoiceDetail">
+            <EntityTypeMapping TypeName="OrthosquareModel.InvoiceDetail">
               <MappingFragment StoreEntitySet="InvoiceDetails">
                 <ScalarProperty Name="Invoiceid" ColumnName="Invoiceid" />
                 <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
@@ -2508,7 +3010,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InvoiceMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.InvoiceMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.InvoiceMaster">
               <MappingFragment StoreEntitySet="InvoiceMaster">
                 <ScalarProperty Name="InvoiceTid" ColumnName="InvoiceTid" />
                 <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
@@ -2530,8 +3032,17 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="IssuetypeMasters">
+            <EntityTypeMapping TypeName="OrthosquareModel.IssuetypeMaster">
+              <MappingFragment StoreEntitySet="IssuetypeMaster">
+                <ScalarProperty Name="Issuetypeid" ColumnName="Issuetypeid" />
+                <ScalarProperty Name="IssuetypeName" ColumnName="IssuetypeName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="LabDetails">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.LabDetail">
+            <EntityTypeMapping TypeName="OrthosquareModel.LabDetail">
               <MappingFragment StoreEntitySet="LabDetails">
                 <ScalarProperty Name="TLabid" ColumnName="TLabid" />
                 <ScalarProperty Name="Labid" ColumnName="Labid" />
@@ -2551,7 +3062,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LabMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.LabMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.LabMaster">
               <MappingFragment StoreEntitySet="LabMaster">
                 <ScalarProperty Name="Labid" ColumnName="Labid" />
                 <ScalarProperty Name="patientid" ColumnName="patientid" />
@@ -2571,8 +3082,22 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="LabMasterNews">
+            <EntityTypeMapping TypeName="OrthosquareModel.LabMasterNew">
+              <MappingFragment StoreEntitySet="LabMasterNew">
+                <ScalarProperty Name="LabId" ColumnName="LabId" />
+                <ScalarProperty Name="LabName" ColumnName="LabName" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDatetime" ColumnName="CreateDatetime" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CommissionType" ColumnName="CommissionType" />
+                <ScalarProperty Name="Commission" ColumnName="Commission" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Logins">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.Login">
+            <EntityTypeMapping TypeName="OrthosquareModel.Login">
               <MappingFragment StoreEntitySet="Login">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -2584,8 +3109,50 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ManageMaterialStocks">
+            <EntityTypeMapping TypeName="OrthosquareModel.ManageMaterialStock">
+              <MappingFragment StoreEntitySet="ManageMaterialStock">
+                <ScalarProperty Name="materialstockID" ColumnName="materialstockID" />
+                <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+                <ScalarProperty Name="TotalMaterial" ColumnName="TotalMaterial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaterialMasters">
+            <EntityTypeMapping TypeName="OrthosquareModel.MaterialMaster">
+              <MappingFragment StoreEntitySet="MaterialMaster">
+                <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+                <ScalarProperty Name="MaterialTypeId" ColumnName="MaterialTypeId" />
+                <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+                <ScalarProperty Name="PackId" ColumnName="PackId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CreateId" ColumnName="CreateId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Updateid" ColumnName="Updateid" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaterialTypes">
+            <EntityTypeMapping TypeName="OrthosquareModel.MaterialType">
+              <MappingFragment StoreEntitySet="MaterialType">
+                <ScalarProperty Name="MaterialTypeId" ColumnName="MaterialTypeId" />
+                <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
+                <ScalarProperty Name="IsMedical" ColumnName="IsMedical" />
+                <ScalarProperty Name="Unitid" ColumnName="Unitid" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDatetime" ColumnName="CreateDatetime" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDatetime" ColumnName="UpdateDatetime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="MedicalProblems">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.MedicalProblem">
+            <EntityTypeMapping TypeName="OrthosquareModel.MedicalProblem">
               <MappingFragment StoreEntitySet="MedicalProblem">
                 <ScalarProperty Name="MedicalProid" ColumnName="MedicalProid" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -2597,8 +3164,25 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MedicinesMasters">
+            <EntityTypeMapping TypeName="OrthosquareModel.MedicinesMaster">
+              <MappingFragment StoreEntitySet="MedicinesMaster">
+                <ScalarProperty Name="MedicinesId" ColumnName="MedicinesId" />
+                <ScalarProperty Name="MaterialTypeId" ColumnName="MaterialTypeId" />
+                <ScalarProperty Name="MedicinesName" ColumnName="MedicinesName" />
+                <ScalarProperty Name="MedicinesCompany" ColumnName="MedicinesCompany" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDatetime" ColumnName="CreateDatetime" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDatetime" ColumnName="UpdateDatetime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Menus">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.Menu">
+            <EntityTypeMapping TypeName="OrthosquareModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
                 <ScalarProperty Name="MenuID" ColumnName="MenuID" />
                 <ScalarProperty Name="MenuName" ColumnName="MenuName" />
@@ -2611,7 +3195,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MenuRights">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.MenuRight">
+            <EntityTypeMapping TypeName="OrthosquareModel.MenuRight">
               <MappingFragment StoreEntitySet="MenuRight">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="MenuID" ColumnName="MenuID" />
@@ -2624,16 +3208,31 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MonthsMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.MonthsMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.MonthsMaster">
               <MappingFragment StoreEntitySet="MonthsMaster">
                 <ScalarProperty Name="MonthID" ColumnName="MonthID" />
                 <ScalarProperty Name="MonthsName" ColumnName="MonthsName" />
+                <ScalarProperty Name="MonthsCode" ColumnName="MonthsCode" />
+                <ScalarProperty Name="MonthsNo" ColumnName="MonthsNo" />
                 <ScalarProperty Name="Yearid" ColumnName="Yearid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PackMasters">
+            <EntityTypeMapping TypeName="OrthosquareModel.PackMaster">
+              <MappingFragment StoreEntitySet="PackMaster">
+                <ScalarProperty Name="PackId" ColumnName="PackId" />
+                <ScalarProperty Name="PackName" ColumnName="PackName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PatienByToothNoes">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.PatienByToothNo">
+            <EntityTypeMapping TypeName="OrthosquareModel.PatienByToothNo">
               <MappingFragment StoreEntitySet="PatienByToothNo">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="patientid" ColumnName="patientid" />
@@ -2642,19 +3241,22 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PatientbyDentalinfoes">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.PatientbyDentalinfo">
+            <EntityTypeMapping TypeName="OrthosquareModel.PatientbyDentalinfo">
               <MappingFragment StoreEntitySet="PatientbyDentalinfo">
                 <ScalarProperty Name="DentalinfoID" ColumnName="DentalinfoID" />
                 <ScalarProperty Name="patientid" ColumnName="patientid" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
                 <ScalarProperty Name="Complaint" ColumnName="Complaint" />
                 <ScalarProperty Name="DentalTreatment" ColumnName="DentalTreatment" />
                 <ScalarProperty Name="ConsentStatement" ColumnName="ConsentStatement" />
                 <ScalarProperty Name="ToothNo" ColumnName="ToothNo" />
+                <ScalarProperty Name="ConsentParth" ColumnName="ConsentParth" />
+                <ScalarProperty Name="CreateOn" ColumnName="CreateOn" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PatientbyMedicalProblems">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.PatientbyMedicalProblem">
+            <EntityTypeMapping TypeName="OrthosquareModel.PatientbyMedicalProblem">
               <MappingFragment StoreEntitySet="PatientbyMedicalProblem">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="patientid" ColumnName="patientid" />
@@ -2665,7 +3267,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PatientfeesPayments">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.PatientfeesPayment">
+            <EntityTypeMapping TypeName="OrthosquareModel.PatientfeesPayment">
               <MappingFragment StoreEntitySet="PatientfeesPayment">
                 <ScalarProperty Name="paymentid" ColumnName="paymentid" />
                 <ScalarProperty Name="patientid" ColumnName="patientid" />
@@ -2676,10 +3278,8 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PatientMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.PatientMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.PatientMaster">
               <MappingFragment StoreEntitySet="PatientMaster">
-                <ScalarProperty Name="registrationToken" ColumnName="registrationToken" />
-                <ScalarProperty Name="PCstatus" ColumnName="PCstatus" />
                 <ScalarProperty Name="patientid" ColumnName="patientid" />
                 <ScalarProperty Name="PatientCode" ColumnName="PatientCode" />
                 <ScalarProperty Name="EnquiryId" ColumnName="EnquiryId" />
@@ -2705,11 +3305,13 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PCstatus" ColumnName="PCstatus" />
+                <ScalarProperty Name="registrationToken" ColumnName="registrationToken" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PatientMedicalHistories">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.PatientMedicalHistory">
+            <EntityTypeMapping TypeName="OrthosquareModel.PatientMedicalHistory">
               <MappingFragment StoreEntitySet="PatientMedicalHistory">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="patientid" ColumnName="patientid" />
@@ -2726,18 +3328,27 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PatientMedicines">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.PatientMedicine">
+            <EntityTypeMapping TypeName="OrthosquareModel.PatientMedicine">
               <MappingFragment StoreEntitySet="PatientMedicines">
                 <ScalarProperty Name="Medicinesid" ColumnName="Medicinesid" />
+                <ScalarProperty Name="CNo" ColumnName="CNo" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
                 <ScalarProperty Name="patientid" ColumnName="patientid" />
                 <ScalarProperty Name="MedicinesName" ColumnName="MedicinesName" />
+                <ScalarProperty Name="MId" ColumnName="MId" />
                 <ScalarProperty Name="txtMtype" ColumnName="txtMtype" />
                 <ScalarProperty Name="TotalMedicines" ColumnName="TotalMedicines" />
                 <ScalarProperty Name="DayMedicines" ColumnName="DayMedicines" />
                 <ScalarProperty Name="MorningMedicines" ColumnName="MorningMedicines" />
                 <ScalarProperty Name="AfternoonMedicines" ColumnName="AfternoonMedicines" />
                 <ScalarProperty Name="EveningMedicines" ColumnName="EveningMedicines" />
+                <ScalarProperty Name="InHouse" ColumnName="InHouse" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Strip" ColumnName="Strip" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="TotalDiscount" ColumnName="TotalDiscount" />
+                <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="CreateId" ColumnName="CreateId" />
@@ -2745,7 +3356,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PatientTreatmentImages">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.PatientTreatmentImage">
+            <EntityTypeMapping TypeName="OrthosquareModel.PatientTreatmentImage">
               <MappingFragment StoreEntitySet="PatientTreatmentImage">
                 <ScalarProperty Name="PTID" ColumnName="PTID" />
                 <ScalarProperty Name="patientid" ColumnName="patientid" />
@@ -2758,7 +3369,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PaymentDetilas">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.PaymentDetila">
+            <EntityTypeMapping TypeName="OrthosquareModel.PaymentDetila">
               <MappingFragment StoreEntitySet="PaymentDetilas">
                 <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
                 <ScalarProperty Name="InvoiceTid" ColumnName="InvoiceTid" />
@@ -2783,7 +3394,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ReceivedMaterials">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.ReceivedMaterial">
+            <EntityTypeMapping TypeName="OrthosquareModel.ReceivedMaterial">
               <MappingFragment StoreEntitySet="ReceivedMaterial">
                 <ScalarProperty Name="ReceiveQtyID" ColumnName="ReceiveQtyID" />
                 <ScalarProperty Name="InoutID" ColumnName="InoutID" />
@@ -2798,8 +3409,31 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ReportIssues">
+            <EntityTypeMapping TypeName="OrthosquareModel.ReportIssue">
+              <MappingFragment StoreEntitySet="ReportIssue">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="IssueType" ColumnName="IssueType" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Attachment" ColumnName="Attachment" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ClinicId" ColumnName="ClinicId" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.Role">
+            <EntityTypeMapping TypeName="OrthosquareModel.Role">
               <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
@@ -2808,8 +3442,18 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SoftwareExpiredMasters">
+            <EntityTypeMapping TypeName="OrthosquareModel.SoftwareExpiredMaster">
+              <MappingFragment StoreEntitySet="SoftwareExpiredMaster">
+                <ScalarProperty Name="ExpiredID" ColumnName="ExpiredID" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="States">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.State">
+            <EntityTypeMapping TypeName="OrthosquareModel.State">
               <MappingFragment StoreEntitySet="State">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="StateID" ColumnName="StateID" />
@@ -2823,7 +3467,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_ClinicDetails">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.tbl_ClinicDetails">
+            <EntityTypeMapping TypeName="OrthosquareModel.tbl_ClinicDetails">
               <MappingFragment StoreEntitySet="tbl_ClinicDetails">
                 <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
                 <ScalarProperty Name="ClinicName" ColumnName="ClinicName" />
@@ -2845,11 +3489,12 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="IsApprove" ColumnName="IsApprove" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_Doctor_Degree">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.tbl_Doctor_Degree">
+            <EntityTypeMapping TypeName="OrthosquareModel.tbl_Doctor_Degree">
               <MappingFragment StoreEntitySet="tbl_Doctor_Degree">
                 <ScalarProperty Name="DegreeID" ColumnName="DegreeID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -2860,7 +3505,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_DoctorByDegree">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.tbl_DoctorByDegree">
+            <EntityTypeMapping TypeName="OrthosquareModel.tbl_DoctorByDegree">
               <MappingFragment StoreEntitySet="tbl_DoctorByDegree">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
@@ -2872,8 +3517,20 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbl_DoctorByDegreeNew">
+            <EntityTypeMapping TypeName="OrthosquareModel.tbl_DoctorByDegreeNew">
+              <MappingFragment StoreEntitySet="tbl_DoctorByDegreeNew">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="DegreeName" ColumnName="DegreeName" />
+                <ScalarProperty Name="Boardname" ColumnName="Boardname" />
+                <ScalarProperty Name="CertificationImage" ColumnName="CertificationImage" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbl_DoctorBySpeciality">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.tbl_DoctorBySpeciality">
+            <EntityTypeMapping TypeName="OrthosquareModel.tbl_DoctorBySpeciality">
               <MappingFragment StoreEntitySet="tbl_DoctorBySpeciality">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
@@ -2884,7 +3541,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_DoctorDetails">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.tbl_DoctorDetails">
+            <EntityTypeMapping TypeName="OrthosquareModel.tbl_DoctorDetails">
               <MappingFragment StoreEntitySet="tbl_DoctorDetails">
                 <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
                 <ScalarProperty Name="DoctorTypeID" ColumnName="DoctorTypeID" />
@@ -2933,7 +3590,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_DoctorType">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.tbl_DoctorType">
+            <EntityTypeMapping TypeName="OrthosquareModel.tbl_DoctorType">
               <MappingFragment StoreEntitySet="tbl_DoctorType">
                 <ScalarProperty Name="DocTypeID" ColumnName="DocTypeID" />
                 <ScalarProperty Name="DoctorType" ColumnName="DoctorType" />
@@ -2946,7 +3603,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_DrSpeciality">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.tbl_DrSpeciality">
+            <EntityTypeMapping TypeName="OrthosquareModel.tbl_DrSpeciality">
               <MappingFragment StoreEntitySet="tbl_DrSpeciality">
                 <ScalarProperty Name="SpecialityID" ColumnName="SpecialityID" />
                 <ScalarProperty Name="SpecialityName" ColumnName="SpecialityName" />
@@ -2956,7 +3613,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_HospitalDoctorDetails">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.tbl_HospitalDoctorDetails">
+            <EntityTypeMapping TypeName="OrthosquareModel.tbl_HospitalDoctorDetails">
               <MappingFragment StoreEntitySet="tbl_HospitalDoctorDetails">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="DoctorTypeID" ColumnName="DoctorTypeID" />
@@ -2970,7 +3627,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_Location">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.tbl_Location">
+            <EntityTypeMapping TypeName="OrthosquareModel.tbl_Location">
               <MappingFragment StoreEntitySet="tbl_Location">
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
                 <ScalarProperty Name="LocationName" ColumnName="LocationName" />
@@ -2982,7 +3639,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tblEmployeeBankDetails">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.tblEmployeeBankDetail">
+            <EntityTypeMapping TypeName="OrthosquareModel.tblEmployeeBankDetail">
               <MappingFragment StoreEntitySet="tblEmployeeBankDetails">
                 <ScalarProperty Name="EmployeeBankID" ColumnName="EmployeeBankID" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
@@ -2995,7 +3652,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tblEmployeeContactDetails">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.tblEmployeeContactDetail">
+            <EntityTypeMapping TypeName="OrthosquareModel.tblEmployeeContactDetail">
               <MappingFragment StoreEntitySet="tblEmployeeContactDetails">
                 <ScalarProperty Name="ContactID" ColumnName="ContactID" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
@@ -3018,7 +3675,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tblEmployeeOtherDetails">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.tblEmployeeOtherDetail">
+            <EntityTypeMapping TypeName="OrthosquareModel.tblEmployeeOtherDetail">
               <MappingFragment StoreEntitySet="tblEmployeeOtherDetails">
                 <ScalarProperty Name="OtherID" ColumnName="OtherID" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
@@ -3030,7 +3687,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tblEmployeePersonals">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.tblEmployeePersonal">
+            <EntityTypeMapping TypeName="OrthosquareModel.tblEmployeePersonal">
               <MappingFragment StoreEntitySet="tblEmployeePersonal">
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
@@ -3059,7 +3716,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="timetables">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.timetable">
+            <EntityTypeMapping TypeName="OrthosquareModel.timetable">
               <MappingFragment StoreEntitySet="timetable">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="lecture" ColumnName="lecture" />
@@ -3071,7 +3728,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ToothNoMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.ToothNoMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.ToothNoMaster">
               <MappingFragment StoreEntitySet="ToothNoMaster">
                 <ScalarProperty Name="toothID" ColumnName="toothID" />
                 <ScalarProperty Name="toothNo" ColumnName="toothNo" />
@@ -3079,7 +3736,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TreatmentbyPatients">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.TreatmentbyPatient">
+            <EntityTypeMapping TypeName="OrthosquareModel.TreatmentbyPatient">
               <MappingFragment StoreEntitySet="TreatmentbyPatient">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="patientid" ColumnName="patientid" />
@@ -3090,11 +3747,17 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
                 <ScalarProperty Name="TreatmentsCost" ColumnName="TreatmentsCost" />
                 <ScalarProperty Name="CtrateDate" ColumnName="CtrateDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+                <ScalarProperty Name="TNotes" ColumnName="TNotes" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Tex" ColumnName="Tex" />
+                <ScalarProperty Name="ISInvoice" ColumnName="ISInvoice" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TreatmentCostPlans">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.TreatmentCostPlan">
+            <EntityTypeMapping TypeName="OrthosquareModel.TreatmentCostPlan">
               <MappingFragment StoreEntitySet="TreatmentCostPlans">
                 <ScalarProperty Name="TreatmentCostPlansid" ColumnName="TreatmentCostPlansid" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
@@ -3108,7 +3771,7 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TreatmentMASTERs">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.TreatmentMASTER">
+            <EntityTypeMapping TypeName="OrthosquareModel.TreatmentMASTER">
               <MappingFragment StoreEntitySet="TreatmentMASTER">
                 <ScalarProperty Name="TreatmentID" ColumnName="TreatmentID" />
                 <ScalarProperty Name="TreatmentName" ColumnName="TreatmentName" />
@@ -3122,18 +3785,31 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TreatmentPlans">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.TreatmentPlan">
+            <EntityTypeMapping TypeName="OrthosquareModel.TreatmentPlan">
               <MappingFragment StoreEntitySet="TreatmentPlan">
                 <ScalarProperty Name="treatmentplanid" ColumnName="treatmentplanid" />
                 <ScalarProperty Name="patientid" ColumnName="patientid" />
                 <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
                 <ScalarProperty Name="PlanDetails" ColumnName="PlanDetails" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateOn" ColumnName="CreateOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TreatmentStartedNotes">
+            <EntityTypeMapping TypeName="OrthosquareModel.TreatmentStartedNote">
+              <MappingFragment StoreEntitySet="TreatmentStartedNotes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TreatmentbyPatientID" ColumnName="TreatmentbyPatientID" />
+                <ScalarProperty Name="patientid" ColumnName="patientid" />
+                <ScalarProperty Name="TootNo" ColumnName="TootNo" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TypeofWorkLabs">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.TypeofWorkLab">
+            <EntityTypeMapping TypeName="OrthosquareModel.TypeofWorkLab">
               <MappingFragment StoreEntitySet="TypeofWorkLab">
                 <ScalarProperty Name="TypeOfworkId" ColumnName="TypeOfworkId" />
                 <ScalarProperty Name="TypeName" ColumnName="TypeName" />
@@ -3141,12 +3817,51 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="VendorMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.VendorMaster">
-              <MappingFragment StoreEntitySet="VendorMaster">
-                <ScalarProperty Name="VendorTypeId" ColumnName="VendorTypeId" />
+          <EntitySetMapping Name="UnitMasters">
+            <EntityTypeMapping TypeName="OrthosquareModel.UnitMaster">
+              <MappingFragment StoreEntitySet="UnitMaster">
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="IsMedical" ColumnName="IsMedical" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsedMaterials">
+            <EntityTypeMapping TypeName="OrthosquareModel.UsedMaterial">
+              <MappingFragment StoreEntitySet="UsedMaterial">
+                <ScalarProperty Name="UsedMid" ColumnName="UsedMid" />
+                <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
                 <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="patientid" ColumnName="patientid" />
+                <ScalarProperty Name="ReceiveQty" ColumnName="ReceiveQty" />
+                <ScalarProperty Name="CreateId" ColumnName="CreateId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLoginHistories">
+            <EntityTypeMapping TypeName="OrthosquareModel.UserLoginHistory">
+              <MappingFragment StoreEntitySet="UserLoginHistory">
+                <ScalarProperty Name="LoginID" ColumnName="LoginID" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="LoginDateTime" ColumnName="LoginDateTime" />
+                <ScalarProperty Name="Vid" ColumnName="Vid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VendorMasters">
+            <EntityTypeMapping TypeName="OrthosquareModel.VendorMaster">
+              <MappingFragment StoreEntitySet="VendorMaster">
                 <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+                <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
+                <ScalarProperty Name="VendorTypeId" ColumnName="VendorTypeId" />
                 <ScalarProperty Name="VendorName" ColumnName="VendorName" />
                 <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -3157,135 +3872,53 @@ warning 6002: The table/view 'Orthosquare_UAT.dbo.EditorDetail' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DoctorAttendances">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.DoctorAttendance">
-              <MappingFragment StoreEntitySet="DoctorAttendance">
-                <ScalarProperty Name="Fid" ColumnName="Fid" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="AttendanceDate" ColumnName="AttendanceDate" />
-                <ScalarProperty Name="TimeOut" ColumnName="TimeOut" />
-                <ScalarProperty Name="TimeIn" ColumnName="TimeIn" />
-                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
-                <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
-                <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FeedbackMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.FeedbackMaster">
-              <MappingFragment StoreEntitySet="FeedbackMaster">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="FeedbackDate" ColumnName="FeedbackDate" />
-                <ScalarProperty Name="FeedbackDetails" ColumnName="FeedbackDetails" />
-                <ScalarProperty Name="FeedbackType" ColumnName="FeedbackType" />
-                <ScalarProperty Name="patientid" ColumnName="patientid" />
-                <ScalarProperty Name="Feedbackid" ColumnName="Feedbackid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ManageMaterialStocks">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.ManageMaterialStock">
-              <MappingFragment StoreEntitySet="ManageMaterialStock">
-                <ScalarProperty Name="TotalMaterial" ColumnName="TotalMaterial" />
-                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
-                <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
-                <ScalarProperty Name="materialstockID" ColumnName="materialstockID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PackMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.PackMaster">
-              <MappingFragment StoreEntitySet="PackMaster">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="PackName" ColumnName="PackName" />
-                <ScalarProperty Name="PackId" ColumnName="PackId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UsedMaterials">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.UsedMaterial">
-              <MappingFragment StoreEntitySet="UsedMaterial">
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateId" ColumnName="CreateId" />
-                <ScalarProperty Name="ReceiveQty" ColumnName="ReceiveQty" />
-                <ScalarProperty Name="patientid" ColumnName="patientid" />
-                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
-                <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
-                <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
-                <ScalarProperty Name="UsedMid" ColumnName="UsedMid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="VendorTypeMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.VendorTypeMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.VendorTypeMaster">
               <MappingFragment StoreEntitySet="VendorTypeMaster">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
                 <ScalarProperty Name="VendorTypeId" ColumnName="VendorTypeId" />
+                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VideoMasters">
+            <EntityTypeMapping TypeName="OrthosquareModel.VideoMaster">
+              <MappingFragment StoreEntitySet="VideoMaster">
+                <ScalarProperty Name="VID" ColumnName="VID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LinkPath" ColumnName="LinkPath" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="YearMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.YearMaster">
+            <EntityTypeMapping TypeName="OrthosquareModel.YearMaster">
               <MappingFragment StoreEntitySet="YearMaster">
-                <ScalarProperty Name="YearName" ColumnName="YearName" />
                 <ScalarProperty Name="Yearid" ColumnName="Yearid" />
+                <ScalarProperty Name="YearName" ColumnName="YearName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BrandMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.BrandMaster">
-              <MappingFragment StoreEntitySet="BrandMaster">
+          <EntitySetMapping Name="DayMasters">
+            <EntityTypeMapping TypeName="OrthosquareModel.DayMaster">
+              <MappingFragment StoreEntitySet="DayMaster">
+                <ScalarProperty Name="DayId" ColumnName="DayId" />
+                <ScalarProperty Name="DayName" ColumnName="DayName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubAdminClinics">
+            <EntityTypeMapping TypeName="OrthosquareModel.SubAdminClinic">
+              <MappingFragment StoreEntitySet="SubAdminClinic">
+                <ScalarProperty Name="SubAdminId" ColumnName="SubAdminId" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="ClinicId" ColumnName="ClinicId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
-                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EditorDetails">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.EditorDetail">
-              <MappingFragment StoreEntitySet="EditorDetail">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Detail" ColumnName="Detail" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AdvertismentMasters">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.AdvertismentMaster">
-              <MappingFragment StoreEntitySet="AdvertismentMaster">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="AdImage" ColumnName="AdImage" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Aid" ColumnName="Aid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="App_VersionMaster">
-            <EntityTypeMapping TypeName="NewOrthoSquare2210Model.App_VersionMaster">
-              <MappingFragment StoreEntitySet="App_VersionMaster">
-                <ScalarProperty Name="ForceUpdate" ColumnName="ForceUpdate" />
-                <ScalarProperty Name="App_VCode" ColumnName="App_VCode" />
-                <ScalarProperty Name="App_Version" ColumnName="App_Version" />
-                <ScalarProperty Name="App_VersionID" ColumnName="App_VersionID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

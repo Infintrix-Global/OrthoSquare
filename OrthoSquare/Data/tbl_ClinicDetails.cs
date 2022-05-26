@@ -34,5 +34,6 @@ namespace OrthoSquare.Data
         public Nullable<bool> IsActive { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public Nullable<bool> IsApprove { get; set; }
     }
 }

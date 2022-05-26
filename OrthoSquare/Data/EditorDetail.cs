@@ -17,7 +17,5 @@ namespace OrthoSquare.Data
         public int ID { get; set; }
         public string Type { get; set; }
         public string Detail { get; set; }
-        public string IsActive { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
     }
 }

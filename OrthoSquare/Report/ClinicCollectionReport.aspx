@@ -1,10 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="ClinicCollectionReport.aspx.cs" Inherits="OrthoSquare.Report.ClinicCollectionReport" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>
+    <%--<asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>--%>
             <asp:Panel ID="Edit" runat="server">
                 <div id="Div1" runat="server" class="page-content">
                     <div class="page-bar">
@@ -43,15 +44,15 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                   
-                                                    <asp:DropDownList ID="ddlClinic" class="form-control" AutoPostBack="true" runat="server"></asp:DropDownList>
+
+                                                    <asp:DropDownList ID="ddlClinic" class="form-control" OnSelectedIndexChanged="ddlClinic_SelectedIndexChanged" AutoPostBack="true" runat="server"></asp:DropDownList>
 
 
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                  
+
                                                     <asp:TextBox ID="txtFromPayDate" runat="server" class="form-control" placeholder="From Payment Date"
                                                         ClientIDMode="Static"></asp:TextBox>
                                                     <asp:CalendarExtender ID="txtFromEnquiryDate_CalendarExtender" runat="server"
@@ -62,7 +63,7 @@
 
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                  
+
                                                     <asp:TextBox ID="txtToPayDate" runat="server" class="form-control" placeholder="To Payment Date"
                                                         ClientIDMode="Static"></asp:TextBox>
                                                     <asp:CalendarExtender ID="txtToEnquiryDate_CalendarExtender" runat="server" Format="dd-MM-yyyy"
@@ -72,8 +73,10 @@
                                             </div>
 
                                             <div class="col-md-3">
-                                                <asp:Button ID="btnSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
-                                                    CausesValidation="False" OnClick="btnSearch_Click" />
+                                                <div class="form-group">
+                                                    <asp:Button ID="btnSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
+                                                        CausesValidation="False" OnClick="btnSearch_Click" />
+                                                </div>
                                             </div>
 
                                         </div>
@@ -81,8 +84,8 @@
 
 
                                         <div class="text-right mb-20">
-                                            Total :
-                                            <asp:Label ID="lblTotalTop" runat="server" Text="Label"></asp:Label>
+                                            Total Paid Amount :
+                                            <asp:Label ID="lblTotalTop" runat="server" Text=""></asp:Label>
                                         </div>
                                         <div class="table-scrollable">
 
@@ -155,6 +158,6 @@
                     </div>
                 </div>
             </asp:Panel>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+      <%--  </ContentTemplate>
+    </asp:UpdatePanel>--%>
 </asp:Content>

@@ -40,13 +40,49 @@ namespace OrthoSquare.BAL_Classes
         {
             try
             {
+                General objGeneral = new General();
                 //objGeneral.AddParameterWithValueToSQLCommand("@IsActive", true);
                 objGeneral.AddParameterWithValueToSQLCommand("@TreatmentName", "");
                 objGeneral.AddParameterWithValueToSQLCommand("@TreatmentCost", "");
-               
                 objGeneral.AddParameterWithValueToSQLCommand("@TreatmentID ", 0);
-                objGeneral.AddParameterWithValueToSQLCommand("@mode", 4);
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 6);
                 ds = objGeneral.GetDatasetByCommand_SP("SP_TreatmentList");
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+        }
+
+
+
+        public DataTable GetAllTreatmentoldAndNew()
+        {
+            try
+            {
+                General objGeneral = new General();
+                //objGeneral.AddParameterWithValueToSQLCommand("@IsActive", true);
+                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentName", "");
+                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentCost", "");
+                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentID ", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 7);
+                ds = objGeneral.GetDatasetByCommand_SP("SP_TreatmentList");
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+        }
+
+        public DataTable GetinvoiceTreatment(string invoiceNo)
+        {
+            try
+            {
+                General objGeneral = new General();
+               
+                objGeneral.AddParameterWithValueToSQLCommand("@InvoiceNo", invoiceNo);
+           
+                ds = objGeneral.GetDatasetByCommand_SP("Get_PatientInvoiceTreatment");
             }
             catch (Exception ex)
             {
@@ -106,7 +142,7 @@ namespace OrthoSquare.BAL_Classes
         public DataTable GetAllTreatmentWorkDone(int Pid)
         {
 
-            strQuery = " Select * from TreatmentbyPatient TP left join  TreatmentMASTER T  on  T.TreatmentID = TP. TreatmentID where T.IsActive =1 and  StartedTreatments='YES' ";
+            strQuery = " Select * from TreatmentbyPatient TP left join  TreatmentMASTER T  on  T.TreatmentID = TP. TreatmentID where TP.IsActive =1 and  StartedTreatments='YES' ";
           
             if (Pid > 0)
                 strQuery += " and  TP.patientid="+ Pid + " ";

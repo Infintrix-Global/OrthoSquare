@@ -76,16 +76,11 @@ namespace OrthoSquare.BAL_Classes
             if (Mid > 0)
                     strQuery += " and MM.MaterialId ='" + Mid + "'";
             strQuery += "  ORDER BY MM.MaterialId DESC";
+
+
+
                 return objGeneral.GetDatasetByCommand(strQuery);
 
-                //objGeneral.AddParameterWithValueToSQLCommand("@IsActive", true);
-                //objGeneral.AddParameterWithValueToSQLCommand("@MaterialName","");
-                //objGeneral.AddParameterWithValueToSQLCommand("@BrandId", "");
-                //objGeneral.AddParameterWithValueToSQLCommand("@PackId", "");
-                //objGeneral.AddParameterWithValueToSQLCommand("@Price", "");
-
-                //objGeneral.AddParameterWithValueToSQLCommand("@MaterialId ", 0);
-                //objGeneral.AddParameterWithValueToSQLCommand("@mode", 4);
           
         
         }
@@ -242,8 +237,6 @@ namespace OrthoSquare.BAL_Classes
             {
                 General objGeneral = new General();
 
-
-
                 objGeneral.AddParameterWithValueToSQLCommand("@MaterialId", Mid);
                 objGeneral.AddParameterWithValueToSQLCommand("@VendorID", vid);
                 objGeneral.AddParameterWithValueToSQLCommand("@OrderQty",orderQty);
@@ -255,13 +248,7 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", Cid);
                 objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", Did);
               
-              
-
-
                   objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
-
-               
-
 
                 isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_OutMaterialMaster");
               //  isInserted = 1;
@@ -301,9 +288,6 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", Cid);
                 objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", Did);
                 objGeneral.AddParameterWithValueToSQLCommand("@UnitName", UnitName);
-
-
-                
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
 
                 isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_OutMaterialStockMaster");
@@ -442,7 +426,6 @@ namespace OrthoSquare.BAL_Classes
             if (Did > 0)
                 strQuery += " and RM.DoctorID='" + Cid + "'";
             strQuery += " group by MaterialName,D.FirstName,D.LastName,C.ClinicName ";
-
             return objGeneral.GetDatasetByCommand(strQuery);
 
         }
@@ -524,9 +507,7 @@ namespace OrthoSquare.BAL_Classes
                 }
                 objGeneral.AddParameterWithValueToSQLCommand("@Mid", Mid);
 
-
                 objGeneral.AddParameterWithValueToSQLCommand("@TotalMaterial", TotalMaterial);
-
 
                 objGeneral.GetExecuteNonQueryByCommand(strQuery);
 
@@ -570,6 +551,87 @@ namespace OrthoSquare.BAL_Classes
             {
             }
             return isInserted;
+        }
+
+
+        public DataTable GetMaterialStock(string MaterialTypeId, string MaterialName,int Mode,int ClinicID)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialTypeId", MaterialTypeId);
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialName", MaterialName);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", Mode);
+                ds = objGeneral.GetDatasetByCommand_SP("GET_MaterialStock");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
+
+
+
+        public DataTable GetGtMaterial(string MaterialTypeId, string MaterialName)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialTypeId", MaterialTypeId);
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialName", MaterialName);
+            
+                ds = objGeneral.GetDatasetByCommand_SP("SP_GetMaterial");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
+
+
+        public int MaterialStock()
+        {
+            int Id = 0;
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 27);
+                objGeneral.AddParameterWithValueToSQLCommand("@stateID", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@Countryid", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", 0);
+                Id = objGeneral.GetExecuteScalarByCommand_SP("GET_Common");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Id;
+
+        }
+
+
+        public DataTable Demo(int Countryid)
+        {
+            try
+            {
+
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 28);
+                objGeneral.AddParameterWithValueToSQLCommand("@stateID", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@Countryid", "0");
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", 0);
+                ds = objGeneral.GetDatasetByCommand_SP("GET_Common");
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+
         }
     }
 }

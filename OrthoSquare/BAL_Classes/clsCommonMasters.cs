@@ -795,9 +795,13 @@ public class clsCommonMasters
         decimal TOtal = 0;
         try
         {
-            strQuery = " Select IsNull(Sum (PaidAmount),0) TotalAmount from InvoiceMaster  ";
+            //strQuery = " Select IsNull(Sum (PaidAmount),0) TotalAmount from InvoiceMaster where   month(PayDate) = month(GETDATE())  and   Year(PayDate) = Year(GETDATE())  ";
+
+            strQuery = " Select IsNull(Sum (IM.PaidAmount),0) TotalAmount from InvoiceMaster IM join tbl_ClinicDetails  C on C.ClinicID = IM.ClinicID join PatientMaster  P on P.patientid = IM.patientid" +
+                " where C.IsActive =1 and P.IsActive=1 and  month(IM.PayDate) = month(GETDATE())  and   Year(IM.PayDate) = Year(GETDATE())   ";
+
             if (Cid > 0)
-                strQuery += " where ClinicID='" + Cid + "' and  month(PayDate) = month(GETDATE())  and   Year(PayDate) = Year(GETDATE())  ";
+                strQuery += " and  IM.ClinicID='" + Cid + "'   ";
 
             TOtal = Convert.ToDecimal(objGeneral.GetExecuteScalarByCommand(strQuery));
         }
@@ -807,6 +811,48 @@ public class clsCommonMasters
         }
         return TOtal;
     }
+
+    public decimal GetTotalMedicinesAmount()
+    {
+        decimal TOtal = 0;
+        try
+        {
+            strQuery = " Select isnull(SUM(GrandTotal),0) GrandTotal From PatientMedicines  where Month(CreateDate) = month(GETDATE())  and   Year(CreateDate) = Year(GETDATE()) ";
+           
+
+            TOtal = Convert.ToDecimal(objGeneral.GetExecuteScalarByCommand(strQuery));
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        return TOtal;
+    }
+
+
+
+    public decimal GetTotalMedicines(string FromEnquiryDate, string ToEnquiryDate)
+    {
+        decimal TOtal = 0;
+        try
+        {
+            strQuery = " Select isnull(SUM(GrandTotal),0) GrandTotal From PatientMedicines  where 1=1 ";
+            if (FromEnquiryDate != "" && ToEnquiryDate != "")
+                strQuery += " and convert(date,CreateDate,105) between convert(date,@FromEnquiryDate,105) and convert(date,@ToEnquiryDate,105)";
+            objGeneral.AddParameterWithValueToSQLCommand("@FromEnquiryDate", FromEnquiryDate);
+            objGeneral.AddParameterWithValueToSQLCommand("@ToEnquiryDate", ToEnquiryDate);
+
+            TOtal = Convert.ToDecimal(objGeneral.GetExecuteScalarByCommand(strQuery));
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        return TOtal;
+    }
+
+
+
 
     public DataTable GETFinancialYear()
     {
@@ -897,6 +943,7 @@ public class clsCommonMasters
     }
 
 
+
     public int GetTotalCONVERTEDEnq()
     {
         int TOtal = 0;
@@ -951,10 +998,10 @@ public class clsCommonMasters
         decimal TOtal = 0;
         try
         {
-            strQuery = "Select  IsNull(Sum (Amount),0)  Amount from ExpenseMaster  where  IsActive =1 ";
+            strQuery = "Select  IsNull(Sum (Amount),0)  Amount from ExpenseMaster  where  IsActive =1 and  month(ExpDate) = month(GETDATE())  and   Year(ExpDate) = Year(GETDATE())  ";
 
             if (Cid > 0)
-                strQuery += " and ClinicID='" + Cid + "' and  month(ExpDate) = month(GETDATE())  and   Year(ExpDate) = Year(GETDATE())  ";
+                strQuery += " and ClinicID='" + Cid + "' ";
 
             TOtal = Convert.ToDecimal(objGeneral.GetExecuteScalarByCommand(strQuery));
         }
@@ -1108,7 +1155,7 @@ public class clsCommonMasters
         int TOtal = 0;
         try
         {
-            strQuery = " SELECT Count(*) FROM Enquiry WHERE NOT EXISTS  (SELECT * FROM Followup  WHERE Followup.EnquiryID = Enquiry.EnquiryID) and Enquiry.AssignToEmpId = '" + Cid + "' and Enquiry.IsActive =1 and Enquiry.IsPatient=0";
+            strQuery = " SELECT Count(*) FROM Enquiry WHERE NOT EXISTS  (SELECT * FROM Followup  WHERE Followup.EnquiryID = Enquiry.EnquiryID ) and Enquiry.AssignToEmpId = '" + Cid + "' and Enquiry.IsActive =1 and Enquiry.IsPatient=0  and   month(EnquiryDate) = month(GETDATE())  and   Year(EnquiryDate) = Year(GETDATE())";
             TOtal = Convert.ToInt32(objGeneral.GetExecuteScalarByCommand(strQuery));
         }
         catch (Exception ex)
@@ -1260,7 +1307,7 @@ public class clsCommonMasters
             strQuery = "Select COUNT(E.EnquiryID) from Enquiry E left Join  EnquirySourceMaster ES on ES.Sourceid =E.Sourceid left Join  tbl_ClinicDetails CD on CD.ClinicID =E.ClinicID  where E.IsActive =1 and E.IsPatient=0 ";
 
             if (Cid > 0)
-                strQuery += " and E.ClinicID ='" + Cid + "'";
+                strQuery += " and E.ClinicID ='" + Cid + "' and  month(EnquiryDate) = month(GETDATE())  and   Year(EnquiryDate) = Year(GETDATE()) ";
 
 
             TOtal = Convert.ToInt32(objGeneral.GetExecuteScalarByCommand(strQuery));
@@ -1400,6 +1447,24 @@ public class clsCommonMasters
     }
 
 
+    public DataTable GetDoctorTodayFollowup(int UserId)
+    {
+        try
+        {
+
+            General objGeneral = new General();
+     
+            objGeneral.AddParameterWithValueToSQLCommand("@DoctorId", UserId);
+            
+            ds = objGeneral.GetDatasetByCommand_SP("GET_DoctorTodayFollowup");
+        }
+        catch (Exception ex)
+        {
+        }
+        return ds.Tables[0];
+
+    }
+
 
 
     public int GetFollowupCountNoTelecaller(int UserId, int RoleID)
@@ -1503,7 +1568,7 @@ public class clsCommonMasters
         int TOtal = 0;
         try
         {
-            strQuery = "select count(patientid) from PatientMaster where IsActive=1 and ClinicID='" + Cid + "'";
+            strQuery = "select count(patientid) from PatientMaster where IsActive=1 and ClinicID='" + Cid + "' and  month(RegistrationDate) = month(GETDATE())  and   Year(RegistrationDate) = Year(GETDATE()) ";
             TOtal = Convert.ToInt32(objGeneral.GetExecuteScalarByCommand(strQuery));
         }
         catch (Exception ex)
@@ -2116,12 +2181,17 @@ public class clsCommonMasters
 
     }
 
-
+    public void ShowMessageAndRedirect(Page page, string message, string url)
+    {
+        ScriptManager.RegisterStartupScript(page, page.GetType(), "redirect", "alert('" + message + "'); window.location='" + url + "';", true);
+    }
 
     public void ShowMessage(Page page, string message)
     {
         ScriptManager.RegisterClientScriptBlock(page, page.GetType(), "alertMessage", "alert('" + message + "');", true);
     }
+
+
 }
 
 
@@ -2137,6 +2207,8 @@ public class invoiceDetils
     public string Discount { get; set; }
     public int ISInvoice { get; set; }
     public string Tex { get; set; }
+
+    public string toothNo { get; set; }
 }
 
 [Serializable]
@@ -2349,6 +2421,8 @@ public class Patient_Details
     public string boolgroup;
     public string Gender;
     public string Address;
+    public string Address1;
+    public string Landmark;
     public long CountryId;
 
     public long stateid;
@@ -2390,7 +2464,7 @@ public class Patient_Details
     public string UserName;
     public string Password;
     public string ConsentParth;
-
+    public string CaseFileNo;
 
 }
 
@@ -2615,9 +2689,6 @@ public class EnqyiryExcel
  
 }
 
-
-
-
 [Serializable]
 public class MedicinesDetails
 {
@@ -2635,6 +2706,37 @@ public class MedicinesDetails
     public string InHouse { get; set; }
 
     public string Strip { get; set; }
+}
+
+
+[Serializable]
+public class MaterialDetails
+{
+    public int ID { get; set; }
+    public int RowNumber { get; set; }
+    public string MaterialTypeId { get; set; }
+    public string MaterialID { get; set; }
+    public string Qty { get; set; }
+    public string Remarks { get; set; }
+
+}
+
+
+
+
+[Serializable]
+public class PatientTreatment
+{
+    public int ID { get; set; }
+    public int RowNumber { get; set; }
+    public int TreatmentID { get; set; }
+    public string ToothNo { get; set; }
+    public string ConfomToUser { get; set; }
+    public string TreatmentStartDate { get; set; }
+    public string WorkDone { get; set; }
+    public string WorkDoneDate { get; set; }
+    public string Remarks { get; set; }
+   
 }
 
 

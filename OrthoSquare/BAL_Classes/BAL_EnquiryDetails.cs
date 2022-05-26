@@ -26,7 +26,7 @@ namespace OrthoSquare.BAL_Classes
                 }
                 else
                 {
-                    Folllowupdate1 = objGeneral.getDatetime(Convert.ToDateTime(bojEnq.Folllowupdate).ToString("dd-MM-yyyy"));
+                    Folllowupdate1 = objGeneral.getDatetime(bojEnq.Folllowupdate);
 
                 }
                 DateTime DateBirth1;
@@ -67,7 +67,7 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@InterestLevelCode", bojEnq.InterestLevelCode);
                 objGeneral.AddParameterWithValueToSQLCommand("@CreatedBy", bojEnq.CreatedBy);
                 // objGeneral.AddParameterWithValueToSQLCommand("@CreatedDate", Convert.ToDateTime(bojEnq.CreatedDate) );
-                objGeneral.AddParameterWithValueToSQLCommand("@Folllowupdate", DBNull.Value);
+                objGeneral.AddParameterWithValueToSQLCommand("@Folllowupdate", Folllowupdate1);
                 objGeneral.AddParameterWithValueToSQLCommand("@ModifiedBy", "");
                 //objGeneral.AddParameterWithValueToSQLCommand("@ModifiedDate", "");
                 objGeneral.AddParameterWithValueToSQLCommand("@IsActive", 1);
@@ -301,9 +301,16 @@ namespace OrthoSquare.BAL_Classes
             DataTable dt = new DataTable();
             try
             {
-                strQuery = " Select F.EnquiryID,F.Followupdate,F.ConversationDetails,F.Followupmode,ES.statusName,NextFollowupdate,DD.FirstName+' '+DD.LastName as Dname from  Followup F join Enquirystatus ES on ES.StatusId =F.StatusId ";
-            strQuery += " join tbl_DoctorDetails DD on DD.DoctorID =F.employeeid where EnquiryID='" + Eid + "' order by Followupid DESC";
-           
+                //    strQuery = " Select F.EnquiryID,F.Followupdate,F.ConversationDetails,F.Followupmode,ES.statusName,NextFollowupdate,DD.FirstName+' '+DD.LastName as Dname from  Followup F join Enquirystatus ES on ES.StatusId =F.StatusId ";
+                //strQuery += " join tbl_DoctorDetails DD on DD.DoctorID =F.employeeid where EnquiryID='" + Eid + "' order by Followupid DESC";
+
+                strQuery = "Select E.EnquiryID,E.Folllowupdate as Followupdate,E.Conversation as ConversationDetails,ES.Sourcename as Followupmode,'Followup' as statusName,'' as NextFollowupdate,DD.FirstName+' '+DD.LastName as Dname From Enquiry E   ";
+                strQuery += " join EnquirySourceMaster ES on E.Sourceid=ES.Sourceid join tbl_DoctorDetails DD on DD.DoctorID =E.AssignToEmpId where  E.EnquiryID='" + Eid + "' ";
+                strQuery += " UNION ";
+                strQuery += " Select F.EnquiryID,F.Followupdate,F.ConversationDetails,F.Followupmode,ES.statusName,NextFollowupdate,DD.FirstName+' '+DD.LastName as Dname from  Followup F join Enquirystatus ES on ES.StatusId =F.StatusId  join tbl_DoctorDetails DD on DD.DoctorID =F.employeeid  ";
+                strQuery += "  where EnquiryID = '" + Eid + "' ";
+               
+
                 dt = objGeneral.GetDatasetByCommand(strQuery);
             }
             catch (Exception ex)

@@ -19,5 +19,6 @@ namespace OrthoSquare.Data
         public Nullable<int> DoctorID { get; set; }
         public string PlanDetails { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public Nullable<System.DateTime> CreateOn { get; set; }
     }
 }

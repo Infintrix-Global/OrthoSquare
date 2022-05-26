@@ -16,6 +16,8 @@ namespace OrthoSquare.Data
     {
         public int MonthID { get; set; }
         public Nullable<int> MonthsName { get; set; }
+        public string MonthsCode { get; set; }
+        public string MonthsNo { get; set; }
         public Nullable<int> Yearid { get; set; }
     }
 }

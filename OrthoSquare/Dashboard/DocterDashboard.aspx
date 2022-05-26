@@ -114,7 +114,7 @@
                     <div class="col-md-2 col-sm-2 col-xs-6">
                         <!-- BEGIN WIDGET THUMB -->
                         <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                            <h4 class="widget-thumb-heading">Follow Ups
+                            <h4 class="widget-thumb-heading">Today Follow Ups
                             </h4>
                             <div class="widget-thumb-wrap">
                                 <i class="fa fa-arrow-up widget-thumb-icon bg-purple"></i>
@@ -266,49 +266,7 @@
                                         </EmptyDataTemplate>
                                     </asp:GridView>
 
-
-
-                                    <%--  <table class="table table-hover table-light">
                                     
-                                            <tr>
-                                                <td>
-                                                    <a href="javascript:;" class="primary-link">Patient Name</a>
-                                                </td>
-                                                <td> Doctors Name </td>
-                                                <td> 17th july 18 </td>
-                                                <td> 10 Am </td>
-                                                <td><div class="grey"><i class="fa fa-check"></i><i class="fa fa-times-circle"></i></div> </td>
-                                            </tr>
-                                             <tr>
-                                                <td>
-                                                    <a href="javascript:;" class="primary-link">Patient Name</a>
-                                                </td>
-                                                <td> Doctors Name </td>
-                                                <td> 17th july 18 </td>
-                                                <td> 10 Am </td>
-                                                <td><div class="grey"><i class="fa fa-check"></i><i class="fa fa-times-circle"></i></div>                                                  
-                                                </td>
-                                            </tr>
-                                              <tr>
-                                                <td>
-                                                    <a href="javascript:;" class="primary-link">Patient Name</a>
-                                                </td>
-                                                <td> Doctors Name </td>
-                                                <td> 17th july 18 </td>
-                                                <td> 10 Am </td>
-                                                <td><div class="grey"><i class="fa fa-check"></i><i class="fa fa-times-circle"></i></div> 
-                                                </td>
-                                            </tr>
-                                             <tr>
-                                                <td>
-                                                    <a href="javascript:;" class="primary-link">Patient Name</a>
-                                                </td>
-                                                <td> Doctors Name </td>
-                                                <td> 17th july 18 </td>
-                                                <td> 10 Am </td>
-                                                <td><div class="grey"><i class="fa fa-check"></i><i class="fa fa-times-circle"></i></div>  </td>
-                                            </tr>
-                                        </table>--%>
                                 </div>
 
 
@@ -385,12 +343,12 @@
                             <div class="portlet-title">
                                 <div class="caption caption-md">
                                     <i class="icon-bar-chart font-dark hide"></i>
-                                    <span class="caption-subject font-dark bold uppercase">Enquiries</span>
+                                    <span class="caption-subject font-dark bold uppercase">Today Follow Ups</span>
 
                                 </div>
                                 <div class="actions">
                                     <div class="btn-group">
-                                        <asp:DropDownList ID="ddlYEARENQ" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlYEARENQ_SelectedIndexChanged">
+                                        <asp:DropDownList ID="ddlYEARENQ" Visible="false" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlYEARENQ_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </div>
                                 </div>
@@ -412,12 +370,15 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Enquiry No">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblPrice" runat="server" Text='<%# Eval("Enquiryno") %>'></asp:Label>
+                                                    <asp:Label ID="lblPrice" runat="server" Visible="false" Text='<%# Eval("Enquiryno") %>'></asp:Label>
+
+                                                      <asp:HyperLink runat="server" NavigateUrl='<%# Eval("EnquiryID","../Enquiry/FollowupDetails.aspx?Eid={0}")%>' Text='<%#Eval("Enquiryno") %>' Font-Underline="true" />
+
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Name">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblCompanyName" runat="server" Text='<%# Eval("FirstName") +"  "+ Eval("LastName") %>'></asp:Label>
+                                                    <asp:Label ID="lblCompanyName" runat="server" Text='<%# Eval("PatientName") %>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
 
@@ -441,7 +402,7 @@
 
                                             <asp:TemplateField HeaderText="Date">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblEnquiryDate" runat="server" Text='<%# Eval("EnquiryDate","{0:dd/MMM/yyyy}") %>'></asp:Label>
+                                                    <asp:Label ID="lblEnquiryDate" runat="server" Text='<%# Eval("Folllowupdate","{0:dd/MMM/yyyy}") %>'></asp:Label>
 
                                                 </ItemTemplate>
                                             </asp:TemplateField>

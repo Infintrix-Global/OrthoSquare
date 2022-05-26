@@ -114,15 +114,9 @@ namespace OrthoSquare.Invoice
                             lblWordsAmount.Text = "Rupees " + NumberToWords_Large(Convert.ToInt32(dtpay.Rows[0]["PaidAmount"])) + " only";
                         }
 
-
-
-
-                      
-
-
                         lblClinic.Text = dtFid.Rows[0]["ClinicName"].ToString();
                         lblMobailNo.Text = dtFid.Rows[0]["PhoneNo2"].ToString();
-                        lblAddress1.Text = dtFid.Rows[0]["AddressLine1"].ToString();
+                        lblAddress1.Text = dtFid.Rows[0]["AddressLine1"].ToString() +" ," + dtFid.Rows[0]["Area"].ToString();
                         lblEmail1.Text = dtFid.Rows[0]["EmailID"].ToString();
                         patientID.Text = dtFid.Rows[0]["PatientCode"].ToString();
                         BindInvoiceAmount(InvCode);
@@ -148,19 +142,19 @@ namespace OrthoSquare.Invoice
 
              AllData = objinv.GetAllInvoiceAmount(INV);
              grdInvoice.DataSource = AllData;
-            grdInvoice.DataBind();
+              grdInvoice.DataBind();
 
         }
 
-         public void BindInvoicePaymentDetils(int INV)
+        public void BindInvoicePaymentDetils(int INV)
         {
-            DataTable dt = objinv.GetAllInvoicePaymentDetila(INV);
+            DataTable dt = objinv.GetAllInvoicePaymentDetilainv(INV);
             GridpayDetails.DataSource = dt;
             GridpayDetails.DataBind();
 
         }
 
-         protected void Button1_Click(object sender, EventArgs e)
+        protected void Button1_Click(object sender, EventArgs e)
          {
              Response.Redirect("ViewInvice.aspx");
          }

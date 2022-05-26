@@ -47,7 +47,7 @@ namespace OrthoSquare.patient
 
                 if (Request.QueryString["Eid"] != null)
                 {
-                    Eid = Convert.ToInt32(Request.QueryString["Eid"].ToString());
+                var      Eid = Convert.ToInt32(Request.QueryString["Eid"].ToString());
 
                     Edit.Visible = false;
                     Add.Visible = true;
@@ -56,7 +56,7 @@ namespace OrthoSquare.patient
                 if (!IsPostBack)
                 {
                     bindClinic();
-
+                    bindClinicSearch();
                     if (SessionUtilities.RoleID == 1)
                     {
 
@@ -138,6 +138,36 @@ namespace OrthoSquare.patient
             ddlClinic.Items.Insert(0, new ListItem("-- Select Clinic --", "0", true));
 
         }
+
+        public void bindClinicSearch()
+        {
+
+
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                // dt = objc.GetAllClinicDetaisNew(SessionUtilities.Empid);
+                dt = objc.GetAllClinicDetais();
+
+            }
+            else
+            {
+                dt = objc.GetAllClinicDetais();
+
+            }
+            ddlClinic.DataSource = dt;
+            ddlClinic.DataValueField = "ClinicID";
+            ddlClinic.DataTextField = "ClinicName";
+            ddlClinic.DataBind();
+            ddlClinic.Items.Insert(0, new ListItem("-- Select Clinic --", "0", true));
+
+        }
+
 
 
         public void bindClinicExpUplod()
@@ -479,7 +509,7 @@ namespace OrthoSquare.patient
                     DentalTreatment = txtlistDentalTreatment.Text,
                     ConsentStatement = ConsentStatement,
                     ConsentParth = lblConsentPic.Text,
-
+                    CaseFileNo=txtCaseFileNo.Text,
 
                     // PaymentMode = RadioPayment1.SelectedItem .Text ,
                     //PayDate =txtpaymentDate1 .Text ,
@@ -498,7 +528,16 @@ namespace OrthoSquare.patient
 
                 if (patientid == 0)
                 {
-                    Isv = objPatient.GetPatientssIsvelid(txtMobile.Text.Trim(), txtFname.Text.Trim());
+                    DataTable dt = new DataTable();
+                    dt = objPatient.GetPatientssIsvelidNew(txtMobile.Text.Trim(), txtFname.Text.Trim());
+                    if(dt!=null && dt.Rows.Count>0)
+                    {
+                       
+                        lblClinic_Name.Text = dt.Rows[0]["ClinicName"].ToString();
+                        lblPatientName.Text = dt.Rows[0]["PatienntName"].ToString();
+                        Isv = dt.Rows.Count;
+                    }
+                   
                 }
 
                 if (Isv > 0)
@@ -509,10 +548,12 @@ namespace OrthoSquare.patient
                     string confirmValue = Request.Form["confirm_value"];
                     if (confirmValue == "Yes")
                     {
+                       
                         _isInserted = objPatient.Add_Patient(objPatientDetails);
                     }
                     else
                     {
+                       
                         // do nothing  
                     }
 
@@ -539,13 +580,14 @@ namespace OrthoSquare.patient
                 {
                     if (Isv > 0)
                     {
-                        lblMessage.Text = "Mobile number already in use";
-                        lblMessage.ForeColor = System.Drawing.Color.Red;
+                        //lblMessage.Text = "Mobile number already in use";
+                        //lblMessage.ForeColor = System.Drawing.Color.Red;
                     }
                     else
                     {
-                        lblMessage.Text = "Failed to Add Patient";
-                        lblMessage.ForeColor = System.Drawing.Color.Red;
+                        //lblMessage.Text = "Failed to Add Patient";
+                        //lblMessage.ForeColor = System.Drawing.Color.Red;
+                        objcommon.ShowMessage(this, "Failed to Add Patient");
                     }
                 }
                 else
@@ -555,9 +597,12 @@ namespace OrthoSquare.patient
                         int Eid1 = objPatient.EnquiryToPatient(Eid);
                     }
                     //patientid = 0;
-                    Response.Write("<script>alert('Patient Added Successfully')</script>");
-                    lblMessage.Text = "Patient Added Successfully";
-                    lblMessage.ForeColor = System.Drawing.Color.Green;
+                  //  Response.Write("<script>alert('Patient Added Successfully')</script>");
+                    //lblMessage.Text = "Patient Added Successfully";
+                    //lblMessage.ForeColor = System.Drawing.Color.Green;
+
+                    objcommon.ShowMessage(this, "Patient Added Successfully");
+
                     btnConsultation.Visible = true;
                     Clear();
 
@@ -669,8 +714,35 @@ namespace OrthoSquare.patient
             TabContactPerson1.ActiveTabIndex = 2;
         }
 
+        private long PatientsId
+        {
+            get
+            {
+                if (ViewState["PatientsId"] != null)
+                {
+                    return (long)ViewState["PatientsId"];
+                }
+                return 0;
+            }
+            set
+            {
+                ViewState["PatientsId"] = value;
+            }
+        }
+        protected void txtPatientName_TextChanged(object sender, EventArgs e)
+        
+        {
+            DataTable dt = objPatient.PatientSelectDoctorID(txtPatientName.Text);
+            PatientsId = Convert.ToInt32(dt.Rows[0]["PatientId"]);
+            getAllPatient();
 
 
+        }
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            getAllPatient();
+
+        }
         public void getAllPatient()
         {
             string Cid = "";
@@ -684,11 +756,7 @@ namespace OrthoSquare.patient
                 string A = "";
                 DataTable dt23 = objPatient.DoctorByClinicLIST(SessionUtilities.Empid);
 
-                //for (int i = 0; i < AllData.Rows.Count; i++)
-                //{
-
-                //}
-
+               
                 for (int i = 0; i < dt23.Rows.Count; i++)
                 {
                     A += dt23.Rows[i]["ClinicID"].ToString() + ",";
@@ -706,8 +774,12 @@ namespace OrthoSquare.patient
             {
                 Cid = "";
             }
+
+            Session["ClinicID"] = Cid;
             // AllData = objPatient.GetPatientlist();
-            AllData = objPatient.NewGetPatientlist1(Cid);
+            //  AllData = objPatient.NewGetPatientlist1(Cid);
+            AllData = objPatient.GetAllPatientRecordReport(txtFromDate.Text,txtToDate.Text,Cid, txttxtMobailNoss.Text, txtPatientNos.Text, Convert.ToInt32(PatientsId));
+            
             if (AllData != null && AllData.Rows.Count > 0)
             {
                 //Dhaval 
@@ -720,8 +792,26 @@ namespace OrthoSquare.patient
                     else if (AllData.Rows[i]["PCstatus"].ToString() == "3")
                     { AllData.Rows[i]["PCstatus"] = "Very Co-operative"; }
                 }
-                gvShow.DataSource = AllData;
-                gvShow.DataBind();
+                //gvShow.DataSource = AllData;
+                //gvShow.DataBind();
+             
+                if (AllData != null && AllData.Rows.Count > 0)
+                {
+
+                    lblTotaCount.Text = AllData.Rows.Count.ToString();
+                    gvShow.DataSource = AllData;
+                    gvShow.DataBind();
+                }
+                else
+                {
+                    lblTotaCount.Text = "0";
+                    gvShow.DataSource = null;
+                    gvShow.DataBind();
+                }
+
+
+
+
 
                 if (SessionUtilities.RoleID == 2)
                 {
@@ -729,67 +819,18 @@ namespace OrthoSquare.patient
                     gvShow.Columns[6].Visible = true;
                 }
             }
-        }
-
-        protected void btSearch_Click(object sender, EventArgs e)
-        {
-            try
+            else
             {
-                string search = "";
-                //if (txtSearch.Text != "")
-                //{
-
-
-                if (txtNameS.Text.Trim() != "" && txtLastNameS.Text.Trim() != "")
-                {
-                    search += "FristName like '%" + txtNameS.Text.Trim() + "%' and LastName like '%" + txtLastNameS.Text.Trim() + "%'";
-                }
-                else if (txtNameS.Text.Trim() != "")
-                {
-                    search += "FristName like '%" + txtNameS.Text.Trim() + "%'";
-                }
-                else if (txtPatientNos.Text.Trim() != "")
-                {
-                    search += "PatientCode like '%" + txtPatientNos.Text.Trim() + "%'";
-                }
-                else if (txttxtMobailNoss.Text.Trim() != "")
-                {
-                    search += "Mobile like '%" + txttxtMobailNoss.Text.Trim() + "%'";
-                }
-                else
-                {
-
-                }
-
-                DataRow[] dtSearch1 = AllData.Select(search);
-                if (dtSearch1.Count() > 0)
-                {
-                    DataTable dtSearch = dtSearch1.CopyToDataTable();
-                    gvShow.DataSource = dtSearch;
-                    gvShow.DataBind();
-                }
-                else
-                {
-                    DataTable dt = new DataTable();
-                    gvShow.DataSource = dt;
-                    gvShow.DataBind();
-                }
-                //}
-                //else
-                //{
-                //    gvShow.DataSource = AllData;
-                //    gvShow.DataBind();
-                //}
-            }
-            catch (Exception ex)
-            {
+                gvShow.DataSource = null;
+                gvShow.DataBind();
             }
         }
 
+  
         protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvShow.PageIndex = e.NewPageIndex;
-            btSearch_Click(sender, e);
+            getAllPatient();
         }
 
         protected void gvShow_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -1001,7 +1042,7 @@ namespace OrthoSquare.patient
                     lblMessage.Text = "Enquiry Deleted successfully.";
                     lblMessage.ForeColor = System.Drawing.Color.Red;
                     Response.Redirect("PatientMaster.aspx");
-                    btSearch_Click(sender, e);
+                    
                 }
             }
             catch (Exception ex)
@@ -1130,7 +1171,7 @@ namespace OrthoSquare.patient
         protected void gvShow_RowEditing(object sender, GridViewEditEventArgs e)
         {
             gvShow.EditIndex = -1;
-            btSearch_Click(sender, e);
+           
         }
 
         protected void btnAddMedicalProblem_Click(object sender, EventArgs e)
@@ -1600,45 +1641,64 @@ namespace OrthoSquare.patient
             }
         }
 
-        protected void gvShow_SelectedIndexChanged(object sender, EventArgs e)
+    
+
+
+        [System.Web.Script.Services.ScriptMethod()]
+        [System.Web.Services.WebMethod]
+        public static List<string> SearchCustomers(string prefixText, int count)
         {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = ConfigurationManager.ConnectionStrings["OrthoSquareDBConnectionString"].ConnectionString;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    int DoctorID = 0, ClinicId = 0;
+                    int RoleId = Convert.ToInt32(HttpContext.Current.Session["RoleID"]);
+                    DoctorID = Convert.ToInt32(HttpContext.Current.Session["Empid"]);
+                    ClinicId = Convert.ToInt32(HttpContext.Current.Session["Empid"]);
+                    int Cid = Convert.ToInt32(HttpContext.Current.Session["Cid"]);
 
+                    string Clinic_id =(HttpContext.Current.Session["ClinicID"]).ToString();
+                    if (RoleId == 1)
+                    {
+                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1 ";
+                        cmd.CommandText += " and  P.FristName +' ('+P.Mobile +')' like '%" + prefixText + "%' and P.ClinicID ='" + ClinicId + "'";
+                        cmd.CommandText += "order by patientid DESC ";
+                    }
+                    else if (RoleId == 3)
+                    {
+                      
+
+                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1  and  P.FristName +' ('+P.Mobile +')'  like '%" + prefixText + "%' and P.ClinicID in (" + Clinic_id + ")";
+
+
+                    }
+                    else
+                    {
+                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1  and  P.FristName +' ('+P.Mobile +')' like '%" + prefixText + "%'";
+
+
+                    }
+
+
+                    cmd.Parameters.AddWithValue("@SearchText", prefixText);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    List<string> customers = new List<string>();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            customers.Add(sdr["Fname"].ToString());
+                        }
+                    }
+                    conn.Close();
+
+                    return customers;
+                }
+            }
         }
-
-
-        //protected void SendMail(string Email, string Username, string Password)
-        //{
-        //    // Gmail Address from where you send the mail
-        //    var fromAddress = "orthomail885@gmail.com";
-        //    // any address where the email will be sending
-        //    // var toAddress = "mehulrana1901@gmail.com,urvi.gandhi@infintrixglobal.com,nidhi.mehta@infintrixglobal.com,bhavin.gandhi@infintrixglobal.com,mehul.rana@infintrixglobal.com,naimisha.rohit@infintrixglobal.com";
-
-        //    var toAddress = Email + ",drshraddhakambale@gmail.com";
-
-        //    //Password of your gmail address
-        //    const string fromPassword = "Ortho@1234";
-        //    // Passing the values and make a email formate to display
-        //    string subject = "Your UserName and Password For Ortho Square";
-        //    string body = "Dear ," + "\n";
-        //    body += "Your UserName and Password For OrthoSquare :" + "\n";
-        //    body += "UserName : " + Username + " " + "\n\n";
-        //    body += "Password : " + Password + " " + "\n\n";
-        //    body += "Thank you!" + "\n";
-        //    body += "Warm Regards," + "\n";
-
-        //    // smtp settings
-        //    var smtp = new System.Net.Mail.SmtpClient();
-        //    {
-        //        smtp.Host = "smtp.gmail.com";
-        //        smtp.Port = 587;
-        //        smtp.EnableSsl = true;
-        //        smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
-        //        smtp.Credentials = new NetworkCredential(fromAddress, fromPassword);
-        //        smtp.Timeout = 50000;
-        //    }
-        //    // Passing values to smtp object
-        //    smtp.Send(fromAddress, toAddress, subject, body);
-        //}
 
 
     }

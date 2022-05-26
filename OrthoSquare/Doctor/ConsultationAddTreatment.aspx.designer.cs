@@ -87,6 +87,15 @@ namespace OrthoSquare.Doctor
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Add;
 
         /// <summary>
+        /// upFilter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upFilter;
+
+        /// <summary>
         /// lblMessage control.
         /// </summary>
         /// <remarks>
@@ -139,6 +148,24 @@ namespace OrthoSquare.Doctor
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
+
+        /// <summary>
+        /// ddlClinic control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlClinic;
+
+        /// <summary>
+        /// RequiredFieldValidator3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
 
         /// <summary>
         /// txtDocter control.
@@ -285,6 +312,24 @@ namespace OrthoSquare.Doctor
         protected global::System.Web.UI.WebControls.GridView GridMedicinesDetails;
 
         /// <summary>
+        /// txtTotal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTotal;
+
+        /// <summary>
+        /// txtpay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtpay;
+
+        /// <summary>
         /// txtMDiscount control.
         /// </summary>
         /// <remarks>
@@ -357,15 +402,6 @@ namespace OrthoSquare.Doctor
         protected global::System.Web.UI.WebControls.Button btnTplan;
 
         /// <summary>
-        /// GridTreatment control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridTreatment;
-
-        /// <summary>
         /// ddlTreatment control.
         /// </summary>
         /// <remarks>
@@ -382,6 +418,15 @@ namespace OrthoSquare.Doctor
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAdd;
+
+        /// <summary>
+        /// GridTreatment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridTreatment;
 
         /// <summary>
         /// txtNots control.

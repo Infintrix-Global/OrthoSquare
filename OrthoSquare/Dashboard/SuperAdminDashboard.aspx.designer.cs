@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OrthoSquare.Dashboard {
-    
-    
-    public partial class SuperAdminDashboard {
-        
+namespace OrthoSquare.Dashboard
+{
+
+
+    public partial class SuperAdminDashboard
+    {
+
         /// <summary>
         /// btnTimeOut control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnTimeOut;
-        
+
         /// <summary>
         /// LinkButtonClinic control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButtonClinic;
-        
+
         /// <summary>
         /// lblClinics control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblClinics;
-        
+
         /// <summary>
         /// LinkButtonEnQ control.
         /// </summary>
@@ -47,16 +49,52 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButtonEnQ;
-        
+
         /// <summary>
-        /// lblEnq control.
+        /// lblEnqYear control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEnq;
-        
+        protected global::System.Web.UI.WebControls.Label lblEnqYear;
+
+        /// <summary>
+        /// LinkButton3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton3;
+
+        /// <summary>
+        /// lblEnqMonth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEnqMonth;
+
+        /// <summary>
+        /// LinkButton4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton4;
+
+        /// <summary>
+        /// lbllblEnqDay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbllblEnqDay;
+
         /// <summary>
         /// LinkButtonFollup control.
         /// </summary>
@@ -65,7 +103,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButtonFollup;
-        
+
         /// <summary>
         /// lblFollwupCOunt control.
         /// </summary>
@@ -74,7 +112,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFollwupCOunt;
-        
+
         /// <summary>
         /// lblConvertedEnd control.
         /// </summary>
@@ -83,7 +121,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblConvertedEnd;
-        
+
         /// <summary>
         /// LinkButtonEMP control.
         /// </summary>
@@ -92,7 +130,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButtonEMP;
-        
+
         /// <summary>
         /// lblEmpTotal control.
         /// </summary>
@@ -101,7 +139,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblEmpTotal;
-        
+
         /// <summary>
         /// LinkButtoninvoice control.
         /// </summary>
@@ -110,7 +148,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButtoninvoice;
-        
+
         /// <summary>
         /// totalinvoice control.
         /// </summary>
@@ -119,7 +157,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label totalinvoice;
-        
+
         /// <summary>
         /// LinkButtonEXP control.
         /// </summary>
@@ -128,7 +166,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButtonEXP;
-        
+
         /// <summary>
         /// lblExp control.
         /// </summary>
@@ -137,7 +175,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblExp;
-        
+
         /// <summary>
         /// LinkButtonDr control.
         /// </summary>
@@ -146,7 +184,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButtonDr;
-        
+
         /// <summary>
         /// lblDoctors control.
         /// </summary>
@@ -155,7 +193,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDoctors;
-        
+
         /// <summary>
         /// lblDailyAppontment control.
         /// </summary>
@@ -164,7 +202,43 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDailyAppontment;
-        
+
+        /// <summary>
+        /// LinkButton1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+
+        /// <summary>
+        /// lblNewPatient control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNewPatient;
+
+        /// <summary>
+        /// LinkButton2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
+
+        /// <summary>
+        /// lblPatinetVisits control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPatinetVisits;
+
         /// <summary>
         /// LinkButtonPatient control.
         /// </summary>
@@ -173,7 +247,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButtonPatient;
-        
+
         /// <summary>
         /// lblPatient control.
         /// </summary>
@@ -182,7 +256,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPatient;
-        
+
         /// <summary>
         /// LinkButtonTreatment control.
         /// </summary>
@@ -191,7 +265,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButtonTreatment;
-        
+
         /// <summary>
         /// lblTreatmentTotal control.
         /// </summary>
@@ -200,7 +274,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTreatmentTotal;
-        
+
         /// <summary>
         /// lblTodayAppoinment control.
         /// </summary>
@@ -209,7 +283,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTodayAppoinment;
-        
+
         /// <summary>
         /// GridAppoinment control.
         /// </summary>
@@ -218,7 +292,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridAppoinment;
-        
+
         /// <summary>
         /// Button1 control.
         /// </summary>
@@ -227,7 +301,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
-        
+
         /// <summary>
         /// Button2 control.
         /// </summary>
@@ -236,7 +310,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button2;
-        
+
         /// <summary>
         /// ddlstate control.
         /// </summary>
@@ -245,7 +319,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlstate;
-        
+
         /// <summary>
         /// gvShow control.
         /// </summary>
@@ -254,7 +328,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvShow;
-        
+
         /// <summary>
         /// ddlyear1 control.
         /// </summary>
@@ -263,7 +337,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlyear1;
-        
+
         /// <summary>
         /// ddlClinic control.
         /// </summary>
@@ -272,7 +346,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlClinic;
-        
+
         /// <summary>
         /// ddlYearSOE control.
         /// </summary>
@@ -281,7 +355,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlYearSOE;
-        
+
         /// <summary>
         /// ddlClinicCollection control.
         /// </summary>
@@ -290,7 +364,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlClinicCollection;
-        
+
         /// <summary>
         /// ddlYearCollection control.
         /// </summary>
@@ -299,7 +373,7 @@ namespace OrthoSquare.Dashboard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlYearCollection;
-        
+
         /// <summary>
         /// lt control.
         /// </summary>

@@ -25,5 +25,8 @@ namespace OrthoSquare.Data
         public Nullable<int> CreateID { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public string VendorType { get; set; }
+        public string FromPlace { get; set; }
+        public string ToPlace { get; set; }
     }
 }

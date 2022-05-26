@@ -158,6 +158,43 @@ namespace OrthoSquare.BAL_Classes
             return ID1;
         }
 
+        public DataTable GetAllClinicDetaisNew(int LocationID, string ClinicName)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@LocationID", LocationID);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicName", ClinicName);
+                ds = objGeneral.GetDatasetByCommand_SP("GET_ClinicNew");
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return ds.Tables[0];
+        }
+
+
+        public DataTable LocationSelectLocationId(string LocationName)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                General objGeneral = new General();
+
+
+                strQuery = "Select LocationName,LocationID From tbl_Location where LocationName like '%" + LocationName + "%'";
+              
+
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
+        }
+
 
 
         public DataTable GetAllClinicDetais()

@@ -250,7 +250,7 @@ namespace OrthoSquare.Enquiry1
                     lblEmail.Text = dt.Rows[0]["Email"].ToString();
                     if (dt.Rows[0]["Folllowupdate"].ToString() != "")
                     {
-                        txtTodayFollowupdate.Text = Convert.ToDateTime(dt.Rows[0]["Folllowupdate"]).ToString("dd-MM-yyyy");
+                        txtTodayFollowupdate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
                     }
                     else
                     {

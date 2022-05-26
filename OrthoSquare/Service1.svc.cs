@@ -22,7 +22,7 @@ namespace OrthoSquare
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class Service1 : IService1
     {
-        NewOrthoSquare2210Entities db;
+        OrthosquareEntities db;
 
         General objg = new General();
         clsCommonMasters objcom = new clsCommonMasters();
@@ -42,7 +42,7 @@ namespace OrthoSquare
             checkVerifyLogin check = new checkVerifyLogin();
 
             VerifyLogin rowslogin = new VerifyLogin();
-            db = new NewOrthoSquare2210Entities();
+            db = new  OrthosquareEntities();
             try
             {
                 if (Rolid == "8")
@@ -72,10 +72,9 @@ namespace OrthoSquare
                         var res111 = (from P in db.PatientMasters
                                       where P.patientid == res.patientid
                                       select P).FirstOrDefault();
-
                         var res2 = (from P in db.App_VersionMaster
-
                                     select P).FirstOrDefault();
+
 
                         if (res111 != null)
                         {
@@ -112,7 +111,7 @@ namespace OrthoSquare
 
                         rowslogin.Email = res.Email;
                         rowslogin.Mobile = res.Mobile;
-                       // rowslogin.ProfileImage = res.ProfileImage;
+                      
                         rowslogin.ClinicID = Convert.ToInt32(res.ClinicID);
                         rowslogin.App_Version = res2.App_Version;
                         rowslogin.App_VCode = res2.App_VCode;
@@ -126,7 +125,6 @@ namespace OrthoSquare
                     {
                         check.data = null;
                         check.message = "failed";
-
 
                         check.status = "-1";
                     }
@@ -195,7 +193,7 @@ namespace OrthoSquare
             checkVerifyLogin check = new checkVerifyLogin();
 
             VerifyLogin rowslogin = new VerifyLogin();
-            db = new NewOrthoSquare2210Entities();
+            db = new OrthosquareEntities();
             try
             {
                 if (Rolid == "8")
@@ -358,7 +356,7 @@ namespace OrthoSquare
             General objGeneral = new General();
             checkChangePassword check = new checkChangePassword();
             ChangePasswords changePassword = new ChangePasswords();
-            db = new NewOrthoSquare2210Entities();
+            db = new OrthosquareEntities();
             try
             {
 
@@ -522,7 +520,7 @@ namespace OrthoSquare
 
 
             string Message = "";
-            db = new NewOrthoSquare2210Entities();
+            db = new OrthosquareEntities();
             try
             {
                 if (Rolid == "8")
@@ -775,7 +773,7 @@ namespace OrthoSquare
             List<ClinicDetailsDetails> list = new List<ClinicDetailsDetails>();
 
             ClinicDetailsDetails objClinic = null;
-            db = new NewOrthoSquare2210Entities();
+            db = new OrthosquareEntities();
             try
             {
                 var res = (from C in db.tbl_ClinicDetails
@@ -856,7 +854,7 @@ namespace OrthoSquare
             {
 
 
-                strQuery = "Select * from tbl_DoctorDetails D  Join tbl_ClinicDetails C on  D.ClinicID=C.ClinicID  where D.IsActive ='1'  ";
+                strQuery = "Select * from tbl_DoctorDetails D  Join tbl_ClinicDetails C on  D.ClinicID=C.ClinicID  where D.IsActive ='1'   and  D.IsDeleted=0 ";
                 if (ClinicID > 0)
                     strQuery += " and  D.ClinicID ='" + ClinicID + "'";
 
@@ -921,7 +919,7 @@ namespace OrthoSquare
 
 
 
-            db = new NewOrthoSquare2210Entities();
+            db = new OrthosquareEntities();
             checkAddAppointment check = new checkAddAppointment();
 
             AddAppointment AdA = new AddAppointment();
@@ -1190,7 +1188,7 @@ namespace OrthoSquare
         {
 
 
-            db = new NewOrthoSquare2210Entities();
+            db = new OrthosquareEntities();
             checkAddPatient check = new checkAddPatient();
 
             AddAppointment AdA = new AddAppointment();
@@ -1292,7 +1290,7 @@ namespace OrthoSquare
             List<TreatmentDetails> list = new List<TreatmentDetails>();
 
             TreatmentDetails objT = null;
-            db = new NewOrthoSquare2210Entities();
+            db = new OrthosquareEntities();
             try
             {
                 var res = (from T in db.TreatmentMASTERs
@@ -1491,7 +1489,7 @@ namespace OrthoSquare
         {
             checkMiscellaneousList check = new checkMiscellaneousList();
 
-            db = new NewOrthoSquare2210Entities();
+            db = new OrthosquareEntities();
             try
             {
                 //var res = (from E in db.EditorDetails
@@ -1762,7 +1760,7 @@ namespace OrthoSquare
                 ErrorMessage("check");
                 AddAppointment updateSG = new AddAppointment();
                 ErrorMessage("updateSG");
-                db = new NewOrthoSquare2210Entities();
+                db = new OrthosquareEntities();
                 ErrorMessage("db = new NewOrthoSqua");
                 var res3 = (from P in db.PatientMasters
                             where P.patientid == SecID
@@ -1818,7 +1816,7 @@ namespace OrthoSquare
             checkPatientUpdateNew check = new checkPatientUpdateNew();
 
             PatientUpdate objP = new PatientUpdate();
-            db = new NewOrthoSquare2210Entities();
+            db = new OrthosquareEntities();
 
             try
             {
@@ -1969,7 +1967,7 @@ namespace OrthoSquare
             checkUpdateCancelAppointment check = new checkUpdateCancelAppointment();
             UpcomingAppointment objupAp = new UpcomingAppointment();
             List<UpcomingAppointment> list = new List<UpcomingAppointment>();
-            db = new NewOrthoSquare2210Entities();
+            db = new OrthosquareEntities();
 
             try
             {
@@ -2216,7 +2214,7 @@ namespace OrthoSquare
         public checkFeedback FeedBack(int patientid, string FeedbackType, string Description)
         {
 
-            db = new NewOrthoSquare2210Entities();
+            db = new OrthosquareEntities();
             checkFeedback check = new checkFeedback();
             FeedbackS LoginSG = new FeedbackS();
 
@@ -2429,7 +2427,7 @@ namespace OrthoSquare
             List<GetClinicList> list = new List<GetClinicList>();
 
             GetClinicList objClinic = null;
-            db = new NewOrthoSquare2210Entities();
+            db = new  OrthosquareEntities();
             try
             {
                 var res = (from C in db.tbl_ClinicDetails
@@ -2490,7 +2488,6 @@ namespace OrthoSquare
                     strQuery += " and DBC.ClinicID ='"+ ClinicId + "'";
                 strQuery += "  order by D.FirstName ASC";
 
-
                 DataTable dt = objg.GetDatasetByCommand(strQuery);
 
                 if (dt != null)
@@ -2530,7 +2527,6 @@ namespace OrthoSquare
         }
 
         #endregion
-
 
         #region GetPatientList
         public checkGetPatientList GetPatientList(int ClinicId)

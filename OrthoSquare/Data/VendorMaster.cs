@@ -15,6 +15,8 @@ namespace OrthoSquare.Data
     public partial class VendorMaster
     {
         public int VendorID { get; set; }
+        public Nullable<int> ClinicID { get; set; }
+        public string VendorTypeId { get; set; }
         public string VendorName { get; set; }
         public string MobileNo { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -22,7 +24,5 @@ namespace OrthoSquare.Data
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<bool> IsActive { get; set; }
-        public Nullable<int> ClinicID { get; set; }
-        public string VendorTypeId { get; set; }
     }
 }

@@ -339,17 +339,12 @@
                                 <asp:Label ID="lblWordsAmount" runat="server" Font-Size="Small" Text=""></asp:Label>
                             </td>
                         </tr>
-                        <tr style="height: 80px">
-                            <td colspan="4">
-
-                                <%--  <span class="style2">We declare that this invoice shows the actual price of the goods
-                                described and that all particulars are true and correct. </span>--%>
-                            </td>
-                        </tr>
+                     
 
 
                         <tr>
                             <td colspan="4">
+                                   <br />
                                 <asp:GridView ID="GridpayDetails" runat="server" AutoGenerateColumns="false" Width="100%" Style="font-size: 12px;"
                                     GridLines="None">
                                     <HeaderStyle CssClass="yellow" />
@@ -365,7 +360,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Date" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="lblDescriptionCreateDate" runat="server" Text='<%# Eval("CreateDate","{0:dd/MM/yyyy}") %>'></asp:Label>
+                                                <asp:Label ID="lblDescriptionCreateDate" runat="server" Text='<%# Eval("payDate","{0:dd/MM/yyyy}") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                          <asp:TemplateField HeaderText=" Payment Mode " ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
@@ -373,6 +368,13 @@
                                                 <asp:Label ID="lblPaymentMode" runat="server" Text='<%# Eval("PaymentMode") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                          <asp:TemplateField HeaderText=" Grand Total" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblGrandTotal" runat="server" Text='<%# Eval("GrandTotal") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        
                                         <asp:TemplateField HeaderText="Received Amount (INR) " ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblPaidAmount" runat="server" Text='<%# Convert.ToDecimal(Eval("PaidAmount")).ToString("#,##0.00") %>'></asp:Label>
@@ -380,7 +382,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText=" Balance Amount (INR)" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="lblPendingAmount" runat="server" Text='<%# Convert.ToDecimal(Eval("PendingAmount")).ToString("#,##0.00") %>'></asp:Label>
+                                                <asp:Label ID="lblPendingAmount" runat="server" Text='<%# Convert.ToDecimal(Eval("Pending")).ToString("#,##0.00") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

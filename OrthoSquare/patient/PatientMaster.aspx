@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="PatientMaster.aspx.cs" Inherits="OrthoSquare.patient.PatientMaster" %>
 
+
+<%@ Register Assembly="DropDownCheckBoxes" Namespace="Saplin.Controls" TagPrefix="cc1" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../css/ajaxtab.css" rel="stylesheet" />
@@ -85,8 +88,8 @@
         function DateSelectionChanged() {
             var today = new Date();
             var dob = new Date(document.getElementById('<%=txtBDate.ClientID%>').value);
-             var months = (today.getMonth() - dob.getMonth() + (12 * (today.getFullYear() - dob.getFullYear())));
-             document.getElementById('<%=txtAge.ClientID%>').value = Math.round(months / 12);
+            var months = (today.getMonth() - dob.getMonth() + (12 * (today.getFullYear() - dob.getFullYear())));
+            document.getElementById('<%=txtAge.ClientID%>').value = Math.round(months / 12);
         }
     </script>
 </asp:Content>
@@ -162,6 +165,8 @@
                                         </asp:DropDownList>
 
 
+
+
                                         <span class="help-block">
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="ddlClinic" ValidationGroup="a" InitialValue="0"
                                                 SetFocusOnError="true" ErrorMessage="Please Select Clinic" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -197,15 +202,30 @@
                                         <div class="portlet-body form">
 
                                             <div class="form-body">
-
+                                                <div class="form-group col-md-6">
+                                                    <label>Case Paper  No. <span class="required">*</span></label>
+                                                    <asp:TextBox ID="txtCaseFileNo" class="form-control" TabIndex="1" MaxLength="10" placeholder="Enter Case File No."
+                                                        runat="server"></asp:TextBox>
+                                                    <span class="help-block">
+                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtCaseFileNo" ValidationGroup="a"
+                                                            SetFocusOnError="true" ErrorMessage="Please Enter Case File No." ForeColor="Red"></asp:RequiredFieldValidator>
+                                                        <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ValidationGroup="a"
+                                                            Display="Dynamic" ErrorMessage="Please enter valid Case File No." ControlToValidate="txtCaseFileNo"
+                                                            SetFocusOnError="True" ValidationExpression="([0-9])[0-9]*[.]?[0-9]*" ForeColor="Red"></asp:RegularExpressionValidator>
+                                                    </span>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                </div>
+                                                <div class="clearfix"></div>
                                                 <div class="form-group col-md-6">
                                                     <label>Patient No.</label>
                                                     <asp:TextBox ID="txtPatientNo" class="form-control" ReadOnly="true" TabIndex="1" placeholder="Enter Patient No"
                                                         runat="server"></asp:TextBox>
+
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label>Date</label>
-                                                    <asp:TextBox ID="txtRegDate" ReadOnly="true" TabIndex="2" class="form-control" runat="server"></asp:TextBox>
+                                                    <asp:TextBox ID="txtRegDate" TabIndex="2" class="form-control" runat="server"></asp:TextBox>
                                                     <asp:CalendarExtender ID="txtENqDate_CalendarExtender" runat="server" Enabled="True"
                                                         TargetControlID="txtRegDate" Format="dd-MM-yyyy">
                                                     </asp:CalendarExtender>
@@ -225,7 +245,7 @@
                                                     </span>
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label>Last Name </label>
+                                                    <label>Last Name <span class="required">*</span></label>
                                                     <asp:TextBox ID="txtLname" class="form-control" placeholder="Enter Last Name" TabIndex="4" runat="server"></asp:TextBox>
 
                                                     <span class="help-block">
@@ -262,14 +282,36 @@
                                                 </div>
                                                 <div class="clearfix"></div>
                                                 <div class="form-group col-md-6">
-                                                    <label>Address</label>
-                                                    <asp:TextBox ID="txtAddress" class="form-control" placeholder="Enter Address" TabIndex="9" runat="server"
-                                                        TextMode="MultiLine"></asp:TextBox>
+                                                    <label>Flat, House no., Building, Company, Apartment <span class="required">*</span></label>
+                                                    <asp:TextBox ID="txtAddress" class="form-control" placeholder="Please Enter Flat, House no., Building" TabIndex="9" runat="server"></asp:TextBox>
 
                                                     <span class="help-block">
                                                         <asp:RequiredFieldValidator ID="RequiredtxtAddress" runat="server" ControlToValidate="txtAddress" ValidationGroup="a"
-                                                            SetFocusOnError="true" ErrorMessage="Please Enter Address" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                            SetFocusOnError="true" ErrorMessage="Please Enter Flat, House no., Building" ForeColor="Red"></asp:RequiredFieldValidator>
                                                     </span>
+                                                </div>
+
+
+
+                                                <div class="form-group col-md-6">
+                                                    <label>Area, Street, Sector, Village <span class="required">*</span> </label>
+
+                                                    <asp:TextBox ID="txtArea" class="form-control" placeholder="Enter Area, Street, Sector, Village"  
+                                                        runat="server"></asp:TextBox>
+                                                    <span class="help-block">
+                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="txtArea" ValidationGroup="a"
+                                                            SetFocusOnError="true" ErrorMessage="Please Enter Area, Street, Sector, Village" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                    </span>
+                                                </div>
+
+
+                                                <div class="clearfix"></div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label>Landmark</label>
+                                                    <asp:TextBox ID="txtLandmark" class="form-control" placeholder="Enter Landmark" TabIndex="9" runat="server"></asp:TextBox>
+
+
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label>Country</label>
@@ -318,13 +360,7 @@
 
                                                 </div>
                                                 <div class="clearfix"></div>
-                                                <div class="form-group col-md-6">
-                                                    <label>Area  </label>
 
-                                                    <asp:TextBox ID="txtArea" class="form-control" placeholder="Enter Area" TextMode="MultiLine" TabIndex="10"
-                                                        runat="server"></asp:TextBox>
-
-                                                </div>
 
                                                 <div class="form-group col-md-6">
                                                     <label>Email</label>
@@ -335,6 +371,17 @@
                                                             ForeColor="Red" ErrorMessage="Enter Proper Email ID" Display="Dynamic" ControlToValidate="txtEmail"
                                                             SetFocusOnError="True" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$">
                                                         </asp:RegularExpressionValidator>
+                                                    </span>
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label>Enquiry Source <span class="required">*</span></label>
+                                                    <asp:DropDownList ID="ddlEnquirysource" class="form-control" runat="server"></asp:DropDownList>
+
+
+                                                    <span class="help-block">
+                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="ddlEnquirysource" ValidationGroup="a" InitialValue="0"
+                                                            SetFocusOnError="true" ErrorMessage="Please Select Enquiry Source" ForeColor="Red"></asp:RequiredFieldValidator>
                                                     </span>
                                                 </div>
 
@@ -369,11 +416,7 @@
                                                 <div class="clearfix"></div>
 
 
-                                                <div class="form-group col-md-6">
-                                                    <label>Enquiry Source</label>
-                                                    <asp:DropDownList ID="ddlEnquirysource" class="form-control" runat="server"></asp:DropDownList>
 
-                                                </div>
 
                                                 <%--  </div>
 
@@ -809,11 +852,11 @@
 
                                                     <div class="form-group">
                                                         <div class="col-sm-12">
-                                                          
-                                                                <div class="mt-checkbox-inline">
-                                                                    <asp:CheckBoxList ID="checkallergic" Width="100%" RepeatDirection="Horizontal" RepeatColumns="6" runat="server">
-                                                                    </asp:CheckBoxList>
-                                                            
+
+                                                            <div class="mt-checkbox-inline">
+                                                                <asp:CheckBoxList ID="checkallergic" Width="100%" RepeatDirection="Horizontal" RepeatColumns="6" runat="server">
+                                                                </asp:CheckBoxList>
+
                                                             </div>
 
                                                         </div>
@@ -903,9 +946,12 @@
                                             <div class="form-group">
                                                 <div class="col-sm-10">
                                                     <div class="form-body">
-                                                        <label>What is your complaint? </label>
+                                                        <label>What is your complaint?  <span class="required">*</span></label>
                                                         <asp:TextBox ID="txtcomplaint" class="form-control" placeholder="Enter complaint." runat="server"></asp:TextBox>
-
+                                                        <span class="help-block">
+                                                            <asp:RequiredFieldValidator ID="RequiredFieldValidatorcomplaint" runat="server" ControlToValidate="txtcomplaint" ValidationGroup="b"
+                                                                SetFocusOnError="true" ErrorMessage="Please Enter Complaint" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                        </span>
                                                     </div>
 
                                                 </div>
@@ -1065,7 +1111,7 @@
                                     <div class="row">
                                         <div class="form-actions text-center">
 
-                                            <asp:Button ID="btAdd" runat="server" Text="Submit" class="btn blue" ClientIDMode="Static"
+                                            <asp:Button ID="btAdd" runat="server" Text="Submit" ValidationGroup="b" class="btn blue" ClientIDMode="Static"
                                                 OnClick="btAdd_Click1" />
                                             <asp:Button ID="btUpdate" ClientIDMode="Static" class="btn blue" runat="server"
                                                 Text="Update" Visible="False" />
@@ -1083,40 +1129,10 @@
 
                         </asp:TabContainer>
 
-
-                        <%--<ul class="nav nav-tabs ">
-                            <li class="active">
-                                <a href="#tab_5_1" data-toggle="tab">Personal Information </a>
-                            </li>
-                            <li>
-                                <a href="#tab_5_2" data-toggle="tab">Medical History </a>
-                            </li>
-                            <li>
-                                <a href="#tab_5_3" data-toggle="tab">Dental Information</a>
-                            </li>
-                            
-
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tab_5_1">
-                              
-                                
-                                
-                                  
-                            </div>
+                        <asp:Label ID="lblClinic_Name" runat="server" Text=""></asp:Label>
+                        <asp:Label ID="lblPatientName" runat="server" Text=""></asp:Label>
 
 
-
-                            <div class="tab-pane" id="tab_5_2">
-                              
-                            </div>
-                            <div class="tab-pane" id="tab_5_3">
-                               
-                            </div>
-
-
-                            
-                        </div>--%>
                     </div>
 
 
@@ -1160,14 +1176,7 @@
                             <i class="icon-settings font-red"></i>
                             <span class="caption-subject font-red sbold uppercase">Patient</span>
                         </div>
-                        <%--<div class="actions">
-							<div class="btn-group btn-group-devided" data-toggle="buttons">
-								<label class="btn grey-salsa btn-sm active">
-									<input type="radio" name="options" class="toggle" id="option1">Actions</label>
-								<label class="btn grey-salsa btn-sm">
-									<input type="radio" name="options" class="toggle" id="option2">Settings</label>
-							</div>
-						</div>--%>
+
                     </div>
                     <div class="portlet-body">
                         <div class="row">
@@ -1177,9 +1186,14 @@
                                 <div class="form-group">
 
 
+                                    <asp:TextBox ID="txtPatientName" runat="server" OnTextChanged="txtPatientName_TextChanged" placeholder="Patient Name" AutoPostBack="true" class="form-control"></asp:TextBox>
 
-                                    <asp:TextBox ID="txtNameS" runat="server" class="form-control" placeholder="First Name"
-                                        ClientIDMode="Static"></asp:TextBox>
+                                    <cc1:AutoCompleteExtender ServiceMethod="SearchCustomers"
+                                        MinimumPrefixLength="2"
+                                        CompletionInterval="100" EnableCaching="false" CompletionSetCount="10"
+                                        TargetControlID="txtPatientName"
+                                        ID="AutoCompleteExtender1" runat="server" FirstRowSelected="false">
+                                    </cc1:AutoCompleteExtender>
 
 
                                 </div>
@@ -1187,23 +1201,9 @@
                             <div class="col-md-3">
                                 <div class="form-group">
 
-
-
-                                    <asp:TextBox ID="txtLastNameS" runat="server" class="form-control" placeholder="Last Name"
-                                        ClientIDMode="Static"></asp:TextBox>
-
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
 
                                     <asp:TextBox ID="txtPatientNos" runat="server" class="form-control" placeholder="Patient No"
                                         ClientIDMode="Static"></asp:TextBox>
-
 
                                 </div>
                             </div>
@@ -1216,31 +1216,56 @@
 
                                 </div>
                             </div>
+                        </div>
+                        <br />
+                        <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
 
-                                    <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
-                                        OnClick="btSearch_Click" />
+                                    <asp:TextBox ID="txtFromDate" runat="server" class="form-control" placeholder="From Date"
+                                        ClientIDMode="Static"></asp:TextBox>
+                                    <asp:CalendarExtender ID="txtFromEnquiryDate_CalendarExtender" runat="server"
+                                        Enabled="True" Format="dd-MM-yyyy" TargetControlID="txtFromDate">
+                                    </asp:CalendarExtender>
 
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+
+                                    <asp:TextBox ID="txtToDate" runat="server" class="form-control" placeholder="To Date"
+                                        ClientIDMode="Static"></asp:TextBox>
+                                    <asp:CalendarExtender ID="txtToEnquiryDate_CalendarExtender" runat="server" Format="dd-MM-yyyy"
+                                        Enabled="True" TargetControlID="txtToDate">
+                                    </asp:CalendarExtender>
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <asp:Button ID="btnSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
+                                        CausesValidation="False" OnClick="btnSearch_Click" />
+
+                                    <asp:Button ID="Button11" runat="server" Text="Excel upload" class="btn blue-madison" ClientIDMode="Static"
+                                        CausesValidation="False" OnClick="btnAddexcelupload_Click1" />
+                                    <asp:Button ID="btnAddNew" runat="server" Text="Add New Patient" class="btn blue-madison" ClientIDMode="Static"
+                                        CausesValidation="False" OnClick="btnAddNew_Click" />
                                 </div>
                             </div>
                         </div>
                         <!-- Usage as a class -->
                         <div class="text-right mb-20">
-
-                            <asp:Button ID="Button11" runat="server" Text="Excel upload" class="btn blue-madison" ClientIDMode="Static"
-                                CausesValidation="False" OnClick="btnAddexcelupload_Click1" />
-                            <asp:Button ID="btnAddNew" runat="server" Text="Add New Patient" class="btn blue-madison" ClientIDMode="Static"
-                                CausesValidation="False" OnClick="btnAddNew_Click" />
-
-
+                            Total :
+                                            <asp:Label ID="lblTotaCount" runat="server" Text=""></asp:Label>
                         </div>
                         <div class="table-scrollable">
 
                             <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
                                 class="table table-bordered table-hover" DataKeyNames="patientid" OnRowDataBound="gvShow_RowDataBound"
                                 GridLines="None" OnPageIndexChanging="gvShow_PageIndexChanging" OnRowCommand="gvShow_RowCommand"
-                                OnRowDeleting="gvShow_RowDeleting" OnRowEditing="gvShow_RowEditing" ShowHeaderWhenEmpty="true" OnSelectedIndexChanged="gvShow_SelectedIndexChanged">
+                                OnRowDeleting="gvShow_RowDeleting" OnRowEditing="gvShow_RowEditing" ShowHeaderWhenEmpty="true">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Sr. No.">
                                         <ItemTemplate>
@@ -1248,6 +1273,8 @@
                                             <asp:Label ID="lblID" runat="server" Text='<%# Eval("patientid") %>' Visible="false"></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+
+
                                     <asp:TemplateField HeaderText="Patient No">
                                         <ItemTemplate>
                                             <asp:Label ID="lblPrice" runat="server" Visible="false" Text='<%# Eval("PatientCode") %>'></asp:Label>
@@ -1256,6 +1283,15 @@
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Case Paper No.">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblCaseFileNo" runat="server" Text='<%# Eval("CaseFileNo") %>'></asp:Label>
+
+
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
 
 
                                     <asp:TemplateField HeaderText="Name">
@@ -1278,7 +1314,7 @@
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                      <asp:TemplateField HeaderText="Patient Status">
+                                    <asp:TemplateField HeaderText="Patient Status">
                                         <ItemTemplate>
                                             <asp:Label ID="lblPstatus1" runat="server" Text='<%# Eval("PCstatus") %>'></asp:Label>
 
@@ -1299,7 +1335,7 @@
 
                                     <asp:TemplateField HeaderText="#">
                                         <ItemTemplate>
-                                           <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("patientid") %>'
+                                            <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" CommandArgument='<%# Eval("patientid") %>'
                                                 CommandName="EditEnquiry" ImageUrl="../Images/edit15x15.png" />
                                             <asp:ImageButton ID="btnview" ToolTip="View" CausesValidation="false" runat="server" Height="10px" Width="20px" CommandArgument='<%# Eval("patientid") %>'
                                                 CommandName="viewPDetails" ImageUrl="../Images/images.png" />
@@ -1319,7 +1355,7 @@
 
                         <div class="text-left mb-20">
                             <asp:ImageButton ID="btExcel" runat="server" CausesValidation="false" Height="40px"
-                                ImageUrl="~/Images/download.jpg" Text="Download" ToolTip="Download" Width="40px"
+                                ImageUrl="~/Images/excel-icon.png" Text="Download" ToolTip="Download" Width="40px"
                                 OnClick="btExcel_Click" />
                         </div>
                     </div>
@@ -1452,7 +1488,6 @@
                                 OnClick="btbtnExlCancel_Click" CausesValidation="False" />
 
 
-
                         </div>
 
                     </div>
@@ -1476,14 +1511,17 @@
 
 
 
-     </script>
+    </script>
 
     <script type="text/javascript">
         function Confirm() {
             var confirm_value = document.createElement("INPUT");
             confirm_value.type = "hidden";
             confirm_value.name = "confirm_value";
-            if (confirm("Mobile number already in used.If you wish to add new patient with existing mobile number then click on OK and then SUBMIT.")) {
+            let lblClinic_Name = document.getElementById('ContentPlaceHolder1_lblClinic_Name').innerHTML;
+            let lblPatientName = document.getElementById('ContentPlaceHolder1_lblPatientName').innerHTML;
+
+            if (confirm("Mobile number already  Used in Clinic Name:  " + lblClinic_Name + " Patient Name : " + lblPatientName + ".If you wish to add new patient with existing mobile number then click on OK and then SUBMIT.")) {
                 confirm_value.value = "Yes";
             } else {
                 confirm_value.value = "No";

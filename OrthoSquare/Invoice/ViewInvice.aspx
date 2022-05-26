@@ -1,4 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OrthoSquare.Master" AutoEventWireup="true" CodeBehind="ViewInvice.aspx.cs" Inherits="OrthoSquare.Invoice.ViewInvice" %>
+
+<%@ Register Assembly="DropDownCheckBoxes" Namespace="Saplin.Controls" TagPrefix="cc1" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -41,7 +44,7 @@
 						</div>--%>
                     </div>
                     <div class="portlet-body">
-                       
+
 
                         <div class="row">
                             <div class="col-xs-12">
@@ -59,7 +62,7 @@
 
                                         <label>Doctor Name</label>
 
-                                        <asp:DropDownList ID="ddlDoctor" class="form-control" runat="server"></asp:DropDownList>
+                                        <asp:DropDownList ID="ddlDoctor" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged" runat="server"></asp:DropDownList>
 
                                         <span class="help-block"></span>
 
@@ -68,8 +71,14 @@
 
                                         <label>Patient Name</label>
 
-                                        <asp:TextBox ID="txtSearch" runat="server" class="form-control" placeholder="Name"
-                                            ClientIDMode="Static"></asp:TextBox>
+                                        <asp:TextBox ID="txtPatientName" runat="server" OnTextChanged="txtPatientName_TextChanged" placeholder="Patient Name" AutoPostBack="true" class="form-control"></asp:TextBox>
+
+                                        <cc1:autocompleteextender servicemethod="SearchCustomers"
+                                            minimumprefixlength="2"
+                                            completioninterval="100" enablecaching="false" completionsetcount="10"
+                                            targetcontrolid="txtPatientName"
+                                            id="AutoCompleteExtender1" runat="server" firstrowselected="false">
+                                        </cc1:autocompleteextender>
                                     </div>
                                     <div class="col-sm-3">
                                         <label>Mobile No</label>
@@ -83,30 +92,30 @@
                         </div>
 
 
-                        
+
 
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <div class="col-sm-3">
-                                          <asp:TextBox ID="txtFromEnquiryDate" runat="server" class="form-control" placeholder="From Payment Date"
-                                        ClientIDMode="Static"></asp:TextBox>
-                                    <asp:CalendarExtender ID="txtFromEnquiryDate_CalendarExtender" runat="server"
-                                        Enabled="True" Format="dd-MM-yyyy" TargetControlID="txtFromEnquiryDate">
-                                    </asp:CalendarExtender>
-                                    <span class="help-block"></span>
+                                        <asp:TextBox ID="txtFromEnquiryDate" runat="server" class="form-control" placeholder="From Payment Date"
+                                            ClientIDMode="Static"></asp:TextBox>
+                                        <asp:CalendarExtender ID="txtFromEnquiryDate_CalendarExtender" runat="server"
+                                            Enabled="True" Format="dd-MM-yyyy" TargetControlID="txtFromEnquiryDate">
+                                        </asp:CalendarExtender>
+                                        <span class="help-block"></span>
                                     </div>
 
 
                                     <div class="col-sm-3">
-                                            <asp:TextBox ID="txtToEnquiryDate" runat="server" class="form-control" placeholder="To Payment Date"
-                                        ClientIDMode="Static"></asp:TextBox>
-                                    <asp:CalendarExtender ID="txtToEnquiryDate_CalendarExtender" runat="server" Format="dd-MM-yyyy"
-                                        Enabled="True" TargetControlID="txtToEnquiryDate">
-                                    </asp:CalendarExtender>
+                                        <asp:TextBox ID="txtToEnquiryDate" runat="server" class="form-control" placeholder="To Payment Date"
+                                            ClientIDMode="Static"></asp:TextBox>
+                                        <asp:CalendarExtender ID="txtToEnquiryDate_CalendarExtender" runat="server" Format="dd-MM-yyyy"
+                                            Enabled="True" TargetControlID="txtToEnquiryDate">
+                                        </asp:CalendarExtender>
                                     </div>
                                     <div class="col-sm-3">
-                                        
+
                                         <asp:Button ID="btSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
                                             OnClick="btSearch_Click" />
 
@@ -124,10 +133,27 @@
                                 CausesValidation="False" OnClick="btnAddNew_Click" />
 
                         </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-md-3">
+                                Grand Total :
+                                             <asp:Label ID="lblGrandTotal" runat="server" Text=""></asp:Label>
+                            </div>
+                            <div class="col-md-3">
+                                Paid Total:
+                                             <asp:Label ID="lblPaid" runat="server" Text=""></asp:Label>
+                            </div>
+                            <div class="col-md-3">
+                                Pending Total :
+                                             <asp:Label ID="lblPending" runat="server" Text=""></asp:Label>
+                            </div>
+
+                        </div>
+                        <br />
                         <div class="table-scrollable">
 
                             <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
-                                class="table table-bordered table-hover" DataKeyNames="InvoiceNo"
+                                class="table table-bordered table-hover" DataKeyNames="InvoiceNo" OnRowDataBound="gvShow_RowDataBound"
                                 GridLines="None" OnPageIndexChanging="gvShow_PageIndexChanging" OnRowCommand="gvShow_RowCommand"
                                 ShowHeaderWhenEmpty="true">
                                 <Columns>
@@ -152,11 +178,11 @@
                                             <asp:Label ID="lblPatientName" runat="server" Text='<%# Eval("Mobile") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Doctor Name">
+                                    <%--<asp:TemplateField HeaderText="Doctor Name">
                                         <ItemTemplate>
                                             <asp:Label ID="lblDoctor" runat="server" Text='<%# Eval("DFirstName") +"  "+ Eval("DLastName") %>'></asp:Label>
                                         </ItemTemplate>
-                                    </asp:TemplateField>
+                                    </asp:TemplateField>--%>
                                     <asp:TemplateField HeaderText="Grand Total">
                                         <ItemTemplate>
 
@@ -169,6 +195,9 @@
 
 
                                             <asp:Label ID="lblPaidAmount" runat="server" Text='<%# Convert.ToDecimal(Eval("PaidAmount")).ToString("N", System.Globalization.CultureInfo.GetCultureInfo("en-IN")) %>'></asp:Label>
+                                            <asp:Label ID="lblSumPaid" runat="server" Visible="false" Text='<%# Convert.ToDecimal(Eval("SumPaid")).ToString("N", System.Globalization.CultureInfo.GetCultureInfo("en-IN")) %>'></asp:Label>
+
+
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
@@ -183,12 +212,12 @@
 
 
 
-                                    <asp:TemplateField HeaderText="Payment Date">
+                                    <%--                                    <asp:TemplateField HeaderText="Payment Date">
                                         <ItemTemplate>
                                             <asp:Label ID="lblstart_date" runat="server" Text='<%# Eval("PayDate","{0:dd/MMM/yyyy}") %>'></asp:Label>
 
                                         </ItemTemplate>
-                                    </asp:TemplateField>
+                                    </asp:TemplateField>--%>
 
                                     <asp:TemplateField>
                                         <ItemTemplate>
@@ -196,13 +225,14 @@
 													CommandName="EditEnquiry" ImageUrl="../Images/right15x15.png" />--%>
 
                                             <asp:Button ID="btnview" CommandArgument='<%# Eval("InvoiceNo") %>' CommandName="Viewinv" class="btn blue-madison" runat="server" Text="View" />
+
+                                            <asp:ImageButton ID="lbtDelete" Visible="false" CausesValidation="false" runat="server" CommandName="delete1" CommandArgument='<%# Eval("InvoiceNo") %>'
+                                                ImageUrl="../Images/delete15x15.png" OnClientClick="return confirm('Are you sure you want to delete this Invloce?');" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
                                     <asp:TemplateField HeaderText="Delete" Visible="false" ItemStyle-Width="2%">
                                         <ItemTemplate>
-                                    <%--        <asp:ImageButton ID="lbtDelete" CausesValidation="false" runat="server" CommandName="delete1" CommandArgument='<%# Eval("InvoiceTid") %>'
-                                                ImageUrl="../Images/delete15x15.png" OnClientClick="return confirm('Are you sure you want to delete this Invloce?');" />--%>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 

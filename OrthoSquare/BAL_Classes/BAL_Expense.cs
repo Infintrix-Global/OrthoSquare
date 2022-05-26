@@ -170,6 +170,27 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
+        public DataTable GetAllClinicCollection_Report(string FromDate, string Todate, int ClinicID)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+               
+                ds = objGeneral.GetDatasetByCommand_SP("GET_ClinicCollectionReport");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
+
+
+
         public DataTable GetAllClinicCollectionReport(int Cid)
         {
             strQuery = "Select Sum(PaidAmount) as PaidAmount,sum(PendingAmount) as PendingAmount,C.ClinicName,IM.ClinicID  from InvoiceMaster IM join tbl_ClinicDetails  C on C.ClinicID = IM.ClinicID   ";
@@ -212,11 +233,32 @@ namespace OrthoSquare.BAL_Classes
 
         }
 
+        public DataTable GetAllPatientCollectionReport(string FromDate, string Todate, int ClinicID, int DoctorID, int patientid)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+                objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", DoctorID);
+                objGeneral.AddParameterWithValueToSQLCommand("@patientid", patientid);
+
+
+                ds = objGeneral.GetDatasetByCommand_SP("GET_PatientCollectionReport");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
 
 
         public DataTable GetAllPatientCollectionReport(int Cid,int Did, string ToDate, string FromDate,string Name)
         {
-            strQuery = "Select Sum(PaidAmount) as PaidAmount,sum(PendingAmount) as PendingAmount,C.ClinicName,DD.FirstName as DFirstName,DD.LastName as DLastName,P.FristName,P.LastName,IM.patientid from InvoiceMaster IM  ";
+            strQuery = "Select Sum(PaidAmount) as PaidAmount,IM.GrandTotal - Sum(PaidAmount)  as PendingAmount,C.ClinicName,DD.FirstName as DFirstName,DD.LastName as DLastName,P.FristName,P.LastName,IM.patientid from InvoiceMaster IM  ";
             strQuery += " join tbl_ClinicDetails  C on C.ClinicID = IM.ClinicID  join tbl_DoctorDetails  DD on DD.DoctorID = IM.DoctorID  join PatientMaster  P on P.patientid = IM.patientid  where C.IsActive =1 ";
             
             if (Cid > 0)
@@ -229,7 +271,7 @@ namespace OrthoSquare.BAL_Classes
             if (FromDate != "" && ToDate != "")
                 strQuery += " and convert(date,IM.PayDate,105) between convert(date,'" + FromDate + "',105) and convert(date,'"+ ToDate + "',105)";
 
-            strQuery += "   Group by ClinicName,DD.FirstName,DD.LastName,P.FristName,P.LastName,IM.patientid  ";
+            strQuery += "   Group by ClinicName,DD.FirstName,DD.LastName,P.FristName,P.LastName,IM.patientid,IM.GrandTotal ";
 
             return objGeneral.GetDatasetByCommand(strQuery);
 
@@ -344,6 +386,7 @@ namespace OrthoSquare.BAL_Classes
             if (Did != "")
                 strQuery += " and D.FirstName +' ' +D.LastName like '%" + Did + "%'";
 
+
             // strQuery += "  Group by  D.FirstName,D.LastName,DBC.DoctorId,D.Mobile1,C.ClinicName,DBC.ClinicId,DBC.DoctorID ";
 
             return objGeneral.GetDatasetByCommand(strQuery);
@@ -397,7 +440,114 @@ namespace OrthoSquare.BAL_Classes
             return _isDeleted;
         }
 
+        public DataTable GetAllFinancePayment(string FromDate, string Todate,int ClinicID,int DoctorsID, string PaymentMode)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+                objGeneral.AddParameterWithValueToSQLCommand("@DoctorsID", DoctorsID);
+                objGeneral.AddParameterWithValueToSQLCommand("@PaymentMode", PaymentMode);
 
+               
+                ds = objGeneral.GetDatasetByCommand_SP("Get_FinanceReport");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
+
+
+        public DataTable GetAllMedicinesCollectionReport(string FromDate, string Todate, int ClinicID, int DoctorsID, string Medicines)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+                objGeneral.AddParameterWithValueToSQLCommand("@DoctorsID", DoctorsID);
+                objGeneral.AddParameterWithValueToSQLCommand("@MedicinesName", Medicines);
+
+
+                ds = objGeneral.GetDatasetByCommand_SP("Get_MedicinesCollectionReport");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
+
+        public DataTable GetAllTreatmentReport(string FromDate, string Todate, int ClinicID,int Mode,int TreatmentGroupid)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", Mode);
+                objGeneral.AddParameterWithValueToSQLCommand("@Groupid", TreatmentGroupid);
+
+
+                ds = objGeneral.GetDatasetByCommand_SP("GET_TreatmentReport");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
+
+
+        public DataTable GetEnquiryFollowPuReport(string FromDate, string Todate, int ClinicID,int DoctorsID, string Mode)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+                objGeneral.AddParameterWithValueToSQLCommand("@DoctorsID", DoctorsID);
+
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", Mode);
+           
+
+
+                ds = objGeneral.GetDatasetByCommand_SP("GET_EnquiryFollowPReport");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
+
+        public DataTable GET_TreatmentGroup()
+        {
+            try
+            {
+                General objGeneral = new General();
+              
+
+                ds = objGeneral.GetDatasetByCommand_SP("GET_TreatmentGroup");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
 
     }
 }

@@ -281,13 +281,15 @@ namespace OrthoSquare.Report
 
         public void biendInvoiceMaster()
         {
-
+            double Invoice = 0;
+            decimal TotalMedicinesAmount = objcommon.GetTotalMedicines(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim());
+            lblMedicinesAmount.Text = TotalMedicinesAmount.ToString("n2");
             DataTable dt = objcommon.clinicVSInvoiceMaster(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue), ddlDoctors.SelectedValue, SessionUtilities.RoleID);
             if (dt.Rows.Count >= 0 && dt != null)
             {
                 GridViewInvoiceMaster.DataSource = dt;
                 GridViewInvoiceMaster.DataBind();
-                double Invoice = 0;
+             
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     Invoice += Convert.ToDouble(dt.Rows[i]["PaidAmount"]);
@@ -300,6 +302,8 @@ namespace OrthoSquare.Report
             {
                 lblCollectionCount.Text = "0.00";
             }
+
+            lblCMtotal.Text =(Convert.ToDecimal(Invoice)+ TotalMedicinesAmount).ToString("n2");
         }
 
         protected void GridViewInvoiceMaster_PageIndexChanging(object sender, GridViewPageEventArgs e)

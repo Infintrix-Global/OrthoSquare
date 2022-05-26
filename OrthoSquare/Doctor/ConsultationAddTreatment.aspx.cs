@@ -25,6 +25,7 @@ namespace OrthoSquare.Doctor
         BAL_Medicines objMedicines = new BAL_Medicines();
         BAL_Appointment ojbApp = new BAL_Appointment();
         BAL_Patient objPatient = new BAL_Patient();
+        BAL_Clinic objc = new BAL_Clinic();
         BAL_ConsultationAddTreatment objCT = new BAL_ConsultationAddTreatment();
         BAL_Treatment objT = new BAL_Treatment();
         BAL_Patient objp = new BAL_Patient();
@@ -43,6 +44,7 @@ namespace OrthoSquare.Doctor
             if (!IsPostBack)
             {
                 ClearCache();
+                bindClinic();
                 if (Request.QueryString["pid"] != null)
                 {
                     int Pid = Convert.ToInt32(Request.QueryString["pid"]);
@@ -588,7 +590,7 @@ namespace OrthoSquare.Doctor
 
             //int TPD = objCT.Update_TreatmentbyPatientWorkDone(Convert.ToInt32(Request.QueryString["pid"]), Convert.ToInt32(ddlTreatmentbyworkDone.SelectedValue), ddlToothNoWOrkname.SelectedItem.Text, txtNotsWorkDone.Text);
 
-            int TPD = objCT.Update_TreatmentbyPatientWorkDone(Convert.ToInt32(Request.QueryString["pid"]), Convert.ToInt32(ddlTreatmentbyworkDone.SelectedValue), chkSelectedToothworkDone, txtNotsWorkDone.Text);
+            int TPD = objCT.Update_TreatmentbyPatientWorkDone(Convert.ToInt32(Request.QueryString["pid"]), Convert.ToInt32(ddlTreatmentbyworkDone.SelectedValue), chkSelectedToothworkDone, txtNotsWorkDone.Text,Convert.ToInt32(ddlClinic.SelectedValue),Convert.ToInt32(DoctorID));
 
             BindTreatmentStartedNotesWorkDones(Convert.ToInt32(Request.QueryString["pid"]));
             txtNotsWorkDone.Text = "";
@@ -617,17 +619,19 @@ namespace OrthoSquare.Doctor
                 int c = 0;
                 string x = "";
                 string chkSelectedTooth = "";
+                int toothCont = 0;
                 foreach (ListItem item1 in ddltooth.Items)
                 {
                     if (item1.Selected)
                     {
-                        c = 1;
+                        c += 1;
                         x += item1.Text + ",";
                     }
                 }
                 if (c > 0)
                 {
                     chkSelectedTooth = x.Remove(x.Length - 1, 1);
+                    toothCont = c;
                 }
 
 
@@ -640,7 +644,7 @@ namespace OrthoSquare.Doctor
 
                         if (lblStartedTreatments.Text == "No" || lblStartedTreatments.Text == "")
                         {
-                            int TPD = objCT.Update_TreatmentbyPatientYES(Convert.ToInt32(lblID.Text), txtCost.Text, chkSelectedTooth, StartedTreatments, txtNots.Text, txtSdate.Text);
+                            int TPD = objCT.Update_TreatmentbyPatientYES(Convert.ToInt32(lblID.Text), txtCost.Text, chkSelectedTooth, StartedTreatments, txtNots.Text, txtSdate.Text, toothCont,Convert.ToInt32(ddlClinic.SelectedValue));
                             //int TPD = objCT.Update_TreatmentbyPatientYES(Convert.ToInt32(lblID.Text), txtCost.Text, ddltooth.SelectedItem.Text, StartedTreatments, txtNots.Text, txtSdate.Text);
 
                         }
@@ -651,7 +655,7 @@ namespace OrthoSquare.Doctor
                     {
                         StartedTreatments = "No";
                         //  int TPD = objCT.Update_TreatmentbyPatient(Convert.ToInt32(lblID.Text), txtCost.Text, ddltooth.SelectedItem.Text, StartedTreatments, txtNots.Text, txtSdate.Text);
-                        int TPD = objCT.Update_TreatmentbyPatient(Convert.ToInt32(lblID.Text), txtCost.Text, chkSelectedTooth, StartedTreatments, txtNots.Text, txtSdate.Text);
+                        int TPD = objCT.Update_TreatmentbyPatient(Convert.ToInt32(lblID.Text), txtCost.Text, chkSelectedTooth, StartedTreatments, txtNots.Text, txtSdate.Text, toothCont, Convert.ToInt32(ddlClinic.SelectedValue));
 
                     }
 
@@ -917,8 +921,8 @@ namespace OrthoSquare.Doctor
                 else
                 {
                     patientid = 0;
-                    this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Patient Added Successfully')", true);
-
+                 //   this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Patient Added Successfully')", true);
+                    objcommon.ShowMessage(this, "Patient Added Successfully");
                     lblMessage.Text = "Patient Added Successfully";
                     lblMessage.ForeColor = System.Drawing.Color.Green;
                     Clear();
@@ -1020,8 +1024,8 @@ namespace OrthoSquare.Doctor
                 }
                 else
                 {
-                    this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Lab Added Successfullyy')", true);
-
+                    //  this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Lab Added Successfullyy')", true);
+                    objcommon.ShowMessage(this, "Lab Added Successfully");
                     lblMessage.Text = "Lab Added Successfully";
                     lblMessage.ForeColor = System.Drawing.Color.Green;
                     getAlaGridelb(patientid);
@@ -1058,7 +1062,7 @@ namespace OrthoSquare.Doctor
         {
             InsertMultipleImage();
 
-          
+
 
         }
 
@@ -1115,7 +1119,7 @@ namespace OrthoSquare.Doctor
             else
             {
                 this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Complaints Added Successfully')", true);
-
+                objcommon.ShowMessage(this, "Complaints Added Successfully");
                 lblMessage.Text = "Complaints Added Successfully";
                 lblMessage.ForeColor = System.Drawing.Color.Green;
                 Clear();
@@ -1157,8 +1161,8 @@ namespace OrthoSquare.Doctor
             }
             else
             {
-                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Treatment Plan Added Successfully')", true);
-
+              //  this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Treatment Plan Added Successfully')", true);
+                objcommon.ShowMessage(this, "Treatment Plan Added Successfully");
                 lblMessage.Text = "Treatment Plan Added Successfully";
                 lblMessage.ForeColor = System.Drawing.Color.Green;
                 // Clear();
@@ -1250,8 +1254,8 @@ namespace OrthoSquare.Doctor
                                 }
                                 else
                                 {
-                                    this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Treatment Image Added Successfully')", true);
-
+                                  //  this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Treatment Image Added Successfully')", true);
+                                    objcommon.ShowMessage(this, "Treatment Image Added Successfully");
                                     lblMessage.Text = "Treatment Image Added Successfully";
                                     lblMessage.ForeColor = System.Drawing.Color.Green;
                                     Clear();
@@ -1328,63 +1332,7 @@ namespace OrthoSquare.Doctor
         }
 
 
-        [System.Web.Script.Services.ScriptMethod()]
-        [System.Web.Services.WebMethod]
-        public static List<string> SearchCustomers(string prefixText, int count)
-        {
-            using (SqlConnection conn = new SqlConnection())
-            {
-                conn.ConnectionString = ConfigurationManager.ConnectionStrings["OrthoSquareDBConnectionString"].ConnectionString;
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    int DoctorID = 0, ClinicId = 0;
-                    int RoleId = Convert.ToInt32(HttpContext.Current.Session["RoleID"]);
-                    DoctorID = Convert.ToInt32(HttpContext.Current.Session["Empid"]);
-                    ClinicId = Convert.ToInt32(HttpContext.Current.Session["Empid"]);
-                    //cmd.CommandText = " select distinct GPD.jobcode from gti_jobs_seeds_plan GTS inner join GrowerPutAwayDetails GPD on GPD.wo=GTS.wo  where  GPD.FacilityID ='" + Facility + "'  AND GPD.jobcode like '%" + prefixText + "%' union select distinct jobcode from gti_jobs_seeds_plan_Manual where loc_seedline ='" + Facility + "'  AND jobcode like '%" + prefixText + "%' order by jobcode" +
-                    //    "";
-                    //SessionUtilities.Empid, SessionUtilities.RoleID
-
-                    if (RoleId == 1)
-                    {
-                        cmd.CommandText = "Select D.FirstName+' '+ isnull(D.LastName,' ') as DoctorName,* from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID  where  IsActive =1  and IsDeleted=0 and DBC.IsDeactive=1 ";
-                        cmd.CommandText += " and DBC.ClinicID='" + ClinicId + "' and  D.FirstName +' ' + D.LastName like '%" + prefixText + "%' ";
-                        cmd.CommandText += "  order by FirstName ASC";
-                    }
-                    else if (RoleId == 3)
-                    {
-
-                        cmd.CommandText = "Select  FirstName+' '+ isnull(LastName,' ') as DoctorName,* from  tbl_DoctorDetails  where IsDeleted=0 and  FirstName +' ' + LastName like '%" + prefixText + "%'";
-                        cmd.CommandText += " and DoctorID='" + DoctorID + "'";
-                        cmd.CommandText += "  order by FirstName ASC";
-
-                    }
-                    else
-                    {
-
-                        cmd.CommandText = "Select  FirstName+' '+ isnull(LastName,' ') as DoctorName,* from tbl_DoctorDetails where  IsActive =1  and IsDeleted=0 and  FirstName +' ' + LastName like '%" + prefixText + "%' ";
-                        cmd.CommandText += "  order by FirstName ASC";
-                    }
-
-
-                    cmd.Parameters.AddWithValue("@SearchText", prefixText);
-                    cmd.Connection = conn;
-                    conn.Open();
-                    List<string> customers = new List<string>();
-                    using (SqlDataReader sdr = cmd.ExecuteReader())
-                    {
-                        while (sdr.Read())
-                        {
-                            customers.Add(sdr["DoctorName"].ToString());
-                        }
-                    }
-                    conn.Close();
-
-                    return customers;
-                }
-            }
-        }
-
+       
         protected void GridTretmetWorkDone_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridTretmetWorkDone.PageIndex = e.NewPageIndex;
@@ -1467,7 +1415,7 @@ namespace OrthoSquare.Doctor
                     AddMedicines(ref objMedi, Convert.ToInt32(hdnWOEmployeeIDVal), MedicinesType, MedicinesName, txtTotalDose.Text, txtTotalNoofDays.Text, Morning, Afternoon, Evening, txtRemarksN.Text, inHouseValues, txtStrip.Text);
                 }
                 if (AddBlankRow)
-                    AddMedicines(ref objMedi, 1, "", "0", "0", "0", "", "", "", "", "", "0");
+                    AddMedicines(ref objMedi, 1, "", "0", "0", "0", "", "", "", "", "", "1");
                 //GrowerPutData = objinvoice;
                 GridMedicinesDetails.DataSource = objMedi;
                 GridMedicinesDetails.DataBind();
@@ -1477,14 +1425,6 @@ namespace OrthoSquare.Doctor
             {
 
             }
-        }
-
-
-
-        public void GridSplitjob()
-        {
-            GridMedicinesDetails.DataSource = ViewState["Data"];
-            GridMedicinesDetails.DataBind();
         }
 
         private void AddMedicines(ref List<MedicinesDetails> objGP, int ID, string MedicinesType, string MedicinesName, string Dose, string NoOfDays, string Morning, string Afternoon, string Evening, string Remarks, string InHouse, string Strip)
@@ -1506,6 +1446,11 @@ namespace OrthoSquare.Doctor
             ViewState["ojbpro"] = objGP;
         }
 
+        public void GridSplitjob()
+        {
+            GridMedicinesDetails.DataSource = ViewState["Data"];
+            GridMedicinesDetails.DataBind();
+        }
 
         protected void GridMedicinesDetails_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -1639,7 +1584,7 @@ namespace OrthoSquare.Doctor
                 ddlMedicinesName.DataValueField = "MedicinesId";
                 ddlMedicinesName.DataBind();
                 ddlMedicinesName.Items.Insert(0, new ListItem("---Medicines---", "0"));
-
+                
             }
 
 
@@ -1689,8 +1634,9 @@ namespace OrthoSquare.Doctor
                 string InHouse = "";
                 string MedicinesName = "";
                 int Medicines = 0;
-                int MedicinesPrice = 0;
-                int TotalPrice = 0, TotalG = 0, PreAmount = 0, DiscountAmount = 0;
+                decimal MedicinesPrice = 0;
+                int TotalPrice = 0;
+                decimal DiscountAmount = 0, PreAmount = 0, TotalG = 0;
 
 
                 if (row.RowType == DataControlRowType.DataRow)
@@ -1761,14 +1707,14 @@ namespace OrthoSquare.Doctor
                     DataTable Dt = objMedicines.GetSelectMedicines(Medicines);
                     if (Dt != null && Dt.Rows.Count > 0)
                     {
-                        DiscountAmount = Convert.ToInt32(txtMDiscount.Text);
+                        DiscountAmount = Convert.ToDecimal(txtMDiscount.Text);
                         Price = Convert.ToInt32(Dt.Rows[0]["Price"]);
                         MedicinesPrice = Convert.ToInt32(Dt.Rows[0]["Price"]) * Convert.ToInt32(txtStrip.Text);
-                        PreAmount = (MedicinesPrice * Convert.ToInt32(DiscountAmount)) / 100;
+                        PreAmount = (MedicinesPrice * DiscountAmount) / 100;
                         TotalG = MedicinesPrice - PreAmount;
                     }
 
-                    _isInserted = objCT.Add_Medicines(patientid, MedicinesName, Medicines, ddlMedicinesType.SelectedItem.Text, txtTotal.Text, txtTotalDay.Text, Morning1, Afternoon1, Evening1, txtRemarks.Text, InHouse, CNo, Convert.ToInt32(DoctorID), MedicinesPrice, Convert.ToDecimal(DiscountAmount), Convert.ToDecimal(PreAmount), Convert.ToDecimal(TotalG), txtStrip.Text);
+                    _isInserted = objCT.Add_Medicines(patientid, MedicinesName, Medicines, ddlMedicinesType.SelectedItem.Text, txtTotal.Text, txtTotalDay.Text, Morning1, Afternoon1, Evening1, txtRemarks.Text, InHouse, CNo, Convert.ToInt32(DoctorID), MedicinesPrice, Convert.ToDecimal(DiscountAmount), Convert.ToDecimal(PreAmount), Convert.ToDecimal(TotalG), txtStrip.Text,ddlClinic.SelectedValue);
                     SelectedItems++;
 
 
@@ -1782,12 +1728,14 @@ namespace OrthoSquare.Doctor
 
             this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Medicines Added Successfully')", true);
 
-
+            objcommon.ShowMessage(this, "Medicines Added Successfully");
             lblMessage.ForeColor = System.Drawing.Color.Green;
             getAlaGridViewViewMedicines(patientid);
             GridMedicinesDetails.DataSource = null;
             GridMedicinesDetails.DataBind();
-
+            txtTotal.Text = "0";
+            txtpay.Text = "0";
+            txtMDiscount.Text = "0";
             AddMedicinesRow(true);
 
             txtMDiscount.Text = "";
@@ -1799,7 +1747,7 @@ namespace OrthoSquare.Doctor
             }
             else
             {
-                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Medicines Added Successfully')", true);
+                objcommon.ShowMessage(this, "Medicines Added Successfully");
 
                 lblMessage.Text = "Medicines Added Successfully";
                 lblMessage.ForeColor = System.Drawing.Color.Green;
@@ -1840,5 +1788,164 @@ namespace OrthoSquare.Doctor
             int patientid = Convert.ToInt32(GridViewViewMedicines.DataKeys[rowIndex].Values[1]);
             Response.Redirect("MedicinesPrint.aspx?CNo=" + CNo + "&patientid=" + patientid);
         }
+
+
+        public void CalData()
+        {
+
+            decimal Total = 0;
+            decimal Qty = 0;
+            decimal price = 0;
+
+            foreach (GridViewRow row in GridMedicinesDetails.Rows)
+            {
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+
+                    DropDownList ddlMedicinesName = (row.Cells[0].FindControl("ddlMedicinesName") as DropDownList);
+
+                    TextBox txtStrip = (row.Cells[0].FindControl("txtStrip") as TextBox);
+
+                    DataTable AllData23 = objMedicines.GetSelectMedicines(Convert.ToInt32(ddlMedicinesName.SelectedValue));
+                    if (AllData23 != null && AllData23.Rows.Count > 0)
+                    {
+                        price = Convert.ToDecimal(AllData23.Rows[0]["Price"]);
+                        if (txtStrip.Text != "")
+                        {
+                            Qty = Decimal.Parse(txtStrip.Text);
+                        }
+                        Total = Total + (price * Qty);
+                        
+                    }
+
+                }
+            }
+
+            txtTotal.Text = Total.ToString();
+
+        }
+
+
+        protected void ddlMedicinesName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+          
+                CalData();
+           
+
+        }
+
+        protected void txtStrip_TextChanged(object sender, EventArgs e)
+        {
+            CalData();
+        }
+
+        protected void txtpay_TextChanged(object sender, EventArgs e)
+        {
+            decimal per = 0;
+            per = (Convert.ToDecimal(txtpay.Text) * 100) / Convert.ToDecimal(txtTotal.Text);
+          
+            txtMDiscount.Text = Math.Round((100 - per), 2).ToString();
+
+        
+        }
+
+
+        public void bindClinic()
+        {
+
+            DataTable dt;
+
+            if (SessionUtilities.RoleID == 3)
+            {
+                dt = objcommon.GetDoctorByClinic(SessionUtilities.Empid);
+            }
+            else if (SessionUtilities.RoleID == 1)
+            {
+                dt = objc.GetAllClinicDetaisNew(SessionUtilities.Empid);
+            }
+            else
+            {
+                dt = objc.GetAllClinicDetais();
+
+            }
+            ddlClinic.DataSource = dt;
+
+            ddlClinic.DataValueField = "ClinicID";
+            ddlClinic.DataTextField = "ClinicName";
+            ddlClinic.DataBind();
+            ddlClinic.Items.Insert(0, new ListItem("-- Select Clinic --", "0", true));
+
+        }
+
+        protected void ddlClinic_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+           /// BindDocter(Convert.ToInt32(ddlClinic.SelectedValue));
+            Session["Cid"] = ddlClinic.SelectedValue;
+        }
+
+
+
+
+        [System.Web.Script.Services.ScriptMethod()]
+        [System.Web.Services.WebMethod]
+        public static List<string> SearchCustomers(string prefixText, int count)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = ConfigurationManager.ConnectionStrings["OrthoSquareDBConnectionString"].ConnectionString;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    int DoctorID = 0, ClinicId = 0;
+                    int RoleId = Convert.ToInt32(HttpContext.Current.Session["RoleID"]);
+                    DoctorID = Convert.ToInt32(HttpContext.Current.Session["Empid"]);
+                    ClinicId = Convert.ToInt32(HttpContext.Current.Session["Empid"]); 
+
+                    //cmd.CommandText = " select distinct GPD.jobcode from gti_jobs_seeds_plan GTS inner join GrowerPutAwayDetails GPD on GPD.wo=GTS.wo  where  GPD.FacilityID ='" + Facility + "'  AND GPD.jobcode like '%" + prefixText + "%' union select distinct jobcode from gti_jobs_seeds_plan_Manual where loc_seedline ='" + Facility + "'  AND jobcode like '%" + prefixText + "%' order by jobcode" +
+                    //    "";
+                    //SessionUtilities.Empid, SessionUtilities.RoleID
+
+                    if (RoleId == 1)
+                    {
+                        cmd.CommandText = "Select D.FirstName+' '+ isnull(D.LastName,' ') as DoctorName,* from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID  where  IsActive =1  and IsDeleted=0 and DBC.IsDeactive=1 ";
+                        cmd.CommandText += " and DBC.ClinicID='" + ClinicId + "' and  D.FirstName +' ' + D.LastName like '%" + prefixText + "%' ";
+                        cmd.CommandText += "  order by FirstName ASC";
+                    }
+                    else if (RoleId == 3)
+                    {
+
+                        cmd.CommandText = "Select  FirstName+' '+ isnull(LastName,' ') as DoctorName,* from  tbl_DoctorDetails  where IsDeleted=0 and  FirstName +' ' + LastName like '%" + prefixText + "%'";
+                        cmd.CommandText += " and DoctorID='" + DoctorID + "'";
+                        cmd.CommandText += "  order by FirstName ASC";
+
+                    }
+                    else
+                    {
+
+                        cmd.CommandText = "Select  FirstName+' '+ isnull(LastName,' ') as DoctorName,* from tbl_DoctorDetails where  IsActive =1  and IsDeleted=0 and  FirstName +' ' + LastName like '%" + prefixText + "%' ";
+                        cmd.CommandText += "  order by FirstName ASC";
+                    }
+
+
+                    cmd.Parameters.AddWithValue("@SearchText", prefixText);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    List<string> customers = new List<string>();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            customers.Add(sdr["DoctorName"].ToString());
+                        }
+                    }
+                    conn.Close();
+
+                    return customers;
+                }
+            }
+        }
+
+
+
     }
 }

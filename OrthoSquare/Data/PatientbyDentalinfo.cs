@@ -16,9 +16,12 @@ namespace OrthoSquare.Data
     {
         public int DentalinfoID { get; set; }
         public Nullable<int> patientid { get; set; }
+        public Nullable<int> DoctorID { get; set; }
         public string Complaint { get; set; }
         public string DentalTreatment { get; set; }
         public string ConsentStatement { get; set; }
         public string ToothNo { get; set; }
+        public string ConsentParth { get; set; }
+        public Nullable<System.DateTime> CreateOn { get; set; }
     }
 }

@@ -239,7 +239,11 @@ namespace OrthoSquare.Report
                 Label lblIDFCFirstBank = (Label)e.Row.FindControl("lblIDFCFirstBank1"); 
                 Label lblShopse = (Label)e.Row.FindControl("lblShopse1");
                 Label lblMonthNo = (Label)e.Row.FindControl("lblMonthNo");
-                
+
+                Label lblShopsePreapproved1 = (Label)e.Row.FindControl("lblShopsePreapproved1");
+                Label lblShopseHDFC1 = (Label)e.Row.FindControl("lblShopseHDFC1");
+                Label lblShopseCreditCard1 = (Label)e.Row.FindControl("lblShopseCreditCard1");
+                Label lblShopseAmex1 = (Label)e.Row.FindControl("lblShopseAmex1");
 
                 if (lblCash.Text=="")
                 {
@@ -281,7 +285,24 @@ namespace OrthoSquare.Report
                     lblShopse.Text = "0.00";
                 }
 
-                Total = Convert.ToDecimal(lblCash.Text) + Convert.ToDecimal(lblDebitCard.Text) + Convert.ToDecimal(lblCreditCard.Text) + Convert.ToDecimal(lblUPI.Text) + Convert.ToDecimal(lblBajajfinance.Text) + Convert.ToDecimal(lblKotakfinance.Text) + Convert.ToDecimal(lblLiquiLoans.Text) + Convert.ToDecimal(lblIDFCFirstBank.Text) + Convert.ToDecimal(lblShopse.Text);
+                if (lblShopsePreapproved1.Text == "")
+                {
+                    lblShopsePreapproved1.Text = "0.00";
+                }
+                if (lblShopseHDFC1.Text == "")
+                {
+                    lblShopseHDFC1.Text = "0.00";
+                }
+                if (lblShopseCreditCard1.Text == "")
+                {
+                    lblShopseCreditCard1.Text = "0.00";
+                }
+                if (lblShopseAmex1.Text == "")
+                {
+                    lblShopseAmex1.Text = "0.00";
+                }
+
+                Total = Convert.ToDecimal(lblCash.Text) + Convert.ToDecimal(lblDebitCard.Text) + Convert.ToDecimal(lblCreditCard.Text) + Convert.ToDecimal(lblUPI.Text) + Convert.ToDecimal(lblBajajfinance.Text) + Convert.ToDecimal(lblKotakfinance.Text) + Convert.ToDecimal(lblLiquiLoans.Text) + Convert.ToDecimal(lblIDFCFirstBank.Text) + Convert.ToDecimal(lblShopse.Text) + Convert.ToDecimal(lblShopsePreapproved1.Text) + Convert.ToDecimal(lblShopseHDFC1.Text) + Convert.ToDecimal(lblShopseCreditCard1.Text) + Convert.ToDecimal(lblShopseAmex1.Text);
 
                 lblTotal.Text = Total.ToString();
 
@@ -323,6 +344,7 @@ namespace OrthoSquare.Report
                 Label lblLiquiLoans = (Label)e.Row.FindControl("lblLiquiLoans");
                 Label lblIDFCFirstBank = (Label)e.Row.FindControl("lblIDFCFirstBank");
                 Label lblShopse = (Label)e.Row.FindControl("lblShopse");
+
 
                 if (lblCash.Text == "")
                 {

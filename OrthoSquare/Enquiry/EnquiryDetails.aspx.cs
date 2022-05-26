@@ -467,7 +467,7 @@ namespace OrthoSquare.Enquiry1
                 }
                 else
                 {
-                    FollowupDate = "01-01-1999";
+                    FollowupDate = System.DateTime.Now.ToString("dd-MM-yyyy");
 
                 }
                 string c = ddlCity.SelectedValue;
