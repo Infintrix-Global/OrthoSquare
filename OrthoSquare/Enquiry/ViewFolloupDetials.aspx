@@ -55,6 +55,7 @@
 
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+
                                              <asp:TemplateField HeaderText="Date" ItemStyle-Width="18%">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblEnquiryDate11" runat="server" Text='<%# Eval("Followupdate","{0:dd/MMM/yyyy}") %>'></asp:Label>
