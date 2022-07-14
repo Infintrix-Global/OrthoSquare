@@ -482,6 +482,7 @@ public class clsCommonMasters
     }
 
 
+
     public DataTable DoctersMaster(int Cid, int Rolid)
     {
         DataTable dt = new DataTable();
@@ -778,6 +779,30 @@ public class clsCommonMasters
         return Id;
 
     }
+
+
+
+    public int GetPurchaseOrde_No()
+    {
+        int Id = 0;
+        try
+        {
+            General objGeneral = new General();
+            objGeneral.AddParameterWithValueToSQLCommand("@mode", 29);
+            objGeneral.AddParameterWithValueToSQLCommand("@stateID", 0);
+            objGeneral.AddParameterWithValueToSQLCommand("@Countryid", 0);
+            objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", 0);
+            Id = objGeneral.GetExecuteScalarByCommand_SP("GET_Common");
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        return Id;
+
+    }
+
+
 
 
     //public DataTable GetTotalPaidAmount(int Cid)
@@ -2181,6 +2206,30 @@ public class clsCommonMasters
 
     }
 
+    public DataTable clinicVSInvoiceMedicines(string FromDate, string Todate, int ClinicID, string DoctorsID, int RoleId)
+    {
+        try
+        {
+
+            General objGeneral = new General();
+            objGeneral.AddParameterWithValueToSQLCommand("@mode", 8);
+            objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+            objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
+            objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+            objGeneral.AddParameterWithValueToSQLCommand("@DoctorsID", DoctorsID);
+
+            ds = objGeneral.GetDatasetByCommand_SP("Get_ReportAllDetilsOfClinic");
+        }
+        catch (Exception ex)
+        {
+
+        }
+        return ds.Tables[0];
+
+    }
+
+
+
     public void ShowMessageAndRedirect(Page page, string message, string url)
     {
         ScriptManager.RegisterStartupScript(page, page.GetType(), "redirect", "alert('" + message + "'); window.location='" + url + "';", true);
@@ -2716,6 +2765,8 @@ public class MaterialDetails
     public int RowNumber { get; set; }
     public string MaterialTypeId { get; set; }
     public string MaterialID { get; set; }
+    public string PackId { get; set; }
+
     public string Qty { get; set; }
     public string Remarks { get; set; }
 

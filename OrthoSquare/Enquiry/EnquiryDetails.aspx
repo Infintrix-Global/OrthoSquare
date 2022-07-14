@@ -748,7 +748,7 @@
                             <i class="icon-settings font-red-sunglo"></i>
                             <span class="caption-subject bold uppercase">Enquiry</span>
                         </div>
-                        
+
                     </div>
 
                     <div class="row">
@@ -858,7 +858,7 @@
                             </div>
                             <div class="table-scrollable">
                                 <asp:GridView ID="GridViewExcelNotSave" runat="server" AllowPaging="true" AutoGenerateColumns="false"
-                                    class="table table-bordered table-hover" PageSize="20" 
+                                    class="table table-bordered table-hover" PageSize="20"
                                     GridLines="None" OnPageIndexChanging="GridViewExcelNotSave_PageIndexChanging"
                                     ShowHeaderWhenEmpty="true">
                                     <Columns>
@@ -917,7 +917,23 @@
 
 
 
+    <asp:Label ID="lblClinic_Name" runat="server" Text=""></asp:Label>
+    <asp:Label ID="lblPatientName" runat="server" Text=""></asp:Label>
 
+      <script type="text/javascript">
+          function Confirm() {
+              var confirm_value = document.createElement("INPUT");
+              confirm_value.type = "hidden";
+              confirm_value.name = "confirm_value";
+              let lblClinic_Name = document.getElementById('ContentPlaceHolder1_lblClinic_Name').innerHTML;
+              let lblPatientName = document.getElementById('ContentPlaceHolder1_lblPatientName').innerHTML;
 
-
+              if (confirm("Mobile number already  Used in Clinic Name:  " + lblClinic_Name + " Patient Name : " + lblPatientName + ".If you wish to add new Enquiry with existing mobile number then click on OK and then SUBMIT.")) {
+                  confirm_value.value = "Yes";
+              } else {
+                  confirm_value.value = "No";
+              }
+              document.forms[0].appendChild(confirm_value);
+          }
+      </script>
 </asp:Content>

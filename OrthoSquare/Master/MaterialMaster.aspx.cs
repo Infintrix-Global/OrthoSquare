@@ -54,7 +54,7 @@ namespace OrthoSquare.Master
                 ddlBrand.DataValueField = "BrandId";
                 ddlBrand.DataTextField = "BrandName";
                 ddlBrand.DataBind();
-                ddlBrand.Items.Insert(0, new ListItem("--- Select ---", "0"));
+                ddlBrand.Items.Insert(0, new ListItem("--- Select Brand Name---", "0"));
             }
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ namespace OrthoSquare.Master
                 ddlPack.DataValueField = "PackId";
                 ddlPack.DataTextField = "PackName";
                 ddlPack.DataBind();
-                ddlPack.Items.Insert(0, new ListItem("--- Select ---", "0"));
+                ddlPack.Items.Insert(0, new ListItem("--- Select Packaging Type---", "0"));
             }
             catch (Exception ex)
             {
@@ -88,7 +88,7 @@ namespace OrthoSquare.Master
                 ddlMaterialType.DataValueField = "MaterialTypeId";
                 ddlMaterialType.DataTextField = "MaterialName";
                 ddlMaterialType.DataBind();
-                ddlMaterialType.Items.Insert(0, new ListItem("--- Select Material Type---", "0"));
+                ddlMaterialType.Items.Insert(0, new ListItem("--- Select Inventory Type---", "0"));
             }
             catch (Exception ex)
             {
@@ -143,7 +143,7 @@ namespace OrthoSquare.Master
                 else
                 {
                     //  this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Material Added Successfully')", true);
-                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Login", "alert('Material Added Successfully')", true);
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Login", "alert('Item Added Successfully')", true);
 
                     // lblMessage.Text = "Material Added Successfully";
                     // lblMessage.ForeColor = System.Drawing.Color.Green;

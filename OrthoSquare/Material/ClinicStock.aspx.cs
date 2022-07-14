@@ -43,7 +43,7 @@ namespace OrthoSquare.Material
                 ddlMaterialType.DataValueField = "MaterialTypeId";
                 ddlMaterialType.DataTextField = "MaterialName";
                 ddlMaterialType.DataBind();
-                ddlMaterialType.Items.Insert(0, new ListItem("--- Select Material Type---", "0"));
+                ddlMaterialType.Items.Insert(0, new ListItem("--- Select Inventory Type---", "0"));
             }
             catch (Exception ex)
             {
@@ -61,30 +61,35 @@ namespace OrthoSquare.Material
                 Gridplaceorder.DataSource = AllData1;
                 Gridplaceorder.DataBind();
             }
+            else
+            {
+                Gridplaceorder.DataSource = null;
+                Gridplaceorder.DataBind();
+            }
         }
 
 
 
-        protected void Gridplaceorder_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            Gridplaceorder.PageIndex = e.NewPageIndex;
-            getAllGridplaceorder();
+        //protected void Gridplaceorder_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        //{
+        //    Gridplaceorder.PageIndex = e.NewPageIndex;
+        //    getAllGridplaceorder();
 
-        }
+        //}
 
         protected void Gridplaceorder_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                Label lblStockMaterialID = (Label)e.Row.FindControl("lblStockMaterialID");
+                //Label lblStockMaterialID = (Label)e.Row.FindControl("lblStockMaterialID");
 
-                DataTable AllData1 = objM.GetMaterialStock("0",lblStockMaterialID.Text, 3, Convert.ToInt32(Session["Empid"].ToString()));
+                //DataTable AllData1 = objM.GetMaterialStock("0",lblStockMaterialID.Text, 3, Convert.ToInt32(Session["Empid"].ToString()));
 
-                if (AllData1 != null && AllData1.Rows.Count > 0)
-                {
-                    e.Row.Visible = false;
+                //if (AllData1 != null && AllData1.Rows.Count > 0)
+                //{
+                //    e.Row.Visible = false;
                 
-                }
+                //}
             }
         }
 
@@ -125,17 +130,18 @@ namespace OrthoSquare.Material
                     Label lblMaterialId = (Label)row.FindControl("lblMaterialId");
                     Label lblBrandname1 = (Label)row.FindControl("lblBrandname1");
                     Label lblUUnit = (Label)row.FindControl("lblUUnit");
-                    Label lblId = (Label)row.FindControl("lblId");
+                    //Label lblId = (Label)row.FindControl("lblId");
                     Label lblStockMaterialID = (Label)row.FindControl("lblStockMaterialID");
 
                     NameValueCollection nv = new NameValueCollection();
 
-                    nv.Add("@ID", lblId.Text);
+                    nv.Add("@ID","0");
                     nv.Add("@MaterialId", lblMaterialId.Text);
                     nv.Add("@MaterialTypeId", lblMaterialTypeId.Text);
                     nv.Add("@Qty", txtOrderQty.Text);
-                    nv.Add("@StockMaterialID", lblStockMaterialID.Text);
+                    nv.Add("@StockMaterialID", "0");
                     nv.Add("@CreateBy", Session["Empid"].ToString());
+                    nv.Add("@Price","0");
                     nv.Add("@mode","1");
 
                     _isInserted = objG.GetDataExecuteScaler("SP_AddMaterialStock", nv);

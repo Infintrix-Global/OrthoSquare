@@ -5,12 +5,14 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-      <script type="text/javascript" src="<%= ResolveUrl("~/JS1/jquery.min.js") %>"></script>
+    <script type="text/javascript" src="<%= ResolveUrl("~/JS1/jquery.min.js") %>"></script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-      <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>
+   <%-- <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>--%>
+
+
             <asp:Panel ID="Edit" runat="server">
                 <div id="Div1" runat="server" class="page-content">
                     <div class="page-bar">
@@ -34,7 +36,7 @@
                                         <i class="icon-settings font-red"></i>
                                         <span class="caption-subject font-red sbold uppercase">Payment Collection Report</span>
                                     </div>
-                                 
+
                                 </div>
                                 <div class="portlet-body">
                                     <!-- BEGIN FORM-->
@@ -124,16 +126,16 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3"  style="margin-top: 25px;">
+                                            <div class="col-md-3" style="margin-top: 25px;">
                                                 <div class="form-group">
-                                                         <asp:Button ID="btnSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
+                                                    <asp:Button ID="btnSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
                                                         CausesValidation="False" OnClick="btnSearch_Click" />
 
                                                 </div>
                                             </div>
                                         </div>
 
-                                        
+
                                         <div class="text-right mb-20">
                                             Total :
                                             <asp:Label ID="lblTotalTop" runat="server" Text=""></asp:Label>
@@ -154,7 +156,7 @@
                                                             <asp:Label ID="lblMonthNo" runat="server" Visible="false" Text='<%# Eval("MonthNo") %>'></asp:Label>
 
                                                             <asp:HyperLink ID="HyperLink1" Class="d1" Text='<%# Eval("MonthPay") %>' runat="server"></asp:HyperLink>
-                                                           <%-- <img alt="" style="cursor: pointer" src="../Images/plus.png" runat="server" id="img" />--%>
+                                                            <%-- <img alt="" style="cursor: pointer" src="../Images/plus.png" runat="server" id="img" />--%>
 
 
                                                             <asp:Panel ID="Panel1" runat="server" Style="display: none">
@@ -179,6 +181,13 @@
                                                                                 <asp:Label ID="lblCash" runat="server" Text='<%# Eval("Cash")%>'></asp:Label>
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
+
+                                                                        <asp:TemplateField HeaderText="Cheque">
+                                                                            <ItemTemplate>
+                                                                                <asp:Label ID="lblCheque" runat="server" Text='<%# Eval("Cheque")%>'></asp:Label>
+                                                                            </ItemTemplate>
+                                                                        </asp:TemplateField>
+
                                                                         <asp:TemplateField HeaderText="Debit Card">
                                                                             <ItemTemplate>
                                                                                 <asp:Label ID="lblDebitCard" runat="server" Text='<%# Eval("Debit Card")%>'></asp:Label>
@@ -223,7 +232,7 @@
 
 
                                                                         </asp:TemplateField>
-                                                                        <asp:TemplateField HeaderText="IDFC First Bank">
+                                                                        <asp:TemplateField Visible="false" HeaderText="IDFC First Bank">
                                                                             <ItemTemplate>
 
                                                                                 <asp:Label ID="lblIDFCFirstBank" runat="server" Text='<%# Eval("IDFC First Bank") %>'></asp:Label>
@@ -238,6 +247,49 @@
                                                                                 <asp:Label ID="lblShopse" runat="server" Text='<%# Eval("Shopse") %>'></asp:Label>
                                                                             </ItemTemplate>
 
+
+                                                                        </asp:TemplateField>
+
+                                                                        <asp:TemplateField HeaderText="Shopse Debit Card">
+                                                                            <ItemTemplate>
+
+                                                                                <asp:Label ID="lblShopsePreapproved" runat="server" Text='<%# Eval("Shopse - Preapproved Debit Card + Cardless EMI") %>'></asp:Label>
+                                                                            </ItemTemplate>
+
+                                                                        </asp:TemplateField>
+
+                                                                        <asp:TemplateField HeaderText="Shopse HDFC & Citi">
+                                                                            <ItemTemplate>
+
+                                                                                <asp:Label ID="lblShopseHDFC" runat="server" Text='<%# Eval("Shopse- Credid Card No Cost HDFC & Citi") %>'></asp:Label>
+                                                                            </ItemTemplate>
+
+                                                                        </asp:TemplateField>
+
+                                                                        <asp:TemplateField HeaderText="Shopse Credit Card">
+                                                                            <ItemTemplate>
+
+                                                                                <asp:Label ID="lblShopseCreditCard" runat="server" Text='<%# Eval("Shopse- Credit Card Bank") %>'></asp:Label>
+                                                                            </ItemTemplate>
+
+                                                                        </asp:TemplateField>
+
+
+
+                                                                        <asp:TemplateField HeaderText="Shopse- Amex">
+                                                                            <ItemTemplate>
+
+                                                                                <asp:Label ID="lblShopseAmex" runat="server" Text='<%# Eval("Shopse- Amex") %>'></asp:Label>
+                                                                            </ItemTemplate>
+
+                                                                        </asp:TemplateField>
+
+
+                                                                        <asp:TemplateField HeaderText="NEFT">
+                                                                            <ItemTemplate>
+
+                                                                                <asp:Label ID="lblNEFT" runat="server" Text='<%# Eval("NEFT") %>'></asp:Label>
+                                                                            </ItemTemplate>
 
                                                                         </asp:TemplateField>
 
@@ -267,6 +319,13 @@
                                                             <asp:Label ID="lblCash1" runat="server" Text='<%# Eval("Cash")%>'></asp:Label>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Cheque">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblCheque1" runat="server" Text='<%# Eval("Cheque")%>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+
+
                                                     <asp:TemplateField HeaderText="Debit Card">
                                                         <ItemTemplate>
                                                             <asp:Label ID="lblDebitCard1" runat="server" Text='<%# Eval("Debit Card")%>'></asp:Label>
@@ -311,7 +370,7 @@
 
 
                                                     </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="IDFC First Bank">
+                                                    <asp:TemplateField Visible="false" HeaderText="IDFC First Bank">
                                                         <ItemTemplate>
 
                                                             <asp:Label ID="lblIDFCFirstBank1" runat="server" Text='<%# Eval("IDFC First Bank") %>'></asp:Label>
@@ -328,6 +387,49 @@
 
 
                                                     </asp:TemplateField>
+
+                                                    <asp:TemplateField HeaderText="Shopse Debit Card">
+                                                        <ItemTemplate>
+
+                                                            <asp:Label ID="lblShopsePreapproved1" runat="server" Text='<%# Eval("Shopse - Preapproved Debit Card + Cardless EMI") %>'></asp:Label>
+                                                        </ItemTemplate>
+
+                                                    </asp:TemplateField>
+
+                                                    <asp:TemplateField HeaderText="Shopse HDFC & Citi">
+                                                        <ItemTemplate>
+
+                                                            <asp:Label ID="lblShopseHDFC1" runat="server" Text='<%# Eval("Shopse- Credid Card No Cost HDFC & Citi") %>'></asp:Label>
+                                                        </ItemTemplate>
+
+                                                    </asp:TemplateField>
+
+                                                    <asp:TemplateField HeaderText="Shopse Credit Card">
+                                                        <ItemTemplate>
+
+                                                            <asp:Label ID="lblShopseCreditCard1" runat="server" Text='<%# Eval("Shopse- Credit Card Bank") %>'></asp:Label>
+                                                        </ItemTemplate>
+
+                                                    </asp:TemplateField>
+
+
+                                                    <asp:TemplateField HeaderText="Shopse- Amex">
+                                                        <ItemTemplate>
+
+                                                            <asp:Label ID="lblShopseAmex1" runat="server" Text='<%# Eval("Shopse- Amex") %>'></asp:Label>
+                                                        </ItemTemplate>
+
+                                                    </asp:TemplateField>
+
+                                                    <asp:TemplateField HeaderText="NEFT">
+                                                        <ItemTemplate>
+
+                                                            <asp:Label ID="lblNEFT1" runat="server" Text='<%# Eval("NEFT") %>'></asp:Label>
+                                                        </ItemTemplate>
+
+                                                    </asp:TemplateField>
+
+
 
                                                     <asp:TemplateField HeaderText="Total">
                                                         <ItemTemplate>
@@ -354,34 +456,34 @@
                 </div>
             </asp:Panel>
 
-        </ContentTemplate>
-    </asp:UpdatePanel>
 
-    <script type="text/javascript">
-        $("[src*=plus]").live("click", function () {
-            $(this).closest("tr").after("<tr><td></td><td colspan = '999'>" + $(this).next().html() + "</td></tr>")
-            $(this).attr("src", "<%= ResolveUrl("~/Images/minus.png") %>");
+       <%-- </ContentTemplate>
+    </asp:UpdatePanel>--%>
+<script type="text/javascript">
+    $("[src*=plus]").live("click", function () {
+        $(this).closest("tr").after("<tr><td></td><td colspan = '999'>" + $(this).next().html() + "</td></tr>")
+        $(this).attr("src", "<%= ResolveUrl("~/Images/minus.png") %>");
         });
-        $("[src*=minus]").live("click", function () {
-            $(this).attr("src", "<%= ResolveUrl("~/Images/plus.png") %>");
+    $("[src*=minus]").live("click", function () {
+        $(this).attr("src", "<%= ResolveUrl("~/Images/plus.png") %>");
             $(this).closest("tr").next().remove();
         });
-    </script>
+</script>
 
 
-      <script type="text/javascript">
-          $(".d1").on("click", function () {
-              debugger
-              if ($(this).hasClass('d2')) {
-                  $(this).closest("tr").next().remove();
-                  $(this).removeClass('d2');
-              } else {
-                  $(this).closest("tr").after("<tr><td></td><td colspan = '999'>" + $(this).next().html() + "</td></tr>")
-                  $(this).addClass("d2");
-              }
+    <script type="text/javascript">
+        $(".d1").on("click", function () {
+            debugger
+            if ($(this).hasClass('d2')) {
+                $(this).closest("tr").next().remove();
+                $(this).removeClass('d2');
+            } else {
+                $(this).closest("tr").after("<tr><td></td><td colspan = '999'>" + $(this).next().html() + "</td></tr>")
+                $(this).addClass("d2");
+            }
 
-              
+
         });
-        
-      </script>
+
+    </script>
 </asp:Content>

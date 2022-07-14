@@ -12,6 +12,7 @@ using System.IO;
 using System.Net;
 using PreconFinal.Utility;
 using System.Data.OleDb;
+using System.Net.Mail;
 
 namespace OrthoSquare.Doctor
 {
@@ -450,20 +451,14 @@ namespace OrthoSquare.Doctor
                 };
 
 
-
-
-
-
                 _isInserted = objDoc.Add_Doctors(objClinicDetails);
                 int Did = objDoc.GetDoctorsID();
-
 
                 DataTable dt = new DataTable();
                 dt.Columns.Add(new DataColumn("DoctorID", typeof(int)));
                 dt.Columns.Add(new DataColumn("DegreeName", typeof(string)));
                 dt.Columns.Add(new DataColumn("Boardname", typeof(string)));
                 dt.Columns.Add(new DataColumn("CertificationImage", typeof(string)));
-
 
                 for (int i = 0; i <= GridQualification.Rows.Count - 1; i++)
                 {
@@ -478,7 +473,6 @@ namespace OrthoSquare.Doctor
                         dt.Rows.Add(Did, txt_CertificationName, txt_boardname, txtFileName);
                     }
                 }
-
 
 
                 bool Result1 = objDoc.InsertUpdateAddDoctor_Degree(dt);
@@ -497,12 +491,17 @@ namespace OrthoSquare.Doctor
 
                     int IDq = objApp.Add_AppointmentDetails(Did1);
 
-                    lblMessage.Text = "Doctor Added Successfully";
-                    lblMessage.ForeColor = System.Drawing.Color.Green;
+                   // lblMessage.Text = "Doctor Added Successfully";
+                   // lblMessage.ForeColor = System.Drawing.Color.Green;
                     SendMail(txtEmail.Text, txtMobileNo1.Text, Password1);
+
                     Clear();
                     txtDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
 
+                    string message = "Doctor Added Successfully";
+                    string url = "Add_Doctor.aspx";
+
+                    objcommon.ShowMessageAndRedirect(this, message, url);
                 }
 
             }
@@ -651,6 +650,13 @@ namespace OrthoSquare.Doctor
                     lblMessage.Text = "Doctor Update Successfully";
                     lblMessage.ForeColor = System.Drawing.Color.Green;
                     txtDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
+
+
+                    string message = "Doctor Update Successfully";
+                    string url = "Add_Doctor.aspx";
+
+                    objcommon.ShowMessageAndRedirect(this, message, url);
+
                 }
 
             }
@@ -1671,8 +1677,10 @@ namespace OrthoSquare.Doctor
             // smtp settings
             var smtp = new System.Net.Mail.SmtpClient();
             {
+                MailMessage mail = new MailMessage();
                 smtp.Host = "smtp.gmail.com";
                 smtp.Port = 587;
+                mail.IsBodyHtml = true;
                 smtp.EnableSsl = true;
                 smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
                 smtp.Credentials = new NetworkCredential(fromAddress, fromPassword);

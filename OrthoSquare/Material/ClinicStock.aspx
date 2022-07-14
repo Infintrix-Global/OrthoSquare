@@ -16,7 +16,7 @@
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <span>Add Material Stock</span>
+                    <span>Add Clinic Stock</span>
                 </li>
             </ul>
 
@@ -33,7 +33,7 @@
                     <div class="portlet-title">
                         <div class="caption font-red-sunglo">
                             <i class="icon-settings font-red-sunglo"></i>
-                            <span class="caption-subject bold uppercase"><span>Add Material Stock</span>
+                            <span class="caption-subject bold uppercase"><span>Add Clinic Stock</span>
                         </div>
 
                     </div>
@@ -51,7 +51,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
 
-                                <asp:TextBox ID="txtMaterial" runat="server" class="form-control" placeholder="Material"
+                                <asp:TextBox ID="txtMaterial" runat="server" class="form-control" placeholder="Item Name"
                                     ClientIDMode="Static"></asp:TextBox>
                               
 
@@ -67,9 +67,9 @@
                     </div>
                     <br />
                     <div class="table-responsive">
-                        <asp:GridView ID="Gridplaceorder" runat="server" AllowPaging="true" AutoGenerateColumns="false"
+                        <asp:GridView ID="Gridplaceorder" runat="server"  AutoGenerateColumns="false"
                             class="table table-striped table-bordered table-hover" DataKeyNames="MaterialId" OnRowDataBound="Gridplaceorder_RowDataBound"
-                            GridLines="None" OnPageIndexChanging="Gridplaceorder_PageIndexChanging"
+                            GridLines="None" 
                             ShowHeaderWhenEmpty="true" >
 
                             <Columns>
@@ -81,17 +81,17 @@
 
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Material Type">
+                                <asp:TemplateField HeaderText="Inventory Type">
                                     <ItemTemplate>
                                         <asp:Label ID="lblMaterialType" runat="server" Text='<%# Eval("MaterialType") %>'></asp:Label>
-                                           <asp:Label ID="lblId" Visible="false" runat="server" Text='<%# Eval("Id") %>'></asp:Label>
+                                       <%--    <asp:Label ID="lblId" Visible="false" runat="server" Text='<%# Eval("Id") %>'></asp:Label>--%>
                                            <asp:Label ID="lblMaterialTypeId" Visible="false" runat="server" Text='<%# Eval("StockMaterialTypeIdID") %>'></asp:Label>
                                           <asp:Label ID="lblStockMaterialID" Visible="false" runat="server" Text='<%# Eval("StockMaterialID") %>'></asp:Label>
                                     </ItemTemplate>
 
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Material Name">
+                                <asp:TemplateField HeaderText="Item Name">
                                     <ItemTemplate>
                                         <asp:Label ID="lblMaterialName" runat="server" Text='<%# Eval("MaterialName") %>'></asp:Label>
                                           <asp:Label ID="lblMaterialId" Visible="false" runat="server" Text='<%# Eval("MaterialId") %>'></asp:Label>
@@ -106,16 +106,16 @@
                                     </ItemTemplate>
 
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Unit Name">
+                                <asp:TemplateField HeaderText="Packaging">
                                     <ItemTemplate>
                                         <asp:Label ID="lblUUnit" runat="server" Text='<%# Eval("PackName") %>'></asp:Label>
                                     </ItemTemplate>
 
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Qty">
+                                <asp:TemplateField HeaderText="Stock">
                                     <ItemTemplate>
-                                        <asp:TextBox ID="txtOrderQty" TextMode="Number" Width="100px" Text='<%# Eval("Qty") %>' class="form-control" AutoPostBack="true" OnTextChanged="txtOrderQty_TextChanged" runat="server"></asp:TextBox>
+                                        <asp:TextBox ID="txtOrderQty" TextMode="Number" Width="100px"  class="form-control" AutoPostBack="true" OnTextChanged="txtOrderQty_TextChanged" runat="server"></asp:TextBox>
                                     </ItemTemplate>
 
                                 </asp:TemplateField>

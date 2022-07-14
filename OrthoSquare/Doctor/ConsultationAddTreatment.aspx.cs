@@ -389,7 +389,7 @@ namespace OrthoSquare.Doctor
 
         public void bindDentalCategory()
         {
-            ddlTreatment.DataSource = objT.GetAllTreatment();
+            ddlTreatment.DataSource = objT.GetAllTreatment("");
             ddlTreatment.DataValueField = "TreatmentID";
             ddlTreatment.DataTextField = "TreatmentName";
             ddlTreatment.DataBind();
@@ -400,7 +400,7 @@ namespace OrthoSquare.Doctor
 
         public void bindDentalTreatment()
         {
-            ddlTreatmentDetails.DataSource = objT.GetAllTreatment();
+            ddlTreatmentDetails.DataSource = objT.GetAllTreatment("");
             ddlTreatmentDetails.DataValueField = "TreatmentID";
             ddlTreatmentDetails.DataTextField = "TreatmentName";
             ddlTreatmentDetails.DataBind();
@@ -478,7 +478,7 @@ namespace OrthoSquare.Doctor
             getAllGallery(pid);
             getAlaGridelb(pid);
 
-            DataTable dt = objPatient.GetPatient(pid);
+            DataTable dt = objPatient.GetPatientNew(pid);
 
             patientid = pid;
             if (SessionUtilities.RoleID == 3)
@@ -491,8 +491,9 @@ namespace OrthoSquare.Doctor
             {
 
 
-                lblPname.Text = dt.Rows[0]["FristName"].ToString() + " " + dt.Rows[0]["LastName"].ToString();
-                lblPmobialNo.Text = dt.Rows[0]["Mobile"].ToString();
+                lblPname.Text = "Name: "+dt.Rows[0]["FristName"].ToString() + " " + dt.Rows[0]["LastName"].ToString();
+                lblPmobialNo.Text = "Mobile :"+dt.Rows[0]["Mobile"].ToString();
+                lblClinicName.Text = "Clinic Name : "+ dt.Rows[0]["ClinicName"].ToString();
 
                 if (dt.Rows[0]["ProfileImage"] != "")
                 {

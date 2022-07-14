@@ -81,7 +81,7 @@
 
                                     <div class="form-group">
                                         <label>Treatment Cost</label>
-                                        <asp:TextBox ID="txtTCost" TextMode="Number" class="form-control"
+                                        <asp:TextBox ID="txtTCost"  class="form-control"
                                             runat="server"></asp:TextBox>
 
                                         <span class="help-block">
@@ -242,6 +242,8 @@
                                         <asp:CommandField ShowEditButton="true" ButtonType="Image" EditImageUrl="../Images/edit15x15.png"
                                             CausesValidation="False"  UpdateImageUrl="../Images/right15x15.png"
                                             CancelImageUrl="../Images/cancel15x15.png" ItemStyle-Width="5%" />
+
+
                                         <asp:TemplateField ItemStyle-Width="5%">
                                             <ItemTemplate>
                                                 

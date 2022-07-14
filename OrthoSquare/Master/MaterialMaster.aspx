@@ -16,7 +16,7 @@
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <span>MATERIAL</span>
+                    <span>Item</span>
                 </li>
             </ul>
 
@@ -33,7 +33,7 @@
                     <div class="portlet-title">
                         <div class="caption font-red-sunglo">
                             <i class="icon-settings font-red-sunglo"></i>
-                            <span class="caption-subject bold uppercase">MATERIAL</span>
+                            <span class="caption-subject bold uppercase">Item</span>
                         </div>
                        
                     </div>
@@ -44,7 +44,7 @@
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <div class="col-sm-6">
-                                            <label>Material Type </label>
+                                            <label>Inventory Type </label>
 
                                             <%--<asp:TextBox ID="txtBrandname" class="form-control" placeholder="Enter Brand" TabIndex ="15" runat="server"></asp:TextBox>--%>
                                             <asp:DropDownList ID="ddlMaterialType" class="form-control" runat="server"></asp:DropDownList>
@@ -71,9 +71,9 @@
                                         </div>
 
                                         <div class="col-sm-6">
-                                            <label>Material Name<span class="required">*</span></label>
+                                            <label>Item Name<span class="required">*</span></label>
 
-                                            <asp:TextBox ID="txtAdd" class="form-control" placeholder="Material Name"
+                                            <asp:TextBox ID="txtAdd" class="form-control" placeholder="Item Name"
                                                 runat="server"></asp:TextBox>
 
                                             
@@ -92,7 +92,7 @@
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <div class="col-sm-6">
-                                            <label>Pack </label>
+                                            <label>Packaging Type </label>
 
                                             <%--<asp:TextBox ID="txtBrandname" class="form-control" placeholder="Enter Brand" TabIndex ="15" runat="server"></asp:TextBox>--%>
                                             <asp:DropDownList ID="ddlPack" class="form-control" runat="server"></asp:DropDownList>
@@ -155,7 +155,7 @@
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <span>MATERIAL</span>
+                    <span>Item</span>
                 </li>
             </ul>
 
@@ -169,7 +169,7 @@
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="icon-settings font-red"></i>
-                            <span class="caption-subject font-red sbold uppercase">MATERIAL</span>
+                            <span class="caption-subject font-red sbold uppercase">Item</span>
                         </div>
                         
                     </div>
@@ -203,7 +203,7 @@
 
                         <!-- Usage as a class -->
                         <div class="text-right mb-20">
-                            <asp:Button ID="btnAddNew" runat="server" Text="Add New Material" class="btn blue-madison" ClientIDMode="Static"
+                            <asp:Button ID="btnAddNew" runat="server" Text="Add New Item" class="btn blue-madison" ClientIDMode="Static"
                                 CausesValidation="False" OnClick="btnAddNew_Click" />
                         </div>
                         <div class="table-scrollable">
@@ -220,13 +220,13 @@
                                             <asp:Label ID="lblID" runat="server" Text='<%# Eval("MaterialId") %>' Visible="false"></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                      <asp:TemplateField HeaderText="Material Type">
+                                      <asp:TemplateField HeaderText="Inventory Type">
                                         <ItemTemplate>
                                             <asp:Label ID="lblMaterialType" runat="server" Text='<%# Eval("MaterialType") %>'></asp:Label>
                                         </ItemTemplate>
 
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Material Name">
+                                    <asp:TemplateField HeaderText="Item Name">
                                         <ItemTemplate>
                                             <asp:Label ID="lblName" runat="server" Text='<%# Eval("MaterialName") %>'></asp:Label>
                                         </ItemTemplate>
@@ -238,7 +238,7 @@
                                         </ItemTemplate>
 
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Pack Name">
+                                    <asp:TemplateField HeaderText="Packaging Type">
                                         <ItemTemplate>
                                             <asp:Label ID="lblPackName" runat="server" Text='<%# Eval("PackName") %>'></asp:Label>
                                         </ItemTemplate>

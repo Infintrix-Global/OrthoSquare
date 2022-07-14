@@ -258,42 +258,6 @@ namespace OrthoSquare.Invoice
         protected global::System.Web.UI.WebControls.GridView grdInvoice;
 
         /// <summary>
-        /// lblTotalCost control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalCost;
-
-        /// <summary>
-        /// lbldiscount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbldiscount;
-
-        /// <summary>
-        /// lbltotaltext control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbltotaltext;
-
-        /// <summary>
-        /// lblTax control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTax;
-
-        /// <summary>
         /// lblNet control.
         /// </summary>
         /// <remarks>
@@ -330,42 +294,6 @@ namespace OrthoSquare.Invoice
         protected global::System.Web.UI.WebControls.Label lblWords;
 
         /// <summary>
-        /// lblTotalCoust1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalCoust1;
-
-        /// <summary>
-        /// lbldiscount1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbldiscount1;
-
-        /// <summary>
-        /// lblTotalFooter control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalFooter;
-
-        /// <summary>
-        /// lblTaxAmount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTaxAmount;
-
-        /// <summary>
         /// lblNetAmount control.
         /// </summary>
         /// <remarks>
@@ -375,22 +303,22 @@ namespace OrthoSquare.Invoice
         protected global::System.Web.UI.WebControls.Label lblNetAmount;
 
         /// <summary>
-        /// lblpaidAmount control.
+        /// lblDownpaymentAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblpaidAmount;
+        protected global::System.Web.UI.WebControls.Label lblDownpaymentAmount;
 
         /// <summary>
-        /// lblpendingAmount control.
+        /// lblBalanceAmont control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblpendingAmount;
+        protected global::System.Web.UI.WebControls.Label lblBalanceAmont;
 
         /// <summary>
         /// lblWordsAmount control.

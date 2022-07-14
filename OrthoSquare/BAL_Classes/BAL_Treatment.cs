@@ -36,13 +36,13 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
-        public DataTable GetAllTreatment()
+        public DataTable GetAllTreatment(string TreatmentName)
         {
             try
             {
                 General objGeneral = new General();
                 //objGeneral.AddParameterWithValueToSQLCommand("@IsActive", true);
-                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentName", "");
+                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentName", TreatmentName);
                 objGeneral.AddParameterWithValueToSQLCommand("@TreatmentCost", "");
                 objGeneral.AddParameterWithValueToSQLCommand("@TreatmentID ", 0);
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 6);
@@ -54,6 +54,44 @@ namespace OrthoSquare.BAL_Classes
             return ds.Tables[0];
         }
 
+
+
+        public DataTable GetAllTreatmentMASter(string TreatmentName)
+        {
+            try
+            {
+                General objGeneral = new General();
+                //objGeneral.AddParameterWithValueToSQLCommand("@IsActive", true);
+                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentName", TreatmentName);
+                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentCost", "");
+                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentID ", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 8);
+                ds = objGeneral.GetDatasetByCommand_SP("SP_TreatmentList");
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+        }
+
+
+        public DataTable GetAllTreatmentList(string TreatmentName)
+        {
+            try
+            {
+                General objGeneral = new General();
+                //objGeneral.AddParameterWithValueToSQLCommand("@IsActive", true);
+                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentName", TreatmentName);
+                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentCost", "");
+                objGeneral.AddParameterWithValueToSQLCommand("@TreatmentID ", 0);
+                objGeneral.AddParameterWithValueToSQLCommand("@mode", 9);
+                ds = objGeneral.GetDatasetByCommand_SP("SP_TreatmentList");
+            }
+            catch (Exception ex)
+            {
+            }
+            return ds.Tables[0];
+        }
 
 
         public DataTable GetAllTreatmentoldAndNew()

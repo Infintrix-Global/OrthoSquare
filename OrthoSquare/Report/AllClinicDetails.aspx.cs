@@ -37,6 +37,7 @@ namespace OrthoSquare.Report
                     biendFollowup();
                     biendExpenseMaster();
                     biendInvoiceMaster();
+                    biendInvoiceMedicines();
                 }
             }
         }
@@ -283,7 +284,7 @@ namespace OrthoSquare.Report
         {
             double Invoice = 0;
             decimal TotalMedicinesAmount = objcommon.GetTotalMedicines(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim());
-            lblMedicinesAmount.Text = TotalMedicinesAmount.ToString("n2");
+            
             DataTable dt = objcommon.clinicVSInvoiceMaster(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue), ddlDoctors.SelectedValue, SessionUtilities.RoleID);
             if (dt.Rows.Count >= 0 && dt != null)
             {
@@ -303,7 +304,41 @@ namespace OrthoSquare.Report
                 lblCollectionCount.Text = "0.00";
             }
 
-            lblCMtotal.Text =(Convert.ToDecimal(Invoice)+ TotalMedicinesAmount).ToString("n2");
+        }
+
+
+
+        public void biendInvoiceMedicines()
+        {
+            double Invoice = 0;
+         
+            DataTable dt = objcommon.clinicVSInvoiceMedicines(txtFromEnquiryDate.Text.Trim(), txtToEnquiryDate.Text.Trim(), Convert.ToInt32(ddlClinic.SelectedValue), ddlDoctors.SelectedValue, SessionUtilities.RoleID);
+            if (dt.Rows.Count >= 0 && dt != null)
+            {
+                GridViewMedicines.DataSource = dt;
+                GridViewMedicines.DataBind();
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    Invoice += Convert.ToDouble(dt.Rows[i]["GrandTotal"]);
+
+                }
+
+                lblMedicinesTotal.Text = Invoice.ToString("n2");
+            }
+            else
+            {
+                lblMedicinesTotal.Text = "0.00";
+            }
+
+           
+        }
+
+        protected void GridViewMedicines_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewMedicines.PageIndex = e.NewPageIndex;
+
+            biendInvoiceMedicines();
         }
 
         protected void GridViewInvoiceMaster_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -323,6 +358,7 @@ namespace OrthoSquare.Report
             biendFollowup();
             biendExpenseMaster();
             biendInvoiceMaster();
+            biendInvoiceMedicines();
         }
 
     }

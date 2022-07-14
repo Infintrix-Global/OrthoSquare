@@ -44,13 +44,13 @@ namespace OrthoSquare.Master
 
                 if (_isInserted == -1)
                 {
-                    lblMessage.Text = "Failed to Add Pack";
+                    lblMessage.Text = "Failed to Add Packaging Type";
                     lblMessage.ForeColor = System.Drawing.Color.Red;
                 }
                 else
                 {
 
-                    lblMessage.Text = "Pack Added Successfully";
+                    lblMessage.Text = "Packaging Type Added Successfully";
                     lblMessage.ForeColor = System.Drawing.Color.Green;
                     txtAdd.Text = "";
                     getAllPack();

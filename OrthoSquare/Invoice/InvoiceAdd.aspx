@@ -67,6 +67,7 @@
 
     <asp:UpdatePanel runat="server" ID="upFilter">
         <ContentTemplate>
+
             <div class="page-content" id="Add" runat="server">
                 <!-- BEGIN PAGE HEADER-->
 
@@ -151,8 +152,8 @@
                                         <div class="col-sm-3" runat="server" id="pdate">
 
                                             <label>Payment Date</label>
-                                            <asp:TextBox ID="txtPayDate" class="form-control" autocomplete="Off" placeholder="Payment Date" TabIndex="5" AutoPostBack="true" runat="server"></asp:TextBox>
-                                            <asp:CalendarExtender ID="txtBDate_CalendarExtender" runat="server" Enabled="True" OnClientDateSelectionChanged="checkDate1"
+                                            <asp:TextBox ID="txtPayDate" class="form-control" autocomplete="Off" ReadOnly="true"  placeholder="Payment Date" TabIndex="5"  runat="server"></asp:TextBox>
+                                            <asp:CalendarExtender ID="txtBDate_CalendarExtender" runat="server"  Enabled="True" OnClientDateSelectionChanged="checkDate1"
                                                 TargetControlID="txtPayDate" Format="dd-MM-yyyy">
                                             </asp:CalendarExtender>
 
@@ -275,7 +276,7 @@
 
 
 
-                                        <asp:GridView ID="gvInformation" runat="server" ShowFooter="True" AutoGenerateColumns="False"
+                                        <asp:GridView ID="gvInformation" runat="server" ShowFooter="True" AutoGenerateColumns="False" OnRowDeleting="gvInformation_RowDeleting"
                                             Width="100%" OnRowCommand="gvInformation_RowCommand" class="table table-bordered table-hover"
                                             OnRowDataBound="gvInformation_RowDataBound">
 
@@ -294,6 +295,7 @@
                                                     <ItemTemplate>
                                                         <asp:ListBox ID="ddltooth" SelectionMode="Multiple" runat="server" OnSelectedIndexChanged="ddltooth_SelectedIndexChanged" AutoPostBack="true" CssClass="multiSelect custom__dropdown robotomd"></asp:ListBox>
                                                         <asp:Label ID="lblTooth" runat="server" Visible="false" Text='<%# Eval("toothNo") %>'></asp:Label>
+                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidatorTooth" ControlToValidate="ddltooth" InitialValue="" runat="server" ValidationGroup="e" ErrorMessage="Please select Tooth No" ForeColor="Red"></asp:RequiredFieldValidator>
 
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -310,7 +312,7 @@
 
                                                 <asp:TemplateField HeaderText="Cost" HeaderStyle-Width="15%">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtCost1" Width="100px" OnTextChanged="txtCost1_TextChanged" AutoPostBack="true" ReadOnly="true" CssClass="form-control minInp" Text='<%# Eval("Cost")%>' runat="server"></asp:TextBox>
+                                                        <asp:TextBox ID="txtCost1" Width="100px" OnTextChanged="txtCost1_TextChanged" AutoPostBack="true" ReadOnly="true" CssClass="form-control" Text='<%# Eval("Cost")%>' runat="server"></asp:TextBox>
                                                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtCost1" ErrorMessage="Please Enter Cost Amount" ForeColor="Red" SetFocusOnError="true" ValidationGroup="e"></asp:RequiredFieldValidator>
                                                         <%--  <cc1:FilteredTextBoxExtender ID="FilUnCost" runat="server"
                                                             Enabled="True" TargetControlID="txtCost1" FilterType="Numbers">
@@ -348,7 +350,7 @@
 
                                                 <asp:TemplateField HeaderStyle-Width="5%">
                                                     <ItemTemplate>
-                                                        <asp:ImageButton ID="ImageButton1" ImageUrl="~/Images/remove-icon-png-26.png" Width="30px" CommandArgument='<%# Eval("ID") %>' runat="server" OnClientClick="return confirm('Do you really want to delete Treatment?');" />
+                                                        <asp:ImageButton ID="ImageButton1" ImageUrl="~/Images/remove-icon-png-26.png" Width="30px" CommandName="Delete" runat="server" OnClientClick="return confirm('Do you really want to delete Treatment?');" />
 
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -506,7 +508,7 @@
                                             <div class="col-sm-3">
 
                                                 <label>Approved Loan Amount</label><br />
-                                                <asp:TextBox ID="txtApprovalAmount" Text="0" class="form-control" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtApprovalAmount" Text="0" OnTextChanged="txtApprovalAmount_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
 
                                             </div>
 
@@ -586,6 +588,7 @@
                                             <br />
                                             <asp:TextBox ID="txtPendingAmount" ReadOnly="true" class="form-control" runat="server"></asp:TextBox>
 
+                                            <asp:Label ID="lblPendingAmt" Visible="false" runat="server" Text=""></asp:Label>
                                         </div>
 
 
@@ -613,15 +616,14 @@
                                                 <asp:ListItem Value="4">Debit Card</asp:ListItem>
                                                 <%-- <asp:ListItem Value="5">Finance</asp:ListItem>--%>
                                                 <asp:ListItem Value="6">UPI</asp:ListItem>
+                                                <asp:ListItem Value="7">NEFT</asp:ListItem>
 
                                             </asp:DropDownList>
 
-
-                                            
-                                           <%-- <span class="help-block">
+                                            <span class="help-block">
                                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="DropDownList1" InitialValue="0" ValidationGroup="e"
                                                     SetFocusOnError="true" ErrorMessage="Please Enter Payment Mode" ForeColor="Red"></asp:RequiredFieldValidator>
-                                            </span>--%>
+                                            </span>
                                         </div>
                                         <div class="col-sm-3">
                                         </div>
@@ -672,6 +674,10 @@
 
                                                 <label>Cheque  No</label><br />
                                                 <asp:TextBox ID="txtCheckNO" class="form-control" runat="server"></asp:TextBox>
+
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="txtCheckNO" ValidationGroup="e"
+                                                    SetFocusOnError="true" ErrorMessage="Please Enter Cheque  No" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                <
                                             </div>
                                             <div class="col-sm-3">
                                                 <label>Cheque  Date</label><br />
@@ -702,7 +708,8 @@
 
                                                 <label>No</label><br />
                                                 <asp:TextBox ID="txtCardNo" class="form-control" runat="server"></asp:TextBox>
-
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidatorCardNo" runat="server" ControlToValidate="txtCardNo" ValidationGroup="e"
+                                                    SetFocusOnError="true" ErrorMessage="Please Enter No" ForeColor="Red"></asp:RequiredFieldValidator>
                                             </div>
                                             <div class="col-sm-3">
                                             </div>

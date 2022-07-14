@@ -110,7 +110,7 @@ namespace OrthoSquare.Enquiry1
 
         public void bindddlTreatment()
         {
-            ddlTreatment.DataSource = objT.GetAllTreatment();
+            ddlTreatment.DataSource = objT.GetAllTreatment("");
             ddlTreatment.DataValueField = "TreatmentID";
             ddlTreatment.DataTextField = "TreatmentName";
             ddlTreatment.DataBind();
@@ -517,72 +517,96 @@ namespace OrthoSquare.Enquiry1
                     IsActive = true
                 };
 
-                if (EnquiryID > 0)
+                if (EnquiryID == 0)
                 {
 
-                }
-                else
-                {
-                    Isv = objENQ.GetEnqurysIsvelid(txtMobile.Text);
+                    DataTable dt = new DataTable();
+                    dt = objENQ.GetEnqurysIsvelidNew(txtMobile.Text.Trim());
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
 
-                }
-                if (Isv > 0)
-                {
-                    this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Mobile number already in use')", true);
+                        lblClinic_Name.Text = dt.Rows[0]["ClinicName"].ToString();
+                        lblPatientName.Text = dt.Rows[0]["PatienntName"].ToString();
+                        Isv = dt.Rows.Count;
+                    }
 
-                    lblMessage.Text = "Mobile number already in use";
-                    lblMessage.ForeColor = System.Drawing.Color.Red;
 
+                    if (Isv > 0)
+                    {
+
+
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "Confirm()", true);
+                        string confirmValue = Request.Form["confirm_value"];
+                        if (confirmValue == "Yes")
+                        {
+                            _isInserted = objENQ.Add_Enquiry(objEnqDetails);
+                        }
+                        else
+                        {
+
+                            // do nothing  
+                        }
+
+
+                    }
+                    else
+                    {
+                        _isInserted = objENQ.Add_Enquiry(objEnqDetails);
+
+                    }
                 }
                 else
                 {
                     _isInserted = objENQ.Add_Enquiry(objEnqDetails);
+                }
 
-                    if (_isInserted == -1)
+
+                if (_isInserted == -1)
+                {
+
+                    if (Isv > 0)
+                    {
+                    }
+                    else
                     {
                         lblMessage.Text = "Failed to Add Enquiry";
                         lblMessage.ForeColor = System.Drawing.Color.Red;
                     }
-                    else
+                }
+                else
+                {
+
+
+                    string url = "EnquiryDetails.aspx";
+
+                    string message = "Enquiry Added Successfully";
+                    string script = "window.onload = function(){ alert('";
+                    script += message;
+                    script += "');";
+                    script += "window.location = '";
+                    script += url;
+                    script += "'; }";
+                    this.Page.ClientScript.RegisterStartupScript(this.GetType(), "Redirect", script, true);
+
+
+
+                    if (Rabinfo.SelectedValue == "Patient")
                     {
 
-                        // lblMessage.Text = "Enquiry Added Successfully";
-                        //lblMessage.ForeColor = System.Drawing.Color.Green;
-                        //txtCompanyName.Text = "";
-                        //txtBrandName.Text = "";
+                        string Eid = objENQ.GetEnqMaxId();
 
-                        string url = "EnquiryDetails.aspx";
-
-
-                        string message = "Enquiry Added Successfully";
-                        string script = "window.onload = function(){ alert('";
-                        script += message;
-                        script += "');";
-                        script += "window.location = '";
-                        script += url;
-                        script += "'; }";
-                        this.Page.ClientScript.RegisterStartupScript(this.GetType(), "Redirect", script, true);
-
-
-
-                        if (Rabinfo.SelectedValue == "Patient")
-                        {
-
-                            string Eid = objENQ.GetEnqMaxId();
-
-                            Response.Redirect("../patient/PatientMaster.aspx?Eid=" + Eid);
-                        }
-                        else
-                        {
-                            getAllEnquiry();
-                            ///  Response.Redirect("EnquiryDetails.aspx");
-
-                        }
-                        EnquiryID = 0;
-                        // getAllMaterial();
-                        //btSearch_Click(sender, e);
+                        Response.Redirect("../patient/PatientMaster.aspx?Eid=" + Eid);
                     }
+                    else
+                    {
+                        getAllEnquiry();
+
+
+                    }
+                    EnquiryID = 0;
+
                 }
+
 
             }
             catch (Exception ex)

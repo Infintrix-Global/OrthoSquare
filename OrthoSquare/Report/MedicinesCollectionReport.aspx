@@ -4,8 +4,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>
+   <%-- <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>--%>
             <asp:Panel ID="Edit" runat="server">
                 <div id="Div1" runat="server" class="page-content">
                     <div class="page-bar">
@@ -139,9 +139,27 @@
                                                             </ItemTemplate>
                                                         </asp:TemplateField>
 
+                                                         <asp:TemplateField HeaderText="Clinic Name">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("ClinicName") %>'></asp:Label>
+                                                            </ItemTemplate>
+
+                                                        </asp:TemplateField>
+
+                                                         <asp:TemplateField HeaderText="Doctor Name">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="lblDoctorName" runat="server" Text='<%# Eval("DoctorName") %>'></asp:Label>
+                                                            </ItemTemplate>
+
+                                                        </asp:TemplateField>
+
+
+                                                        
+
+
                                                         <asp:TemplateField HeaderText="Medicines Name">
                                                             <ItemTemplate>
-                                                                <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("MedicinesName") %>'></asp:Label>
+                                                                <asp:Label ID="lblMedicines" runat="server" Text='<%# Eval("MedicinesName") %>'></asp:Label>
                                                             </ItemTemplate>
 
                                                         </asp:TemplateField>
@@ -188,6 +206,13 @@
                                                     </EmptyDataTemplate>
                                                 </asp:GridView>
                                             </div>
+
+
+                                            <div class="text-left mb-20">
+                                                <asp:ImageButton ID="btExcel" runat="server" Height="40px"
+                                                    ImageUrl="~/Images/excel-icon.png" Text="Download" ToolTip="Download" Width="40px"
+                                                    OnClick="btExcel_Click" />
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- / .panel -->
@@ -197,8 +222,8 @@
                     </div>
                 </div>
             </asp:Panel>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+  <%--      </ContentTemplate>
+    </asp:UpdatePanel>--%>
 
 
 </asp:Content>

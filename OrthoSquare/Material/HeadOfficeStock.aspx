@@ -4,7 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="page-content" id="Add"  runat="server">
+    <div class="page-content" id="Add" runat="server">
         <!-- BEGIN PAGE HEADER-->
 
 
@@ -16,7 +16,7 @@
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <span>Add Material Stock</span>
+                    <span>Add Head Office Stock</span>
                 </li>
             </ul>
 
@@ -33,7 +33,7 @@
                     <div class="portlet-title">
                         <div class="caption font-red-sunglo">
                             <i class="icon-settings font-red-sunglo"></i>
-                            <span class="caption-subject bold uppercase"><span>Add Material Stock</span>
+                            <span class="caption-subject bold uppercase"><span>Add Head Office Stock</span>
                         </div>
 
                     </div>
@@ -51,7 +51,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
 
-                                <asp:TextBox ID="txtMaterial" runat="server" class="form-control" placeholder="Material"
+                                <asp:TextBox ID="txtMaterial" runat="server" class="form-control" placeholder="Item Name"
                                     ClientIDMode="Static"></asp:TextBox>
 
 
@@ -67,9 +67,9 @@
                     </div>
                     <br />
                     <div class="table-responsive">
-                        <asp:GridView ID="Gridplaceorder" runat="server" AllowPaging="true" AutoGenerateColumns="false"
+                        <asp:GridView ID="Gridplaceorder" runat="server" AutoGenerateColumns="false"
                             class="table table-striped table-bordered table-hover" DataKeyNames="MaterialId"
-                            GridLines="None" OnPageIndexChanging="Gridplaceorder_PageIndexChanging"
+                            GridLines="None"
                             ShowHeaderWhenEmpty="true">
 
                             <Columns>
@@ -82,7 +82,7 @@
 
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Material Type">
+                                <asp:TemplateField HeaderText="Inventory Type">
                                     <ItemTemplate>
                                         <asp:Label ID="lblMaterialType" runat="server" Text='<%# Eval("MaterialType") %>'></asp:Label>
                                         <asp:Label ID="lblId" Visible="false" runat="server" Text='<%# Eval("Id") %>'></asp:Label>
@@ -92,7 +92,7 @@
 
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Material Name">
+                                <asp:TemplateField HeaderText="Item Name">
                                     <ItemTemplate>
                                         <asp:Label ID="lblMaterialName" runat="server" Text='<%# Eval("MaterialName") %>'></asp:Label>
                                         <asp:Label ID="lblMaterialId" Visible="false" runat="server" Text='<%# Eval("MaterialId") %>'></asp:Label>
@@ -107,17 +107,34 @@
                                     </ItemTemplate>
 
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Unit Name">
+                                <asp:TemplateField HeaderText="Packaging">
                                     <ItemTemplate>
                                         <asp:Label ID="lblUUnit" runat="server" Text='<%# Eval("PackName") %>'></asp:Label>
                                     </ItemTemplate>
 
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Order Qty">
+                                <asp:TemplateField HeaderText="Rate">
                                     <ItemTemplate>
-                                        <asp:TextBox ID="txtOrderQty" class="form-control" TextMode="Number" Width="100px" Text='<%# Eval("Qty") %>'  AutoPostBack="true" OnTextChanged="txtOrderQty_TextChanged" runat="server"></asp:TextBox>
+                                        <asp:TextBox ID="txtRate" class="form-control" TextMode="Number" Width="100px" Text='<%# Eval("HPrice") %>' runat="server"></asp:TextBox>
                                     </ItemTemplate>
+
+                                </asp:TemplateField>
+
+
+                                <asp:TemplateField HeaderText="Opening Stock">
+                                    <ItemTemplate>
+                                        <asp:TextBox ID="txtOrderQty" class="form-control" TextMode="Number" Width="100px" Text='<%# Eval("Qty") %>' AutoPostBack="true" OnTextChanged="txtOrderQty_TextChanged" runat="server"></asp:TextBox>
+                                    </ItemTemplate>
+
+                                </asp:TemplateField>
+
+
+                                <asp:TemplateField HeaderText="Current Stock">
+                                    <ItemTemplate>
+                                           <asp:Label ID="lblCurrentStock" runat="server" Text='<%# Eval("CurrentStock") %>'></asp:Label>
+                                       
+                                        </ItemTemplate>
 
                                 </asp:TemplateField>
 

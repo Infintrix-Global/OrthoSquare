@@ -27,6 +27,8 @@ namespace OrthoSquare.Invoice
         {
             if (!IsPostBack)
             {
+                txtFromEnquiryDate.Text = Convert.ToDateTime(System.DateTime.Now).AddDays(-15).ToString("dd-MM-yyyy");
+                txtToEnquiryDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
                 bindClinic();
                 if (SessionUtilities.RoleID == 1)
                 {
@@ -125,7 +127,10 @@ namespace OrthoSquare.Invoice
                 for (int i = 0; i < AllData.Rows.Count; i++)
                 {
                     SumPaid += Convert.ToDecimal(AllData.Rows[i]["SumPaid"]);
-                    sumPendingValue += Convert.ToDecimal(AllData.Rows[i]["PendingAmount"]);
+                   // sumPendingValue += Convert.ToDecimal(AllData.Rows[i]["PendingAmount"]);
+                    sumPendingValue += Convert.ToDecimal(AllData.Rows[i]["PendingCount"]);
+
+                    
                     sumGrandValue += Convert.ToDecimal(AllData.Rows[i]["GrandTotal"]);
 
                 }
@@ -148,6 +153,8 @@ namespace OrthoSquare.Invoice
 
             //gvShow.DataSource = AllData;
             //gvShow.DataBind();
+            //txtFromEnquiryDate.Text = Convert.ToDateTime(System.DateTime.Now).AddDays(-15).ToString("dd-MM-yyyy");
+            //txtToEnquiryDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
 
         }
 
@@ -218,6 +225,7 @@ namespace OrthoSquare.Invoice
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 ImageButton bindeleteinv = (ImageButton)e.Row.FindControl("lbtDelete");
+                Label lblDownpayment = (Label)e.Row.FindControl("lblDownpayment");
                 if (SessionUtilities.RoleID == 2)
                 {
                     bindeleteinv.Visible = true;
@@ -225,6 +233,12 @@ namespace OrthoSquare.Invoice
                 else
                 {
                     bindeleteinv.Visible = false;
+                }
+
+
+                if(Convert.ToDecimal(lblDownpayment.Text) > 0)
+                {
+                    e.Row.Visible = false;
                 }
 
             }
@@ -249,6 +263,8 @@ namespace OrthoSquare.Invoice
         {
             DataTable dt = objPatient.PatientSelect(txtPatientName.Text);
             PatientsId = Convert.ToInt32(dt.Rows[0]["PatientId"]);
+            txtFromEnquiryDate.Text = "";
+
             getAllInvoice(Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(ddlDoctor.SelectedValue));
 
         }

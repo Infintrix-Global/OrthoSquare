@@ -113,7 +113,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                         <br />
+                                        <br />
 
                                         <div class="row ">
                                             <div class="col-md-3">
@@ -128,11 +128,11 @@
                                                 Pending Total :
                                              <asp:Label ID="lblPending" runat="server" Text=""></asp:Label>
                                             </div>
-                                           
+
                                         </div>
 
-                                        
-                                        
+
+
                                         <br />
 
                                         <div class="table-scrollable">
@@ -168,6 +168,13 @@
                                                     </asp:TemplateField>
 
 
+                                                    <asp:TemplateField HeaderText="Patient Code">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblPatientCode" runat="server" Text='<%# Eval("PatientCode") %>'></asp:Label>
+
+
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="Patient Name">
                                                         <ItemTemplate>
                                                             <asp:Label ID="lblVisitorPname" runat="server" Text='<%# Eval("FristName") +"  "+ Eval("LastName") %>'></asp:Label>
@@ -211,8 +218,8 @@
                                             </asp:GridView>
                                         </div>
                                     </div>
-                            </div>
-                            <!-- / .panel -->
+                                </div>
+                                <!-- / .panel -->
                             </div>
                         </div>
                     </div>

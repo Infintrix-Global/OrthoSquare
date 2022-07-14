@@ -2481,8 +2481,6 @@ namespace OrthoSquare
 
             try
             {
-
-
                 strQuery = " Select *,D.FirstName+' '+ isnull(D.LastName,' ') as DoctorName from DoctorByClinic DBC join tbl_DoctorDetails D on D.DoctorID = DBC.DoctorID where D.IsActive =1   and D.IsDeleted=0 and DBC.IsDeactive=1";
                 if (ClinicId > 0)
                     strQuery += " and DBC.ClinicID ='"+ ClinicId + "'";

@@ -42,7 +42,7 @@ namespace OrthoSquare.Material
                 ddlMaterialType.DataValueField = "MaterialTypeId";
                 ddlMaterialType.DataTextField = "MaterialName";
                 ddlMaterialType.DataBind();
-                ddlMaterialType.Items.Insert(0, new ListItem("--- Select Material Type---", "0"));
+                ddlMaterialType.Items.Insert(0, new ListItem("--- Select Inventory Type---", "0"));
             }
             catch (Exception ex)
             {
@@ -121,6 +121,7 @@ namespace OrthoSquare.Material
                     Label lblUUnit = (Label)row.FindControl("lblUUnit");
                     Label lblId = (Label)row.FindControl("lblId");
                     Label lblStockMaterialID = (Label)row.FindControl("lblStockMaterialID");
+                    TextBox txtRate = (TextBox)row.FindControl("txtRate");
                     NameValueCollection nv = new NameValueCollection();
 
                     nv.Add("@ID", lblId.Text);
@@ -129,7 +130,10 @@ namespace OrthoSquare.Material
                     nv.Add("@Qty", txtOrderQty.Text);
                     nv.Add("@StockMaterialID", lblStockMaterialID.Text);
                     nv.Add("@CreateBy", Session["Empid"].ToString());
-                    nv.Add("@mode", "1");
+                   
+                    nv.Add("@Price", txtRate.Text);
+                    
+                    nv.Add("@mode", "2");
 
                     _isInserted = objG.GetDataExecuteScaler("SP_AddMaterialStock", nv);
                 }

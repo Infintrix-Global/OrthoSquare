@@ -15,7 +15,7 @@
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <span>Add Material Stock</span>
+                    <span>Clinic Request Stock</span>
                 </li>
             </ul>
 
@@ -32,45 +32,43 @@
                     <div class="portlet-title">
                         <div class="caption font-red-sunglo">
                             <i class="icon-settings font-red-sunglo"></i>
-                            <span class="caption-subject bold uppercase"><span>Add Material Request Stock</span>
+                            <span class="caption-subject bold uppercase"><span>Clinic Request Stock</span>
                         </div>
 
                     </div>
+
+                    <br />
+
 
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
 
-                                <asp:DropDownList ID="ddlMaterialType" class="form-control" runat="server"></asp:DropDownList>
+                                <label>Clinic Name</label>
+                                <asp:DropDownList ID="ddlClinic" class="form-control" runat="server"></asp:DropDownList>
 
-
-
+                                <span class="help-block">
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="ddlClinic" InitialValue="0" ValidationGroup="e"
+                                        SetFocusOnError="true" ErrorMessage="Please Enter Clinic" ForeColor="Red"></asp:RequiredFieldValidator>
+                                </span>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-
-                                <asp:TextBox ID="txtMaterial" runat="server" class="form-control" placeholder="Material"
-                                    ClientIDMode="Static"></asp:TextBox>
-
-
-
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <asp:Button ID="btnSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
-                                    CausesValidation="False" />
                             </div>
                         </div>
                     </div>
-                    <br />
+                  
                     <div class="table-responsive">
                         <asp:GridView ID="GridMateialStock" class="table table-bordered table-hover" ShowFooter="true" runat="server" OnRowDeleting="GridMateialStock_RowDeleting"
                             AutoGenerateColumns="false" OnRowDataBound="GridMateialStock_RowDataBound">
                             <Columns>
                                 <asp:BoundField DataField="RowNumber" Visible="false" HeaderText="NO." />
-                                <asp:TemplateField HeaderText="Type" ItemStyle-Width="25%">
+                                <asp:TemplateField HeaderText="Inventory Type" ItemStyle-Width="25%">
                                     <ItemTemplate>
                                         <asp:DropDownList ID="ddlMaterialType" OnSelectedIndexChanged="ddlMaterialType_SelectedIndexChanged" AutoPostBack="true" class="form-control" runat="server">
                                         </asp:DropDownList>
@@ -82,7 +80,7 @@
 
 
 
-                                <asp:TemplateField HeaderText="Material Name" ItemStyle-Width="25%">
+                                <asp:TemplateField HeaderText="Item Name" ItemStyle-Width="25%">
                                     <ItemTemplate>
                                         <asp:DropDownList ID="ddlMaterialName" class="form-control" runat="server">
                                         </asp:DropDownList>
@@ -93,7 +91,17 @@
                                 </asp:TemplateField>
 
 
-                                <asp:TemplateField HeaderText="Qty" ItemStyle-Width="15%">
+                                 <asp:TemplateField HeaderText="Packaging" ItemStyle-Width="25%">
+                                    <ItemTemplate>
+                                        <asp:DropDownList ID="ddlPack" class="form-control" runat="server">
+                                        </asp:DropDownList>
+
+                                        <asp:Label ID="lblPack" Visible="false" Text='<%# Eval("PackId")%>' runat="server"></asp:Label>
+
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Quantity" ItemStyle-Width="15%">
                                     <ItemTemplate>
                                         <asp:TextBox ID="txtQty" class="form-control" MaxLength="4" Text='<%# Eval("Qty")%>' runat="server"></asp:TextBox>
                                     </ItemTemplate>

@@ -65,13 +65,15 @@ namespace OrthoSquare
         {
             DataTable User = (DataTable)Session["User"];
 
+            //string query = "select LG.UserID,LG.RoleID,RL.RoleName,MR.MenuID,MR.Page_Add,MR.Page_Delete,MR.Page_Edit,MR.Page_View ";
+            //query += " ,MN.MenuName,MN.MenuIcon,MN.OrderNo,MN.ParentId,MN.Path from [Login] LG  ";
+            //query += " Left outer join Role RL on RL.RoleID = LG.RoleID Left outer join MenuRight MR on MR.RoleID = LG.RoleID ";
+            //query += " Left outer join Menu MN on MN.MenuID = MR.MenuID where UserID='" + User.Rows[0]["UserID"].ToString() + "' and MN.IsActive= 1 and ISNULL(MenuName,'')<>'' order by ParentID,MR.MenuID, OrderNo asc";
+
             string query = "select LG.UserID,LG.RoleID,RL.RoleName,MR.MenuID,MR.Page_Add,MR.Page_Delete,MR.Page_Edit,MR.Page_View ";
             query += " ,MN.MenuName,MN.MenuIcon,MN.OrderNo,MN.ParentId,MN.Path from [Login] LG  ";
             query += " Left outer join Role RL on RL.RoleID = LG.RoleID Left outer join MenuRight MR on MR.RoleID = LG.RoleID ";
-            query += " Left outer join Menu MN on MN.MenuID = MR.MenuID where UserID='" + User.Rows[0]["UserID"].ToString() + "' and MN.IsActive= 1 and ISNULL(MenuName,'')<>'' order by ParentID,MR.MenuID, OrderNo asc";
-
-
-           
+            query += " Left outer join Menu MN on MN.MenuID = MR.MenuID where UserID='" + User.Rows[0]["UserID"].ToString() + "' and MN.IsActive= 1 and ISNULL(MenuName,'')<>'' order by ParentID, OrderNo asc";
 
 
             if (con.State == ConnectionState.Closed)
@@ -106,19 +108,7 @@ namespace OrthoSquare
                     PlhldrMenu.Controls.Add(literalMenu);
                 }
                
-                //if (dtSubMenu.Count() >= 2)
-              
-                //{
-                //    var literalSubMenuolds = new LiteralControl("<ul class='sub-menu sub-menu1'>");
-                //    PlhldrMenu.Controls.Add(literalSubMenuolds);
-                //}
-                //else
-                //{
-                //     var literalSubMenuolds = new LiteralControl("<ul class='sub-menu '>");
-                //     PlhldrMenu.Controls.Add(literalSubMenuolds);
-
-                //}
-
+                
                 var literalSubMenuolds = new LiteralControl("<ul class='sub-menu '>");
                 PlhldrMenu.Controls.Add(literalSubMenuolds);
                 foreach (DataRow rowSubMenu in dtSubMenu)

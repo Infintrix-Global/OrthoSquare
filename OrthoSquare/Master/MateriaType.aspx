@@ -15,7 +15,7 @@
                             <i class="fa fa-angle-right"></i>
                         </li>
                         <li>
-                            <span>MATERIAL TYPE</span>
+                            <span>Inventory TYPE</span>
                         </li>
                     </ul>
 
@@ -32,7 +32,7 @@
                             <div class="portlet-title">
                                 <div class="caption font-red-sunglo">
                                     <i class="icon-settings font-red-sunglo"></i>
-                                    <span class="caption-subject bold uppercase">MATERIAL TYPE</span>
+                                    <span class="caption-subject bold uppercase">Inventory TYPE</span>
                                 </div>
 
                             </div>
@@ -51,7 +51,7 @@
 
                                 </div>
                                 <div class="col-md-6">
-                                    <asp:TextBox ID="txtAdd" MaxLength="100" class="form-control" placeholder="Material Type Name"
+                                    <asp:TextBox ID="txtAdd" MaxLength="100" class="form-control" placeholder="Inventory Type Name"
                                         runat="server"></asp:TextBox>
                                     <span class="help-block">
                                         <asp:RequiredFieldValidator ID="RequiredtxtAdd" runat="server" ControlToValidate="txtAdd"
@@ -91,7 +91,7 @@
                             <i class="fa fa-angle-right"></i>
                         </li>
                         <li>
-                            <span>MATERIAL TYPE</span>
+                            <span>Inventory TYPE</span>
                         </li>
                     </ul>
 
@@ -105,7 +105,7 @@
                             <div class="portlet-title">
                                 <div class="caption">
                                     <i class="icon-settings font-red"></i>
-                                    <span class="caption-subject font-red sbold uppercase">MATERIAL TYPE</span>
+                                    <span class="caption-subject font-red sbold uppercase">Inventory Type</span>
                                 </div>
                               
                             </div>
@@ -143,7 +143,7 @@
 
                                             <asp:Button ID="btnClear" runat="server" Text="Cancel" class="btn default"
                                                 OnClick="btnClear_Click" />
-                                            <asp:Button ID="btnAddNew" runat="server" Text="Add New Material Type" class="btn blue-madison"
+                                            <asp:Button ID="btnAddNew" runat="server" Text="Add New Inventory Type" class="btn blue-madison"
                                                 CausesValidation="False" OnClick="btnAddNew_Click" />
                                         </div>
 
@@ -175,14 +175,14 @@
                                                         <asp:Label ID="lblID" runat="server" Text='<%# Eval("MaterialTypeId") %>' Visible="false"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="Material Type Name" SortExpression="MaterialName">
+                                                <asp:TemplateField HeaderText="Item Type Name" SortExpression="MaterialName">
                                                     <ItemTemplate>
                                                         <asp:Label ID="lblName" runat="server" Text='<%# Eval("MaterialName") %>'></asp:Label>
                                                     </ItemTemplate>
 
                                                 </asp:TemplateField>
 
-                                                <asp:TemplateField HeaderText="Material Type" SortExpression="IsMedical">
+                                                <asp:TemplateField HeaderText="Inventory Type" SortExpression="IsMedical">
                                                     <ItemTemplate>
                                                         <asp:Label ID="lblIsMedical" runat="server" Text='<%# Eval("IsMedical") %>'></asp:Label>
                                                     </ItemTemplate>

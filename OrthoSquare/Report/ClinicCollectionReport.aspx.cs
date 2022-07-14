@@ -8,6 +8,7 @@ using OrthoSquare.BAL_Classes;
 using System.Data;
 using OrthoSquare.Utility;
 using System.IO;
+using System.Text;
 
 namespace OrthoSquare.Report
 {
@@ -73,18 +74,20 @@ namespace OrthoSquare.Report
 
             AllData = objExp.GetAllClinicCollection_Report(txtFromPayDate.Text,txtToPayDate.Text, Convert.ToInt32(ddlClinic.SelectedValue));
 
+
+
             //gvShow.DataSource = AllData;
             //gvShow.DataBind();
 
             if (AllData != null && AllData.Rows.Count > 0)
             {
-                for (int i = 0; i < AllData.Rows.Count; i++)
-                {
-                    Total += Convert.ToDecimal(AllData.Rows[i]["PaidAmount"]);
+                //for (int i = 0; i < AllData.Rows.Count; i++)
+                //{
+                //    Total += Convert.ToDecimal(AllData.Rows[i]["PaidAmount"]) + Convert.ToDecimal(AllData.Rows[i]["MedicinesPaidAmount"]);
 
 
-                }
-                lblTotalTop.Text = Total.ToString();
+                //}
+                //lblTotalTop.Text = Total.ToString();
                 gvShow.DataSource = AllData;
                 gvShow.DataBind();
             }
@@ -121,33 +124,82 @@ namespace OrthoSquare.Report
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
 
-                Label lblPaidAmount = (Label)e.Row.FindControl("lblPaidAmount");
-                Label lblPendingAmount = (Label)e.Row.FindControl("lblPendingAmount");
+                Label lblMedicinesPaidAmount = (Label)e.Row.FindControl("lblMedicinesPaidAmount");
+                Label lblTotalMedicinesDiscount = (Label)e.Row.FindControl("lblTotalMedicinesDiscount");
                 Label lblClinicID = (Label)e.Row.FindControl("lblClinicID");
 
 
-              // lblPendingAmount.Text = objExp.GetPendingAmount(Convert.ToInt32  (lblClinicID.Text),0,0).ToString();
+               DataTable AllData1 = objExp.GetAllClinicCollectionMedicinesReport(txtFromPayDate.Text, txtToPayDate.Text, Convert.ToInt32(lblClinicID.Text));
+                if (AllData1 != null && AllData1.Rows.Count >0)
+                {
+                    lblMedicinesPaidAmount.Text = AllData1.Rows[0]["MedicinesPaidAmount"].ToString();
+                    lblTotalMedicinesDiscount.Text = AllData1.Rows[0]["TotalMedicinesDiscount"].ToString();
+
+                }
+                else
+                {
+                    lblMedicinesPaidAmount.Text = "0.00";
+                    lblTotalMedicinesDiscount.Text = "0.00";
+
+                }
 
 
-                sumFooterValue += Convert.ToDecimal(lblPaidAmount.Text);
-                sumFooterPendingValue += Convert.ToDecimal(lblPendingAmount.Text);
-                
+
             }
 
-           // lblTotalTop.Text = sumFooterValue.ToString();
-            if (e.Row.RowType == DataControlRowType.Footer)
-            {
-                Label lblPaidAmountTotal = (Label)e.Row.FindControl("lblPaidAmountTotal");
-                Label lblPendingAmountTotal = (Label)e.Row.FindControl("lblPendingAmountTotal");
-                lblPaidAmountTotal.Text = sumFooterValue.ToString();
-                lblPendingAmountTotal.Text = sumFooterPendingValue.ToString();
+            //// lblTotalTop.Text = sumFooterValue.ToString();
+            // if (e.Row.RowType == DataControlRowType.Footer)
+            // {
+            //     Label lblPaidAmountTotal = (Label)e.Row.FindControl("lblPaidAmountTotal");
+            //     Label lblPendingAmountTotal = (Label)e.Row.FindControl("lblPendingAmountTotal");
+            //     lblPaidAmountTotal.Text = sumFooterValue.ToString();
+            //     lblPendingAmountTotal.Text = sumFooterPendingValue.ToString();
 
-            }
+            // }
         }
 
         protected void ddlClinic_SelectedIndexChanged(object sender, EventArgs e)
         {
             getAllCollection();
         }
+
+
+        public override void VerifyRenderingInServerForm(Control control)
+        {
+            /* Verifies that the control is rendered */
+        }
+
+        protected void btExcel_ClickClinic(object sender, ImageClickEventArgs e)
+        {
+
+
+            AllData = objExp.GetAllClinicCollection_Report(txtFromPayDate.Text, txtToPayDate.Text, Convert.ToInt32(ddlClinic.SelectedValue));
+
+
+            HttpResponse response = HttpContext.Current.Response;
+            response.Clear();
+            response.ClearHeaders();
+            response.ClearContent();
+            response.Charset = Encoding.UTF8.WebName;
+            response.AddHeader("content-disposition", "attachment; filename=" + DateTime.Now.ToString("yyyy-MM-dd") + ".xls");
+            response.AddHeader("Content-Type", "application/Excel");
+            response.ContentType = "application/vnd.xlsx";
+            using (StringWriter sw = new StringWriter())
+            {
+                using (HtmlTextWriter htw = new HtmlTextWriter(sw))
+                {
+                    GridView gridView = new GridView();
+                    gridView.DataSource = AllData;
+                    gridView.DataBind();
+                    gridView.RenderControl(htw);
+                    response.Write(sw.ToString());
+                    gridView.Dispose();
+                    AllData.Dispose();
+                    response.End();
+                }
+            }
+        }
+
+      
     }
 }

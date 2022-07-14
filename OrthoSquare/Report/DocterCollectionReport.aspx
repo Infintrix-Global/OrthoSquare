@@ -18,7 +18,7 @@
                                 <i class="fa fa-angle-right"></i>
                             </li>
                             <li>
-                                <span>Doctor Report</span>
+                                <span>Docter Collection Report</span>
                             </li>
                         </ul>
 
@@ -29,7 +29,7 @@
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="icon-settings font-red"></i>
-                                        <span class="caption-subject font-red sbold uppercase">Doctor Report</span>
+                                        <span class="caption-subject font-red sbold uppercase">Docter Collection Report</span>
                                     </div>
 
                                 </div>

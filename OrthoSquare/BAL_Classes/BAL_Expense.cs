@@ -83,10 +83,13 @@ namespace OrthoSquare.BAL_Classes
             if (Did > 0)
                 strQuery += " and E.DoctorID='" + Did + "'";
             if (FromDate != "" && Todate != "")
-                strQuery += " and convert(date,E.ExpDate,105) between convert(date,'" + Convert.ToDateTime(FromDate) + "',105) and convert(date,'" + Convert.ToDateTime(Todate) + "',105)";
+                strQuery += " and convert(date,E.ExpDate,105) between convert(date,@FromEnquiryDate,105) and convert(date,@ToEnquiryDate,105)";
             strQuery += "   order by E.ExpDate DESC";
 
+            objGeneral.AddParameterWithValueToSQLCommand("@FromEnquiryDate", FromDate);
+            objGeneral.AddParameterWithValueToSQLCommand("@ToEnquiryDate", Todate);
             return objGeneral.GetDatasetByCommand(strQuery);
+
 
         }
 
@@ -103,8 +106,11 @@ namespace OrthoSquare.BAL_Classes
             if (Did > 0)
                 strQuery += " and E.DoctorID='" + Did + "'";
             if (FromDate != "" && Todate != "")
-                strQuery += " and convert(date,E.ExpDate,105) between convert(date,'" + Convert.ToDateTime(FromDate) + "',105) and convert(date,'" + Convert.ToDateTime(Todate) + "',105)";
+                strQuery += " and convert(date,E.ExpDate,105) between convert(date,@FromEnquiryDate1,105) and convert(date,@ToEnquiryDate1,105)";
             strQuery += "   order by E.ExpDate DESC";
+
+            objGeneral.AddParameterWithValueToSQLCommand("@FromEnquiryDate1", FromDate);
+            objGeneral.AddParameterWithValueToSQLCommand("@ToEnquiryDate1", Todate);
 
             return objGeneral.GetDatasetByCommand(strQuery);
 
@@ -178,8 +184,94 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
                 objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
                 objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
-               
+
                 ds = objGeneral.GetDatasetByCommand_SP("GET_ClinicCollectionReport");
+
+               // ds = objGeneral.GetDatasetByCommand_SP("GET_ClinicCollectionTreatmentAndMedicinesReport");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
+
+
+        public DataTable GetAllClinicCollectionMedicinesReport(string FromDate, string Todate, int ClinicID)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+
+               
+                 ds = objGeneral.GetDatasetByCommand_SP("GET_ClinicCollectionTreatmentAndMedicinesReport");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
+
+
+
+        public DataTable GetAreaManagerClinicCollection_Report(string FromDate, string Todate, int DoctorID)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
+                objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", DoctorID);
+                objGeneral.AddParameterWithValueToSQLCommand("@Mode", 1);
+
+                ds = objGeneral.GetDatasetByCommand_SP("GET_AreaManagerCollectionReport");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
+
+
+        public DataTable GetAreaManagerReport(int DoctorID)
+        {
+            try
+            {
+                General objGeneral = new General();
+              
+                objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", DoctorID);
+                objGeneral.AddParameterWithValueToSQLCommand("@Mode", 1);
+
+                ds = objGeneral.GetDatasetByCommand_SP("GET_AreaManagerReport");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
+
+
+
+        public DataTable GetAllClinicCollectionMedicines_Report(string FromDate, string Todate, int ClinicID)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+
+                ds = objGeneral.GetDatasetByCommand_SP("GET_ClinicCollectionMedicinesReport");
             }
             catch (Exception ex)
             {
@@ -495,7 +587,6 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", Mode);
                 objGeneral.AddParameterWithValueToSQLCommand("@Groupid", TreatmentGroupid);
-
 
                 ds = objGeneral.GetDatasetByCommand_SP("GET_TreatmentReport");
             }

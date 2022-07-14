@@ -73,7 +73,7 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
-        public int InvoiceDetailsTritment(int Tid,int Pid,int Did,int TreatmentID, string Unit, string Cost, string Discount, string Tax,string ISInvoice,string Toothno,string sDate)
+        public int InvoiceDetailsTritment(int Tid,int Pid,int Did,int TreatmentID, string Unit, string Cost, string Discount, string Tax,string ISInvoice,string Toothno,string sDate,string ClinicId)
         {
             int isInserted = -1;
             try
@@ -87,8 +87,8 @@ namespace OrthoSquare.BAL_Classes
                 }
                 else
                 {
-                    strQuery = "insert into  TreatmentbyPatient(patientid,DoctorID,TreatmentID,StartedTreatments,TreatmentsCost,IsActive,Unit,Discount,Tex,ISInvoice,toothNo,CtrateDate)";
-                    strQuery += "  Values (@Pid,@Did,@TreatmentID,'Yes',@Cost,1,@Unit,@Discount,@Tax,1,@Toothno,@Sdate)";
+                    strQuery = "insert into  TreatmentbyPatient(patientid,DoctorID,TreatmentID,StartedTreatments,TreatmentsCost,IsActive,Unit,Discount,Tex,ISInvoice,toothNo,CtrateDate,ClinicId)";
+                    strQuery += "  Values (@Pid,@Did,@TreatmentID,'Yes',@Cost,1,@Unit,@Discount,@Tax,1,@Toothno,@Sdate,@ClinicId)";
                
                 }
 
@@ -101,6 +101,7 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@Discount", Discount);
                 objGeneral.AddParameterWithValueToSQLCommand("@Tax", Tax);
                 objGeneral.AddParameterWithValueToSQLCommand("@Toothno", Toothno);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicId", ClinicId);
                 objGeneral.GetExecuteNonQueryByCommand(strQuery);
                 isInserted = 1;
             }
@@ -216,11 +217,7 @@ namespace OrthoSquare.BAL_Classes
 
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 1);
 
-
-
                 isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_AddInvoicePaymentDetails");
-
-
 
             }
             catch (Exception ex)
@@ -268,22 +265,6 @@ namespace OrthoSquare.BAL_Classes
             return ds.Tables[0];
         }
 
-
-        //public DataTable GetViewMedicinesInvoice(int PID)
-        //{
-        //    try
-        //    {
-        //        General objGeneral = new General();
-        //        objGeneral.AddParameterWithValueToSQLCommand("@Cno", "0");
-        //        objGeneral.AddParameterWithValueToSQLCommand("@patientid ", PID);
-        //        objGeneral.AddParameterWithValueToSQLCommand("@mode", 4);
-        //        ds = objGeneral.GetDatasetByCommand_SP("GET_InvoicePatientMedicines");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //    return ds.Tables[0];
-        //}
 
 
         public DataTable GetMedicinesClinicDetails(int Pid)
@@ -346,9 +327,7 @@ namespace OrthoSquare.BAL_Classes
             //strQuery = "Select * from InvoiceMaster  where InvoiceNo= '" + InvCode + "'";
 
 
-            strQuery = " Select PaymentMode,(ISNULL(IM.GrandTotal, 0)) -(ISNULL(IM.FinanceAmount, 0)) GrandTotal,Im.payDate," +
-                "IM.PaidAmount,IM.GrandTotal - ((ISNULL(IM.PaidAmount, 0)) + (ISNULL(IM.FinanceAmount, 0))) Pending   From InvoiceMaster IM " +
-                "join PaymentDetilas PM on IM.InvoiceTid = PM.InvoiceTid where IM.InvoiceNo= '" + InvCode + "'";
+            strQuery = "Select PaymentMode, Im.GrandTotal,Im.payDate,IM.PaidAmount, IM.PendingAmount   From InvoiceMaster IM join PaymentDetilas PM on IM.InvoiceTid = PM.InvoiceTid where IM.InvoiceNo= '" + InvCode + "'";
 
             return objGeneral.GetDatasetByCommand(strQuery);
 
@@ -370,8 +349,13 @@ namespace OrthoSquare.BAL_Classes
 
             string strQuery = string.Empty;
             //strQuery = "  Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,DD.LastName as DLastName from InvoiceMaster IM join PatientMaster PM on PM.patientid= IM.patientid ";
-            strQuery += "  Select InvoiceNo,InvoiceCode,SUM(PaidAmount) PaidAmount,GrandTotal- SUM(PaidAmount) as PendingPayment, GrandTotal,TotalDiscount,TotalTax,IM.TotalCost,IM.TotalCostAmount  FROM InvoiceMaster IM   where InvoiceNo =" + InvCode + " and InvoiceCode='"+ InvoiceCode + "' ";
-            strQuery += " Group by InvoiceNo,InvoiceCode,GrandTotal,TotalDiscount,TotalTax,IM.TotalCost,IM.TotalCostAmount";
+            //strQuery += "  Select InvoiceNo,InvoiceCode,SUM(PaidAmount) PaidAmount,GrandTotal- SUM(PaidAmount) as PendingPayment, GrandTotal,TotalDiscount,TotalTax,IM.TotalCost,IM.TotalCostAmount  FROM InvoiceMaster IM   where InvoiceNo =" + InvCode + " and InvoiceCode='"+ InvoiceCode + "' ";
+            //strQuery += " Group by InvoiceNo,InvoiceCode,GrandTotal,TotalDiscount,TotalTax,IM.TotalCost,IM.TotalCostAmount";
+
+
+            strQuery += "  Select InvoiceNo,SUM(PaidAmount) PaidAmount,GrandTotal- SUM(PaidAmount) as PendingPayment, GrandTotal,TotalDiscount,TotalTax,IM.TotalCost,IM.TotalCostAmount  FROM InvoiceMaster IM   where InvoiceNo =" + InvCode + " ";
+            strQuery += " Group by InvoiceNo,GrandTotal,TotalDiscount,TotalTax,IM.TotalCost,IM.TotalCostAmount";
+
 
             return objGeneral.GetDatasetByCommand(strQuery);
 
@@ -383,8 +367,8 @@ namespace OrthoSquare.BAL_Classes
 
             string strQuery = string.Empty;
             //strQuery = "  Select *,PM.FristName as PFristName,PM.LastName as PLastName,DD.FirstName as DFirstName,DD.LastName as DLastName from InvoiceMaster IM join PatientMaster PM on PM.patientid= IM.patientid ";
-            strQuery += "  Select InvoiceNo,InvoiceCode,Downpayment as PaidAmount,GrandTotal- Downpayment as PendingPayment, GrandTotal,TotalDiscount,TotalTax,IM.TotalCost,IM.TotalCostAmount  FROM InvoiceMaster IM   where InvoiceNo =" + InvCode + " and InvoiceCode='" + InvoiceCode + "' ";
-            strQuery += " Group by InvoiceNo,InvoiceCode,GrandTotal,TotalDiscount,TotalTax,IM.TotalCost,IM.TotalCostAmount,Downpayment";
+            strQuery += "  Select InvoiceNo,InvoiceCode,Downpayment,GrandTotal- Downpayment as PendingPayment, GrandTotal,TotalDiscount,TotalTax,IM.TotalCost,IM.TotalCostAmount,IM.RevenueAmount  FROM InvoiceMaster IM   where InvoiceNo =" + InvCode + " and InvoiceCode='" + InvoiceCode + "' ";
+            strQuery += " Group by InvoiceNo,InvoiceCode,GrandTotal,TotalDiscount,TotalTax,IM.TotalCost,IM.TotalCostAmount,Downpayment,IM.RevenueAmount";
 
             return objGeneral.GetDatasetByCommand(strQuery);
 
@@ -403,7 +387,9 @@ namespace OrthoSquare.BAL_Classes
                 objGeneral.AddParameterWithValueToSQLCommand("@DoctorID", DoctorID);
                 objGeneral.AddParameterWithValueToSQLCommand("@PatiletId", PatientsId);
 
-                ds = objGeneral.GetDatasetByCommand_SP("GET_GetAllInvoicDispaly");
+                ds = objGeneral.GetDatasetByCommand_SP("GET_TestGetAllInvoicDispaly");
+                //ds = objGeneral.GetDatasetByCommand_SP("GET_TestGetAllInvoicDispaly");
+
             }
             catch (Exception ex)
             {

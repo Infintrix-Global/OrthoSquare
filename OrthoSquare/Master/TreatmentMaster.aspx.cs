@@ -28,7 +28,7 @@ namespace OrthoSquare.Master
         public void getAllTreatment()
         {
 
-            AllData = objES.GetAllTreatment();
+            AllData = objES.GetAllTreatmentList(txtSearch.Text.Trim());
             gvShow.DataSource = AllData;
             gvShow.DataBind();
         }
@@ -64,7 +64,7 @@ namespace OrthoSquare.Master
                         lblMessage.Text = "Treatment Added Successfully";
                         lblMessage.ForeColor = System.Drawing.Color.Green;
                         txtAdd.Text = "";
-                      //  getAllTreatment();
+                        getAllTreatment();
                        // Response.Redirect("TreatmentMaster.aspx");
                         btSearch_Click(sender, e);
                     }

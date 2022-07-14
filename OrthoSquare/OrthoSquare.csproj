@@ -867,6 +867,7 @@
     <Content Include="Enquiry\NotConnectedEnquiryToPatient.aspx" />
     <Content Include="Enquiry\PendingFolloupReport.aspx" />
     <Content Include="Enquiry\PendingFollowupDetails.aspx" />
+    <Content Include="Enquiry\UploadLeads.aspx" />
     <Content Include="Enquiry\ViewEnquiry.aspx" />
     <Content Include="Enquiry\ViewFolloupDetials.aspx" />
     <Content Include="ErrorPage.aspx" />
@@ -1059,9 +1060,15 @@
     <Content Include="Master\UserAccess.aspx" />
     <Content Include="Master\VendorMaster.aspx" />
     <Content Include="Master\VendorType.aspx" />
+    <Content Include="Material\AssignMaterial.aspx" />
     <Content Include="Material\ClinicRequestStock.aspx" />
     <Content Include="Material\ClinicStock.aspx" />
+    <Content Include="Material\ClinicStockReport.aspx" />
     <Content Include="Material\HeadOfficeStock.aspx" />
+    <Content Include="Material\PurchaseOrder.aspx" />
+    <Content Include="Material\PurchaseOrderReceive.aspx" />
+    <Content Include="Material\ViewOrderHistory.aspx" />
+    <Content Include="Material\ViewRequestStock.aspx" />
     <Content Include="OrthoSquare1.Master" />
     <Content Include="assets\global\plugins\bootstrap-summernote\font\summernoted41d.eot" />
     <Content Include="assets\global\plugins\bootstrap-summernote\font\summernotef534.eot" />
@@ -1081,6 +1088,9 @@
     <Content Include="ReportIssue.aspx" />
     <Content Include="Report\AllClinicDetails.aspx" />
     <Content Include="Report\AllDoctorWiserevenuereport.aspx" />
+    <Content Include="Report\AreaManagerCollectionReport.aspx" />
+    <Content Include="Report\AreaManagerReport.aspx" />
+    <Content Include="Report\ClinicCollectionMedicinesReport.aspx" />
     <Content Include="Report\ClinicCollectionReport.aspx" />
     <Content Include="Report\ClinicwishExpenseReport.aspx" />
     <Content Include="Report\ContactMasterReport.aspx" />
@@ -1091,6 +1101,7 @@
     <Content Include="Report\ExpenseReport.aspx" />
     <Content Include="Report\FinanceReport.aspx" />
     <Content Include="Report\LebInoutReport.aspx" />
+    <Content Include="Report\LoginDetails.aspx" />
     <Content Include="Report\MaterialInoutReport.aspx" />
     <Content Include="Report\MaterialPurchased.aspx" />
     <Content Include="Report\MaterialStockHistory.aspx" />
@@ -1102,6 +1113,7 @@
     <Content Include="Report\TreatmentReport.aspx" />
     <Content Include="Report\UserLoginDetails.aspx" />
     <Content Include="Report\ViewClinicwishExpenseReport.aspx" />
+    <Content Include="SendMail.aspx" />
     <Content Include="Service1.svc" />
     <Content Include="UnderMaintenance.aspx" />
     <Content Include="WebForm1.aspx" />
@@ -2073,6 +2085,13 @@
     <Compile Include="Enquiry\PendingFollowupDetails.aspx.designer.cs">
       <DependentUpon>PendingFollowupDetails.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Enquiry\UploadLeads.aspx.cs">
+      <DependentUpon>UploadLeads.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Enquiry\UploadLeads.aspx.designer.cs">
+      <DependentUpon>UploadLeads.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Enquiry\ViewEnquiry.aspx.cs">
       <DependentUpon>ViewEnquiry.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2439,6 +2458,13 @@
     <Compile Include="Master\VendorType.aspx.designer.cs">
       <DependentUpon>VendorType.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Material\AssignMaterial.aspx.cs">
+      <DependentUpon>AssignMaterial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Material\AssignMaterial.aspx.designer.cs">
+      <DependentUpon>AssignMaterial.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Material\ClinicRequestStock.aspx.cs">
       <DependentUpon>ClinicRequestStock.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2453,12 +2479,47 @@
     <Compile Include="Material\ClinicStock.aspx.designer.cs">
       <DependentUpon>ClinicStock.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Material\ClinicStockReport.aspx.cs">
+      <DependentUpon>ClinicStockReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Material\ClinicStockReport.aspx.designer.cs">
+      <DependentUpon>ClinicStockReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Material\HeadOfficeStock.aspx.cs">
       <DependentUpon>HeadOfficeStock.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Material\HeadOfficeStock.aspx.designer.cs">
       <DependentUpon>HeadOfficeStock.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Material\PurchaseOrder.aspx.cs">
+      <DependentUpon>PurchaseOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Material\PurchaseOrder.aspx.designer.cs">
+      <DependentUpon>PurchaseOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Material\PurchaseOrderReceive.aspx.cs">
+      <DependentUpon>PurchaseOrderReceive.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Material\PurchaseOrderReceive.aspx.designer.cs">
+      <DependentUpon>PurchaseOrderReceive.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Material\ViewOrderHistory.aspx.cs">
+      <DependentUpon>ViewOrderHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Material\ViewOrderHistory.aspx.designer.cs">
+      <DependentUpon>ViewOrderHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Material\ViewRequestStock.aspx.cs">
+      <DependentUpon>ViewRequestStock.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Material\ViewRequestStock.aspx.designer.cs">
+      <DependentUpon>ViewRequestStock.aspx</DependentUpon>
     </Compile>
     <Compile Include="OrthoSquare.Master.cs">
       <DependentUpon>OrthoSquare.Master</DependentUpon>
@@ -2538,6 +2599,27 @@
     <Compile Include="Report\AllDoctorWiserevenuereport.aspx.designer.cs">
       <DependentUpon>AllDoctorWiserevenuereport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Report\AreaManagerCollectionReport.aspx.cs">
+      <DependentUpon>AreaManagerCollectionReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\AreaManagerCollectionReport.aspx.designer.cs">
+      <DependentUpon>AreaManagerCollectionReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\AreaManagerReport.aspx.cs">
+      <DependentUpon>AreaManagerReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\AreaManagerReport.aspx.designer.cs">
+      <DependentUpon>AreaManagerReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ClinicCollectionMedicinesReport.aspx.cs">
+      <DependentUpon>ClinicCollectionMedicinesReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ClinicCollectionMedicinesReport.aspx.designer.cs">
+      <DependentUpon>ClinicCollectionMedicinesReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Report\ClinicCollectionReport.aspx.cs">
       <DependentUpon>ClinicCollectionReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2607,6 +2689,13 @@
     </Compile>
     <Compile Include="Report\LebInoutReport.aspx.designer.cs">
       <DependentUpon>LebInoutReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\LoginDetails.aspx.cs">
+      <DependentUpon>LoginDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\LoginDetails.aspx.designer.cs">
+      <DependentUpon>LoginDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Report\MaterialInoutReport.aspx.cs">
       <DependentUpon>MaterialInoutReport.aspx</DependentUpon>
@@ -2685,6 +2774,13 @@
     <Compile Include="Report\ViewClinicwishExpenseReport.aspx.designer.cs">
       <DependentUpon>ViewClinicwishExpenseReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SendMail.aspx.cs">
+      <DependentUpon>SendMail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SendMail.aspx.designer.cs">
+      <DependentUpon>SendMail.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Service1.svc.cs">
       <DependentUpon>Service1.svc</DependentUpon>
     </Compile>
@@ -2743,6 +2839,7 @@
     <Folder Include="Files\" />
     <Folder Include="temp\" />
     <Folder Include="TreatmentDoc\" />
+    <Folder Include="UploadFile\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -380,9 +380,9 @@
                                                 <asp:Label ID="lblPaidAmount" runat="server" Text='<%# Convert.ToDecimal(Eval("PaidAmount")).ToString("#,##0.00") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText=" Balance Amount (INR)" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText=" Balance Amount (INR)" Visible="false" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="lblPendingAmount" runat="server" Text='<%# Convert.ToDecimal(Eval("Pending")).ToString("#,##0.00") %>'></asp:Label>
+                                                <asp:Label ID="lblPendingAmount" runat="server" Text='<%# Convert.ToDecimal(Eval("PendingAmount")).ToString("#,##0.00") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

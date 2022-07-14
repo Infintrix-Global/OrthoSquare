@@ -110,6 +110,25 @@ namespace OrthoSquare.BAL_Classes
 
         }
 
+        public DataTable GetEnqurysIsvelidNew(string Mno)
+        {
+            try
+            {
+                string strQuery = "Select E.FirstName+' '+E.LastName [PatienntName],Cd.ClinicName From Enquiry E join tbl_ClinicDetails Cd on Cd.ClinicID=E.ClinicID  where  E.Mobile ='" + Mno + "'";
+                return objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+        }
+
+
+
+
+
         public DataTable GetAllEnquiry(int Cid)
         {
             DataTable dt = new DataTable();

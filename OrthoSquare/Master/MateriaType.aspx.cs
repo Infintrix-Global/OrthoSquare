@@ -88,7 +88,7 @@ namespace OrthoSquare.Master
                 {
 
                     string CloseWindow;
-                    CloseWindow = "alert('Failed to Add  Materila Type')";
+                    CloseWindow = "alert('Failed to Add  Inventory Type')";
                     ScriptManager.RegisterStartupScript(UpdatePanel1, UpdatePanel1.GetType(), "CloseWindow", CloseWindow, true);
 
                 }
@@ -96,7 +96,7 @@ namespace OrthoSquare.Master
                 {
 
                     string CloseWindow;
-                    CloseWindow = "alert('Materila Type Added Successfully')";
+                    CloseWindow = "alert('Inventory Type Added Successfully')";
                     ScriptManager.RegisterStartupScript(UpdatePanel1, UpdatePanel1.GetType(), "CloseWindow", CloseWindow, true);
 
                     txtAdd.Text = "";

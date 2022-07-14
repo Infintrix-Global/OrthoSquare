@@ -393,6 +393,15 @@ namespace OrthoSquare.Invoice
         protected global::System.Web.UI.WebControls.TextBox txtPendingAmount;
 
         /// <summary>
+        /// lblPendingAmt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPendingAmt;
+
+        /// <summary>
         /// PaymentMode control.
         /// </summary>
         /// <remarks>
@@ -409,6 +418,15 @@ namespace OrthoSquare.Invoice
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
 
         /// <summary>
         /// Panel1 control.
@@ -456,6 +474,15 @@ namespace OrthoSquare.Invoice
         protected global::System.Web.UI.WebControls.TextBox txtCheckNO;
 
         /// <summary>
+        /// RequiredFieldValidator5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
+
+        /// <summary>
         /// txtCheckDate control.
         /// </summary>
         /// <remarks>
@@ -490,6 +517,15 @@ namespace OrthoSquare.Invoice
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCardNo;
+
+        /// <summary>
+        /// RequiredFieldValidatorCardNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorCardNo;
 
         /// <summary>
         /// btAdd control.

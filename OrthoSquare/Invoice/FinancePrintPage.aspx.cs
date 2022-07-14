@@ -97,20 +97,14 @@ namespace OrthoSquare.Invoice
                         DataTable dtpay = objinv.GetInvoiceDetailsPayMentFinance(InvCode, Fid);
                         if (dtpay != null && dtpay.Rows.Count > 0)
                         {
-                            lblTotalFooter.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalCostAmount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
-                            lblTaxAmount.Text = Convert.ToDecimal(dtpay.Rows[0]["TotalTax"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
-                            lblNetAmount.Text = Convert.ToDecimal(dtpay.Rows[0]["GrandTotal"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+                   
+                            lblNetAmount.Text = Convert.ToDecimal(dtpay.Rows[0]["RevenueAmount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+
+                            lblDownpaymentAmount.Text = Convert.ToDecimal(dtFid.Rows[0]["Downpayment"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
+                          //  lblBalanceAmont.Text = Convert.ToDecimal(dtpay.Rows[0]["TotalDiscount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
 
 
-                            lblpaidAmount.Text = Convert.ToDecimal(dtpay.Rows[0]["PaidAmount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
-                            lblpendingAmount.Text = Convert.ToDecimal(dtpay.Rows[0]["PendingPayment"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
-
-
-                            lblTotalCoust1.Text = Convert.ToDecimal(dtFid.Rows[0]["TotalCost"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
-                            lbldiscount1.Text = Convert.ToDecimal(dtpay.Rows[0]["TotalDiscount"]).ToString("N", CultureInfo.GetCultureInfo("en-IN"));
-
-
-                            lblWordsAmount.Text = "Rupees " + NumberToWords_Large(Convert.ToInt32(dtpay.Rows[0]["PaidAmount"])) + " only";
+                            lblWordsAmount.Text = "Rupees " + NumberToWords_Large(Convert.ToInt32(dtpay.Rows[0]["RevenueAmount"])) + " only";
                         }
 
 

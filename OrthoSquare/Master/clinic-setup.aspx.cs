@@ -29,16 +29,12 @@ namespace OrthoSquare.Branch
                 getAllClinic();
                 BindLocation();
               //  BindCountry();
-
-
                 BindCountry();
                 ddlCountry.SelectedValue = "1";
                 BindState();
                 ddlState.SelectedValue = "2";
                 BindCity();
                 ddlCity.SelectedValue = "34";
-
-
 
                 txtDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
             }

@@ -60,7 +60,7 @@
                                 </div>
                             </div>
 
-                              <div class="col-md-2">
+                            <div class="col-md-2">
                                 <div class="form-group">
 
 
@@ -97,7 +97,7 @@
                         </div>
 
 
-                        
+
                     </div>
                 </div>
             </div>
@@ -128,12 +128,12 @@
                                 ShowHeaderWhenEmpty="true">
                                 <Columns>
 
-                                    <asp:TemplateField HeaderText="Sr. No.">
+                                  <%--  <asp:TemplateField HeaderText="Sr. No.">
                                         <ItemTemplate>
                                             <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
 
                                         </ItemTemplate>
-                                    </asp:TemplateField>
+                                    </asp:TemplateField>--%>
                                     <asp:TemplateField HeaderText="Name">
                                         <ItemTemplate>
                                             <asp:Label ID="lblpaEFirstName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
@@ -183,7 +183,7 @@
                     <div class="portlet-title">
                         <div class="caption ">
                             <span class="caption-subject font-dark bold uppercase">Followup</span>
-                               <span class="badge badge-info badge-roundless">
+                            <span class="badge badge-info badge-roundless">
                                 <asp:Label ID="lblFollowupCount" runat="server" Text="0"></asp:Label>
                             </span>
                         </div>
@@ -200,12 +200,12 @@
                             ShowHeaderWhenEmpty="true" PageSize="10">
                             <Columns>
 
-                                <asp:TemplateField HeaderText="Sr. No.">
+                               <%-- <asp:TemplateField HeaderText="Sr. No.">
                                     <ItemTemplate>
                                         <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
 
                                     </ItemTemplate>
-                                </asp:TemplateField>
+                                </asp:TemplateField>--%>
                                 <asp:TemplateField HeaderText="Name">
                                     <ItemTemplate>
                                         <asp:Label ID="lblpaEFirstName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
@@ -326,7 +326,7 @@
                     <div class="portlet-title">
                         <div class="caption ">
                             <span class="caption-subject font-dark bold uppercase">Consultation</span>
-                               <span class="badge badge-info badge-roundless">
+                            <span class="badge badge-info badge-roundless">
                                 <asp:Label ID="lblConsultationCount" runat="server" Text="0"></asp:Label>
                             </span>
                         </div>
@@ -342,12 +342,12 @@
                             GridLines="None" OnPageIndexChanging="gvShowConsultation_PageIndexChanging"
                             ShowHeaderWhenEmpty="true" PageSize="10">
                             <Columns>
-                                <asp:TemplateField HeaderText="Sr. No.">
+                               <%-- <asp:TemplateField HeaderText="Sr. No.">
                                     <ItemTemplate>
                                         <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
 
                                     </ItemTemplate>
-                                </asp:TemplateField>
+                                </asp:TemplateField>--%>
 
                                 <asp:TemplateField HeaderText="Patient No">
                                     <ItemTemplate>
@@ -370,13 +370,174 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                 <asp:TemplateField HeaderText="Date">
+                                <asp:TemplateField HeaderText="Date">
                                     <ItemTemplate>
                                         <asp:Label ID="lblDateC" runat="server" Text='<%# Eval("TDate") %>'></asp:Label>
 
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                
+
+
+                            </Columns>
+                            <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
+                            <PagerSettings Mode="NumericFirstLast" />
+                            <EmptyDataTemplate>
+                                No Record Available
+                            </EmptyDataTemplate>
+                        </asp:GridView>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-lg-6 col-xs-12 col-sm-12">
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span class="caption-subject bold uppercase font-dark">Medicines</span>
+                            <span class="badge badge-info badge-roundless">
+                                <asp:Label ID="lblMedicinesTotal" runat="server" Text="0"></asp:Label>
+                            </span>
+                        </div>
+                        <div class="actions">
+                        </div>
+
+                    </div>
+
+                    <div class="portlet-body">
+                        <div class="table-scrollable table-scrollable-borderless">
+                            <asp:GridView ID="GridViewMedicines" runat="server" AllowPaging="true" AutoGenerateColumns="false" PageSize="10"
+                                class="table table-hover table-light" OnPageIndexChanging="GridViewMedicines_PageIndexChanging"
+                                GridLines="None"
+                                ShowHeaderWhenEmpty="true">
+                                <Columns>
+
+
+                                     <asp:TemplateField HeaderText="Patient Code">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblPatientCode" runat="server" Text='<%# Eval("PatientCode") %>'></asp:Label>
+
+
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Patient Name">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblAExpClinicName" runat="server" Text='<%# Eval("PatientName") %>'></asp:Label>
+
+
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+
+                                    <asp:TemplateField HeaderText="Paid Amount">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblGrandTotal" runat="server" Text='<%# Eval("GrandTotal") %>'></asp:Label>
+
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Date">
+                                        <ItemTemplate>
+
+                                            <asp:Label ID="lblmCreateDate" runat="server" Text='<%# Eval("CreateDate","{0:dd/MMM/yyyy}") %>'></asp:Label>
+
+
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+
+
+                                </Columns>
+                                <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
+                                <PagerSettings Mode="NumericFirstLast" />
+                                <EmptyDataTemplate>
+                                    No Record Available
+                                </EmptyDataTemplate>
+                            </asp:GridView>
+
+                        </div>
+
+
+                        <div class="actions text-center">
+                            <div class="btn-group btn-group-devided">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 col-xs-12 col-sm-12">
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption ">
+                            <span class="caption-subject font-dark bold uppercase">Collection</span>
+                            <span class="badge badge-info badge-roundless">
+                                <asp:Label ID="lblCollectionCount" runat="server" Text="0"></asp:Label>
+                            </span>
+                         
+                        </div>
+                        <div class="actions">
+                            <div class="btn-group">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+
+                        <asp:GridView ID="GridViewInvoiceMaster" runat="server" AllowPaging="true" AutoGenerateColumns="false"
+                            class="table table-bordered table-hover" DataKeyNames="ClinicID"
+                            GridLines="None" OnPageIndexChanging="GridViewInvoiceMaster_PageIndexChanging"
+                            ShowHeaderWhenEmpty="true" PageSize="10">
+                            <Columns>
+                             <%--   <asp:TemplateField HeaderText="Sr. No.">
+                                    <ItemTemplate>
+                                        <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
+
+                                    </ItemTemplate>
+                                </asp:TemplateField>--%>
+
+                                <asp:TemplateField HeaderText="Patient Code">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblPatientCode" runat="server" Text='<%# Eval("PatientCode") %>'></asp:Label>
+
+
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Name">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblinvPName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Clinic Name">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblinvClinicName" runat="server" Text='<%# Eval("ClinicName") %>'></asp:Label>
+
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Paid Amount">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblPaidAmount" runat="server" Text='<%# Eval("PaidAmount") %>'></asp:Label>
+
+
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Pay Date">
+                                    <ItemTemplate>
+
+                                        <asp:Label ID="lblPayDate" runat="server" Text='<%# Eval("PayDate","{0:dd/MMM/yyyy}") %>'></asp:Label>
+
+
+                                    </ItemTemplate>
+                                </asp:TemplateField>
 
                             </Columns>
                             <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
@@ -399,7 +560,7 @@
                     <div class="portlet-title">
                         <div class="caption">
                             <span class="caption-subject bold uppercase font-dark">Expense</span>
-                             <span class="badge badge-info badge-roundless">
+                            <span class="badge badge-info badge-roundless">
                                 <asp:Label ID="lblExpenseTotal" runat="server" Text="0"></asp:Label>
                             </span>
                         </div>
@@ -475,84 +636,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-xs-12 col-sm-12">
-                <div class="portlet light ">
-                    <div class="portlet-title">
-                        <div class="caption ">
-                            <span class="caption-subject font-dark bold uppercase">Collection</span>
-                             <span class="badge badge-info badge-roundless">
-                                <asp:Label ID="lblCollectionCount" runat="server" Text="0"></asp:Label>
-                            </span>
-                            <span class="badge badge-info badge-roundless">
-                                <asp:Label ID="lblMedicinesAmount" runat="server" Text="0"></asp:Label>
-                            </span>
-                             <span class="badge badge-info badge-roundless">
-                                <asp:Label ID="lblCMtotal" runat="server" Text="0"></asp:Label>
-                            </span>
-                        </div>
-                        <div class="actions">
-                            <div class="btn-group">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portlet-body">
-
-                        <asp:GridView ID="GridViewInvoiceMaster" runat="server" AllowPaging="true" AutoGenerateColumns="false"
-                            class="table table-bordered table-hover" DataKeyNames="ClinicID"
-                            GridLines="None" OnPageIndexChanging="GridViewInvoiceMaster_PageIndexChanging"
-                            ShowHeaderWhenEmpty="true" PageSize="10">
-                            <Columns>
-                                <asp:TemplateField HeaderText="Sr. No.">
-                                    <ItemTemplate>
-                                        <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
-
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
-
-
-                                <asp:TemplateField HeaderText="Name">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblinvPName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
-                                <asp:TemplateField HeaderText="Clinic Name">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblinvClinicName" runat="server" Text='<%# Eval("ClinicName") %>'></asp:Label>
-
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Paid Amount">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblPaidAmount" runat="server" Text='<%# Eval("PaidAmount") %>'></asp:Label>
-
-
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
-                                <asp:TemplateField HeaderText="Pay Date">
-                                    <ItemTemplate>
-
-                                        <asp:Label ID="lblPayDate" runat="server" Text='<%# Eval("PayDate","{0:dd/MMM/yyyy}") %>'></asp:Label>
-
-
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
-                            </Columns>
-                            <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
-                            <PagerSettings Mode="NumericFirstLast" />
-                            <EmptyDataTemplate>
-                                No Record Available
-                            </EmptyDataTemplate>
-                        </asp:GridView>
-
-
-                    </div>
-                </div>
-            </div>
         </div>
-
     </div>
 </asp:Content>

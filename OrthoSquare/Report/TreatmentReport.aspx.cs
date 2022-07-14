@@ -1,12 +1,20 @@
-﻿using OrthoSquare.BAL_Classes;
-using OrthoSquare.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using OrthoSquare.BAL_Classes;
+using System.Data;
+using OrthoSquare.Utility;
+using System.IO;
+using PreconFinal.Utility;
+using System.Data.OleDb;
+using System.Globalization;
+using System.Configuration;
+using System.Data.SqlClient;
+using ClosedXML.Excel;
+using System.Text;
 
 namespace OrthoSquare.Report
 {
@@ -139,14 +147,14 @@ namespace OrthoSquare.Report
             }
 
             DataTable DtSum = new DataTable();
-            DtSum = objExp.GetAllTreatmentReport(txtSFromFollowDate.Text, txtSToFollowDate.Text, Convert.ToInt32(ddlClinic.SelectedValue), 4, 0);
+            DtSum = objExp.GetAllTreatmentReport(txtSFromFollowDate.Text, txtSToFollowDate.Text, Convert.ToInt32(ddlClinic.SelectedValue), 4, Convert.ToInt32(ddlTreatmentGroup.SelectedValue));
             if (DtSum != null && DtSum.Rows.Count > 0)
             {
                 lblPaidAmount.Text = DtSum.Rows[0]["PaidAmount"].ToString();       
             }
             else
             {
-                lblPaidAmount.Text = "";
+                lblPaidAmount.Text = "0";
             }
 
         }
@@ -179,9 +187,7 @@ namespace OrthoSquare.Report
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                Label lblGrandTotal = (Label)e.Row.FindControl("lblPaidamount");
-
-               
+                
             }
         }
 
@@ -190,6 +196,44 @@ namespace OrthoSquare.Report
             Total = 0;
             getAllCollection();
         }
+
+
+        public override void VerifyRenderingInServerForm(Control control)
+        {
+            /* Verifies that the control is rendered */
+        }
+
+        protected void btExcel_Click(object sender, ImageClickEventArgs e)
+        {
+
+           
+            AllData = objExp.GetAllTreatmentReport(txtSFromFollowDate.Text, txtSToFollowDate.Text, Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(RadioButtonListFinance.SelectedValue), Convert.ToInt32(ddlTreatmentGroup.SelectedValue));
+
+
+            HttpResponse response = HttpContext.Current.Response;
+            response.Clear();
+            response.ClearHeaders();
+            response.ClearContent();
+            response.Charset = Encoding.UTF8.WebName;
+            response.AddHeader("content-disposition", "attachment; filename=" + DateTime.Now.ToString("yyyy-MM-dd") + ".xls");
+            response.AddHeader("Content-Type", "application/Excel");
+            response.ContentType = "application/vnd.xlsx";
+            using (StringWriter sw = new StringWriter())
+            {
+                using (HtmlTextWriter htw = new HtmlTextWriter(sw))
+                {
+                    GridView gridView = new GridView();
+                    gridView.DataSource = AllData;
+                    gridView.DataBind();
+                    gridView.RenderControl(htw);
+                    response.Write(sw.ToString());
+                    gridView.Dispose();
+                    AllData.Dispose();
+                    response.End();
+                }
+            }
+        }
+
     }
 
 

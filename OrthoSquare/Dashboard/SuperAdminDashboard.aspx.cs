@@ -60,10 +60,10 @@ namespace OrthoSquare.Dashboard
                 CLINICSTotal();
                 DAILYAPPONTMENTSTOTAL();
                 CLINICSTotal();
-                bindState();
+               
                 NewPatinetCount();
                 VisitsCount();
-                biendClinicData();
+               
                 AdminCount();
             }
         }
@@ -77,9 +77,68 @@ namespace OrthoSquare.Dashboard
             DataTable dtEM = ds.Tables[1];
             DataTable dtED = ds.Tables[2];
 
+            DataTable dtFY = ds.Tables[3];
+            DataTable dtFM = ds.Tables[4];
+            DataTable dtFD = ds.Tables[5];
+
+            DataTable dtCEY = ds.Tables[6];
+            DataTable dtCEM = ds.Tables[7];
+            DataTable dtCED = ds.Tables[8];
+
+            DataTable dtNPY = ds.Tables[9];
+            DataTable dtNPM = ds.Tables[10];
+            DataTable dtNPD = ds.Tables[11];
+
+            DataTable dtVPY = ds.Tables[12];
+            DataTable dtVPM = ds.Tables[13];
+            DataTable dtVPD = ds.Tables[14];
+
+
+            DataTable dtTCY = ds.Tables[15];
+            DataTable dtTCM = ds.Tables[16];
+            DataTable dtTCD = ds.Tables[17];
+
+            DataTable dtPMY = ds.Tables[18];
+            DataTable dtPMM = ds.Tables[19];
+            DataTable dtPMD = ds.Tables[20];
+
+            DataTable dtPEY = ds.Tables[21];
+            DataTable dtPEM = ds.Tables[22];
+            DataTable dtPED = ds.Tables[23];
+
             lblEnqYear.Text = dtEY.Rows[0]["EnquiryYear"].ToString();
             lblEnqMonth.Text = dtEM.Rows[0]["EnquiryMonth"].ToString();
             lbllblEnqDay.Text = dtED.Rows[0]["EnquiryDay"].ToString();
+
+            lblFollouwpsYear.Text = dtFY.Rows[0]["FolllowuYear"].ToString();
+            lblFollouwpsMonth.Text = dtFM.Rows[0]["FolllowuMonth"].ToString();
+            lblFollouwpsDay.Text = dtFD.Rows[0]["FolllowuDay"].ToString();
+
+            lblConversionYear.Text = dtCEY.Rows[0]["ConversionYear"].ToString();
+            lblConversionMonth.Text = dtCEM.Rows[0]["ConversionMonth"].ToString();
+            lblConversionDay.Text = dtCED.Rows[0]["ConversionDay"].ToString();
+
+            lblNewYear.Text = dtNPY.Rows[0]["NewYear"].ToString();
+            lblNewMonth.Text = dtNPM.Rows[0]["NewMonth"].ToString();
+            lblNewDay.Text = dtNPD.Rows[0]["NewDay"].ToString();
+
+            lblVisitsYear.Text = dtVPY.Rows[0]["PatientYear"].ToString();
+            lblVisitsMonth.Text = dtVPM.Rows[0]["PatientMonth"].ToString();
+            lblVisitsDay.Text = dtVPD.Rows[0]["PatientDay"].ToString();
+
+
+            lblTreatCollYear.Text = Convert.ToDecimal(dtTCY.Rows[0]["TotalAmountYear"]).ToString("#,##0.00");
+            lblTreatCollMonth.Text = Convert.ToDecimal(dtTCM.Rows[0]["TotalAmountMonth"]).ToString("#,##0.00");
+            lblTreatCollDay.Text = Convert.ToDecimal(dtTCD.Rows[0]["TotalAmountDay"]).ToString("#,##0.00");
+
+            lblMediCollYear.Text = Convert.ToDecimal(dtPMY.Rows[0]["GrandTotalYear"]).ToString("#,##0.00");
+            lblMediCollMonth.Text = Convert.ToDecimal(dtPMM.Rows[0]["GrandTotalMonth"]).ToString("#,##0.00");
+            lblMediCollDay.Text = Convert.ToDecimal(dtPMD.Rows[0]["GrandTotalDay"]).ToString("#,##0.00");
+
+
+            lblExpenseYear.Text = Convert.ToDecimal(dtPEY.Rows[0]["AmountYear"]).ToString("#,##0.00");
+            lblExpenseMonth.Text = Convert.ToDecimal(dtPEM.Rows[0]["AmountMonth"]).ToString("#,##0.00");
+            lblExpenseDay.Text = Convert.ToDecimal(dtPED.Rows[0]["AmountDay"]).ToString("#,##0.00");
 
         }
 
@@ -87,7 +146,7 @@ namespace OrthoSquare.Dashboard
 
 
 
-      
+
 
         public void DocterNo()
         {
@@ -171,7 +230,7 @@ namespace OrthoSquare.Dashboard
         {
 
             int Eno = objcommon.GetEnquiryCountNo();
-      //      lblEnq.Text = Eno.ToString();
+            lblEnq.Text = Eno.ToString();
         }
 
         public void PatientNo()
@@ -225,23 +284,7 @@ namespace OrthoSquare.Dashboard
         }
 
 
-        public void biendClinicData()
-        {
-
-            DataTable dt = objcommon.GetAllClinicDetaisNew1(Convert.ToInt32(ddlstate.SelectedValue));
-            gvShow.DataSource = dt;
-            gvShow.DataBind();
-
-
-        }
-
-        protected void gvShow_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gvShow.PageIndex = e.NewPageIndex;
-
-            biendClinicData();
-        }
-
+     
         public void bindClinic()
         {
             ddlClinic.DataSource = objc.GetAllClinicDetais();
@@ -270,21 +313,7 @@ namespace OrthoSquare.Dashboard
             BindChart();
         }
 
-        public void bindState()
-        {
-            DataTable dt = objcommon.GetState();
-            ddlstate.DataSource = dt;
-            ddlstate.DataTextField = "StateName";
-            ddlstate.DataValueField = "StateID";
-            ddlstate.DataBind();
-            ddlstate.Items.Insert(0, new ListItem("--- Select ---", "0"));
-
-        }
-        protected void State_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            biendClinicData();
-
-        }
+        
 
 
         public void bindYear()
@@ -517,7 +546,7 @@ namespace OrthoSquare.Dashboard
         {
             DateTime today = DateTime.Now;
             DateTime MonthsofYear = DateTime.Today.AddDays(-15);
-            string query = " Select  M.MonthsName,count(MONTH(E.EnquiryDate)) Enq from  MonthsMaster M  left  join Enquiry E on M.MonthsName = MONTH(E.EnquiryDate)  Group by MonthsName";
+            string query = " Select  M.MonthsName,count(MONTH(E.EnquiryDate)) Enq from  MonthsMaster M  left  join Enquiry E on M.MonthsName = MONTH(E.EnquiryDate) where  YEAR(E.EnquiryDate) ='"+ monthsid + "'  Group by MonthsName Order by  M.MonthsName ";
 
             string constr = ConfigurationManager.ConnectionStrings["OrthoSquareDBConnectionString"].ConnectionString;
             List<object> chartData = new List<object>();
@@ -546,6 +575,33 @@ namespace OrthoSquare.Dashboard
                     return chartData;
                 }
             }
+        }
+
+
+
+        [WebMethod]
+        public static List<Data> GetDataDonut()
+        {
+            SqlConnection conn = new SqlConnection(@"Data Source=92.204.4.195; Initial Catalog=Orthosquare; User ID=ortho_admin;Password=admin@@123");
+
+            DataSet ds = new DataSet();
+            DataTable dt = new DataTable();
+            conn.Open();
+            string cmdstr = "select gender,count(*) value from Patientmaster where IsActive=1 and gender is not NULL  group by gender";
+            SqlCommand cmd = new SqlCommand(cmdstr, conn);
+            SqlDataAdapter adp = new SqlDataAdapter(cmd);
+            adp.Fill(ds);
+            dt = ds.Tables[0];
+            List<Data> dataList = new List<Data>();
+            string cat = "";
+            int val = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                cat = dr[0].ToString();
+                val = Convert.ToInt32(dr[1]);
+                dataList.Add(new Data(cat, val));
+            }
+            return dataList;
         }
 
         //--------------------------------------------------------- Bar Chart----------
@@ -642,32 +698,32 @@ namespace OrthoSquare.Dashboard
 
         }
 
-        //---------------------------------------------------Pai Chart -------------------------
+       // ---------------------------------------------------Pai Chart -------------------------
 
-        //     [WebMethod]
-        //public static List<Data> GetDatapai(string monthsid)
-        //{
-        //    SqlConnection conn = new SqlConnection(@"Data Source=92.204.4.195; Initial Catalog=Orthosquare; User ID=ortho_admin;Password=admin@@123");
+             [WebMethod]
+        public static List<Data> GetDatapai(string monthsid)
+        {
+            SqlConnection conn = new SqlConnection(@"Data Source=92.204.4.195; Initial Catalog=Orthosquare; User ID=ortho_admin;Password=admin@@123");
 
-        //         DataSet ds = new DataSet();
-        //    DataTable dt = new DataTable();
-        //    conn.Open();
-        //    string cmdstr = "Select ESM.Sourcename,count(E.Sourceid) as Source1 from Enquiry E join EnquirySourceMaster ESM on  ESM.Sourceid=E.Sourceid where ESM.Sourceid in (10,17,21,18,12) and Year(EnquiryDate)="+ monthsid + " group by ESM.Sourcename ";
-        //    SqlCommand cmd = new SqlCommand(cmdstr, conn);
-        //    SqlDataAdapter adp = new SqlDataAdapter(cmd);
-        //    adp.Fill(ds);
-        //    dt = ds.Tables[0];
-        //    List<Data> dataList = new List<Data>();
-        //    string cat="";
-        //    int val=0;
-        //    foreach (DataRow dr in dt.Rows)
-        //    {
-        //        cat=dr[0].ToString();
-        //        val=Convert.ToInt32( dr[1]);
-        //        dataList.Add(new Data(cat, val));
-        //    }
-        //    return dataList;
-        //}
+            DataSet ds = new DataSet();
+            DataTable dt = new DataTable();
+            conn.Open();
+            string cmdstr = "Select ESM.Sourcename,count(E.Sourceid) as Source1 from Enquiry E join EnquirySourceMaster ESM on  ESM.Sourceid=E.Sourceid where ESM.Sourceid in (10,17,21,18,12) and Year(EnquiryDate)=" + monthsid + " group by ESM.Sourcename ";
+            SqlCommand cmd = new SqlCommand(cmdstr, conn);
+            SqlDataAdapter adp = new SqlDataAdapter(cmd);
+            adp.Fill(ds);
+            dt = ds.Tables[0];
+            List<Data> dataList = new List<Data>();
+            string cat = "";
+            int val = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                cat = dr[0].ToString();
+                val = Convert.ToInt32(dr[1]);
+                dataList.Add(new Data(cat, val));
+            }
+            return dataList;
+        }
 
         public class Data
         {

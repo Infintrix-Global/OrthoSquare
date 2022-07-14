@@ -198,7 +198,7 @@ namespace OrthoSquare.Report
         }
         protected void txtPatientName_TextChanged(object sender, EventArgs e)
         {
-            DataTable dt = objp.PatientSelectDoctorID(txtPatientName.Text);
+            DataTable dt = objp.PatientSelect(txtPatientName.Text);
             PatientId = Convert.ToInt32(dt.Rows[0]["PatientId"]);
             getAllCollection();
 
@@ -221,20 +221,20 @@ namespace OrthoSquare.Report
                     int Cid = Convert.ToInt32(HttpContext.Current.Session["Cid"]);
                     if (RoleId == 1)
                     {
-                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1 ";
-                        cmd.CommandText += " and  P.FristName +' ('+P.Mobile +')' like '%" + prefixText + "%' and P.ClinicID ='" + ClinicId + "'";
+                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')+'  ('+P.PatientCode +')'+  +'  ('+P.Mobile +')' as as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1 ";
+                        cmd.CommandText += " and  P.FristName+' '+ isnull(p.LastName,'')+'  ('+P.PatientCode +')'+  +'  ('+P.Mobile +')'  like '%" + prefixText + "%' and P.ClinicID ='" + ClinicId + "'";
                         cmd.CommandText += "order by patientid DESC ";
                     }
                     else if (RoleId == 3)
                     {
 
-                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1 and P.ClinicID ='" + Cid + "' and  P.FristName +' ('+P.Mobile +')'  like '%" + prefixText + "%'";
+                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')+'  ('+P.PatientCode +')'+  +'  ('+P.Mobile +')'  as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1 and P.ClinicID ='" + Cid + "' and  P.FristName+' '+ isnull(p.LastName,'')+'  ('+P.PatientCode +')'+  +'  ('+P.Mobile +')' a  like '%" + prefixText + "%'";
 
 
                     }
                     else
                     {
-                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1  and  P.FristName +' ('+P.Mobile +')' like '%" + prefixText + "%'";
+                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')+'  ('+P.PatientCode +')'+  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1  and  P.FristName+' '+ isnull(p.LastName,'')+'  ('+P.PatientCode +')'+  +'  ('+P.Mobile +')'  like '%" + prefixText + "%'";
 
 
                     }

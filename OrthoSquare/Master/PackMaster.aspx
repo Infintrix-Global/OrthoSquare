@@ -16,7 +16,7 @@
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <span>Pack</span>
+                    <span>Packaging Type</span>
                 </li>
             </ul>
 
@@ -33,7 +33,7 @@
                     <div class="portlet-title">
                         <div class="caption font-red-sunglo">
                             <i class="icon-settings font-red-sunglo"></i>
-                            <span class="caption-subject bold uppercase">Pack</span>
+                            <span class="caption-subject bold uppercase">Packaging Type</span>
                         </div>
                        <%-- <div class="actions">
                             <div class="btn-group">
@@ -70,14 +70,14 @@
                                 <div class="form-body">
 
                                     <div class="form-group">
-                                        <label>Pack Name</label>
+                                        <label>Packaging Type Name</label>
                                         <asp:TextBox ID="txtAdd" class="form-control"
                                             runat="server"></asp:TextBox>
 
 
                                           <span class="help-block">
                                          <asp:RequiredFieldValidator ID="RequiredtxtAdd" runat="server" ControlToValidate="txtAdd"
-                                                    SetFocusOnError="true" ErrorMessage="Please Enter Pack Name" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                    SetFocusOnError="true" ErrorMessage="Please Enter Packaging Type Name" ForeColor="Red"></asp:RequiredFieldValidator>
                                             </span>
                                     </div>
 
@@ -149,7 +149,7 @@
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <span>Pack</span>
+                    <span>Packaging Type</span>
                 </li>
             </ul>
 
@@ -163,7 +163,7 @@
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="icon-settings font-red"></i>
-                            <span class="caption-subject font-red sbold uppercase">Pack</span>
+                            <span class="caption-subject font-red sbold uppercase">Packaging Type</span>
                         </div>
                         
                     </div>
@@ -211,7 +211,7 @@
                                                 <asp:Label ID="lblID" runat="server" Text='<%# Eval("PackId") %>' Visible="false"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField ItemStyle-Width="60%" HeaderText="Pack Name">
+                                        <asp:TemplateField ItemStyle-Width="60%" HeaderText="Packaging Type Name">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblName" runat="server" Text='<%# Eval("PackName") %>'></asp:Label>
                                             </ItemTemplate>

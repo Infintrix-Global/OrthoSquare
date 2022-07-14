@@ -59,11 +59,15 @@ namespace OrthoSquare.BAL_Classes
         public DataTable GetAllVendor(int Cid,int Vtype)
         {
             
-                strQuery = "Select * from VendorMaster V Join VendorTypeMaster VT on VT.VendorTypeId =V.VendorTypeId Join tbl_ClinicDetails CD on CD.ClinicID =v.ClinicID  where V.IsActive =1";
+                strQuery = "Select * from VendorMaster V Join VendorTypeMaster VT on VT.VendorTypeId =V.VendorTypeId left Join tbl_ClinicDetails CD on CD.ClinicID =v.ClinicID  where V.IsActive =1";
                 if (Cid > 0)
                     strQuery += " and V.ClinicID=" + Cid + "";
                 if (Vtype > 0)
                     strQuery += " and V.VendorTypeId=" + Vtype + "";
+            strQuery += "  order by V.VendorID DESC";
+
+
+
                 return objGeneral.GetDatasetByCommand(strQuery);
            
         }
@@ -86,7 +90,6 @@ namespace OrthoSquare.BAL_Classes
 
                 objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", "");
                 objGeneral.AddParameterWithValueToSQLCommand("@VendorTypeId", "");
-
 
                 objGeneral.AddParameterWithValueToSQLCommand("@VendorID ", vid);
                 objGeneral.AddParameterWithValueToSQLCommand("@mode", 5);

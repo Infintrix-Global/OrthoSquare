@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -30,6 +32,18 @@ namespace OrthoSquare.Report
                 txtSFromFollowDate.Text = Convert.ToDateTime(System.DateTime.Now).AddDays(-15).ToString("dd-MM-yyyy");
                 txtSToFollowDate.Text = System.DateTime.Now.ToString("dd-MM-yyyy");
 
+                if (SessionUtilities.RoleID == 3 || SessionUtilities.RoleID == 1)
+                {
+
+                    bindDoctorMaster(SessionUtilities.Empid, SessionUtilities.RoleID);
+
+                }
+                else
+                {
+
+                    bindDoctorMaster(0, SessionUtilities.RoleID);
+                }
+
 
                 if (SessionUtilities.RoleID == 1)
                 {
@@ -51,6 +65,28 @@ namespace OrthoSquare.Report
                 }
             }
         }
+
+        public void bindDoctorMaster(int did, int Rolid)
+        {
+            //  ddl_DocterDetils.DataSource = objcommon.DoctersMasterNew(did, Rolid);
+
+            ////  ddl_DocterDetils.DataSource = objcommon.DoctersMasterNew(did, Rolid);
+
+            //ddl_DocterDetils.DataValueField = "DoctorID";
+            //ddl_DocterDetils.DataTextField = "DoctorName";
+            //ddl_DocterDetils.DataBind();
+            //ddl_DocterDetils.Items.Insert(0, new ListItem("-- Select Doctor --", "0", true));
+
+
+            if (Rolid == 3)
+            {
+                DataTable dt = objcommon.DoctersMasterNew(did, Rolid);
+                txtDocter.Text = dt.Rows[0]["DoctorName"].ToString();
+                DoctorId = did;
+            }
+
+        }
+
 
         private long DoctorId
         {
@@ -324,6 +360,44 @@ namespace OrthoSquare.Report
                 //lblTotaCount.Text = Total.ToString();
             }
         }
+
+        public override void VerifyRenderingInServerForm(Control control)
+        {
+            /* Verifies that the control is rendered */
+        }
+
+        protected void btExcel_Click(object sender, ImageClickEventArgs e)
+        {
+
+
+            AllData = objExp.GetAllMedicinesCollectionReport(txtSFromFollowDate.Text, txtSToFollowDate.Text, Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(DoctorId), txtMedicines.Text);
+
+            //AllData = objExp.GetAllMedicinesCollectionReport(txtSFromFollowDate.Text, txtSToFollowDate.Text, Convert.ToInt32(ddlClinic.SelectedValue), Convert.ToInt32(DoctorId), txtMedicines.Text);
+
+            HttpResponse response = HttpContext.Current.Response;
+            response.Clear();
+            response.ClearHeaders();
+            response.ClearContent();
+            response.Charset = Encoding.UTF8.WebName;
+            response.AddHeader("content-disposition", "attachment; filename=" + DateTime.Now.ToString("yyyy-MM-dd") + ".xls");
+            response.AddHeader("Content-Type", "application/Excel");
+            response.ContentType = "application/vnd.xlsx";
+            using (StringWriter sw = new StringWriter())
+            {
+                using (HtmlTextWriter htw = new HtmlTextWriter(sw))
+                {
+                    GridView gridView = new GridView();
+                    gridView.DataSource = AllData;
+                    gridView.DataBind();
+                    gridView.RenderControl(htw);
+                    response.Write(sw.ToString());
+                    gridView.Dispose();
+                    AllData.Dispose();
+                    response.End();
+                }
+            }
+        }
+
     }
 
 

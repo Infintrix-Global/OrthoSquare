@@ -262,7 +262,7 @@
                                                         <asp:Label ID="lblPmobialNo" runat="server" Text=""></asp:Label></td>
                                                 </tr>
                                                 <tr>
-                                                    <td></td>
+                                                    <td> <asp:Label ID="lblClinicName" runat="server" Text=""></asp:Label></td>
                                                     <td>&nbsp;</td>
                                                 </tr>
                                                 <tr>
@@ -315,7 +315,7 @@
                                     <asp:DropDownList ID="ddlClinic" class="form-control" AutoPostBack="true" runat="server" OnSelectedIndexChanged="ddlClinic_SelectedIndexChanged1"></asp:DropDownList>
 
                                     <span class="help-block">
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="ddlClinic" InitialValue="0"  ValidationGroup="C"
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="ddlClinic" InitialValue="0" ValidationGroup="C"
                                             SetFocusOnError="true" ErrorMessage="Please Enter Clinic" ForeColor="Red"></asp:RequiredFieldValidator>
                                     </span>
                                 </div>
@@ -549,10 +549,17 @@
 
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
-                                                                        <asp:TemplateField HeaderText="#">
+
+                                                                         <asp:TemplateField HeaderText="Total" HeaderStyle-HorizontalAlign="Center">
                                                                             <ItemTemplate>
-                                                                              
-                                                                                <asp:Button ID="Button1" CommandName="PrintView" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' runat="server" CausesValidation="false"
+                                                                                <asp:Label ID="lblGrandTotal" runat="server" Text='<%# Eval("GrandTotal") %>'></asp:Label>
+
+                                                                            </ItemTemplate>
+                                                                        </asp:TemplateField>
+                                                                        <asp:TemplateField Visible="false" HeaderText="#">
+                                                                            <ItemTemplate>
+
+                                                                                <asp:Button ID="Button1" CommandName="PrintView"  CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' runat="server" CausesValidation="false"
                                                                                     Text="PRINT" class="btn yellow-gold" />
 
                                                                             </ItemTemplate>
@@ -579,6 +586,7 @@
                                                                                 </asp:DropDownList>
                                                                                 <asp:HiddenField ID="hdnWOEmployeeID" runat="server" Value='<%# Eval("ID")%>'></asp:HiddenField>
                                                                                 <asp:Label ID="lblMedicinesType" Visible="false" Text='<%# Eval("MedicinesType")%>' runat="server"></asp:Label>
+                                                                                <asp:RequiredFieldValidator ID="RequiredFieldValidatorMedicinesType" ControlToValidate="ddlMedicinesType" InitialValue="0" runat="server" ValidationGroup="C" ErrorMessage="Please select Medicines Type" ForeColor="Red"></asp:RequiredFieldValidator>
 
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
@@ -601,6 +609,8 @@
 
                                                                                 <asp:Label ID="lblMedicines_Name" Visible="false" Text='<%# Eval("MedicinesName")%>' runat="server"></asp:Label>
                                                                                 <asp:Label ID="lblMedicinesPrice" Visible="false" Text="" runat="server"></asp:Label>
+                                                                                <asp:RequiredFieldValidator ID="RequiredFieldValidatorMedicinesName" ControlToValidate="ddlMedicinesName" InitialValue="0" runat="server" ValidationGroup="C" ErrorMessage="Please select Medicines Name" ForeColor="Red"></asp:RequiredFieldValidator>
+                                                                                <asp:RequiredFieldValidator ID="RequiredFieldValidatorMedicinesText" ControlToValidate="txtMedicinesName" runat="server" ValidationGroup="C" ErrorMessage="Please Enter Medicines Name" ForeColor="Red"></asp:RequiredFieldValidator>
 
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
@@ -608,6 +618,7 @@
                                                                         <asp:TemplateField HeaderText="Dose" ItemStyle-Width="7%">
                                                                             <ItemTemplate>
                                                                                 <asp:TextBox ID="txtTotalDose" Text='<%# Eval("Dose")%>' class="form-control" MaxLength="5" runat="server"></asp:TextBox>
+                                                                                   <asp:RequiredFieldValidator ID="RequiredFieldValidatorDose" ControlToValidate="txtTotalDose" runat="server" ValidationGroup="C" ErrorMessage="Please Enter Dose" ForeColor="Red"></asp:RequiredFieldValidator>
 
                                                                             </ItemTemplate>
 
@@ -616,7 +627,9 @@
                                                                         <asp:TemplateField HeaderText="No.of Days" ItemStyle-Width="7%">
                                                                             <ItemTemplate>
                                                                                 <asp:TextBox ID="txtTotalNoofDays" class="form-control" MaxLength="2" Text='<%# Eval("NoOfDays")%>' runat="server"></asp:TextBox>
-                                                                            </ItemTemplate>
+                                                                            <asp:RequiredFieldValidator ID="RequiredFieldValidatorNoOfDay" ControlToValidate="txtTotalNoofDays" runat="server" ValidationGroup="C" ErrorMessage="Please Enter No.of Days" ForeColor="Red"></asp:RequiredFieldValidator>
+
+                                                                                </ItemTemplate>
                                                                         </asp:TemplateField>
 
 
@@ -661,7 +674,7 @@
 
                                                                             <FooterStyle HorizontalAlign="Right" />
                                                                             <FooterTemplate>
-                                                                                <asp:Button ID="ButtonAdd" OnClick="ButtonAdd_Click" runat="server" ValidationGroup="e" CausesValidation="false" Text="Add New" CssClass="btn yellow-gold" />
+                                                                                <asp:Button ID="ButtonAdd" OnClick="ButtonAdd_Click" runat="server" ValidationGroup="C" CausesValidation="false" Text="Add New" CssClass="btn yellow-gold" />
 
                                                                             </FooterTemplate>
                                                                         </asp:TemplateField>
@@ -1012,6 +1025,7 @@
                                                                                                 <asp:ListBox ID="ddltoothM" SelectionMode="Multiple" runat="server" CssClass="multiSelect custom__dropdown robotomd"></asp:ListBox>
                                                                                                 <asp:Label ID="lblTooth1" runat="server" Visible="false" Text='<%# Eval("toothNo") %>'></asp:Label>
                                                                                                 <asp:RequiredFieldValidator ID="RequiredFieldValidatorTooth" ControlToValidate="ddltoothM" InitialValue="" runat="server" ValidationGroup="T" ErrorMessage="Please select Tooth No" ForeColor="Red"></asp:RequiredFieldValidator>
+
                                                                                             </ItemTemplate>
                                                                                         </asp:TemplateField>
 
@@ -1162,7 +1176,7 @@
                                                                     <div class="row">
                                                                         <div class="col-md-6 ">
                                                                             <div class="form-group">
-                                                                                <asp:Button ID="btnTDoneWork" runat="server" Text="Submit" ValidationGroup="C" class="btn blue" ClientIDMode="Static" OnClick="btnTDoneWork_Clicklab" />
+                                                                                <asp:Button ID="btnTDoneWork" runat="server" Text="Submit" class="btn blue" ClientIDMode="Static" OnClick="btnTDoneWork_Clicklab" />
                                                                             </div>
                                                                         </div>
                                                                     </div>

@@ -73,12 +73,12 @@
 
                                         <asp:TextBox ID="txtPatientName" runat="server" OnTextChanged="txtPatientName_TextChanged" placeholder="Patient Name" AutoPostBack="true" class="form-control"></asp:TextBox>
 
-                                        <cc1:autocompleteextender servicemethod="SearchCustomers"
-                                            minimumprefixlength="2"
-                                            completioninterval="100" enablecaching="false" completionsetcount="10"
-                                            targetcontrolid="txtPatientName"
-                                            id="AutoCompleteExtender1" runat="server" firstrowselected="false">
-                                        </cc1:autocompleteextender>
+                                        <cc1:AutoCompleteExtender ServiceMethod="SearchCustomers"
+                                            MinimumPrefixLength="2"
+                                            CompletionInterval="100" EnableCaching="false" CompletionSetCount="10"
+                                            TargetControlID="txtPatientName"
+                                            ID="AutoCompleteExtender1" runat="server" FirstRowSelected="false">
+                                        </cc1:AutoCompleteExtender>
                                     </div>
                                     <div class="col-sm-3">
                                         <label>Mobile No</label>
@@ -161,6 +161,7 @@
                                         <ItemTemplate>
                                             <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
                                             <asp:Label ID="lblID" runat="server" Text='<%# Eval("InvoiceNo") %>' Visible="false"></asp:Label>
+                                            <asp:Label ID="lblDownpayment" runat="server" Text='<%# Eval("Downpayment") %>' Visible="false"></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Invoice No.">
@@ -168,6 +169,22 @@
                                             <asp:Label ID="lblInvoiceCode" runat="server" Text='<%# Eval("InvoiceCode") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Clinic Name">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("ClinicName") %>'></asp:Label>
+                                        </ItemTemplate>
+
+                                    </asp:TemplateField>
+
+
+                                    <asp:TemplateField HeaderText="Patient Code">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblPatientCode" runat="server" Text='<%# Eval("PatientCode") %>'></asp:Label>
+                                        </ItemTemplate>
+
+                                    </asp:TemplateField>
+
                                     <asp:TemplateField HeaderText="Patient Name">
                                         <ItemTemplate>
                                             <asp:Label ID="lblPatientName1" runat="server" Text='<%# Eval("PFristName") +"  "+ Eval("PLastName") %>'></asp:Label>
@@ -190,6 +207,17 @@
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
+
+
+                                    <asp:TemplateField Visible="false" HeaderText="Paid Before">
+                                        <ItemTemplate>
+
+                                            <asp:Label ID="lblPaidBefore" runat="server" Text='<%# Convert.ToDecimal(Eval("PaidBefore")).ToString("N", System.Globalization.CultureInfo.GetCultureInfo("en-IN")) %>'></asp:Label>
+
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+
                                     <asp:TemplateField HeaderText="Paid Amount">
                                         <ItemTemplate>
 
@@ -227,7 +255,7 @@
                                             <asp:Button ID="btnview" CommandArgument='<%# Eval("InvoiceNo") %>' CommandName="Viewinv" class="btn blue-madison" runat="server" Text="View" />
 
                                             <asp:ImageButton ID="lbtDelete" Visible="false" CausesValidation="false" runat="server" CommandName="delete1" CommandArgument='<%# Eval("InvoiceNo") %>'
-                                                ImageUrl="../Images/delete15x15.png" OnClientClick="return confirm('Are you sure you want to delete this Invloce?');" />
+                                                ImageUrl="../Images/delete15x15.png" OnClientClick="return confirm('Are you sure you want to delete this Invoice?');" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
 

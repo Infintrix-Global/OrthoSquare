@@ -1314,12 +1314,18 @@
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Patient Status">
+
+                                      <asp:TemplateField HeaderText="Clinic Name" Visible="false">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("ClinicName") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                   <%-- <asp:TemplateField HeaderText="Patient Status">
                                         <ItemTemplate>
                                             <asp:Label ID="lblPstatus1" runat="server" Text='<%# Eval("PCstatus") %>'></asp:Label>
 
                                         </ItemTemplate>
-                                    </asp:TemplateField>
+                                    </asp:TemplateField>--%>
                                     <%--Dhaval--%>
                                     <asp:TemplateField HeaderText="Last Consultation Date">
                                         <ItemTemplate>
@@ -1327,11 +1333,7 @@
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Clinic Name" Visible="false">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("ClinicName") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
+                                  
 
                                     <asp:TemplateField HeaderText="#">
                                         <ItemTemplate>

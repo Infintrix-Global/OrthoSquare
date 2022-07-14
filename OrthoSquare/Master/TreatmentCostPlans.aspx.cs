@@ -32,7 +32,7 @@ namespace OrthoSquare.Master
         public void getAllTreatment()
         {
 
-            AllData = objES.GetAllTreatment();
+            AllData = objES.GetAllTreatment("");
             gvShow.DataSource = AllData;
             gvShow.DataBind();
         }

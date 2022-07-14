@@ -4,7 +4,7 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-    <script type="text/javascript">
+    <%--    <script type="text/javascript">
         google.load("visualization", "1", { packages: ["corechart"] });
         google.setOnLoadCallback(drawChartline);
         function drawChartline() {
@@ -110,7 +110,203 @@
                 draw(data, { title: "" });
         }
 
+    </script>--%>
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <style>
+        .chart {
+            width: 100%;
+        }
+
+        #piechart {
+            height: 600px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        google.charts.load("current", "1", { packages: ["corechart", "pie", "donut"] });
+        //google.load('visualization', "1",{ 'packages': ['pie'] });
+        google.charts.setOnLoadCallback(drawChartline);
+        google.charts.setOnLoadCallback(drawPieChart);
+        google.charts.setOnLoadCallback(drawDonutChart);
+        function drawChartline() {
+            var options = {
+                title: '',
+                backgroundColor: 'Enquiry',
+                width: 1060,
+                height: 500,
+                is3D: true,
+                bar: { groupWidth: "10%" },
+                legend: { position: "none" },
+
+
+                hAxis: {
+                    title: 'Months',
+                    textStyle: {
+                        color: '#3838A8',
+                        fontSize: 20,
+                        fontName: 'Arial',
+                        bold: true,
+                        italic: true
+                    },
+
+                    titleTextStyle: {
+                        color: '#3838A8',
+                        fontSize: 16,
+                        fontName: 'Arial',
+                        bold: false,
+                        italic: true
+                    }
+                },
+
+                vAxis: {
+                    title: 'Enquiry',
+                    textStyle: {
+                        color: '#3838A8',
+                        fontSize: 20,
+                        bold: true
+                    },
+                    titleTextStyle: {
+                        color: '#3838A8',
+                        fontSize: 16,
+                        bold: true
+                    }
+                },
+
+
+                isStacked: true
+            };
+            $.ajax({
+                type: "POST",
+                url: "SuperAdminDashboard.aspx/GetChartDataline",
+                // data: '{}',
+                data: "{monthsid: '" + $("[id*=ddlyear]").val() + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    var data = google.visualization.arrayToDataTable(r.d);
+                    var chart = new google.visualization.LineChart($("#chartline")[0]);
+                    chart.draw(data, options);
+                },
+                failure: function (r) {
+                    alert(r.d);
+                },
+                error: function (r) {
+                    alert(r.d);
+                }
+            });
+
+
+        }
+
+        function drawPieChart() {
+            $.ajax(
+                {
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: 'SuperAdminDashboard.aspx/GetDatapai',
+                    data: "{monthsid: '" + $("[id*=ddlYearSOE]").val() + "'}",
+                    success: function (response) {
+                        drawchart(response.d); // calling method  
+                    },
+                    error: function () {
+                        alert("Error loading data! Please try again.");
+                    }
+                });
+        }
+
+
+        function drawDonutChart() {
+            $.ajax(
+                {
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: 'SuperAdminDashboard.aspx/GetDataDonut',
+                    data: "{}",
+                    success: function (response) {
+                        drawchartdonut(response.d); // calling method  
+                    },
+                    error: function () {
+                        alert("Error loading data! Please try again.");
+                    }
+                });
+        }
+        function drawchartdonut(dataValues) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'ColumnName');
+            data.addColumn('number', 'Value');
+
+            for (var i = 0; i < dataValues.length; i++) {
+                data.addRow([dataValues[i].ColumnName, dataValues[i].Value]);
+            }
+
+            var options = {
+                title: '',
+                pieHole: 0.4,
+
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+
+            chart.draw(data, { width: 430, height: 350, title: 'Gender', pieHole: 0.4 });
+        }
+
+
+
+        function drawchart(dataValues) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'ColumnName');
+            data.addColumn('number', 'Value');
+
+            for (var i = 0; i < dataValues.length; i++) {
+                data.addRow([dataValues[i].ColumnName, dataValues[i].Value]);
+            }
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, { width: 430, height: 450, title: '' });
+        }
+
+
+
+
+
+
     </script>
+
+
+
+    <style>
+        #customers {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            #customers td, #customers th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #customers tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            #customers tr:hover {
+                background-color: #ddd;
+            }
+
+            #customers th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                color: white;
+            }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="page-content">
@@ -157,34 +353,86 @@
                 </div>
                 <!-- END WIDGET THUMB -->
             </div>
+
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">Doctors</h4>
+                    <div class="widget-thumb-wrap">
+
+                        <i class="fa fa-user-md widget-thumb-icon bg-red"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">TOTAL</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293">
+                                <asp:LinkButton ID="LinkButtonDr" PostBackUrl="~/Doctor/Add_Doctor.aspx" runat="server">
+                                    <asp:Label ID="lblDoctors" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">DAILY&nbsp;APPOINTMENTS</h4>
+                    <div class="widget-thumb-wrap">
+                        <i class="fa fa-calendar-check-o widget-thumb-icon bg-purple"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">TOTAL</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="815">
+
+                                <asp:Label ID="lblDailyAppontment" runat="server" Text="Label"></asp:Label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
+
+
+
+
+
+        </div>
+
+        <div class="row" runat="server" visible="false">
+
+            <div class="col-md-2 col-sm-2 col-xs-6">
+                <!-- BEGIN WIDGET THUMB -->
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
+                    <h4 class="widget-thumb-heading">Treatment&nbsp;Statistics</h4>
+                    <div class="widget-thumb-wrap">
+                        <i class="fa fa-user widget-thumb-icon bg-yellow-gold"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">TOTAL</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="">
+
+                                <asp:LinkButton ID="LinkButtonTreatment" PostBackUrl="~/Master/TREATMENT_STATISTICS.aspx" runat="server">
+                                    <asp:Label ID="lblTreatmentTotal" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END WIDGET THUMB -->
+            </div>
             <div class="col-md-2 col-sm-2 col-xs-6">
                 <!-- BEGIN WIDGET THUMB -->
                 <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
                     <h4 class="widget-thumb-heading">Enquiries</h4>
                     <div class="widget-thumb-wrap">
 
-                       <%-- <i class="fa fa-copy widget-thumb-icon bg-red"></i>--%>
+                        <i class="fa fa-copy widget-thumb-icon bg-red"></i>
                         <div class="widget-thumb-body">
-                           <%-- <span class="widget-thumb-subtitle">YEAR / MONTH</span>--%>
-                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293">
-                                <asp:LinkButton ID="LinkButtonEnQ" PostBackUrl="~/Enquiry/EnquiryDetails.aspx" runat="server">
-                                 YEAR:   <asp:Label ID="lblEnqYear" runat="server" Text=""></asp:Label>
-                                </asp:LinkButton>
-
-                            </span>
-                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293">
-                                <asp:LinkButton ID="LinkButton3" PostBackUrl="~/Enquiry/EnquiryDetails.aspx" runat="server">
-                                 MONTH:   <asp:Label ID="lblEnqMonth" runat="server" Text=""></asp:Label>
-                                </asp:LinkButton>
-
-                            </span>
-                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293">
-                                <asp:LinkButton ID="LinkButton4" PostBackUrl="~/Enquiry/EnquiryDetails.aspx" runat="server">
-                                 DAY:   <asp:Label ID="lbllblEnqDay" runat="server" Text=""></asp:Label>
-                                </asp:LinkButton>
-
-                            </span>
+                            <span class="widget-thumb-subtitle">TOTAL</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="815">
+                                <asp:LinkButton ID="LinkButton5" PostBackUrl="~/Enquiry/EnquiryDetails.aspx" runat="server">
+                                    <asp:Label ID="lblEnq" runat="server" Text=""></asp:Label>
+                                </asp:LinkButton></span>
                         </div>
+                        <%-- <i class="fa fa-copy widget-thumb-icon bg-red"></i>--%>
                     </div>
                 </div>
                 <!-- END WIDGET THUMB -->
@@ -285,45 +533,7 @@
                 </div>
                 <!-- END WIDGET THUMB -->
             </div>
-        </div>
 
-        <div class="row">
-
-            <div class="col-md-2 col-sm-2 col-xs-6">
-                <!-- BEGIN WIDGET THUMB -->
-                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                    <h4 class="widget-thumb-heading">Doctors</h4>
-                    <div class="widget-thumb-wrap">
-
-                        <i class="fa fa-user-md widget-thumb-icon bg-red"></i>
-                        <div class="widget-thumb-body">
-                            <span class="widget-thumb-subtitle">TOTAL</span>
-                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293">
-                                <asp:LinkButton ID="LinkButtonDr" PostBackUrl="~/Doctor/Add_Doctor.aspx" runat="server">
-                                    <asp:Label ID="lblDoctors" runat="server" Text=""></asp:Label>
-                                </asp:LinkButton></span>
-                        </div>
-                    </div>
-                </div>
-                <!-- END WIDGET THUMB -->
-            </div>
-            <div class="col-md-2 col-sm-2 col-xs-6">
-                <!-- BEGIN WIDGET THUMB -->
-                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                    <h4 class="widget-thumb-heading">DAILY&nbsp;APPOINTMENTS</h4>
-                    <div class="widget-thumb-wrap">
-                        <i class="fa fa-calendar-check-o widget-thumb-icon bg-purple"></i>
-                        <div class="widget-thumb-body">
-                            <span class="widget-thumb-subtitle">TOTAL</span>
-                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="815">
-
-                                <asp:Label ID="lblDailyAppontment" runat="server" Text="Label"></asp:Label>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <!-- END WIDGET THUMB -->
-            </div>
 
             <div class="col-md-2 col-sm-2 col-xs-6">
                 <!-- BEGIN WIDGET THUMB -->
@@ -381,28 +591,94 @@
                 <!-- END WIDGET THUMB -->
             </div>
 
-            <div class="col-md-2 col-sm-2 col-xs-6">
-                <!-- BEGIN WIDGET THUMB -->
-                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                    <h4 class="widget-thumb-heading">Treatment&nbsp;Statistics</h4>
-                    <div class="widget-thumb-wrap">
-                        <i class="fa fa-user widget-thumb-icon bg-yellow-gold"></i>
-                        <div class="widget-thumb-body">
-                            <span class="widget-thumb-subtitle">TOTAL</span>
-                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="">
 
-                                <asp:LinkButton ID="LinkButtonTreatment" PostBackUrl="~/Master/TREATMENT_STATISTICS.aspx" runat="server">
-                                    <asp:Label ID="lblTreatmentTotal" runat="server" Text=""></asp:Label>
-                                </asp:LinkButton>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <!-- END WIDGET THUMB -->
-            </div>
 
 
         </div>
+
+
+
+
+        <div class="row">
+            <div class="col-lg-12 col-xs-12 col-sm-12">
+                <div class="portlet light">
+                    <table id="customers">
+                        <tr>
+                            <td>#</td>
+                            <td>Enquiry</td>
+                            <td>Follouwps</td>
+                            <td>Conversion</td>
+                            <td>New</td>
+                            <td>Repeat</td>
+                            <td>Treat-Revenue</td>
+                            <td>Medi-Revenue</td>
+                            <td>Expense</td>
+                        </tr>
+                        <tr>
+                            <td>YTD</td>
+                            <td>
+                                <asp:Label ID="lblEnqYear" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblFollouwpsYear" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblConversionYear" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblNewYear" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblVisitsYear" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblTreatCollYear" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblMediCollYear" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblExpenseYear" runat="server" Text="0"></asp:Label></td>
+                        </tr>
+                        <tr>
+                            <td>MTD</td>
+                            <td>
+                                <asp:Label ID="lblEnqMonth" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblFollouwpsMonth" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblConversionMonth" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblNewMonth" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblVisitsMonth" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblTreatCollMonth" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblMediCollMonth" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblExpenseMonth" runat="server" Text="0"></asp:Label></td>
+                        </tr>
+                        <tr>
+                            <td>Today</td>
+                            <td>
+                                <asp:Label ID="lbllblEnqDay" runat="server" Text="0"></asp:Label></td>
+
+                            <td>
+                                <asp:Label ID="lblFollouwpsDay" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblConversionDay" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblNewDay" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblVisitsDay" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblTreatCollDay" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblMediCollDay" runat="server" Text="0"></asp:Label></td>
+                            <td>
+                                <asp:Label ID="lblExpenseDay" runat="server" Text="0"></asp:Label></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+
         <div class="row">
             <div class="col-lg-6 col-xs-12 col-sm-12">
                 <div class="portlet light ">
@@ -415,64 +691,6 @@
                             </span>
                         </div>
                         <div class="actions">
-                            <%--   <div class="btn-group ">
-                                            <a class="btn dark btn-outline btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true"> Year
-                                                <i class="fa fa-angle-down"></i>
-                                            </a>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li>
-                                                    <a href="javascript:;"> Option 1</a>
-                                                </li>
-                                                 <li>
-                                                    <a href="javascript:;">Option 2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;">Option 3</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;">Option 4</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                   
-                                 <div class="btn-group">
-                                            <a class="btn dark btn-outline btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true"> Month
-                                                <i class="fa fa-angle-down"></i>
-                                            </a>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li>
-                                                    <a href="javascript:;"> Option 1</a>
-                                                </li>
-                                                 <li>
-                                                    <a href="javascript:;">Option 2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;">Option 3</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;">Option 4</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn dark btn-outline btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true"> Clinic
-                                                <i class="fa fa-angle-down"></i>
-                                            </a>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li>
-                                                    <a href="javascript:;"> Option 1</a>
-                                                </li>
-                                                 <li>
-                                                    <a href="javascript:;">Option 2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;">Option 3</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;">Option 4</a>
-                                                </li>
-                                            </ul>
-                                        </div>--%>
                         </div>
 
                     </div>
@@ -560,51 +778,12 @@
                 <div class="portlet light ">
                     <div class="portlet-title">
                         <div class="caption ">
-                            <span class="caption-subject font-dark bold uppercase">Branches/Clinics</span>
+                            <span class="caption-subject font-dark bold uppercase">Gender</span>
 
                         </div>
-                        <div class="actions">
-                            <div class="btn-group">
-
-                                <asp:DropDownList ID="ddlstate" class="btn dark btn-outline btn-circle btn-sm " runat="server" AutoPostBack="True" OnSelectedIndexChanged="State_SelectedIndexChanged">
-                                </asp:DropDownList>
-
-                            </div>
-                        </div>
+                        
                     </div>
-                    <div class="portlet-body">
-
-                        <asp:GridView ID="gvShow" runat="server" AllowPaging="true" AutoGenerateColumns="false"
-                            class="table table-bordered table-hover" DataKeyNames="ClinicID"
-                            GridLines="None" OnPageIndexChanging="gvShow_PageIndexChanging"
-                            ShowHeaderWhenEmpty="true" PageSize="7">
-                            <Columns>
-                                <asp:TemplateField HeaderText="Sr. No.">
-                                    <ItemTemplate>
-                                        <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
-
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Clinic Name">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblClinicName" runat="server" Text='<%# Eval("ClinicName")%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Phone No.">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblPhoneNo" runat="server" Text='<%# Eval("PhoneNo1") + ",</br> " + Eval("PhoneNo2")%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
-                            </Columns>
-                            <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
-                            <PagerSettings Mode="NumericFirstLast" />
-                            <EmptyDataTemplate>
-                                No Record Available
-                            </EmptyDataTemplate>
-                        </asp:GridView>
-
-
+                    <div id="donutchart" style="width: 560px; height: 350px;">
                     </div>
                 </div>
             </div>
@@ -739,7 +918,7 @@
                     <div class="portlet-body">
                         <div id="morris_chart_4" style="height: 500px;">
 
-                            <div id="visualization" style="width: 460px; height: 350px;">
+                            <div id="piechart" style="width: 460px; height: 350px;">
                             </div>
 
 

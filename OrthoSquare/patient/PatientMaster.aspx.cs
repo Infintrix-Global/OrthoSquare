@@ -557,18 +557,7 @@ namespace OrthoSquare.patient
                         // do nothing  
                     }
 
-                    //   ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "confirm('You are overriding the existing pay grade ');", true);
-
-
-
-                    //  If(window.confirm) { insertPayGrade(); } 
-
-                    // string message = "Do you want to submit?";
-                    //ClientScript.RegisterOnSubmitStatement(this.GetType(), "confirm", "return confirm('" + message + "');");
-
-
-
-
+                 
 
                 }
                 else
@@ -596,6 +585,8 @@ namespace OrthoSquare.patient
                     {
                         int Eid1 = objPatient.EnquiryToPatient(Eid);
                     }
+
+
                     //patientid = 0;
                   //  Response.Write("<script>alert('Patient Added Successfully')</script>");
                     //lblMessage.Text = "Patient Added Successfully";
@@ -732,7 +723,7 @@ namespace OrthoSquare.patient
         protected void txtPatientName_TextChanged(object sender, EventArgs e)
         
         {
-            DataTable dt = objPatient.PatientSelectDoctorID(txtPatientName.Text);
+            DataTable dt = objPatient.PatientSelect(txtPatientName.Text);
             PatientsId = Convert.ToInt32(dt.Rows[0]["PatientId"]);
             getAllPatient();
 
@@ -1313,18 +1304,48 @@ namespace OrthoSquare.patient
             //        }
             //    }
             //}
-            int Cid = 0;
+            //int Cid = 0;
+
+            //if (SessionUtilities.RoleID == 1)
+            //{
+            //    Cid = Convert.ToInt32(SessionUtilities.Empid);
+            //}
+            //else
+            //{
+            //    Cid = 0;
+            //}
+            //AllData = objPatient.GetPatientlist();
+            // AllData = objPatient.NewGetPatientlist11(Cid);
+            string Cid = "";
 
             if (SessionUtilities.RoleID == 1)
             {
-                Cid = Convert.ToInt32(SessionUtilities.Empid);
+                Cid = SessionUtilities.Empid.ToString();
+            }
+            else if (SessionUtilities.RoleID == 3)
+            {
+                string A = "";
+                DataTable dt23 = objPatient.DoctorByClinicLIST(SessionUtilities.Empid);
+
+
+                for (int i = 0; i < dt23.Rows.Count; i++)
+                {
+                    A += dt23.Rows[i]["ClinicID"].ToString() + ",";
+
+                }
+
+                if (A != "")
+                {
+                    A = A.Remove(A.Length - 1);
+                }
+
+                Cid = A;
             }
             else
             {
-                Cid = 0;
+                Cid = "";
             }
-            //AllData = objPatient.GetPatientlist();
-            AllData = objPatient.NewGetPatientlist11(Cid);
+            AllData = objPatient.GetAllPatientRecordReport(txtFromDate.Text, txtToDate.Text, Cid.ToString(), txttxtMobailNoss.Text, txtPatientNos.Text, Convert.ToInt32(PatientsId));
 
             HttpResponse response = HttpContext.Current.Response;
             response.Clear();
@@ -1662,22 +1683,21 @@ namespace OrthoSquare.patient
                     string Clinic_id =(HttpContext.Current.Session["ClinicID"]).ToString();
                     if (RoleId == 1)
                     {
-                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1 ";
-                        cmd.CommandText += " and  P.FristName +' ('+P.Mobile +')' like '%" + prefixText + "%' and P.ClinicID ='" + ClinicId + "'";
+                        cmd.CommandText = "Select *, P.FristName+' '+ isnull(p.LastName,'')+'  ('+P.PatientCode +')'+  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1 ";
+                        cmd.CommandText += " and  LTRIM(RTRIM(P.FristName))+' '+ isnull(LTRIM(RTRIM(P.LastName)),'')+'  ('+P.PatientCode +')'+  +'  ('+P.Mobile +')' like '%" + prefixText + "%' and P.ClinicID ='" + ClinicId + "'";
                         cmd.CommandText += "order by patientid DESC ";
                     }
                     else if (RoleId == 3)
                     {
                       
 
-                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1  and  P.FristName +' ('+P.Mobile +')'  like '%" + prefixText + "%' and P.ClinicID in (" + Clinic_id + ")";
+                        cmd.CommandText = "Select *, P.FristName+' '+ isnull(p.LastName,'')+'  ('+P.PatientCode +')'+  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1  and   LTRIM(RTRIM(P.FristName)) +' '+ isnull(LTRIM(RTRIM(P.LastName)),'')+'  ('+P.PatientCode +')'+  +'  ('+P.Mobile +')'  like '%" + prefixText + "%' and P.ClinicID in (" + Clinic_id + ")";
 
 
                     }
                     else
                     {
-                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1  and  P.FristName +' ('+P.Mobile +')' like '%" + prefixText + "%'";
-
+                        cmd.CommandText = "Select *,P.FristName+' '+ isnull(p.LastName,'')+'  ('+P.PatientCode +')'+  +'  ('+P.Mobile +')' as Fname from PatientMaster P left join Enquiry E on E.EnquiryID=P.EnquiryId where  P.IsActive =1  and  LTRIM(RTRIM(P.FristName)) +' '+ isnull(LTRIM(RTRIM(P.LastName)),'')+'  ('+P.PatientCode +')'+  +'  ('+P.Mobile +')' like '%" + prefixText + "%'";
 
                     }
 

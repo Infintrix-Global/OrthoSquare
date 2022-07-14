@@ -1083,7 +1083,7 @@
                                     <asp:TemplateField HeaderText="">
                                         <ItemTemplate>
                      <asp:ImageButton ID="btnUpdate" CausesValidation="false" runat="server" Height="15px" Width="17px" CommandArgument='<%# Eval("DoctorID") %>'
-                                                CommandName="viewPDetails" ImageUrl="../Images/edit15x15.png" />
+                                                CommandName="EditDocterDetails" ImageUrl="../Images/edit15x15.png" />
 
                                             <asp:ImageButton ID="btnview" CausesValidation="false" runat="server" Height="15px" CommandArgument='<%# Eval("DoctorID") %>' ToolTip="View"
                                                 CommandName="viewDocterDetails" ImageUrl="../Images/view2.png" />

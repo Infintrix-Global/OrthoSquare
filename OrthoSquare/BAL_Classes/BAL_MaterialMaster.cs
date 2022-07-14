@@ -594,6 +594,49 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
+        public DataTable GetMaterialSelect(string Material)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                General objGeneral = new General();
+
+
+                strQuery = "Select * from MaterialMaster where IsActive =1 and  MaterialName like '%" + Material + "%'";
+              
+
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
+        }
+
+        public DataTable GetVendorNameSelect(string VendorName)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                General objGeneral = new General();
+
+
+                strQuery = " Select * from VendorMaster  where VendorTypeId=2 and IsActive=1 and  VendorName like '%" + VendorName + "%'";
+
+
+                dt = objGeneral.GetDatasetByCommand(strQuery);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
+        }
+
+
+
+
         public int MaterialStock()
         {
             int Id = 0;
@@ -633,5 +676,67 @@ namespace OrthoSquare.BAL_Classes
             return ds.Tables[0];
 
         }
+
+
+
+        public int AddRequestStockMaterial(int ID, int MaterialId, int RequestQty, int ReceiveQty, string RequestCode, int ClinicId,int SendOrderBy,string SendOrderDate,string Remark,decimal Price)
+        {
+            int isInserted = -1;
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@ID", ID);
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialId", MaterialId);
+                objGeneral.AddParameterWithValueToSQLCommand("@RequestQty", RequestQty);
+                objGeneral.AddParameterWithValueToSQLCommand("@ReceiveQty", ReceiveQty);
+                objGeneral.AddParameterWithValueToSQLCommand("@RequestCode", RequestCode);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicId ", ClinicId);
+
+                objGeneral.AddParameterWithValueToSQLCommand("@SendOrderBy ", SendOrderBy);
+                objGeneral.AddParameterWithValueToSQLCommand("@SendOrderDate ", objGeneral.getDatetime(SendOrderDate));
+                objGeneral.AddParameterWithValueToSQLCommand("@SendRemarks", Remark);
+                objGeneral.AddParameterWithValueToSQLCommand("@Price", Price);
+                isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_AddRequestQtyClinic");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return isInserted;
+        }
+
+
+        public int AddReceiveStockMaterial(int ReceiveMaterialId, int MaterialId, int RequestQty, int ReceiveQty, int ClinicId, string orderNo, int ReceiveBy, string ReceiveDate, string Remark,int ActualQty)
+        {
+            int isInserted = -1;
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@ReceiveMaterialId", ReceiveMaterialId);
+                objGeneral.AddParameterWithValueToSQLCommand("@MaterialId", MaterialId);
+                objGeneral.AddParameterWithValueToSQLCommand("@RequestQty", RequestQty);
+                objGeneral.AddParameterWithValueToSQLCommand("@ReceiveQty", ReceiveQty);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicId", ClinicId);
+                objGeneral.AddParameterWithValueToSQLCommand("@orderNo ", orderNo);
+                objGeneral.AddParameterWithValueToSQLCommand("@ReceiveBy ", ReceiveBy);
+                objGeneral.AddParameterWithValueToSQLCommand("@ReceiveDate ", objGeneral.getDatetime(ReceiveDate));
+                objGeneral.AddParameterWithValueToSQLCommand("@ReceiveMarks", Remark);
+
+                objGeneral.AddParameterWithValueToSQLCommand("@ActualQty", ActualQty);
+                isInserted = objGeneral.GetExecuteNonQueryByCommand_SP("SP_AddReceiveMaterialStockClinic");
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return isInserted;
+        }
+
+
     }
 }

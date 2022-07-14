@@ -161,6 +161,8 @@ namespace OrthoSquare.Report
             nv.Add("@YearId", ddlYear.SelectedValue);
             nv.Add("@ClinicID", ddlClinic.SelectedValue);
             nv.Add("@DoctorId", DoctorId.ToString());
+            nv.Add("@FromDate", txtFromDate.Text);
+            nv.Add("@ToDate", txtToDate.Text);
             DataTable dt = objG.GetDataTable("GET_PaymentModeReportMonth", nv);
 
 
@@ -232,6 +234,7 @@ namespace OrthoSquare.Report
                 Label lblDebitCard = (Label)e.Row.FindControl("lblDebitCard1");
                 Label lblCreditCard = (Label)e.Row.FindControl("lblCreditCard1");
                 Label lblUPI = (Label)e.Row.FindControl("lblUPI1");
+                Label lblCheque = (Label)e.Row.FindControl("lblCheque1");
                 Label lblBajajfinance = (Label)e.Row.FindControl("lblBajajfinance1");
 
                 Label lblKotakfinance = (Label)e.Row.FindControl("lblKotakfinance1");
@@ -240,6 +243,18 @@ namespace OrthoSquare.Report
                 Label lblIDFCFirstBank = (Label)e.Row.FindControl("lblIDFCFirstBank1");
                 Label lblShopse = (Label)e.Row.FindControl("lblShopse1");
                 Label lblMonthNo = (Label)e.Row.FindControl("lblMonthNo");
+
+                Label lblShopsePreapproved1 = (Label)e.Row.FindControl("lblShopsePreapproved1");
+                Label lblShopseHDFC1 = (Label)e.Row.FindControl("lblShopseHDFC1");
+                Label lblShopseCreditCard1 = (Label)e.Row.FindControl("lblShopseCreditCard1");
+                Label lblShopseAmex1 = (Label)e.Row.FindControl("lblShopseAmex1");
+                Label lblNEFT = (Label)e.Row.FindControl("lblNEFT1");
+
+
+                if (lblNEFT.Text == "")
+                {
+                    lblNEFT.Text = "0.00";
+                }
 
 
                 if (lblCash.Text == "")
@@ -282,7 +297,31 @@ namespace OrthoSquare.Report
                     lblShopse.Text = "0.00";
                 }
 
-                Total = Convert.ToDecimal(lblCash.Text) + Convert.ToDecimal(lblDebitCard.Text) + Convert.ToDecimal(lblCreditCard.Text) + Convert.ToDecimal(lblUPI.Text) + Convert.ToDecimal(lblBajajfinance.Text) + Convert.ToDecimal(lblKotakfinance.Text) + Convert.ToDecimal(lblLiquiLoans.Text) + Convert.ToDecimal(lblIDFCFirstBank.Text) + Convert.ToDecimal(lblShopse.Text);
+                if (lblShopsePreapproved1.Text == "")
+                {
+                    lblShopsePreapproved1.Text = "0.00";
+                }
+                if (lblShopseHDFC1.Text == "")
+                {
+                    lblShopseHDFC1.Text = "0.00";
+                }
+                if (lblShopseCreditCard1.Text == "")
+                {
+                    lblShopseCreditCard1.Text = "0.00";
+                }
+                if (lblShopseAmex1.Text == "")
+                {
+                    lblShopseAmex1.Text = "0.00";
+                }
+
+                if (lblCheque.Text == "")
+                {
+                    lblCheque.Text = "0.00";
+                }
+
+
+
+                Total = Convert.ToDecimal(lblCash.Text) + Convert.ToDecimal(lblDebitCard.Text) + Convert.ToDecimal(lblCreditCard.Text) + Convert.ToDecimal(lblUPI.Text) + Convert.ToDecimal(lblBajajfinance.Text) + Convert.ToDecimal(lblKotakfinance.Text) + Convert.ToDecimal(lblLiquiLoans.Text) + Convert.ToDecimal(lblIDFCFirstBank.Text) + Convert.ToDecimal(lblShopse.Text) + Convert.ToDecimal(lblShopsePreapproved1.Text) + Convert.ToDecimal(lblShopseHDFC1.Text) + Convert.ToDecimal(lblShopseCreditCard1.Text) + Convert.ToDecimal(lblShopseAmex1.Text) + Convert.ToDecimal(lblCheque.Text) + Convert.ToDecimal(lblNEFT.Text); ;
 
                 lblTotal.Text = Total.ToString();
 
@@ -293,6 +332,9 @@ namespace OrthoSquare.Report
                 nv.Add("@YearId", ddlYear.SelectedValue);
                 nv.Add("@ClinicID", ddlClinic.SelectedValue);
                 nv.Add("@DoctorId", DoctorId.ToString());
+
+                nv.Add("@FromDate", txtFromDate.Text);
+                nv.Add("@ToDate", txtToDate.Text);
                 DataTable dt = objG.GetDataTable("GET_PaymentModeClinicReport", nv);
 
                 gvPaymonthDay.DataSource = dt;
@@ -317,6 +359,7 @@ namespace OrthoSquare.Report
                 Label lblDebitCard = (Label)e.Row.FindControl("lblDebitCard");
                 Label lblCreditCard = (Label)e.Row.FindControl("lblCreditCard");
                 Label lblUPI = (Label)e.Row.FindControl("lblUPI");
+                Label lblCheque = (Label)e.Row.FindControl("lblCheque");
                 Label lblBajajfinance = (Label)e.Row.FindControl("lblBajajfinance");
 
                 Label lblKotakfinance = (Label)e.Row.FindControl("lblKotakfinance");
@@ -324,6 +367,20 @@ namespace OrthoSquare.Report
                 Label lblLiquiLoans = (Label)e.Row.FindControl("lblLiquiLoans");
                 Label lblIDFCFirstBank = (Label)e.Row.FindControl("lblIDFCFirstBank");
                 Label lblShopse = (Label)e.Row.FindControl("lblShopse");
+
+                Label lblShopsePreapproved = (Label)e.Row.FindControl("lblShopsePreapproved");
+                Label lblShopseHDFC = (Label)e.Row.FindControl("lblShopseHDFC");
+                Label lblShopseCreditCard = (Label)e.Row.FindControl("lblShopseCreditCard");
+                Label lblShopseAmex = (Label)e.Row.FindControl("lblShopseAmex");
+
+                Label lblNEFT = (Label)e.Row.FindControl("lblNEFT");
+
+
+                if (lblNEFT.Text == "")
+                {
+                    lblNEFT.Text = "0.00";
+                }
+
 
                 if (lblCash.Text == "")
                 {
@@ -365,7 +422,30 @@ namespace OrthoSquare.Report
                     lblShopse.Text = "0.00";
                 }
 
-                Total = Convert.ToDecimal(lblCash.Text) + Convert.ToDecimal(lblDebitCard.Text) + Convert.ToDecimal(lblCreditCard.Text) + Convert.ToDecimal(lblUPI.Text) + Convert.ToDecimal(lblBajajfinance.Text) + Convert.ToDecimal(lblKotakfinance.Text) + Convert.ToDecimal(lblLiquiLoans.Text) + Convert.ToDecimal(lblIDFCFirstBank.Text) + Convert.ToDecimal(lblShopse.Text);
+                if (lblShopsePreapproved.Text == "")
+                {
+                    lblShopsePreapproved.Text = "0.00";
+                }
+                if (lblShopseHDFC.Text == "")
+                {
+                    lblShopseHDFC.Text = "0.00";
+                }
+                if (lblShopseCreditCard.Text == "")
+                {
+                    lblShopseCreditCard.Text = "0.00";
+                }
+                if (lblShopseAmex.Text == "")
+                {
+                    lblShopseAmex.Text = "0.00";
+                }
+
+                if (lblCheque.Text == "")
+                {
+                    lblCheque.Text = "0.00";
+                }
+
+
+                Total = Convert.ToDecimal(lblCash.Text) + Convert.ToDecimal(lblDebitCard.Text) + Convert.ToDecimal(lblCreditCard.Text) + Convert.ToDecimal(lblUPI.Text) + Convert.ToDecimal(lblBajajfinance.Text) + Convert.ToDecimal(lblKotakfinance.Text) + Convert.ToDecimal(lblLiquiLoans.Text) + Convert.ToDecimal(lblIDFCFirstBank.Text) + Convert.ToDecimal(lblShopse.Text) + Convert.ToDecimal(lblShopsePreapproved.Text) + Convert.ToDecimal(lblShopseHDFC.Text) + Convert.ToDecimal(lblShopseCreditCard.Text) + Convert.ToDecimal(lblShopseAmex.Text) + Convert.ToDecimal(lblCheque.Text) + Convert.ToDecimal(lblNEFT.Text);
 
                 lblTotal.Text = Total.ToString();
 
