@@ -198,6 +198,28 @@ namespace OrthoSquare.BAL_Classes
         }
 
 
+        public DataTable GetAllClinicCollection_ReportNew(string FromDate, string Todate, int ClinicID)
+        {
+            try
+            {
+                General objGeneral = new General();
+                objGeneral.AddParameterWithValueToSQLCommand("@FromDate", FromDate);
+                objGeneral.AddParameterWithValueToSQLCommand("@Todate", Todate);
+                objGeneral.AddParameterWithValueToSQLCommand("@ClinicID", ClinicID);
+                objGeneral.AddParameterWithValueToSQLCommand("@Mode","2");
+                ds = objGeneral.GetDatasetByCommand_SP("GET_ClinicCollectionDetailsReport");
+
+                // ds = objGeneral.GetDatasetByCommand_SP("GET_ClinicCollectionTreatmentAndMedicinesReport");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return ds.Tables[0];
+        }
+
+
         public DataTable GetAllClinicCollectionMedicinesReport(string FromDate, string Todate, int ClinicID)
         {
             try

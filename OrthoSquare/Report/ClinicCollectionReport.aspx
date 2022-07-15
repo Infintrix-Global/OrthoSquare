@@ -76,6 +76,8 @@
                                         <div class="form-group">
                                             <asp:Button ID="btnSearch" runat="server" Text="Search" class="btn blue-hoki" ClientIDMode="Static"
                                                 CausesValidation="False" OnClick="btnSearch_Click" />
+
+                                            <asp:Button ID="btBack" runat="server" Text="Clear" Class="btn default" ClientIDMode="Static" OnClick="btBack_Click" />
                                         </div>
                                     </div>
 
@@ -98,9 +100,7 @@
                                                 <ItemTemplate>
                                                     <asp:Label ID="SrNo" runat="server" Text="<%#Container.DataItemIndex + 1%>"></asp:Label>
 
-                                                    <asp:Label ID="lblClinicID" Visible="false" runat="server" Text='<%# Eval("ClinicID")%>'></asp:Label>
-
-
+                                                    <%-- <asp:Label ID="lblClinicID" Visible="false" runat="server" Text='<%# Eval("ClinicID")%>'></asp:Label>--%>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
 
@@ -113,7 +113,7 @@
 
                                             </asp:TemplateField>
 
-                                               <asp:TemplateField HeaderText="Treatment Paid Amount">
+                                            <asp:TemplateField HeaderText="Treatment Paid Amount">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblPaidAmount" runat="server" Text='<%# Eval("PaidAmount")%>'></asp:Label>
                                                 </ItemTemplate>
@@ -121,30 +121,30 @@
 
                                             <asp:TemplateField HeaderText="Treatment Discount">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblTotalDiscount" runat="server" Text='<%# Eval("TotalDiscount")%>'></asp:Label>
+                                                    <asp:Label ID="lblTotalDiscount" runat="server" Text='<%# Eval("PaidTotalDiscount")%>'></asp:Label>
                                                 </ItemTemplate>
-                                               
+
                                             </asp:TemplateField>
 
 
                                             <asp:TemplateField HeaderText="Medicines Paid Amount">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblMedicinesPaidAmount" runat="server" Text=""></asp:Label>
+                                                    <asp:Label ID="lblMedicinesPaidAmount" runat="server" Text='<%# Eval("MedicinesPaidAmount")%>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
 
-                                             <asp:TemplateField HeaderText="Medicines Discount">
+                                            <asp:TemplateField HeaderText="Medicines Discount">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblTotalMedicinesDiscount" runat="server" Text=""></asp:Label>
+                                                    <asp:Label ID="lblTotalMedicinesDiscount" Text='<%# Eval("MedicinesTotalDiscount")%>' runat="server"></asp:Label>
                                                 </ItemTemplate>
-                                               
+
                                             </asp:TemplateField>
 
 
-                                         
 
 
-   <%--                                            <asp:TemplateField HeaderText="Pending Amount">
+
+                                            <%--                                            <asp:TemplateField HeaderText="Pending Amount">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblPendingAmount" runat="server" Text='<%# Eval("PendingAmount")%>'></asp:Label>
                                                 </ItemTemplate>
@@ -153,10 +153,6 @@
                                                     <asp:Label ID="lblPendingAmountTotal" runat="server" Text=""></asp:Label>
                                                 </FooterTemplate>
                                             </asp:TemplateField>--%>
-
-
-
-
                                         </Columns>
                                         <PagerStyle CssClass="pagination-ys" HorizontalAlign="Right" />
                                         <PagerSettings Mode="NumericFirstLast" />
